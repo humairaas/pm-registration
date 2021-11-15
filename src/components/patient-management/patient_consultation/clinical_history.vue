@@ -1,9 +1,9 @@
 <template>
   <va-card :title="$t('Clinical Information')">
-      <div class="flex  md3 offset--md11 ">
-        <va-button  icon="fa fa-plus"></va-button>
-      </div>
-    
+    <div class="flex  md3 offset--md11 ">
+      <va-button  icon="fa fa-plus"></va-button>
+    </div>
+
     <va-data-table
       :fields="fields"
       :data="filteredData"
@@ -15,13 +15,13 @@
         <va-icon :name="getTrendIcon(props.rowData)" :color="getTrendColor(props.rowData)" />
       </template>
 
-        <template slot="icon">
+      <template slot="icon">
         <va-icon name="fa fa-trash" color="secondary" />
       </template>
       <template slot="icon2">
         <va-icon name="fa fa-edit" color="secondary" />
       </template>
-      
+
       <template slot="status" slot-scope="props">
         <va-badge :color="props.rowData.color">
           {{ props.rowData.status }}
@@ -48,16 +48,17 @@ export default {
     }
   },
   formOptions: {
-        // validationErrorClass: "has-error",
-        // validationSuccessClass: "has-`success`",
-        validateAfterChanged: true,
-      },
-  thirdTabSchema:{
-        groups: [
+    // validationErrorClass: "has-error",
+    // validationSuccessClass: "has-`success`",
+    validateAfterChanged: true,
+    // hahah
+  },
+  thirdTabSchema: {
+    groups: [
+      {
+        styleClasses: 'row',
+        fields: [
           {
-          styleClasses: "row",
-          fields: [
-           {
             type: 'input',
             inputType: 'date',
             label: 'Date  ',
@@ -66,7 +67,7 @@ export default {
             required: true,
             styleClasses: 'col-md-4',
           },
-             {
+          {
             type: 'vueMultiSelect',
             model: 'services',
             label: 'Services',
@@ -80,13 +81,13 @@ export default {
               label: 'name',
               searchable: true,
             },
-          values: (model, schema) => {
-            return this.services
-          }
+            values: (model, schema) => {
+              return this.services
+            },
           },
-          ],
-        }],
-      },
+        ],
+      }],
+  },
   computed: {
     fields () {
       return [{
@@ -94,9 +95,8 @@ export default {
         width: '40px',
         height: '45px',
         dataClass: 'text-center',
-      weight: '',
-      height: '',
-      result: 'Click "Calculate"'
+        weight: '',
+        result: 'Click "Calculate"',
 
       },
       {
@@ -112,11 +112,11 @@ export default {
         name: 'blood_pressure',
         title: this.$t('Blood Prssure (mm/Hg)'),
       },
-       {
+      {
         name: 'pulse_rate',
         title: this.$t('Pulse Rate (bpm)'),
       },
-       {
+      {
         name: 'weight',
         title: this.$t('Weight (KG)'),
       },
@@ -127,7 +127,7 @@ export default {
       {
         name: 'bmi',
         title: this.$t('BMI'),
-         width: '5%',
+        width: '5%',
       },
       {
         name: 'waist',
@@ -153,14 +153,14 @@ export default {
       })
     },
   },
-   model: {
-        show1: true,
-        services: '',
-   },
+  model: {
+    show1: true,
+    services: '',
+  },
   methods: {
-      calculate() {
-      let weight = parseFloat(this.weight)
-      let height = parseFloat(this.height) / 100
+    calculate () {
+      const weight = parseFloat(this.weight)
+      const height = parseFloat(this.height) / 100
       this.result = weight / (height * height)
     },
     getTrendIcon (user) {
