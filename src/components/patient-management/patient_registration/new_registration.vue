@@ -12,57 +12,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic" :before-change="validateSecondTab">               
                 <vue-form-generator :model="model" :schema="firstTabASchema" :options="formOptions" ref="firstTabForm" @model-updated="onModelUpdated">                   
                 </vue-form-generator>
-                
-                <!-- Contoh collapse -->
-                <!-- 
-                <br />
-                <div >
-                  
-                    <va-collapse>
-                        <span slot="header" class="display-6">Socio Demographic</span>
-                        <div slot="body">
-                            <br />
-                            <vue-form-generator :model="model" :schema="firstTabBSchema" :options="formOptions" ref="secondTabForm" @model-updated="onModelUpdated" >
-                            </vue-form-generator>
-
-                        </div>
-                    </va-collapse>
-                  
-                </div>             
-
-                <br />
-                <div>
-                    
-                      <va-collapse>
-                          <span slot="header" class="display-6">Next Of Kin</span>
-                          <div slot="body">
-                              <br />
-                              <vue-form-generator :model="model" :schema="firstTabCSchema" :options="formOptions" ref="secondTabForm" @model-updated="onModelUpdated" >
-                              </vue-form-generator> 
-                                  <div>
-                                      <multiselect v-model="value" :options="options"></multiselect>
-                                  </div>
-                          </div>
-                      </va-collapse>
-                    
-                </div>
-
-                <br />
-                <div>
-                    
-                      <va-collapse>
-                          <span slot="header" class="display-6">Allergy</span>
-                          <div slot="body">
-                              <br />
-                              <vue-form-generator :model="model" :schema="firstTabDSchema" :options="formOptions" ref="secondTabForm" @model-updated="onModelUpdated" >
-                              </vue-form-generator> 
-                                  <div>
-                                      <multiselect v-model="value" :options="options"></multiselect>
-                                  </div>
-                          </div>
-                      </va-collapse>
-                    
-                </div>-->
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->  
