@@ -276,15 +276,8 @@ export default {
 
       // Allergy Data
       radioAllergy: [
-        {
-          name: 'Yes',
-          value: '1',
-        },
-        {
-          name: 'No',
-          value: '0',
-          selected: true,
-        },
+        { name: 'Yes', value: 1 },
+        { name: 'No', value: 0, selected: true },
       ],
 
       model: {
@@ -961,7 +954,6 @@ export default {
               phone: true,
               phoneRegionCode: 'MY',
             },
-            required: true,
             validator: 'required',
             styleClasses: 'col-md-4',
           },
@@ -971,7 +963,6 @@ export default {
             label: 'Address',
             model: 'NOK_ADDRESS_L1',
             placeholder: 'Address Line 1',
-            required: true,
             validator: 'string',
             styleClasses: 'col-md-8',
           },
@@ -980,7 +971,6 @@ export default {
             inputType: 'text',
             model: 'NOK_ADDRESS_L2',
             placeholder: 'Address Line 2',
-            required: true,
             validator: 'string',
             styleClasses: 'col-md-8',
           },
@@ -989,7 +979,6 @@ export default {
           //     inputType: 'text',
           //     model: 'NOK_ADDRESS_L3',
           //     placeholder: 'Address Line 3',
-          //     required: true,
           //     validator: 'string',
           //     styleClasses: "col-md-8"
           // },
@@ -1011,7 +1000,6 @@ export default {
               values: () => {
                 return this.selectState
               },
-              required: true,
               validator: 'required',
               styleClasses: 'col-md-2',
             },
@@ -1030,7 +1018,6 @@ export default {
               values: () => {
                 return this.selectCity
               },
-              required: true,
               validator: 'required',
               styleClasses: 'col-md-2',
             },
@@ -1047,7 +1034,6 @@ export default {
               values: () => {
                 return this.selectPostcode
               },
-              required: true,
               validator: 'required',
               styleClasses: 'col-md-2',
             },
