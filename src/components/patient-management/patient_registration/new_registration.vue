@@ -105,8 +105,39 @@ export default {
   },
   data () {
     return {
+      model: {
+        // Demographic
 
+        // Sosio Demographic
+
+        // Next Of Kin
+
+        // Allergy
+
+      },
+      // Demographic
+      tabASchema: {
+
+      },
+      // Sosio Demographic
+      tabBSchema: {
+
+      },
+      // Next Of Kin
+      tabCSchema: {
+
+      },
+      // Allergy
+      tabDSchema: {
+
+      },
+      formOptions: {
+
+      },
     }
+  },
+  methods: {
+
   },
 }
 </script>
