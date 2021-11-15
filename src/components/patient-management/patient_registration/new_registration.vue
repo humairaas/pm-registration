@@ -12,6 +12,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic" :before-change="validateSecondTab">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h4>{{model}}</h4>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -106,6 +107,129 @@ export default {
   },
   data () {
     return {
+      // Demographic  Data
+      selectSalutation: [
+        { name: 'MR.', value: 1 },
+        { name: 'MRS.', value: 2 },
+      ],
+      radioCitizenship: [
+        { value: 1, name: 'Malaysian' },
+        { value: 2, name: 'Permanent Resident' },
+        { value: 3, name: 'Foreigner' },
+      ],
+      selectNRICType: [
+        { name: 'Old IC', value: 1 },
+        { name: 'New IC', value: 2 },
+        { name: 'Army', value: 3 },
+        { name: 'Police', value: 4 },
+        { name: "Mother's IC", value: 5 },
+        { name: "Father's IC", value: 6 },
+        { name: 'Work Permit', value: 7 },
+        { name: 'Passport', value: 8 },
+        { name: 'Birth Certificate', value: 9 },
+        { name: 'Pension Card', value: 10 },
+        { name: 'Others (Please Specify)', value: 11 },
+      ],
+      radioGender: [
+        { value: 1, name: 'Male' },
+        { value: 2, name: 'Female' },
+      ],
+      selectServiceType: [
+        { name: 'Consultation', value: 1 },
+        { name: 'Rehabilitation', value: 2 },
+        { name: 'Community Psychiatric Service (CPS)', value: 3 },
+      ],
+      selectIssuingCountry: [
+        { id: '1', name: 'Malaysia' },
+        { id: '2', name: 'China' },
+        { id: '3', name: 'India' },
+      ],
+      selectDMState: [
+        { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
+        { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
+        { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
+        { id: 'MY-01', name: 'Johor' },
+        { id: 'MY-02', name: 'Kedah' },
+        { id: 'MY-03', name: 'Kelantan' },
+        { id: 'MY-04', name: 'Melaka' },
+        { id: 'MY-05', name: 'Negeri Sembilan' },
+        { id: 'MY-06', name: 'Pahang' },
+        { id: 'MY-08', name: 'Perak' },
+        { id: 'MY-09', name: 'Perlis' },
+        { id: 'MY-07', name: 'Pulau Pinang' },
+        { id: 'MY-12', name: 'Sabah' },
+        { id: 'MY-13', name: 'Sarawak' },
+        { id: 'MY-10', name: 'Selangor' },
+        { id: 'MY-11', name: 'Terengganu' },
+      ],
+      selectDMCity: [
+        { id: '1', name: 'Subang Jaya' },
+        { id: '2', name: 'Klang' },
+        { id: '3', name: 'Ampang Jaya' },
+        { id: '3', name: 'Shah Alam' },
+        { id: '3', name: 'Petaling Jaya' },
+        { id: '3', name: 'Cheras' },
+        { id: '3', name: 'Kajang' },
+        { id: '3', name: 'Selayang Baru' },
+        { id: '3', name: 'Rawang' },
+        { id: '3', name: 'Taman Greenwood' },
+        { id: '3', name: 'Semenyih' },
+        { id: '3', name: 'Serdang' },
+      ],
+      selectDMPostcode: [
+        '54200',
+        '53849',
+      ],
+
+      // Socio Demographic Data
+      selectRace: [
+        { name: 'Malay', value: 1 },
+        { name: 'Chinese', value: 2 },
+        { name: 'Indian', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectReligion: [
+        { name: 'Islam', value: 1 },
+        { name: 'Buddha', value: 2 },
+        { name: 'Hindu', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectMaritalStatus: [
+        { name: 'Single', value: 1 },
+        { name: 'Married', value: 2 },
+        { name: 'Widowed', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectAccommodation: [
+        { name: 'Homeless', value: 1 },
+        { name: 'Institution', value: 2 },
+        { name: 'Nursing Home', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectEducationLevel: [
+        { name: 'No Info', value: 1 },
+        { name: 'Primary', value: 2 },
+        { name: 'Secondary', value: 3 },
+        { name: 'Tertiary', value: 4 },
+      ],
+      selectOccupationStatus: [
+        { name: 'Employee', value: 1 },
+        { name: 'Employer', value: 2 },
+        { name: 'student', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectFeeExemptionStatus: [
+        { name: 'Government Servant', value: 1 },
+        { name: 'People with Disability (OKU)', value: 2 },
+        { name: 'Pensioner', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
+      selectOccupationSector: [
+        { name: 'Government', value: 1 },
+        { name: 'Private', value: 2 },
+        { name: 'Self-Employed', value: 3 },
+        { name: 'Others', value: 4 },
+      ],
 
       // Next of Kin Data
       selectRelationship: [
@@ -170,12 +294,18 @@ export default {
         CITIZENSHIP: '',
         NRIC_TYPE: '',
         NRIC_NO: '',
+        PASSPORT_NO: '',
+        PASSPORT_EXPIRY_DATE: '',
+        ISSUING_COUNTRY: '',
         GENDER: '',
         BIRTH_DATE: '',
         AGE: '',
         DM_MOBILE_NO: '',
         DM_HOUSE_NO: '',
+        HOSPITAL_MRN: '',
+        MENTARI_MRN: '',
         SERVICE_TYPE: '',
+        REFERRAL_LETTER: '',
         DM_ADDRESS_LINE_1: '',
         DM_ADDRESS_LINE_2: '',
         DM_ADDRESS_LINE_3: '',
@@ -184,7 +314,22 @@ export default {
         DM_STATE: '',
         EXISTING_PATIENT: '',
 
-        // Sosio Demographic
+        // Socio Demographic
+        RACE: '',
+        SPECIFY_RACE: '',
+        RELIGION: '',
+        SPECIFY_RELIGION: '',
+        MARITAL_STATUS: '',
+        SPECIFY_MARITAL_STATUS: '',
+        ACCOMMODATION: '',
+        SPECIFY_ACCOMMODATION: '',
+        EDUCATION_LEVEL: '',
+        OCCUPATION_STATUS: '',
+        SPECIFY_OCCUPATION_STATUS: '',
+        FEE_EXEMPTION_STATUS: '',
+        SPECIFY_FEE_EXEMPTION_STATUS: '',
+        OCCUPATION_SECTOR: '',
+        SPECIFY_OCCUPATION_SECTOR: '',
 
         // Next Of Kin
         NOK_NAME: '',
@@ -223,11 +368,10 @@ export default {
               key: 'value',
               label: 'name',
             },
-            styleClasses: ['col-12 col-md-3'],
-            values: [
-              { name: 'MR.', value: 1 },
-              { name: 'MRS.', value: 2 },
-            ],
+            styleClasses: 'col-md-3',
+            values: () => {
+              return this.selectSalutation
+            },
           },
           {
             type: 'input',
@@ -236,19 +380,18 @@ export default {
             model: 'DM_NAME',
             validator: 'string',
             required: true,
-            styleClasses: ['col-12 col-md-9'],
+            styleClasses: 'col-md-9',
           },
           {
             type: 'radios',
             label: 'Citizenship',
             model: 'CITIZENSHIP',
-            values: [
-              { value: 1, name: 'Malaysian' },
-              { value: 2, name: 'Permanent Resident' },
-              { value: 3, name: 'Foreigner' },
-            ],
+            required: true,
             validator: 'required',
-            // styleClasses : "col-md-7",
+            styleClasses: 'col-md-12',
+            values: () => {
+              return this.radioCitizenship
+            },
           },
           {
             type: 'vueMultiSelect',
@@ -265,42 +408,89 @@ export default {
               key: 'value',
               label: 'name',
             },
-            // styleClasses: ["col-12 col-md-6"],
-            values: [
-              { name: 'Old IC', value: 1 },
-              { name: 'New IC', value: 2 },
-              { name: 'Army', value: 3 },
-              { name: 'Police', value: 4 },
-              { name: "Mother's IC", value: 5 },
-              { name: "Father's IC", value: 6 },
-              { name: 'Work Permit', value: 7 },
-              { name: 'Passport', value: 8 },
-              { name: 'Birth Certificate', value: 9 },
-              { name: 'Pension Card', value: 10 },
-              { name: 'Others (Please Specify)', value: 11 },
-            ],
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectNRICType
+            },
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 1
+            },
           },
           {
             type: 'cleave',
             label: 'NRIC NO',
             model: 'NRIC_NO',
+            required: true,
             cleaveOptions: {
               blocks: [6, 2, 4],
               delimiter: '-',
               numericOnly: true,
             },
             placeholder: 'XXXXXX-XX-XXXX',
+            styleClasses: 'col-md-6',
+            visible: function (model) {
+              return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Passport NO',
+            model: 'PASSPORT_NO',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'date',
+            label: 'Expiry Date',
+            model: 'PASSPORT_EXPIRY_DATE',
+            placeholder: 'Enter Date',
+            required: true,
+            format: 'YYYY/MM/DD',
+            min: 1,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Issuing Country',
+            model: 'ISSUING_COUNTRY',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectIssuingCountry
+            },
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
           },
           {
             type: 'radios',
             label: 'Gender',
             model: 'GENDER',
-            values: [
-              { value: 1, name: 'Male' },
-              { value: 2, name: 'Female' },
-            ],
+            required: true,
             validator: 'required',
-            // styleClasses : "col-md-7",
+            styleClasses: 'col-md-12 display-inline',
+            values: () => {
+              return this.radioGender
+            },
           },
           {
             type: 'input',
@@ -309,17 +499,20 @@ export default {
             model: 'BIRTH_DATE',
             placeholder: 'Enter Date',
             required: true,
-            formatted: 'DD/MM/YYYY',
-            // styleClasses: 'col-md-5',
+            format: 'YYYY/MM/DD',
+            styleClasses: 'col-md-6',
+            onChanged: function (model, newVal, oldVal, field) {
+              model.AGE = new Date().getFullYear() - model.BIRTH_DATE.toString().substring(0, 4)
+            },
           },
           {
             type: 'input',
             inputType: 'number',
             label: 'Age',
             model: 'AGE',
+            min: 0,
             validator: 'number',
-            styleClasses: 'col-md-7',
-            required: true,
+            styleClasses: 'col-md-6',
           },
           {
             type: 'cleave',
@@ -331,7 +524,7 @@ export default {
             },
             required: true,
             validator: 'required',
-            // styleClasses: "col-md-6"
+            styleClasses: 'col-md-6',
           },
           {
             type: 'cleave',
@@ -341,9 +534,26 @@ export default {
               phone: true,
               phoneRegionCode: 'MY',
             },
-            required: true,
             validator: 'required',
-            // styleClasses: "col-md-6"
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: "Hospital's MRN Number",
+            model: 'HOSPITAL_MRN',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: "Mentari's MRN Number",
+            model: 'MENTARI_MRN',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
           },
           {
             type: 'vueMultiSelect',
@@ -360,12 +570,17 @@ export default {
               key: 'value',
               label: 'name',
             },
-            // styleClasses: ["col-12 col-md-6"],
-            values: [
-              { name: 'Consultation', value: 1 },
-              { name: 'Rehabilitation', value: 2 },
-              { name: 'Community Psychiatric Service (CPS)', value: 3 },
-            ],
+            styleClasses: ['col-12 col-md-6'],
+            values: () => {
+              return this.selectServiceType
+            },
+          },
+          {
+            type: 'upload',
+            label: 'Upload Referral Letter',
+            model: 'REFERRAL_LETTER',
+            inputName: 'file1',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'input',
@@ -374,6 +589,7 @@ export default {
             model: 'DM_ADDRESS_LINE_1',
             placeholder: 'Address line 1',
             validator: 'string',
+            styleClasses: 'col-md-12',
           },
           {
             type: 'input',
@@ -381,6 +597,7 @@ export default {
             model: 'DM_ADDRESS_LINE_2',
             placeholder: 'Address line 2',
             validator: 'string',
+            styleClasses: 'col-md-12',
           },
           {
             type: 'input',
@@ -388,6 +605,7 @@ export default {
             model: 'DM_ADDRESS_LINE_3',
             placeholder: 'Address line 3',
             validator: 'string',
+            styleClasses: 'col-md-12',
           },
           {
             type: 'vueMultiSelect',
@@ -404,12 +622,10 @@ export default {
               key: 'value',
               label: 'name',
             },
-            // styleClasses: ["col-12 col-md-6"],
-            values: [
-              { name: 'Selangor', value: 1 },
-              { name: 'Kuala Lumpur', value: 2 },
-              { name: 'Perak', value: 3 },
-            ],
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectDMState
+            },
           },
           {
             type: 'vueMultiSelect',
@@ -426,12 +642,10 @@ export default {
               key: 'value',
               label: 'name',
             },
-            // styleClasses: ["col-12 col-md-6"],
-            values: [
-              { name: 'Klang', value: 1 },
-              { name: 'Batu Caves', value: 2 },
-              { name: 'Subang Jaya', value: 3 },
-            ],
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectDMCity
+            },
           },
           {
             type: 'vueMultiSelect',
@@ -445,21 +659,253 @@ export default {
               closeOnSelect: true,
               maxHeight: 200,
               showLabels: false,
-              key: 'value',
-              label: 'name',
             },
-            // styleClasses: ["col-12 col-md-6"],
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectDMPostcode
+            },
+          },
+          {
+            type: 'radios',
+            label: 'Is this person an existing patient?',
+            model: 'EXISTING_PATIENT',
+            required: true,
             values: [
-              { name: '68100', value: 1 },
-              { name: '59200', value: 2 },
-              { name: '63000', value: 3 },
+              { value: 1, name: 'Yes' },
+              { value: 2, name: 'No' },
             ],
+            validator: 'required',
+            styleClasses: 'col-md-12 display-inline',
           },
         ],
       },
       // Sosio Demographic
       tabBSchema: {
-
+        fields: [
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Race',
+            model: 'RACE',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectRace
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_RACE',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Religion',
+            model: 'RELIGION',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectReligion
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_RELIGION',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Marital Status',
+            model: 'MARITAL_STATUS',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectMaritalStatus
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_MARITAL_STATUS',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Accommodation',
+            model: 'ACCOMMODATION',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectAccommodation
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_ACCOMMODATION',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Education Level',
+            model: 'EDUCATION_LEVEL',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectEducationLevel
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Occupation Status',
+            model: 'OCCUPATION_STATUS',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectOccupationStatus
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_OCCUPATION_STATUS',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Fee Exemption Status',
+            model: 'FEE_EXEMPTION_STATUS',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectFeeExemptionStatus
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_FEE_EXEMPTION_STATUS',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Occupation Sector',
+            model: 'OCCUPATION_SECTOR',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectOccupationSector
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_OCCUPATION_SECTOR',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-2',
+          },
+        ],
       },
       // Next Of Kin
       tabCSchema: {
