@@ -152,7 +152,7 @@ export default {
               key: 'value',
               label: 'name',
             },
-            styleClasses: ['col-12 col-md-4'],
+            styleClasses: ['col-12 col-md-3'],
             values: [
               { name: 'MR.', value: 1 },
               { name: 'MRS.', value: 2 },
@@ -165,7 +165,7 @@ export default {
             model: 'DM_NAME',
             validator: 'string',
             required: true,
-            styleClasses: ['col-12 col-md-8'],
+            styleClasses: ['col-12 col-md-9'],
           },
           {
             type: 'radios',
