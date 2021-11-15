@@ -105,14 +105,85 @@ export default {
   },
   data () {
     return {
+
+      // Next of Kin Data
+      selectRelationship: [
+        { name: 'Husband', id: '1' },
+        { name: 'Wife', id: '2' },
+        { name: 'Father', id: '3' },
+      ],
+      selectState: [
+        { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
+        { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
+        { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
+        { id: 'MY-01', name: 'Johor' },
+        { id: 'MY-02', name: 'Kedah' },
+        { id: 'MY-03', name: 'Kelantan' },
+        { id: 'MY-04', name: 'Melaka' },
+        { id: 'MY-05', name: 'Negeri Sembilan' },
+        { id: 'MY-06', name: 'Pahang' },
+        { id: 'MY-08', name: 'Perak' },
+        { id: 'MY-09', name: 'Perlis' },
+        { id: 'MY-07', name: 'Pulau Pinang' },
+        { id: 'MY-12', name: 'Sabah' },
+        { id: 'MY-13', name: 'Sarawak' },
+        { id: 'MY-10', name: 'Selangor' },
+        { id: 'MY-11', name: 'Terengganu' },
+      ],
+      selectCity: [
+        { id: '1', name: 'Subang Jaya' },
+        { id: '2', name: 'Klang' },
+        { id: '3', name: 'Ampang Jaya' },
+        { id: '3', name: 'Shah Alam' },
+        { id: '3', name: 'Petaling Jaya' },
+        { id: '3', name: 'Cheras' },
+        { id: '3', name: 'Kajang' },
+        { id: '3', name: 'Selayang Baru' },
+        { id: '3', name: 'Rawang' },
+        { id: '3', name: 'Taman Greenwood' },
+        { id: '3', name: 'Semenyih' },
+        { id: '3', name: 'Serdang' },
+      ],
+      selectPostcode: [
+        '54200',
+        '53849',
+      ],
+
+      // Allergy Data
+      radioAllergy: [
+        {
+          name: 'Yes',
+          value: '1',
+        },
+        {
+          name: 'No',
+          value: '0',
+          selected: true,
+        },
+      ],
+
       model: {
         // Demographic
 
         // Sosio Demographic
 
         // Next Of Kin
+        NOK_NAME: '',
+        NOK_RELATIONSHIP: '',
+        NOK_MOBILE_NO: 0,
+        NOK_HOUSE_NO: 0,
+        NOK_ADDRESS_L1: '',
+        NOK_ADDRESS_L2: '',
+        // NOK_ADDRESS_L3: "",
+        NOK_STATE: '',
+        NOK_CITY: '',
+        NOK_POSTCODE: '',
 
         // Allergy
+        ALLERGY: [],
+        DRUG_ALL_SPECIFY: '',
+        SUPP_ALL_SPECIFY: '',
+        OTHERS_SPECIFY: '',
 
       },
       // Demographic
@@ -125,11 +196,253 @@ export default {
       },
       // Next Of Kin
       tabCSchema: {
-
+        fields: [
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Name (as in NRIC)',
+            placeholder: 'Enter Full Name',
+            model: 'NOK_NAME',
+            required: true,
+            validator: 'string',
+            styleClasses: 'col-md-8',
+          },
+          {
+            type: 'vueMultiSelect',
+            model: 'relationship',
+            label: 'Relationship',
+            placeholder: 'Choose Relationship',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            values: () => {
+              return this.selectRelationship
+            },
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-4',
+          },
+          {
+            type: 'cleave',
+            label: 'Mobile Phone Number',
+            model: 'NOK_PHONE_NO',
+            placeholder: 'Enter Mobile Phone Number',
+            cleaveOptions: {
+              phone: true,
+              phoneRegionCode: 'MY',
+            },
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-4',
+          },
+          {
+            type: 'cleave',
+            label: 'House Phone Number',
+            model: 'NOK_PHONE_NO',
+            placeholder: 'Enter House Phone Number',
+            cleaveOptions: {
+              phone: true,
+              phoneRegionCode: 'MY',
+            },
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-4',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Address',
+            model: 'NOK_ADDRESS_L1',
+            placeholder: 'Address Line 1',
+            required: true,
+            validator: 'string',
+            styleClasses: 'col-md-8',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            model: 'NOK_ADDRESS_L2',
+            placeholder: 'Address Line 2',
+            required: true,
+            validator: 'string',
+            styleClasses: 'col-md-8',
+          },
+          // {
+          //     type: 'input',
+          //     inputType: 'text',
+          //     model: 'NOK_ADDRESS_L3',
+          //     placeholder: 'Address Line 3',
+          //     required: true,
+          //     validator: 'string',
+          //     styleClasses: "col-md-8"
+          // },
+        ],
+        groups: [{
+          fields: [
+            {
+              type: 'vueMultiSelect',
+              model: 'NOK_STATE',
+              label: 'State',
+              placeholder: 'Choose State',
+              selectOptions: {
+                multiple: false,
+                closeOnSelect: true,
+                showLabels: false,
+                key: 'value',
+                label: 'name',
+              },
+              values: () => {
+                return this.selectState
+              },
+              required: true,
+              validator: 'required',
+              styleClasses: 'col-md-2',
+            },
+            {
+              type: 'vueMultiSelect',
+              model: 'NOK_CITY',
+              label: 'City',
+              placeholder: 'Choose City',
+              selectOptions: {
+                multiple: false,
+                closeOnSelect: true,
+                showLabels: false,
+                key: 'value',
+                label: 'name',
+              },
+              values: () => {
+                return this.selectCity
+              },
+              required: true,
+              validator: 'required',
+              styleClasses: 'col-md-2',
+            },
+            {
+              type: 'vueMultiSelect',
+              model: 'NOK_POSTCODE',
+              label: 'Postcode',
+              placeholder: 'Choose Postcode',
+              selectOptions: {
+                multiple: false,
+                closeOnSelect: true,
+                showLabels: false,
+              },
+              values: () => {
+                return this.selectPostcode
+              },
+              required: true,
+              validator: 'required',
+              styleClasses: 'col-md-2',
+            },
+          ],
+        }],
       },
       // Allergy
       tabDSchema: {
+        groups: [
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Drug Allergy',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'ALLERGY[0]',
+                styleClasses: 'col-xs1',
+                values: () => {
+                  return this.radioAllergy
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'DRUG_ALL_SPECIFY',
+                placeholder: '',
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+                visible: function (model) {
+                  return model && model.ALLERGY[0] === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Traditional Medication / Supplement Allergy',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'ALLERGY[1]',
+                styleClasses: 'col-xs1',
+                values: () => {
+                  return this.radioAllergy
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'SUPP_ALL_SPECIFY',
+                placeholder: '',
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+                visible: function (model) {
+                  return model && model.ALLERGY[1] === 1
+                },
 
+              },
+            ],
+          },
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Others',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'ALLERGY[2]',
+                styleClasses: 'col-xs1',
+                values: () => {
+                  return this.radioAllergy
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'OTHERS_SPECIFY',
+                placeholder: '',
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+                visible: function (model) {
+                  return model && model.ALLERGY[2] === 1
+                },
+
+              },
+            ],
+          },
+        ],
       },
       formOptions: {
 
