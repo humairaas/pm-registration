@@ -12,7 +12,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic" :before-change="validateSecondTab">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h4>{{model}}</h4>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -37,10 +36,20 @@
                   v-model="showLargeModal"
                   size="large"
                   :title=" $t('Patient Registration Details Preview') "
-                  :message=" $t('Nothing to Preview') "
                   :okText=" $t('Confirm') "
                   :cancelText=" $t('Close') "
-                />
+                >
+                  <div class="modal-preview">
+                    <h5 class="tab-title">Demographic</h5>
+                    <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
+                    <h5 class="tab-title">Sosio Demographic</h5>
+                    <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+                    <h5 class="tab-title">Next of Kin</h5>
+                    <vue-form-generator class="read-only" :model="model" :schema="tabCSchema" readonly></vue-form-generator>
+                    <h5 class="tab-title">Allergy</h5>
+                    <vue-form-generator class="read-only" :model="model" :schema="tabDSchema" readonly></vue-form-generator>
+                  </div>
+                </va-modal>
               </tab-content>
 
               <!-- Button footer-->
@@ -121,11 +130,13 @@ export default {
         { name: 'MR.', value: 1 },
         { name: 'MRS.', value: 2 },
       ],
+
       radioCitizenship: [
         { value: 1, name: 'Malaysian' },
         { value: 2, name: 'Permanent Resident' },
         { value: 3, name: 'Foreigner' },
       ],
+
       selectNRICType: [
         { name: 'Old IC', value: 1 },
         { name: 'New IC', value: 2 },
@@ -139,10 +150,12 @@ export default {
         { name: 'Pension Card', value: 10 },
         { name: 'Others (Please Specify)', value: 11 },
       ],
+
       radioGender: [
         { value: 1, name: 'Male' },
         { value: 2, name: 'Female' },
       ],
+
       selectServiceType: [
         { name: 'Consultation', value: 1 },
         { name: 'Rehabilitation', value: 2 },
@@ -151,6 +164,7 @@ export default {
         { name: 'Rehabilitation - Job Club', value: 5 },
         { name: 'Community Psychiatric Service (CPS)', value: 6 },
       ],
+
       selectReferralType: [
         { name: 'Self-Referral', value: 1 },
         { name: 'Psychiatric Department Own Hospital', value: 2 },
@@ -160,12 +174,14 @@ export default {
         { name: 'Private Hospital', value: 6 },
         { name: 'Others', value: 7 },
       ],
+
       selectIssuingCountry: [
         { id: '1', name: 'Malaysia' },
         { id: '2', name: 'China' },
         { id: '3', name: 'India' },
       ],
-      selectDMState: [
+
+      selectState: [
         { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
         { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
         { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
@@ -183,7 +199,8 @@ export default {
         { id: 'MY-10', name: 'Selangor' },
         { id: 'MY-11', name: 'Terengganu' },
       ],
-      selectDMCity: [
+
+      selectCity: [
         { id: '1', name: 'Subang Jaya' },
         { id: '2', name: 'Klang' },
         { id: '3', name: 'Ampang Jaya' },
@@ -197,7 +214,8 @@ export default {
         { id: '3', name: 'Semenyih' },
         { id: '3', name: 'Serdang' },
       ],
-      selectDMPostcode: [
+
+      selectPostcode: [
         '54200',
         '53849',
       ],
@@ -209,12 +227,14 @@ export default {
         { name: 'Indian', value: 3 },
         { name: 'Others', value: 4 },
       ],
+
       selectReligion: [
         { name: 'Islam', value: 1 },
         { name: 'Buddha', value: 2 },
         { name: 'Hindu', value: 3 },
         { name: 'Others', value: 4 },
       ],
+
       selectMaritalStatus: [
         { name: 'Single', value: 1 },
         { name: 'Married', value: 2 },
@@ -227,6 +247,7 @@ export default {
         { name: 'Nursing Home', value: 3 },
         { name: 'Others', value: 4 },
       ],
+
       selectEducationLevel: [
         { name: 'No Info', value: 1 },
         { name: 'Primary', value: 2 },
@@ -239,12 +260,14 @@ export default {
         { name: 'student', value: 3 },
         { name: 'Others', value: 4 },
       ],
+
       selectFeeExemptionStatus: [
         { name: 'Government Servant', value: 1 },
         { name: 'People with Disability (OKU)', value: 2 },
         { name: 'Pensioner', value: 3 },
         { name: 'Others', value: 4 },
       ],
+
       selectOccupationSector: [
         { name: 'Government', value: 1 },
         { name: 'Private', value: 2 },
@@ -254,45 +277,9 @@ export default {
 
       // Next of Kin Data
       selectRelationship: [
-        { name: 'Husband', id: '1' },
-        { name: 'Wife', id: '2' },
-        { name: 'Father', id: '3' },
-      ],
-      selectState: [
-        // { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
-        // { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
-        // { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
-        // { id: 'MY-01', name: 'Johor' },
-        // { id: 'MY-02', name: 'Kedah' },
-        // { id: 'MY-03', name: 'Kelantan' },
-        // { id: 'MY-04', name: 'Melaka' },
-        // { id: 'MY-05', name: 'Negeri Sembilan' },
-        // { id: 'MY-06', name: 'Pahang' },
-        // { id: 'MY-08', name: 'Perak' },
-        // { id: 'MY-09', name: 'Perlis' },
-        // { id: 'MY-07', name: 'Pulau Pinang' },
-        // { id: 'MY-12', name: 'Sabah' },
-        // { id: 'MY-13', name: 'Sarawak' },
-        // { id: 'MY-10', name: 'Selangor' },
-        // { id: 'MY-11', name: 'Terengganu' },
-      ],
-      selectCity: [
-        // { id: '1', name: 'Subang Jaya' },
-        // { id: '2', name: 'Klang' },
-        // { id: '3', name: 'Ampang Jaya' },
-        // { id: '3', name: 'Shah Alam' },
-        // { id: '3', name: 'Petaling Jaya' },
-        // { id: '3', name: 'Cheras' },
-        // { id: '3', name: 'Kajang' },
-        // { id: '3', name: 'Selayang Baru' },
-        // { id: '3', name: 'Rawang' },
-        // { id: '3', name: 'Taman Greenwood' },
-        // { id: '3', name: 'Semenyih' },
-        // { id: '3', name: 'Serdang' },
-      ],
-      selectPostcode: [
-        // '54200',
-        // '53849',
+        { name: 'Husband', value: '1' },
+        { name: 'Wife', value: '2' },
+        { name: 'Father', value: '3' },
       ],
 
       // Allergy Data
@@ -672,7 +659,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectDMState
+              return this.selectState
             },
           },
           {
@@ -692,7 +679,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectDMCity
+              return this.selectCity
             },
           },
           {
@@ -710,7 +697,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectDMPostcode
+              return this.selectPostcode
             },
           },
           {
@@ -1007,7 +994,7 @@ export default {
             model: 'NOK_NAME',
             required: true,
             validator: 'string',
-            styleClasses: 'col-md-8',
+            styleClasses: 'col-xl-8',
           },
           {
             type: 'vueMultiSelect',
@@ -1026,7 +1013,7 @@ export default {
             },
             required: true,
             validator: 'required',
-            styleClasses: 'col-md-4',
+            styleClasses: 'col-xl-4',
           },
           {
             type: 'cleave',
@@ -1039,7 +1026,7 @@ export default {
             },
             required: true,
             validator: 'required',
-            styleClasses: 'col-md-4',
+            styleClasses: 'col-xl-4',
           },
           {
             type: 'cleave',
@@ -1051,7 +1038,7 @@ export default {
               phoneRegionCode: 'MY',
             },
             validator: 'required',
-            styleClasses: 'col-md-4',
+            styleClasses: 'col-xl-4',
           },
           {
             type: 'input',
@@ -1060,7 +1047,7 @@ export default {
             model: 'NOK_ADDRESS_L1',
             placeholder: 'Address Line 1',
             validator: 'string',
-            styleClasses: 'col-md-8',
+            styleClasses: 'col-xl-8',
           },
           {
             type: 'input',
@@ -1068,7 +1055,7 @@ export default {
             model: 'NOK_ADDRESS_L2',
             placeholder: 'Address Line 2',
             validator: 'string',
-            styleClasses: 'col-md-8',
+            styleClasses: 'col-xl-8',
           },
           // {
           //     type: 'input',
@@ -1104,7 +1091,7 @@ export default {
                 return this.selectState
               },
               validator: 'required',
-              styleClasses: 'col-md-2',
+              styleClasses: 'col-xl-2',
             },
             {
               type: 'vueMultiSelect',
@@ -1129,7 +1116,7 @@ export default {
                 return this.selectCity
               },
               validator: 'required',
-              styleClasses: 'col-md-2',
+              styleClasses: 'col-xl-2',
             },
             {
               type: 'vueMultiSelect',
@@ -1145,7 +1132,7 @@ export default {
                 return this.selectPostcode
               },
               validator: 'required',
-              styleClasses: 'col-md-2',
+              styleClasses: 'col-xl-2',
             },
           ],
         }],
@@ -1332,6 +1319,27 @@ export default {
     border-top: 1px solid rgb(189, 184, 184);
     margin-top: 1rem;
     margin-bottom: 5rem;
+  }
+
+  .modal-preview {
+    padding: 10px;
+  }
+
+  .tab-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: orange;
+    border-radius: 10px;
+    color: white;
+  }
+
+  .sosio-margin {
+    margin-left: 20px;
+  }
+
+  .read-only {
+    pointer-events: none;
   }
 
 </style>
