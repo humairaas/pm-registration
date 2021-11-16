@@ -215,7 +215,7 @@ export default {
         { id: '3', name: 'Serdang' },
       ],
 
-      selectPostcode: [
+      selectDMPostcode: [
         '54200',
         '53849',
       ],
