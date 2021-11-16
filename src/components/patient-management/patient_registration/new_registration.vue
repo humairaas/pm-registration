@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12">
           <va-card>
-            <form-wizard  @on-complete="onComplete" color="orange" error-color="#a94442" finish-button-text="Submit" ref="wizard">
+            <form-wizard  @on-complete="onComplete" color="#f2a444" error-color="#a94442" finish-button-text="Submit" ref="wizard">
               <h3 slot="title" ></h3>
 
               <!-- 1st tab: Demographic-->
