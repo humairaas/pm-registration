@@ -6,90 +6,171 @@
       <br/>
       <h2 class="patient-name">Ms. Nuha Binti Ahmad Soleh</h2>
 
-      <!-- Patient Profile -->
-      <va-card :title="$t('Demographic')">
+      <div class="row">
+        <!--Demographic--->
+        <div class="col-xl-9 mb-3">
+          <va-card :title="$t('Demographic')">
+            <div class="float-right">
+              <router-link to="/admin/patient-management/patient_registration">
+                <button type="button" class="btn sizebtn">
+                  <i class="fa fa-pencil-square-o"/>
+                </button>
+              </router-link>
+            </div>
 
-        <div class="float-right">
-          <router-link to="/admin/patient-management/patient_registration">
-            <button type="button" class="btn sizebtn">
-              <i class="fa fa-pencil-square-o"/>
-            </button>
-          </router-link>
+            <div class="row mt-2">
+              <div class="col-xl-9">
+                <div class="row mt-2">
+                  <div class="col-md-4"><b>MITS 2.0 Reference No</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">MT30399</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Hospital's MRN</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5"> HS30399</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Mentari's MRN</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">HS30399</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Gender</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">Female</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Date of Birth</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">20/12/2000 (21 years old)</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Marital Status</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">Single</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4"><b>Nationality</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">Malaysian</div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-4"><b>Contact No</b></div>
+                  <div class="col-md-auto"><b>:</b></div>
+                  <div class="col-md-5">018-2875425</div>
+                </div>
+              </div>
+              <div class="col-xl-3">
+                <b>Allergies :</b>
+                <p>Peanut, Dairy Products, Peanut, Dairy Products, Peanut, Dairy Products</p>
+              </div>
+            </div>
+          </va-card>
+
+        </div>
+        <!--Alert--->
+        <div class="col-xl">
+          <va-card :title="$t('Alert')">
+          </va-card>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-9">
+          <div class="row mt-3">
+            <!--Visit History--->
+            <div class="col-xl-12">
+              <va-card :title="$t('Visit History')">
+              </va-card>
+            </div>
+          </div>
+
+          <!--Appointment--->
+          <div class="row mt-3">
+            <div class="col-xl-12">
+              <va-card :title="$t('Appointment')">
+              </va-card>
+            </div>
+          </div>
+
+          <!--Clinical Information--->
+          <div class="row mt-3">
+            <div class="col-xl-12">
+              <va-card :title="$t('Clinical Information')">
+              </va-card>
+            </div>
+          </div>
+
+          <!--Attachments--->
+          <div class="row mt-3 mb-2">
+            <div class="col-xl-12">
+              <va-card :title="$t('Attachments')">
+              </va-card>
+            </div>
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-10">
-            <table>
-              <tr>
-                <td><b>MITS 2.0 Reference No.</b></td>
-                <td><b>:</b></td>
-                <td>MS10001</td>
-
-                <td><b>Hospital's MRN No.</b></td>
-                <td><b>:</b></td>
-                <td>MS10001</td>
-
-                <td><b>Mentari's MRN No.</b></td>
-                <td><b>:</b></td>
-                <td>MS10001</td>
-              </tr>
-            </table>
-            <table>
-              <tr>
-                <td><b>Patient Name</b></td>
-                <td><b>:</b></td>
-                <td>Ms. Nuha Binti Ahmad Soleh</td>
-              </tr>
-              <tr>
-                <td><b>Gender</b></td>
-                <td><b>:</b></td>
-                <td>Female</td>
-              </tr>
-              <tr>
-                <td><b>Date of Birth</b></td>
-                <td><b>:</b></td>
-                <td>09/01/2000 (21 years old)</td>
-              </tr>
-              <tr>
-                <td><b>Marital Status</b></td>
-                <td><b>:</b></td>
-                <td>Single</td>
-              </tr>
-              <tr>
-                <td><b>Nationality</b></td>
-                <td><b>:</b></td>
-                <td>Malaysian</td>
-              </tr>
-              <tr>
-                <td><b>Contact No.</b></td>
-                <td><b>:</b></td>
-                <td>012-3456789</td>
-              </tr>
-            </table>
-          </div>
-          <div class="col-md-2">
-            <table>
-              <tr>
-                <td><b>Allergy :</b></td>
-              </tr>
-              <tr>
-                <td>Peanut, Milk</td>
-              </tr>
-            </table>
-          </div>
+        <!--General Actions-->
+        <div class="col-xl mt-3">
+          <va-card :title="$t('General Actions')">
+            <va-accordion>
+              <!--Clinical Information-->
+              <va-collapse withBackground>
+                <span slot="header">Clinical Information</span>
+                <div slot="body">
+                  <div>
+                    Button 1
+                  </div>
+                </div>
+              </va-collapse>
+              <!--Psychometrci Test-->
+              <va-collapse withBackground>
+                <span slot="header">Psychometric Test</span>
+                <div slot="body">
+                  <div>
+                    Button 1
+                  </div>
+                </div>
+              </va-collapse>
+              <!--Clinical Documentation-->
+              <va-collapse withBackground>
+                <span slot="header">Clinical Documentation</span>
+                <div slot="body">
+                  <div>
+                    Button 1
+                  </div>
+                </div>
+              </va-collapse>
+              <!--Appointment-->
+              <va-collapse withBackground>
+                <span slot="header">Appointment</span>
+                <div slot="body">
+                  <div>
+                    Button 1
+                  </div>
+                </div>
+              </va-collapse>
+              <!--Attachments-->
+              <va-collapse withBackground>
+                <span slot="header">Attachment</span>
+                <div slot="body">
+                  <div>
+                    Button 1
+                  </div>
+                </div>
+              </va-collapse>
+            </va-accordion>
+          </va-card>
         </div>
-      </va-card>
-      <!-- Appointment -->
-
-      <!-- Clinical Information -->
-
-      <!-- Recent Visit -->
-
-      <!-- Medication History -->
-
-      <!-- Family History -->
-
-      <!-- Social History-->
+      </div>
 
     </div>
   </div>
