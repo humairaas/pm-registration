@@ -201,6 +201,11 @@ export default {
         '54200',
         '53849',
       ],
+      selectBranch: [
+        { name: 'Mentari Selayang', value: 1 },
+        { name: 'Mentari Klang', value: 2 },
+        { name: 'Mentari Kluang', value: 3 },
+      ],
 
       // Socio Demographic Data
       selectRace: [
@@ -329,6 +334,7 @@ export default {
         DM_CITY: '',
         DM_STATE: '',
         EXISTING_PATIENT: '',
+        BRANCH: '',
 
         // Socio Demographic
         RACE: '',
@@ -421,6 +427,7 @@ export default {
               closeOnSelect: true,
               maxHeight: 200,
               showLabels: false,
+              allowEmpty: false,
               key: 'value',
               label: 'name',
             },
@@ -445,7 +452,22 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2)
+              return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'NRIC NO',
+            model: 'NRIC_NO',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+            visible: function (model) {
+              return model && (model.NRIC_TYPE.value === 1 || model.NRIC_TYPE.value === 3 || model.NRIC_TYPE.value === 4 ||
+                              model.NRIC_TYPE.value === 5 || model.NRIC_TYPE.value === 6 || model.NRIC_TYPE.value === 7 ||
+                              model.NRIC_TYPE.value === 8 || model.NRIC_TYPE.value === 9 || model.NRIC_TYPE.value === 10 ||
+                              model.NRIC_TYPE.value === 11)
             },
           },
           {
@@ -695,35 +717,68 @@ export default {
               return this.selectDMCity
             },
           },
+        ],
+        groups: [
           {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Postcode',
-            model: 'DM_POSTCODE',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-            },
-            styleClasses: 'col-md-6',
-            values: () => {
-              return this.selectDMPostcode
-            },
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Postcode',
+                model: 'DM_POSTCODE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectDMPostcode
+                },
+              },
+            ],
           },
           {
-            type: 'radios',
-            label: 'Is this person an existing patient?',
-            model: 'EXISTING_PATIENT',
-            required: true,
-            values: [
-              { value: 1, name: 'Yes' },
-              { value: 2, name: 'No' },
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is this person an existing patient?',
+                model: 'EXISTING_PATIENT',
+                required: true,
+                values: [
+                  { value: 1, name: 'Yes' },
+                  { value: 2, name: 'No' },
+                ],
+                validator: 'required',
+                styleClasses: 'col-md-6 display-inline',
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mentari Branch',
+                model: 'BRANCH',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectBranch
+                },
+                visible: function (model) {
+                  return model && model.EXISTING_PATIENT === 1
+                },
+              },
             ],
-            validator: 'required',
-            styleClasses: 'col-md-12 display-inline',
           },
         ],
       },
@@ -745,6 +800,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -777,6 +833,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -814,6 +871,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -846,6 +904,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -883,6 +942,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -903,6 +963,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -940,6 +1001,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -972,6 +1034,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
