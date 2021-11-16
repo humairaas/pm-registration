@@ -25,18 +25,22 @@
               <tab-content icon="fa fa-group" title="3. Next of Kin" :before-change="validateFourthTab">
                 <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="nextOfKin" @model-updated="onModelUpdated" >
                 </vue-form-generator>
-                <div>
-                  <multiselect v-model="value" :options="options"></multiselect>
-                </div>
               </tab-content>
 
               <!-- 4th tab: Allergy-->
               <tab-content icon="fa fa-info" title="4. Allergy" :before-change="validateFourthTab">
-                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated" >
+                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated" @submit="onSubmit">
                 </vue-form-generator>
-                <div>
-                  <multiselect v-model="value" :options="options"></multiselect>
-                </div>
+
+                <!--//Modals-->
+                <va-modal
+                  v-model="showLargeModal"
+                  size="large"
+                  :title=" $t('Patient Registration Details Preview') "
+                  :message=" $t('Nothing to Preview') "
+                  :okText=" $t('Confirm') "
+                  :cancelText=" $t('Close') "
+                />
               </tab-content>
 
               <!-- Button footer-->
@@ -51,16 +55,17 @@
                     <i class="fa fa-step-backward" /> &nbsp; Previous
                   </button>
                 </div>
-                <div class="float-right">
 
-                  <button @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
-                    <i class="fa fa-edit" /> &nbsp;Save
+                <div class="float-right">
+                  <button v-if="!isLastStep" @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
+                    Next <i class="fa fa-step-forward" />
                   </button>
 
-                  <button v-if="isLastStep" @click="showmodal" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
+                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
                     <i class="fa fa-play-circle" /> &nbsp;View
                   </button>
-                  <button v-if="isLastStep" @click="nextTab" type="button" class="ml-2 btn btn-primary btn-fill btn-md">
+
+                  <button v-if="isLastStep" @click="redirectToProfile" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
                     Submit
                   </button>
                 </div>
@@ -103,10 +108,14 @@ require('cleave.js/dist/addons/cleave-phone.my')
 
 // register globally
 export default {
+  name: 'modals',
   components: {
   },
   data () {
     return {
+      show: true,
+      showLargeModal: false,
+
       // Demographic  Data
       selectSalutation: [
         { name: 'MR.', value: 1 },
@@ -250,46 +259,46 @@ export default {
         { name: 'Father', id: '3' },
       ],
       selectState: [
-        { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
-        { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
-        { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
-        { id: 'MY-01', name: 'Johor' },
-        { id: 'MY-02', name: 'Kedah' },
-        { id: 'MY-03', name: 'Kelantan' },
-        { id: 'MY-04', name: 'Melaka' },
-        { id: 'MY-05', name: 'Negeri Sembilan' },
-        { id: 'MY-06', name: 'Pahang' },
-        { id: 'MY-08', name: 'Perak' },
-        { id: 'MY-09', name: 'Perlis' },
-        { id: 'MY-07', name: 'Pulau Pinang' },
-        { id: 'MY-12', name: 'Sabah' },
-        { id: 'MY-13', name: 'Sarawak' },
-        { id: 'MY-10', name: 'Selangor' },
-        { id: 'MY-11', name: 'Terengganu' },
+        // { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
+        // { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
+        // { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
+        // { id: 'MY-01', name: 'Johor' },
+        // { id: 'MY-02', name: 'Kedah' },
+        // { id: 'MY-03', name: 'Kelantan' },
+        // { id: 'MY-04', name: 'Melaka' },
+        // { id: 'MY-05', name: 'Negeri Sembilan' },
+        // { id: 'MY-06', name: 'Pahang' },
+        // { id: 'MY-08', name: 'Perak' },
+        // { id: 'MY-09', name: 'Perlis' },
+        // { id: 'MY-07', name: 'Pulau Pinang' },
+        // { id: 'MY-12', name: 'Sabah' },
+        // { id: 'MY-13', name: 'Sarawak' },
+        // { id: 'MY-10', name: 'Selangor' },
+        // { id: 'MY-11', name: 'Terengganu' },
       ],
       selectCity: [
-        { id: '1', name: 'Subang Jaya' },
-        { id: '2', name: 'Klang' },
-        { id: '3', name: 'Ampang Jaya' },
-        { id: '3', name: 'Shah Alam' },
-        { id: '3', name: 'Petaling Jaya' },
-        { id: '3', name: 'Cheras' },
-        { id: '3', name: 'Kajang' },
-        { id: '3', name: 'Selayang Baru' },
-        { id: '3', name: 'Rawang' },
-        { id: '3', name: 'Taman Greenwood' },
-        { id: '3', name: 'Semenyih' },
-        { id: '3', name: 'Serdang' },
+        // { id: '1', name: 'Subang Jaya' },
+        // { id: '2', name: 'Klang' },
+        // { id: '3', name: 'Ampang Jaya' },
+        // { id: '3', name: 'Shah Alam' },
+        // { id: '3', name: 'Petaling Jaya' },
+        // { id: '3', name: 'Cheras' },
+        // { id: '3', name: 'Kajang' },
+        // { id: '3', name: 'Selayang Baru' },
+        // { id: '3', name: 'Rawang' },
+        // { id: '3', name: 'Taman Greenwood' },
+        // { id: '3', name: 'Semenyih' },
+        // { id: '3', name: 'Serdang' },
       ],
       selectPostcode: [
-        '54200',
-        '53849',
+        // '54200',
+        // '53849',
       ],
 
       // Allergy Data
       radioAllergy: [
         { name: 'Yes', value: 1 },
-        { name: 'No', value: 0, selected: true },
+        { name: 'No', value: 0 },
       ],
 
       model: {
@@ -341,8 +350,8 @@ export default {
         // Next Of Kin
         NOK_NAME: '',
         NOK_RELATIONSHIP: '',
-        NOK_MOBILE_NO: 0,
-        NOK_HOUSE_NO: 0,
+        NOK_MOBILE_NO: '',
+        NOK_HOUSE_NO: '',
         NOK_ADDRESS_L1: '',
         NOK_ADDRESS_L2: '',
         // NOK_ADDRESS_L3: "",
@@ -355,8 +364,8 @@ export default {
         DRUG_ALL_SPECIFY: '',
         SUPP_ALL_SPECIFY: '',
         OTHERS_SPECIFY: '',
-
       },
+
       // Demographic
       tabASchema: {
         fields: [
@@ -1022,7 +1031,7 @@ export default {
           {
             type: 'cleave',
             label: 'Mobile Phone Number',
-            model: 'NOK_PHONE_NO',
+            model: 'NOK_MOBILE_NO',
             placeholder: 'Enter Mobile Phone Number',
             cleaveOptions: {
               phone: true,
@@ -1035,7 +1044,7 @@ export default {
           {
             type: 'cleave',
             label: 'House Phone Number',
-            model: 'NOK_PHONE_NO',
+            model: 'NOK_HOUSE_NO',
             placeholder: 'Enter House Phone Number',
             cleaveOptions: {
               phone: true,
@@ -1084,6 +1093,13 @@ export default {
                 key: 'value',
                 label: 'name',
               },
+              // onChanged: function(model){
+              //     this.$axios
+              //         .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE)
+              //         .then((response) =>{
+              //             this.selectCity = response.data.data
+              //         })
+              // },
               values: () => {
                 return this.selectState
               },
@@ -1102,6 +1118,13 @@ export default {
                 key: 'value',
                 label: 'name',
               },
+              // onChanged: function(model){
+              // this.$axios
+              //     .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY)
+              //     .then((response) =>{
+              //         this.selectPostcode = response.data.data
+              //     })
+              // },
               values: () => {
                 return this.selectCity
               },
@@ -1142,10 +1165,12 @@ export default {
               {
                 type: 'radios',
                 model: 'ALLERGY[0]',
-                styleClasses: 'col-xs1',
                 values: () => {
                   return this.radioAllergy
                 },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
               },
               {
                 type: 'input',
@@ -1153,12 +1178,12 @@ export default {
                 label: 'To specify',
                 model: 'DRUG_ALL_SPECIFY',
                 placeholder: '',
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-6',
                 visible: function (model) {
                   return model && model.ALLERGY[0] === 1
                 },
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
               },
             ],
           },
@@ -1174,10 +1199,12 @@ export default {
               {
                 type: 'radios',
                 model: 'ALLERGY[1]',
-                styleClasses: 'col-xs1',
                 values: () => {
                   return this.radioAllergy
                 },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
               },
               {
                 type: 'input',
@@ -1185,13 +1212,12 @@ export default {
                 label: 'To specify',
                 model: 'SUPP_ALL_SPECIFY',
                 placeholder: '',
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-6',
                 visible: function (model) {
                   return model && model.ALLERGY[1] === 1
                 },
-
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
               },
             ],
           },
@@ -1207,10 +1233,12 @@ export default {
               {
                 type: 'radios',
                 model: 'ALLERGY[2]',
-                styleClasses: 'col-xs1',
                 values: () => {
                   return this.radioAllergy
                 },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
               },
               {
                 type: 'input',
@@ -1218,13 +1246,12 @@ export default {
                 label: 'To specify',
                 model: 'OTHERS_SPECIFY',
                 placeholder: '',
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-6',
                 visible: function (model) {
                   return model && model.ALLERGY[2] === 1
                 },
-
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
               },
             ],
           },
@@ -1233,12 +1260,27 @@ export default {
       formOptions: {
         validateAfterLoad: false,
         validateAfterChanged: true,
-        validateAsync: false,
+        validateAsync: true,
       },
     }
   },
+  mounted () {
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getState?country_id=0')
+    //     .then((response) =>{
+    //         this.selectState = response.data.data
+    //     })
+  },
   methods: {
+    onSubmit () {
+      this.$refs.allergy.validateAfterChanged()
+    },
+    showPreview () {
 
+    },
+    redirectToProfile () {
+
+    },
   },
 }
 </script>
