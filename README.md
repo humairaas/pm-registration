@@ -155,3 +155,4 @@ Stay up to date with the latest Vuestic news! Follow us on [Twitter](https://twi
 
 ## License
 [MIT](https://github.com/epicmaxco/vuestic-admin/blob/master/LICENSE) license.
+
