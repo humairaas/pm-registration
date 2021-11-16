@@ -146,7 +146,19 @@ export default {
       selectServiceType: [
         { name: 'Consultation', value: 1 },
         { name: 'Rehabilitation', value: 2 },
-        { name: 'Community Psychiatric Service (CPS)', value: 3 },
+        { name: 'Rehabilitation - SE', value: 3 },
+        { name: 'Rehabilitation - ETP', value: 4 },
+        { name: 'Rehabilitation - Job Club', value: 5 },
+        { name: 'Community Psychiatric Service (CPS)', value: 6 },
+      ],
+      selectReferralType: [
+        { name: 'Self-Referral', value: 1 },
+        { name: 'Psychiatric Department Own Hospital', value: 2 },
+        { name: 'Government Clinic', value: 3 },
+        { name: 'Private Clinic', value: 4 },
+        { name: 'Government Hospital', value: 5 },
+        { name: 'Private Hospital', value: 6 },
+        { name: 'Others', value: 7 },
       ],
       selectIssuingCountry: [
         { id: '1', name: 'Malaysia' },
@@ -307,6 +319,8 @@ export default {
         HOSPITAL_MRN: '',
         MENTARI_MRN: '',
         SERVICE_TYPE: '',
+        REFERRAL_TYPE: '',
+        SPECIFY_REFERRAL: '',
         REFERRAL_LETTER: '',
         DM_ADDRESS_LINE_1: '',
         DM_ADDRESS_LINE_2: '',
@@ -572,9 +586,41 @@ export default {
               key: 'value',
               label: 'name',
             },
-            styleClasses: ['col-12 col-md-6'],
+            styleClasses: 'col-md-4',
             values: () => {
               return this.selectServiceType
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Type of Referral',
+            model: 'REFERRAL_TYPE',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectReferralType
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_REFERRAL',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.REFERRAL_TYPE.value === 7
             },
           },
           {
@@ -683,229 +729,270 @@ export default {
       },
       // Sosio Demographic
       tabBSchema: {
-        fields: [
+        groups: [
           {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Race',
-            model: 'RACE',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectRace
-            },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Race',
+                model: 'RACE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectRace
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_RACE',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.RACE.value === 4
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Religion',
+                model: 'RELIGION',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectReligion
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_RELIGION',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.RELIGION.value === 4
+                },
+              },
+            ],
           },
           {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_RACE',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Marital Status',
+                model: 'MARITAL_STATUS',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectMaritalStatus
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_MARITAL_STATUS',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.MARITAL_STATUS.value === 4
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Accommodation',
+                model: 'ACCOMMODATION',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectAccommodation
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_ACCOMMODATION',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.ACCOMMODATION.value === 4
+                },
+              },
+            ],
           },
           {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Religion',
-            model: 'RELIGION',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectReligion
-            },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Education Level',
+                model: 'EDUCATION_LEVEL',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectEducationLevel
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Occupation Status',
+                model: 'OCCUPATION_STATUS',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectOccupationStatus
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_OCCUPATION_STATUS',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.OCCUPATION_STATUS.value === 4
+                },
+              },
+            ],
           },
           {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_RELIGION',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Marital Status',
-            model: 'MARITAL_STATUS',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectMaritalStatus
-            },
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_MARITAL_STATUS',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Accommodation',
-            model: 'ACCOMMODATION',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectAccommodation
-            },
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_ACCOMMODATION',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Education Level',
-            model: 'EDUCATION_LEVEL',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectEducationLevel
-            },
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Occupation Status',
-            model: 'OCCUPATION_STATUS',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectOccupationStatus
-            },
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_OCCUPATION_STATUS',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Fee Exemption Status',
-            model: 'FEE_EXEMPTION_STATUS',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectFeeExemptionStatus
-            },
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_FEE_EXEMPTION_STATUS',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
-          },
-          {
-            type: 'vueMultiSelect',
-            placeholder: 'Please select',
-            label: 'Occupation Sector',
-            model: 'OCCUPATION_SECTOR',
-            required: true,
-            validator: 'required',
-            selectOptions: {
-              multiple: false,
-              closeOnSelect: true,
-              maxHeight: 200,
-              showLabels: false,
-              key: 'value',
-              label: 'name',
-            },
-            styleClasses: 'col-md-4',
-            values: () => {
-              return this.selectOccupationSector
-            },
-          },
-          {
-            type: 'input',
-            inputType: 'text',
-            label: 'To Specify',
-            model: 'SPECIFY_OCCUPATION_SECTOR',
-            validator: 'string',
-            required: true,
-            styleClasses: 'col-md-2',
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Fee Exemption Status',
+                model: 'FEE_EXEMPTION_STATUS',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectFeeExemptionStatus
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_FEE_EXEMPTION_STATUS',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.FEE_EXEMPTION_STATUS.value === 4
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Occupation Sector',
+                model: 'OCCUPATION_SECTOR',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectOccupationSector
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To Specify',
+                model: 'SPECIFY_OCCUPATION_SECTOR',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-2',
+                visible: function (model) {
+                  return model && model.OCCUPATION_SECTOR.value === 4
+                },
+              },
+            ],
           },
         ],
       },
