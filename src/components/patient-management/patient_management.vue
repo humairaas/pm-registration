@@ -1,304 +1,167 @@
-
-<!-- Template -->
-
 <template>
-  <div class="content">
-    <div class="container-fluid">
- 
-      <br/>
-      <div class="row">
-        <div class="col-12">
-          <va-card :title="$t('Appointments')">
-              <br />
-              <vue-form-generator :model="model" :schema="thirdTabSchema" :options="formOptions" ref="firstTabForm" @model-updated="onModelUpdated" >
-              </vue-form-generator>  
-          </va-card>
-        </div>
+  <va-card :title="$t('LIST OF PATIENTS')" >
+
+    <div class="row align--center">
+      <div class="flex xs12 md6">
+        <va-input
+          :value="term"
+          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
+          @input="search"
+          removable
+        >
+          <va-icon name="fa fa-search" slot="prepend" />
+        </va-input>
+      </div>
+      <div class="flex xs12 md3">
+        <va-select
+          v-model="branch"
+          :label="$t('Branch')"
+          :options="selectBranch"
+          noClear
+        />
+      </div>
+      <div class="flex xs12 md3">
+        <va-select
+          v-model="service"
+          :label="$t('Services')"
+          :options="selectService"
+          noClear
+        />
       </div>
     </div>
-  </div>
+
+    <va-data-table
+      :fields="fields"
+      :data="filteredData"
+      :per-page="parseInt(perPage)"
+      @row-clicked="showUser"
+      clickable
+    >
+    </va-data-table>
+
+    <div class="row">
+      <div class="flex xs12 md2 offset--md10">
+        <va-select
+          v-model="perPage"
+          :label="$t('tables.perPage')"
+          :options="perPageOptions"
+          noClear
+        />
+      </div>
+
+    </div>
+
+  </va-card>
 </template>
+
 <script>
-import Vudal from 'vudal'
-import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg-core.css'
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { debounce } from 'lodash'
+import users from '../../data/patient.json'
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import TreeViewVue from '../ui/tree-view/TreeView.vue'
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-Vue.use(VueFormGenerator)
-Vue.component(Vudal)
-// register globally
 export default {
-  components: {
-    Vudal,
-  },
-  mounted () {
-    // this.$refs.wizard.maxStep = 5
-    // this.$refs.wizard.navigateToTab(5)
-  },
-  props: {
-    value: File,
-  },
   data () {
     return {
-      show: false,
-      show_second: false,
-      show_third: false,
-      modalClass: 'modal-90per',
-      
-      //shafi try
-      teamsOpt1: [
-        {
-            name: 'Consultation',
-            id: '1',
-        },
-        {
-            name: 'Supported Employement',
-            id: '2',
-        },
-        {
-            name: 'Community Pshycriatric Services',
-            id: '3',
-        },
-      ],
-
-      teamsOpt2: [
-        {
-            name: 'Consultation',
-            id: '1',
-        },
-        {
-            name: 'Supported Employement',
-            id: '2',
-        },
-        {
-            name: 'Employment Transition Program',
-            id: '3',
-        },
-        {
-            name: 'Job Club',
-            id: '4',
-        },
-      ],
-      
-      appointments: [
-        {
-            name: 'Outpatient',
-            id: '1',
-        },
-        {
-          name: 'Daycare',
-          id: '2',
-        },
-      ],
-      time: [
-        {
-          name: '08:00',
-          id: '1',
-        },
-        {
-          name: '09:00',
-          id: '2',
-        },
-        {
-          name: '10:00',
-          id: '3',
-        },
-         {
-          name: '11:00',
-          id: '4',
-        },
-         {
-          name: '14:00',
-          id: '5',
-        },
-      ],
-        
-      showView: false,
-      visibleApt1: false,
-      visibleApt2: false,
-      
-   
-
-      model: {
-        show1: true,
-        nric: '',
-        time: '',
-        date: '',
-
-      },
-      formOptions: {
-        // validationErrorClass: "has-error",
-        // validationSuccessClass: "has-`success`",
-        validateAfterChanged: true,
-      },
-      thirdTabSchema: {
-          groups: [
-            {
-                styleClasses: 'row col',
-                legend: '',
-                fields: [
-                    {
-                        type: 'input',
-                        inputType: 'text',
-                        label: 'NRIC',
-                        model: 'nric',
-                        placeholder: 'Enter NRIC',
-                        required: true,
-                        validator: 'Text',
-                        styleClasses: 'col-md-9',
-                    },
-                    {
-                        type: 'input',
-                        inputType: 'date',
-                        label: 'Date  ',
-                        model: 'incorporationDate',
-                        placeholder: 'Enter date',
-                        required: true,
-                        styleClasses: 'col-md-4',
-                    },
-                    {
-                        type: 'select',
-                        model: 'time',
-                        label: 'Time',
-                        placeholder: 'Select time',
-                        hint: 'Select time',
-                        required: true,
-                        validator: 'required',
-                        styleClasses: 'col-md-4',
-                        selectOptions: {
-                        multiple: false,
-                        key: 'name',
-                        label: 'name',
-                        searchable: true,
-                        },
-                        values: () => {
-                            return this.time
-                        }
-                    },
-                    {
-                        type: 'select',
-                        model: 'apt',
-                        label: 'Type of Appointment',
-                        hint: 'Select Team',
-                        required: true,
-                        validator: 'required',
-                        styleClasses: 'col-md-5',
-                        selectOptions: {
-                            multiple: false,
-                            key: 'name',
-                            label: 'name',
-                            searchable: true,
-                            noneSelectedText: 'Type of Appointment'
-                        },        
-                        values: () => {
-                            return this.appointments
-                        }, 
-                    },                   
-                    {
-                        type: 'select',
-                        model: 'team',
-                        label: 'Assigned Team',
-                        hint: 'Select the examining Team',
-                        required: true,
-                        validator: 'required',
-                        styleClasses: 'col-md-5',
-                        selectOptions: {
-                            multiple: false,
-                            key: 'name',
-                            label: 'name',
-                            searchable: true,
-                            noneSelectedText: 'Select the examining Team'
-                        },        
-                        values: () => {
-                          return this.teamsOpt1
-                        },
-                        visible: (model, field, form) => {
-                          return this.visibleApt1            
-                        },
-                                                          
-                    },
-                    {
-                        type: 'select',
-                        model: 'team',
-                        label: 'Assigned Team',
-                        hint: 'Select the examining Team',
-                        required: true,
-                        validator: 'required',
-                        styleClasses: 'col-md-5',
-                        selectOptions: {
-                            multiple: false,
-                            key: 'name',
-                            label: 'name',
-                            searchable: true,
-                            noneSelectedText: 'Select the examining Team'
-                        },        
-                        values: () => {
-                        return this.teamsOpt2
-                        },   
-                        visible: (model, field, form) => {
-                          return this.visibleApt2            
-                        },                               
-                    },                             
-          
-                ],
-            },
-
-
-          ]
-      },
-      
-
+      term: null,
+      perPage: '5',
+      perPageOptions: ['5', '10', '50', '100'],
+      users: users,
+      branch: '',
+      selectBranch: ['Mentari Selayang', 'Mentari Klang', 'Mentari Kluang'],
+      service: '',
+      selectService: ['Consultation', 'Rehab', 'Rehab - SE', 'Rehab - ETP', 'Rehab - Job Club',
+        'CPS'],
     }
   },
-  methods: {
-    showmodal () {
-      this.$modals.simpleModal.$show()
+  computed: {
+    fields () {
+      return [{
+        name: 'no',
+        title: this.$t('NO'),
+        width: '30px',
+        height: '45px',
+        dataClass: 'text-center',
+      }, {
+        name: 'mrn',
+        title: this.$t('MRN'),
+        width: '10%',
+      }, {
+        name: 'salutation',
+        title: this.$t('SALUTATION'),
+        width: '5%',
+      }, {
+        name: 'name',
+        title: this.$t('NAME'),
+        width: '20%',
+      }, {
+        name: 'age',
+        title: this.$t('AGE'),
+        width: '5%',
+      }, {
+        name: 'nric/passport',
+        title: this.$t('NRIC/PASSPORT'),
+        width: '15%',
+      }, {
+        name: 'next visit',
+        title: this.$t('NEXT VISIT'),
+        width: '10%',
+      },
+      {
+        name: 'assigned doctor',
+        title: this.$t('ASSIGNED DOCTOR'),
+        width: '15%',
+      }, {
+        name: 'services',
+        title: this.$t('SERVICES'),
+        width: '15%',
+      }]
     },
-
-    handleFileChange (e) {
-      this.$emit('input', e.target.files[0])
-      this.fileName1 = e.target.files[0].name
-      console.log(e.target.files[0].name)
-
-    },
-    onComplete () {
-      alert(JSON.stringify(this.model))
-      // this.$router.push("/admin/director-details");
-    },
-    onModelUpdated (newVal, schema) {
-      console.log(newVal)
-      //test
-      if (schema === 'apt') {
-          if (newVal === '1'){
-            this.visibleApt1 = true
-            this.visibleApt2 = false
-          }else {
-            this.visibleApt2 = true
-            this.visibleApt1 = false
-          }
+    filteredData () {
+      if ((!this.term || this.term.length < 1) && this.branch === '' && this.service === '') {
+        return this.users
       }
-    },
 
+      return this.users.filter(item => {
+        return item.services.startsWith(this.service) &&
+                  item.branch.startsWith(this.branch) &&
+                  (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                  item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                  item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
+      })
+    },
+  },
+  methods: {
+    getTrendIcon (user) {
+      if (user.trend === 'up') {
+        return 'fa fa-caret-up'
+      }
+
+      if (user.trend === 'down') {
+        return 'fa fa-caret-down'
+      }
+
+      return 'fa fa-minus'
+    },
+    getTrendColor (user) {
+      if (user.trend === 'up') {
+        return 'primary'
+      }
+
+      if (user.trend === 'down') {
+        return 'danger'
+      }
+
+      return 'grey'
+    },
+    showUser (user) {
+      alert(JSON.stringify(user))
+    },
+    search: debounce(function (term) {
+      this.term = term
+    }, 400),
   },
 }
 </script>
-<!-- New step!
-     Add Multiselect CSS. Can be added as a static asset or inside a component. -->
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-<style lang="scss">
-  .app-layout__main {
-    background: #e8e8e8;
-  }
+<style>
+
 </style>
-
