@@ -1,9 +1,7 @@
 <!-- Patient Record (Nurse View) -->
-
 <template>
   <div class="content">
     <div class="container-fluid">
-      <br/>
       <h2 class="patient-name">Ms. Nuha Binti Ahmad Soleh</h2>
 
       <div class="row">
@@ -171,7 +169,13 @@
           </va-card>
         </div>
       </div>
-
+      <div>
+        <router-link to="/admin/patient-management/clinical_history">
+          <button type="button" class="btn log-button">
+            <b>View Transaction Log</b>
+          </button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -240,5 +244,10 @@ export default {
     border-top: 1px solid rgb(189, 184, 184);
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+
+  .log-button:hover {
+    text-decoration: underline;
+    color: blue;
   }
 </style>
