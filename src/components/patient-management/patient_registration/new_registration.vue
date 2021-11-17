@@ -9,48 +9,28 @@
               <h3 slot="title" ></h3>
 
               <!-- 1st tab: Demographic-->
-              <tab-content icon="fa fa-user-circle-o" title="1. Demographic" :before-change="validateSecondTab">
+              <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
                 <h5>{{model}}</h5>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
-              <tab-content icon="fa fa-vcard" title="2. Socio Demographic" :before-change="validateThirdTab">
+              <tab-content icon="fa fa-vcard" title="2. Socio Demographic">
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="sosioDemographic" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </tab-content>
 
               <!-- 3rd tab: Next of Kin-->
-              <tab-content icon="fa fa-group" title="3. Next of Kin" :before-change="validateFourthTab">
+              <tab-content icon="fa fa-group" title="3. Next of Kin">
                 <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="nextOfKin" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </tab-content>
 
               <!-- 4th tab: Allergy-->
-              <tab-content icon="fa fa-info" title="4. Allergy" :before-change="validateFourthTab">
-                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated" @submit="onSubmit">
+              <tab-content icon="fa fa-info" title="4. Allergy">
+                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated">
                 </vue-form-generator>
-
-                <!--//Modals-->
-                <va-modal
-                  v-model="showLargeModal"
-                  size="large"
-                  :title=" $t('Patient Registration Details Preview') "
-                  :okText=" $t('Confirm') "
-                  :cancelText=" $t('Close') "
-                >
-                  <div class="modal-preview">
-                    <h5 class="tab-title">Demographic</h5>
-                    <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
-                    <h5 class="tab-title">Sosio Demographic</h5>
-                    <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
-                    <h5 class="tab-title">Next of Kin</h5>
-                    <vue-form-generator class="read-only" :model="model" :schema="tabCSchema" readonly></vue-form-generator>
-                    <h5 class="tab-title">Allergy</h5>
-                    <vue-form-generator class="read-only" :model="model" :schema="tabDSchema" readonly></vue-form-generator>
-                  </div>
-                </va-modal>
               </tab-content>
 
               <!-- Button footer-->
@@ -75,11 +55,31 @@
                     <i class="fa fa-play-circle" /> &nbsp;View
                   </button>
 
-                  <button v-if="isLastStep" @click="redirectToProfile" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                  <button v-if="isLastStep" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
                     Submit
                   </button>
                 </div>
               </template>
+
+              <!-- Modal -->
+              <va-modal
+                v-model="showLargeModal"
+                size="large"
+                :title=" $t('Patient Registration Details Preview') "
+                :okText=" $t('Confirm') "
+                :cancelText=" $t('Close') "
+              >
+                <div class="modal-preview">
+                  <h5 class="tab-title">1. Demographic</h5>
+                  <vue-form-generator class="read-only" :model="model" :schema="tabAModalSchema"></vue-form-generator>
+                  <h5 class="tab-title">2. Sosio Demographic</h5>
+                  <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+                  <h5 class="tab-title">3. Next of Kin</h5>
+                  <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
+                  <h5 class="tab-title">4. Allergy</h5>
+                  <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+                </div>
+              </va-modal>
             </form-wizard>
           </va-card>
         </div>
@@ -125,6 +125,8 @@ export default {
     return {
       show: true,
       showLargeModal: false,
+
+      tabStatus: false,
 
       // Demographic  Data
       selectSalutation: [
@@ -294,6 +296,7 @@ export default {
         { name: 'No', value: 0 },
       ],
 
+      // Form Model
       model: {
         // Demographic
         SALUTATION: '',
@@ -343,6 +346,7 @@ export default {
 
         // Next Of Kin
         NOK_NAME: '',
+        dd_NAME: 'this.NOK_NAME',
         NOK_RELATIONSHIP: '',
         NOK_MOBILE_NO: '',
         NOK_HOUSE_NO: '',
@@ -358,6 +362,12 @@ export default {
         DRUG_ALL_SPECIFY: '',
         SUPP_ALL_SPECIFY: '',
         OTHERS_SPECIFY: '',
+
+        // Preview Modal
+        MD_CITIZENSHIP: '',
+        MD_EXISTING_PATIENT: '',
+        MD_GENDER: '',
+        MD_ALLERGY: [],
       },
 
       // Demographic
@@ -401,6 +411,9 @@ export default {
             styleClasses: 'col-md-12',
             values: () => {
               return this.radioCitizenship
+            },
+            onChanged: function (model) {
+              model.MD_CITIZENSHIP = model.CITIZENSHIP
             },
           },
           {
@@ -516,6 +529,9 @@ export default {
             styleClasses: 'col-md-12 display-inline',
             values: () => {
               return this.radioGender
+            },
+            onChanged: function (model) {
+              model.MD_GENDER = model.GENDER
             },
           },
           {
@@ -673,7 +689,6 @@ export default {
             placeholder: 'Please select',
             label: 'State',
             model: 'DM_STATE',
-            required: true,
             validator: 'required',
             selectOptions: {
               multiple: false,
@@ -693,7 +708,6 @@ export default {
             placeholder: 'Please select',
             label: 'City',
             model: 'DM_CITY',
-            required: true,
             validator: 'required',
             selectOptions: {
               multiple: false,
@@ -711,26 +725,21 @@ export default {
         ],
         groups: [
           {
-            fields: [
-              {
-                type: 'vueMultiSelect',
-                placeholder: 'Please select',
-                label: 'Postcode',
-                model: 'DM_POSTCODE',
-                required: true,
-                validator: 'required',
-                selectOptions: {
-                  multiple: false,
-                  closeOnSelect: true,
-                  maxHeight: 200,
-                  showLabels: false,
-                },
-                styleClasses: 'col-md-6',
-                values: () => {
-                  return this.selectDMPostcode
-                },
-              },
-            ],
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Postcode',
+            model: 'DM_POSTCODE',
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+            },
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectPostcode
+            },
           },
           {
             fields: [
@@ -770,6 +779,11 @@ export default {
                 },
               },
             ],
+            onChanged: function (model) {
+              model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
+            },
+            validator: 'required',
+            styleClasses: 'col-md-12 display-inline',
           },
         ],
       },
@@ -1065,7 +1079,7 @@ export default {
           },
           {
             type: 'vueMultiSelect',
-            model: 'relationship',
+            model: 'NOK_RELATIONSHIP',
             label: 'Relationship',
             placeholder: 'Choose Relationship',
             selectOptions: {
@@ -1149,7 +1163,7 @@ export default {
               },
               // onChanged: function(model){
               //     this.$axios
-              //         .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE)
+              //         .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.id)
               //         .then((response) =>{
               //             this.selectCity = response.data.data
               //         })
@@ -1174,7 +1188,7 @@ export default {
               },
               // onChanged: function(model){
               // this.$axios
-              //     .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY)
+              //     .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.id)
               //     .then((response) =>{
               //         this.selectPostcode = response.data.data
               //     })
@@ -1221,6 +1235,9 @@ export default {
                 model: 'ALLERGY[0]',
                 values: () => {
                   return this.radioAllergy
+                },
+                onChanged: function (model) {
+                  model.MD_ALLERGY = model.ALLERGY
                 },
                 required: true,
                 validator: 'required',
@@ -1311,6 +1328,473 @@ export default {
           },
         ],
       },
+
+      // Demographic Modal Preview
+      tabAModalSchema: {
+        fields: [
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Salutation',
+            model: 'SALUTATION',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 100,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-3',
+            values: () => {
+              return this.selectSalutation
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Name (as in NRIC)',
+            model: 'DM_NAME',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-9',
+          },
+          {
+            type: 'radios',
+            label: 'Citizenship',
+            model: 'MD_CITIZENSHIP',
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-12',
+            values: () => {
+              return this.radioCitizenship
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'NRIC Type',
+            model: 'NRIC_TYPE',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectNRICType
+            },
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 1
+            },
+          },
+          {
+            type: 'cleave',
+            label: 'NRIC NO',
+            model: 'NRIC_NO',
+            required: true,
+            cleaveOptions: {
+              blocks: [6, 2, 4],
+              delimiter: '-',
+              numericOnly: true,
+            },
+            placeholder: 'XXXXXX-XX-XXXX',
+            styleClasses: 'col-md-6',
+            visible: function (model) {
+              return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Passport NO',
+            model: 'PASSPORT_NO',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'date',
+            label: 'Expiry Date',
+            model: 'PASSPORT_EXPIRY_DATE',
+            placeholder: 'Enter Date',
+            required: true,
+            format: 'YYYY/MM/DD',
+            min: 1,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Issuing Country',
+            model: 'ISSUING_COUNTRY',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectIssuingCountry
+            },
+            visible: function (model) {
+              return model && model.CITIZENSHIP === 3
+            },
+          },
+          {
+            type: 'radios',
+            label: 'Gender',
+            model: 'MD_GENDER',
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-12 display-inline',
+            values: () => {
+              return this.radioGender
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'date',
+            label: 'Date of Birth',
+            model: 'BIRTH_DATE',
+            placeholder: 'Enter Date',
+            required: true,
+            format: 'YYYY/MM/DD',
+            styleClasses: 'col-md-6',
+            onChanged: function (model, newVal, oldVal, field) {
+              model.AGE = new Date().getFullYear() - model.BIRTH_DATE.toString().substring(0, 4)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            label: 'Age',
+            model: 'AGE',
+            min: 0,
+            validator: 'number',
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'cleave',
+            label: 'Mobile Phone Number',
+            model: 'DM_MOBILE_NO',
+            cleaveOptions: {
+              phone: true,
+              phoneRegionCode: 'MY',
+            },
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'cleave',
+            label: 'House Phone Number',
+            model: 'DM_HOUSE_NO',
+            cleaveOptions: {
+              phone: true,
+              phoneRegionCode: 'MY',
+            },
+            validator: 'required',
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: "Hospital's MRN Number",
+            model: 'HOSPITAL_MRN',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: "Mentari's MRN Number",
+            model: 'MENTARI_MRN',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Type of Services',
+            model: 'SERVICE_TYPE',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectServiceType
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Type of Referral',
+            model: 'REFERRAL_TYPE',
+            required: true,
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-4',
+            values: () => {
+              return this.selectReferralType
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'To Specify',
+            model: 'SPECIFY_REFERRAL',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-4',
+            visible: function (model) {
+              return model && model.REFERRAL_TYPE.value === 7
+            },
+          },
+          {
+            type: 'upload',
+            label: 'Upload Referral Letter',
+            model: 'REFERRAL_LETTER',
+            inputName: 'file1',
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Address',
+            model: 'DM_ADDRESS_LINE_1',
+            placeholder: 'Address line 1',
+            validator: 'string',
+            styleClasses: 'col-md-12',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            model: 'DM_ADDRESS_LINE_2',
+            placeholder: 'Address line 2',
+            validator: 'string',
+            styleClasses: 'col-md-12',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            model: 'DM_ADDRESS_LINE_3',
+            placeholder: 'Address line 3',
+            validator: 'string',
+            styleClasses: 'col-md-12',
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'State',
+            model: 'DM_STATE',
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectState
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'City',
+            model: 'DM_CITY',
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
+            },
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectCity
+            },
+          },
+          {
+            type: 'vueMultiSelect',
+            placeholder: 'Please select',
+            label: 'Postcode',
+            model: 'DM_POSTCODE',
+            validator: 'required',
+            selectOptions: {
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+            },
+            styleClasses: 'col-md-6',
+            values: () => {
+              return this.selectPostcode
+            },
+          },
+          {
+            type: 'radios',
+            label: 'Is this person an existing patient?',
+            model: 'MD_EXISTING_PATIENT',
+            required: true,
+            values: [
+              { value: 1, name: 'Yes' },
+              { value: 2, name: 'No' },
+            ],
+            validator: 'required',
+            styleClasses: 'col-md-12 display-inline',
+          },
+        ],
+      },
+
+      // Allergy Modal Preview
+      tabDModalSchema: {
+        groups: [
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Drug Allergy',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'MD_ALLERGY[0]',
+                values: () => {
+                  return this.radioAllergy
+                },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'DRUG_ALL_SPECIFY',
+                placeholder: '',
+                visible: function (model) {
+                  return model && model.ALLERGY[0] === 1
+                },
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Traditional Medication / Supplement Allergy',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'MD_ALLERGY[1]',
+                values: () => {
+                  return this.radioAllergy
+                },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'SUPP_ALL_SPECIFY',
+                placeholder: '',
+                visible: function (model) {
+                  return model && model.ALLERGY[1] === 1
+                },
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row col',
+            legend: '',
+            fields: [
+              {
+                type: 'label',
+                label: 'Others',
+                styleClasses: 'col-sm-5 mt-1',
+              },
+              {
+                type: 'radios',
+                model: 'MD_ALLERGY[2]',
+                values: () => {
+                  return this.radioAllergy
+                },
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-xs1',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'To specify',
+                model: 'OTHERS_SPECIFY',
+                placeholder: '',
+                visible: function (model) {
+                  return model && model.ALLERGY[2] === 1
+                },
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+        ],
+      },
       formOptions: {
         validateAfterLoad: false,
         validateAfterChanged: true,
@@ -1319,6 +1803,9 @@ export default {
     }
   },
   mounted () {
+    window.onbeforeunload = function () {
+      return 'Data will be lost if you leave the page, are you sure?'
+    }
     // this.$axios
     //     .get('http://127.0.0.1:8000/api/getState?country_id=0')
     //     .then((response) =>{
@@ -1326,15 +1813,41 @@ export default {
     //     })
   },
   methods: {
-    onSubmit () {
-      this.$refs.allergy.validateAfterChanged()
+    setValue () {
+      alert('im clicked woho')
     },
-    showPreview () {
-
+    validateForm () {
+      this.validateTabA()
+      this.validateTabB()
+      this.validateTabC()
+      this.validateTabD()
+    },
+    validateTabA () {
+      var errors = this.$refs.demographic.validate()
+      return errors
+    },
+    validateTabB () {
+      var errors = this.$refs.sosioDemographic.validate()
+      return errors
+    },
+    validateTabC () {
+      var errors = this.$refs.nextOfKin.validate()
+      return errors
+    },
+    validateTabD () {
+      var errors = this.$refs.allergy.validate()
+      return errors
     },
     redirectToProfile () {
-
     },
+  },
+  beforeRouteLeave (to, from, next) {
+    const answer = window.confirm('Changes you made may not be saved.')
+    if (answer) {
+      next(true)
+    } else {
+      next(false)
+    }
   },
 }
 </script>

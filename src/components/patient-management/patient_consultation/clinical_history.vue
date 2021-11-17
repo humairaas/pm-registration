@@ -1,7 +1,25 @@
 <template>
-  <va-card :title="$t('Clinical Information')">
-    <div class="flex  md3 offset--md11 ">
-      <va-button  icon="fa fa-plus"></va-button>
+  <va-card :title="$t('Transaction Log')">
+    <div class="row align--center">
+      <div class="flex xs12 md6">
+        <va-input
+          :value="term"
+          :placeholder="$t('tables.searchByName')"
+          @input="search"
+          removable
+        >
+          <va-icon name="fa fa-search" slot="prepend" />
+        </va-input>
+      </div>
+
+      <div class="flex xs12 md3 offset--md3">
+        <va-select
+          v-model="perPage"
+          :label="$t('tables.perPage')"
+          :options="perPageOptions"
+          noClear
+        />
+      </div>
     </div>
 
     <va-data-table
@@ -11,23 +29,6 @@
       @row-clicked="showUser"
       clickable
     >
-      <template slot="trend" slot-scope="props">
-        <va-icon :name="getTrendIcon(props.rowData)" :color="getTrendColor(props.rowData)" />
-      </template>
-
-      <template slot="icon">
-        <va-icon name="fa fa-trash" color="secondary" />
-      </template>
-      <template slot="icon2">
-        <va-icon name="fa fa-edit" color="secondary" />
-      </template>
-
-      <template slot="status" slot-scope="props">
-        <va-badge :color="props.rowData.color">
-          {{ props.rowData.status }}
-        </va-badge>
-      </template>
-
     </va-data-table>
   </va-card>
 </template>
@@ -40,108 +41,38 @@ export default {
   data () {
     return {
       term: null,
-      perPage: '1',
+      perPage: '6',
       perPageOptions: ['4', '6', '10', '20'],
-      sizesList: ['MENTARI SELAYANG', 'MENTARI SG. BULOH', 'MENTARI PUTRAJAYA', 'MENTARI MELAKA'],
-      services: ['Consultation', 'Rehabilitation', 'Community Psychiatric Services'],
-      users: users,
+      users: users.slice(),
     }
-  },
-  formOptions: {
-    // validationErrorClass: "has-error",
-    // validationSuccessClass: "has-`success`",
-    validateAfterChanged: true,
-    // hahah
-  },
-  thirdTabSchema: {
-    groups: [
-      {
-        styleClasses: 'row',
-        fields: [
-          {
-            type: 'input',
-            inputType: 'date',
-            label: 'Date  ',
-            model: 'incorporationDate',
-            placeholder: 'Enter date',
-            required: true,
-            styleClasses: 'col-md-4',
-          },
-          {
-            type: 'vueMultiSelect',
-            model: 'services',
-            label: 'Services',
-            placeholder: 'Select Services',
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-4',
-            selectOptions: {
-              multiple: false,
-              key: 'name',
-              label: 'name',
-              searchable: true,
-            },
-            values: (model, schema) => {
-              return this.services
-            },
-          },
-        ],
-      }],
   },
   computed: {
     fields () {
-      return [{
-        name: 'no',
-        width: '40px',
-        height: '45px',
-        dataClass: 'text-center',
-        weight: '',
-        result: 'Click "Calculate"',
-
-      },
-      {
-        name: 'appt_date',
-        title: this.$t('Date'),
-        width: '10%',
-      },
-      {
-        name: 'temperature',
-        title: this.$t('Temperature (°C)'),
-      },
-      {
-        name: 'blood_pressure',
-        title: this.$t('Blood Prssure (mm/Hg)'),
-      },
-      {
-        name: 'pulse_rate',
-        title: this.$t('Pulse Rate (bpm)'),
-      },
-      {
-        name: 'weight',
-        title: this.$t('Weight (KG)'),
-      },
-      {
-        name: 'height',
-        title: this.$t('Height(CM)'),
-      },
-      {
-        name: 'bmi',
-        title: this.$t('BMI'),
-        width: '5%',
-      },
-      {
-        name: 'waist',
-        title: this.$t('Waist Circumference (CM)'),
-      },
-      {
-        name: 'taken_by',
-        title: this.$t('Taken By'),
-      },
-      {
-        title: this.$t('Actions'),
-        name: '__slot:icon',
-        dataClass: 'text-center',
-      }]
+      return [
+        {
+          name: 'appt_date',
+          title: this.$t('Date'),
+          width: '10%',
+        },
+        {
+          name: 'appt_time',
+          title: this.$t('Time'),
+          width: '10%',
+        },
+        {
+          name: 'fullName',
+          title: this.$t('Name'),
+          width: '30%',
+        },
+        {
+          name: 'activity',
+          title: this.$t('activity'),
+          width: '50%',
+        },
+        {
+          name: '__slot:actions',
+          dataClass: 'text-right',
+        }]
     },
     filteredData () {
       if (!this.term || this.term.length < 1) {
@@ -153,16 +84,7 @@ export default {
       })
     },
   },
-  model: {
-    show1: true,
-    services: '',
-  },
   methods: {
-    calculate () {
-      const weight = parseFloat(this.weight)
-      const height = parseFloat(this.height) / 100
-      this.result = weight / (height * height)
-    },
     getTrendIcon (user) {
       if (user.trend === 'up') {
         return 'fa fa-caret-up'
@@ -194,12 +116,6 @@ export default {
   },
 }
 </script>
-<style lang="scss" >
-.va-card__header-title {
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.0375rem;
-  text-transform: uppercase;
-  color: #104fca;
-}
+
+<style lang="scss">
 </style>
