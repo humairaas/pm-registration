@@ -5,13 +5,14 @@
       <div class="row">
         <div class="col-12">
           <va-card>
-            <form-wizard  @on-complete="onComplete" color="orange" error-color="#a94442" finish-button-text="Submit" ref="wizard">
+            <form-wizard  @on-complete="onComplete" color="#f2a444" error-color="#a94442" finish-button-text="Submit" ref="wizard">
               <h3 slot="title" ></h3>
 
               <!-- 1st tab: Demographic-->
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h5>{{model}}</h5>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -217,9 +218,14 @@ export default {
         { id: '3', name: 'Serdang' },
       ],
 
-      selectPostcode: [
+      selectDMPostcode: [
         '54200',
         '53849',
+      ],
+      selectBranch: [
+        { name: 'Mentari Selayang', value: 1 },
+        { name: 'Mentari Klang', value: 2 },
+        { name: 'Mentari Kluang', value: 3 },
       ],
 
       // Socio Demographic Data
@@ -319,6 +325,7 @@ export default {
         DM_CITY: '',
         DM_STATE: '',
         EXISTING_PATIENT: '',
+        BRANCH: '',
 
         // Socio Demographic
         RACE: '',
@@ -421,6 +428,7 @@ export default {
               closeOnSelect: true,
               maxHeight: 200,
               showLabels: false,
+              allowEmpty: false,
               key: 'value',
               label: 'name',
             },
@@ -445,7 +453,22 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2)
+              return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'NRIC NO',
+            model: 'NRIC_NO',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+            visible: function (model) {
+              return model && (model.NRIC_TYPE.value === 1 || model.NRIC_TYPE.value === 3 || model.NRIC_TYPE.value === 4 ||
+                              model.NRIC_TYPE.value === 5 || model.NRIC_TYPE.value === 6 || model.NRIC_TYPE.value === 7 ||
+                              model.NRIC_TYPE.value === 8 || model.NRIC_TYPE.value === 9 || model.NRIC_TYPE.value === 10 ||
+                              model.NRIC_TYPE.value === 11)
             },
           },
           {
@@ -627,11 +650,14 @@ export default {
             },
           },
           {
-            type: 'upload',
-            label: 'Upload Referral Letter',
+            labels: 'Upload Referral Letter',
+            accept: '.xlxs',
+            multiple: true,
+            text: 'Choose a File',
             model: 'REFERRAL_LETTER',
-            inputName: 'file1',
+            type: 'vfg-custom-file-excel',
             styleClasses: 'col-md-6',
+            hint: '*Please upload excel only (max file size 2MB)',
           },
           {
             type: 'input',
@@ -696,6 +722,8 @@ export default {
               return this.selectCity
             },
           },
+        ],
+        groups: [
           {
             type: 'vueMultiSelect',
             placeholder: 'Please select',
@@ -714,13 +742,42 @@ export default {
             },
           },
           {
-            type: 'radios',
-            label: 'Is this person an existing patient?',
-            model: 'EXISTING_PATIENT',
-            required: true,
-            values: [
-              { value: 1, name: 'Yes' },
-              { value: 2, name: 'No' },
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is this person an existing patient?',
+                model: 'EXISTING_PATIENT',
+                required: true,
+                values: [
+                  { value: 1, name: 'Yes' },
+                  { value: 2, name: 'No' },
+                ],
+                validator: 'required',
+                styleClasses: 'col-md-6 display-inline',
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mentari Branch',
+                model: 'BRANCH',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectBranch
+                },
+                visible: function (model) {
+                  return model && model.EXISTING_PATIENT === 1
+                },
+              },
             ],
             onChanged: function (model) {
               model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
@@ -748,6 +805,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -780,6 +838,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -817,6 +876,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -849,6 +909,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -886,6 +947,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -906,6 +968,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -943,6 +1006,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
@@ -975,6 +1039,7 @@ export default {
                   closeOnSelect: true,
                   maxHeight: 200,
                   showLabels: false,
+                  allowEmpty: false,
                   key: 'value',
                   label: 'name',
                 },
