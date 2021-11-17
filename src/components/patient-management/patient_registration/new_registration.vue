@@ -12,6 +12,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic" :before-change="validateSecondTab">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h5>{{model}}</h5>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -633,11 +634,14 @@ export default {
             },
           },
           {
-            type: 'upload',
-            label: 'Upload Referral Letter',
+            labels: 'Upload Referral Letter',
+            accept: '.xlxs',
+            multiple: true,
+            text: 'Choose a File',
             model: 'REFERRAL_LETTER',
-            inputName: 'file1',
+            type: 'vfg-custom-file-excel',
             styleClasses: 'col-md-6',
+            hint: '*Please upload excel only (max file size 2MB)',
           },
           {
             type: 'input',
