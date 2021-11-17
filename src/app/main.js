@@ -19,7 +19,7 @@ import '../registerServiceWorker'
 import { consoleBuildInfo } from 'vue-cli-plugin-build-info/plugin'
 
 import VueFileAgent from 'vue-file-agent'
-// import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css'
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css'
 import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel'
 
 consoleBuildInfo()
@@ -32,8 +32,9 @@ Vue.use(ColorThemePlugin, {
   // override colors here.
 })
 
-// Vue.component('VueFileAgent', VueFileAgent)
+Vue.component('VueFileAgent', VueFileAgent)
 Vue.use(VueFileAgent)
+Vue.use(VueFileAgentStyles)
 Vue.component('field-vfg-custom-file-excel', VfgCustomFileExcel)
 
 router.beforeEach((to, from, next) => {
