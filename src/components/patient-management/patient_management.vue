@@ -1,5 +1,5 @@
 <template>
-  <va-card :title="$t('LIST OF PATIENTS')" >
+  <va-card :title="$t('LIST OF PATIENTS')">
 
     <div class="row align--center">
       <div class="flex xs12 md6">
@@ -61,7 +61,7 @@ import users from '../../data/patient.json'
 export default {
   data () {
     return {
-      term: null,
+      term: '',
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
       users: users,
