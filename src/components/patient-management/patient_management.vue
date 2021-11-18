@@ -16,6 +16,7 @@
         <va-select
           v-model="branch"
           :label="$t('Branch')"
+          :placeholder="$t('Filter By Branch')"
           :options="selectBranch"
           noClear
         />
@@ -24,6 +25,7 @@
         <va-select
           v-model="service"
           :label="$t('Services')"
+          :placeholder="$t('Filter By Service')"
           :options="selectService"
           noClear
         />
@@ -62,6 +64,7 @@ export default {
   data () {
     return {
       term: '',
+      no: 1,
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
       users: users,
@@ -163,5 +166,12 @@ export default {
 </script>
 
 <style>
+thead {
+  background-color: #bbf2eb;
+}
 
+.va-card__header-title {
+  color: #000000 !important;
+  font-size: 1rem !important;
+}
 </style>
