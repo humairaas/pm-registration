@@ -1,7 +1,12 @@
 <template>
-  <va-card :title="$t('LIST OF PATIENTS')">
+  <va-card>
 
     <div class="row align--center">
+      <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
+      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient_registration'}">+</va-button></div>
+    </div>
+
+    <div class="row">
       <div class="flex xs12 md6">
         <va-input
           :value="term"
@@ -37,6 +42,7 @@
       :data="filteredData"
       :per-page="parseInt(perPage)"
       @row-clicked="showUser"
+      :hoverable="true"
       clickable
     >
     </va-data-table>
@@ -50,7 +56,6 @@
           noClear
         />
       </div>
-
     </div>
 
   </va-card>
@@ -156,7 +161,8 @@ export default {
       return 'grey'
     },
     showUser (user) {
-      alert(JSON.stringify(user))
+      // alert(JSON.stringify(user))
+      this.$router.push({ name: 'patient_consultation' })
     },
     search: debounce(function (term) {
       this.term = term
