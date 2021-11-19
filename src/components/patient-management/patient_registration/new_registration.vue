@@ -7,35 +7,47 @@
 
           <!-- Notification Alert -->
           <div class="mb-3" v-if="tabA==true">
-            <va-notification color="danger" closeable>
+            <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Demographic </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabA')">
+                <span class="fa fa-close"/>
+              </button>
             </va-notification>
           </div>
           <div class="mb-3" v-if="tabB==true">
-            <va-notification color="danger" closeable>
+            <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Sosio Demographic </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabB')">
+                <span class="fa fa-close"/>
+              </button>
             </va-notification>
           </div>
           <div class="mb-3" v-if="tabC==true">
-            <va-notification color="danger" closeable>
+            <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Next of Kin </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabC')">
+                <span class="fa fa-close"/>
+              </button>
             </va-notification>
           </div>
-          <div class="mb-3" v-if="tabD==true" closeable>
+          <div class="mb-3" v-if="tabD==true">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Allergy </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabD')">
+                <span class="fa fa-close"/>
+              </button>
             </va-notification>
           </div>
 
@@ -1903,9 +1915,23 @@ export default {
         return false
       }
     },
+    hideNoti (tab) {
+      if (tab === 'tabA') {
+        this.tabA = false
+      }
+      if (tab === 'tabB') {
+        this.tabB = false
+      }
+      if (tab === 'tabC') {
+        this.tabC = false
+      }
+      if (tab === 'tabD') {
+        this.tabD = false
+      }
+    },
     launchToast () {
       this.showToast(
-        this.model.DM_NAME + ' Registration Successful!',
+        this.model.DM_NAME + ' Registration Successful !',
         {
           icon: 'fa-check',
           position: 'top-center',
@@ -2000,4 +2026,18 @@ export default {
     pointer-events: none;
   }
 
+  .close-button {
+    color: rgb(227, 75, 74);
+    position: absolute;
+    right: 0;
+    width: 70px;
+  }
+
+  .close-button:hover {
+    color: black;
+  }
+
+  .close-button:focus {
+    box-shadow: none !important;
+  }
 </style>
