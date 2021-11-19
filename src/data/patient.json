@@ -8,7 +8,8 @@
       "nric/passport":"980606-10-9887",
       "next visit":"14-12-2021",
       "assigned doctor":"Dr. Zahidah",
-      "services":"Rehab - ETP"
+      "services":"Rehab - ETP",
+      "branch": "Mentari Selayang"
     },
     {
       "no": 2,
@@ -19,7 +20,8 @@
       "nric/passport": "761220-11-9087",
       "next visit": "08-08-2021",
       "assigned doctor": "Dr. Rahman",
-      "services": "Rehab - ETP"
+      "services": "Rehab - ETP",
+      "branch": "Mentari Klang"
     },
     {
       "no": 3,
@@ -30,7 +32,8 @@
       "nric/passport": "890429-10-5656",
       "next visit": "07-07-2021",
       "assigned doctor": "Dr. Siva",
-      "services": "Rehab - SE"
+      "services": "Rehab - SE",
+      "branch": "Mentari Selayang"
     },
     {
       "no": 4,
@@ -41,7 +44,8 @@
       "nric/passport": "0001219-11-7777",
       "next visit": "10-10-2021",
       "assigned doctor": "Dr. Ali",
-      "services": "Rehab - Job Club"
+      "services": "Rehab - Job Club",
+      "branch": "Mentari Klang"
     },
     {
       "no": 5,
@@ -52,7 +56,8 @@
       "nric/passport": "870515-13-6767",
       "next visit": "03-05-2021",
       "assigned doctor": "Dr. Lim",
-      "services": "Rehab - Job Club"
+      "services": "Rehab - Job Club",
+      "branch": "Mentari Selayang"
     },
     {
       "no": 6,
@@ -63,7 +68,8 @@
       "nric/passport": "980707-11-3241",
       "next visit": "11-12-2021",
       "assigned doctor": "Dr. Simon",
-      "services": "CPS"
+      "services": "CPS",
+      "branch": "Mentari Kluang"
     },
     {
       "no": 7,
@@ -74,7 +80,8 @@
       "nric/passport": "780909-10-1234",
       "next visit": "19-09-2021",
       "assigned doctor": "Dr. Devi",
-      "services": "Rehab - SE"
+      "services": "Rehab - SE",
+      "branch": "Mentari Selayang"
     },
     {
       "no": 8,
@@ -85,7 +92,8 @@
       "nric/passport": "960613-10-6666",
       "next visit": "01-11-2021",
       "assigned doctor": "Dr. Abu",
-      "services": "Consultation"
+      "services": "Consultation",
+      "branch": "Mentari Klang"
     },
     {
       "no": 9,
@@ -96,7 +104,8 @@
       "nric/passport": "121212-14-5050",
       "next visit": "21-06-2021",
       "assigned doctor": "Dr. Najib",
-      "services": "CPS"
+      "services": "CPS",
+      "branch": "Mentari Selayang"
     },
     {
       "no": 10,
@@ -107,6 +116,7 @@
       "nric/passport": "990330-14-3443",
       "next visit": "11-07-2021",
       "assigned doctor": "Dr. Lala",
-      "services": "Consultation"
+      "services": "Consultation",
+      "branch": "Mentari Klang"
     }
 ]
