@@ -4,20 +4,55 @@
 
       <div class="row">
         <div class="col-12">
+
+          <!-- Notification Alert -->
+          <div class="mb-3" v-if="tabA==true">
+            <va-notification color="danger" closeable>
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Demographic </b> required fields.</span>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabB==true">
+            <va-notification color="danger" closeable>
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Sosio Demographic </b> required fields.</span>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabC==true">
+            <va-notification color="danger" closeable>
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Next of Kin </b> required fields.</span>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabD==true" closeable>
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Allergy </b> required fields.</span>
+            </va-notification>
+          </div>
+
+          <!-- Form -->
           <va-card>
-            <form-wizard  @on-complete="onComplete" color="#f2a444" error-color="#a94442" finish-button-text="Submit" ref="wizard">
-              <h3 slot="title" ></h3>
+            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard">
+              <h3 slot="title"></h3>
 
               <!-- 1st tab: Demographic-->
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h5>{{model}}</h5>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
               <tab-content icon="fa fa-vcard" title="2. Socio Demographic">
-                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="sosioDemographic" @model-updated="onModelUpdated" >
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="socioDemographic" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </tab-content>
 
@@ -60,28 +95,28 @@
                   </button>
                 </div>
               </template>
-
-              <!-- Modal -->
-              <va-modal
-                v-model="showLargeModal"
-                size="large"
-                :title=" $t('Patient Registration Details Preview') "
-                :okText=" $t('Confirm') "
-                :cancelText=" $t('Close') "
-              >
-                <div class="modal-preview">
-                  <h5 class="tab-title">1. Demographic</h5>
-                  <vue-form-generator class="read-only" :model="model" :schema="tabAModalSchema"></vue-form-generator>
-                  <h5 class="tab-title">2. Sosio Demographic</h5>
-                  <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
-                  <h5 class="tab-title">3. Next of Kin</h5>
-                  <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
-                  <h5 class="tab-title">4. Allergy</h5>
-                  <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
-                </div>
-              </va-modal>
             </form-wizard>
           </va-card>
+
+          <!-- Modal -->
+          <va-modal
+            v-model="showLargeModal"
+            size="large"
+            :title=" $t('Patient Registration Details Preview') "
+            :okText=" $t('Confirm') "
+            :cancelText=" $t('Close') "
+          >
+            <div class="modal-preview">
+              <h5 class="tab-title">1. Demographic</h5>
+              <vue-form-generator class="read-only" :model="model" :schema="tabAModalSchema"></vue-form-generator>
+              <h5 class="tab-title">2. Sosio Demographic</h5>
+              <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+              <h5 class="tab-title">3. Next of Kin</h5>
+              <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
+              <h5 class="tab-title">4. Allergy</h5>
+              <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+            </div>
+          </va-modal>
         </div>
       </div>
     </div>
@@ -123,10 +158,15 @@ export default {
   },
   data () {
     return {
+      tabA: false,
+      tabB: false,
+      tabC: false,
+      tabD: false,
+
       show: true,
       showLargeModal: false,
 
-      tabStatus: false,
+      submitPath: false,
 
       // Demographic  Data
       selectSalutation: [
@@ -218,7 +258,7 @@ export default {
         { id: '3', name: 'Serdang' },
       ],
 
-      selectDMPostcode: [
+      selectPostcode: [
         '54200',
         '53849',
       ],
@@ -346,7 +386,6 @@ export default {
 
         // Next Of Kin
         NOK_NAME: '',
-        dd_NAME: 'this.NOK_NAME',
         NOK_RELATIONSHIP: '',
         NOK_MOBILE_NO: '',
         NOK_HOUSE_NO: '',
@@ -1798,7 +1837,6 @@ export default {
       formOptions: {
         validateAfterLoad: false,
         validateAfterChanged: true,
-        validateAsync: true,
       },
     }
   },
@@ -1813,40 +1851,80 @@ export default {
     //     })
   },
   methods: {
-    setValue () {
-      alert('im clicked woho')
-    },
     validateForm () {
-      this.validateTabA()
-      this.validateTabB()
-      this.validateTabC()
-      this.validateTabD()
+      var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
+
+      if (tabA && tabB && tabC && tabD) {
+        this.launchToast()
+        this.submitPath = true
+        this.$router.push({ path: 'patient_consultation' })
+      }
     },
     validateTabA () {
       var errors = this.$refs.demographic.validate()
-      return errors
+      if (errors) {
+        this.tabA = false
+        return true
+      } else {
+        this.tabA = true
+        return false
+      }
     },
     validateTabB () {
-      var errors = this.$refs.sosioDemographic.validate()
-      return errors
+      var errors = this.$refs.socioDemographic.validate()
+      if (errors) {
+        this.tabB = false
+        return true
+      } else {
+        this.tabB = true
+        return false
+      }
     },
     validateTabC () {
       var errors = this.$refs.nextOfKin.validate()
-      return errors
+      if (errors) {
+        this.tabC = false
+        return true
+      } else {
+        this.tabC = true
+        return false
+      }
     },
     validateTabD () {
       var errors = this.$refs.allergy.validate()
-      return errors
+      if (errors) {
+        this.tabD = false
+        return true
+      } else {
+        this.tabD = true
+        return false
+      }
     },
-    redirectToProfile () {
+    launchToast () {
+      this.showToast(
+        this.model.DM_NAME + ' Registration Successful!',
+        {
+          icon: 'fa-check',
+          position: 'top-center',
+          duration: 2500,
+          fullWidth: false,
+        },
+      )
     },
   },
   beforeRouteLeave (to, from, next) {
-    const answer = window.confirm('Changes you made may not be saved.')
-    if (answer) {
+    if (this.submitPath === true) {
       next(true)
     } else {
-      next(false)
+      const answer = window.confirm('Changes you made may not be saved.')
+      if (answer) {
+        next(true)
+      } else {
+        next(false)
+      }
     }
   },
 }
