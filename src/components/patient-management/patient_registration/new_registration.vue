@@ -383,7 +383,7 @@ export default {
         SERVICE_TYPE: '',
         REFERRAL_TYPE: '',
         SPECIFY_REFERRAL: '',
-        REFERRAL_LETTER: '',
+        REFERRAL_LETTER: [],
         DM_ADDRESS_LINE_1: '',
         DM_ADDRESS_LINE_2: '',
         DM_ADDRESS_LINE_3: '',
