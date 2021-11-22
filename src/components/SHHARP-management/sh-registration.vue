@@ -11,7 +11,7 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all <b> Demographic </b> required fields.</span>
+              <span>Please fill all <b> Risk Factors </b> required fields.</span>
               <button type="button" class="btn close-button" @click="hideNoti('tabA')">
                 <span class="fa fa-close"/>
               </button>
@@ -22,7 +22,7 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all <b> Sosio Demographic </b> required fields.</span>
+              <span>Please fill all <b> Protective Factors </b> required fields.</span>
               <button type="button" class="btn close-button" @click="hideNoti('tabB')">
                 <span class="fa fa-close"/>
               </button>
@@ -33,7 +33,7 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all <b> Next of Kin </b> required fields.</span>
+              <span>Please fill all <b> The Self-harm Act and Suicidal Intent </b> required fields.</span>
               <button type="button" class="btn close-button" @click="hideNoti('tabC')">
                 <span class="fa fa-close"/>
               </button>
@@ -44,7 +44,29 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all <b> Allergy </b> required fields.</span>
+              <span>Please fill all <b> Suicide Risk </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabD')">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabE==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Hospital Management </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="hideNoti('tabD')">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabF==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Source Data Producer </b> required fields.</span>
               <button type="button" class="btn close-button" @click="hideNoti('tabD')">
                 <span class="fa fa-close"/>
               </button>
@@ -60,7 +82,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Risk Factors">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Protective Factors-->
