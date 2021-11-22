@@ -5,122 +5,20 @@
       <div class="row">
         <div class="col-12">
 
-          <!-- Notification Alert -->
-          <div class="mb-3" v-if="tabA==true">
-            <va-notification color="danger">
-              <va-badge color="danger">
-                {{ $t('Incomplete') }}
-              </va-badge>
-              <span>Please fill all <b> Demographic </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabA')">
-                <span class="fa fa-close"/>
-              </button>
-            </va-notification>
-          </div>
-          <div class="mb-3" v-if="tabB==true">
-            <va-notification color="danger">
-              <va-badge color="danger">
-                {{ $t('Incomplete') }}
-              </va-badge>
-              <span>Please fill all <b> Sosio Demographic </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabB')">
-                <span class="fa fa-close"/>
-              </button>
-            </va-notification>
-          </div>
-          <div class="mb-3" v-if="tabC==true">
-            <va-notification color="danger">
-              <va-badge color="danger">
-                {{ $t('Incomplete') }}
-              </va-badge>
-              <span>Please fill all <b> Next of Kin </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabC')">
-                <span class="fa fa-close"/>
-              </button>
-            </va-notification>
-          </div>
-          <div class="mb-3" v-if="tabD==true">
-            <va-notification color="danger">
-              <va-badge color="danger">
-                {{ $t('Incomplete') }}
-              </va-badge>
-              <span>Please fill all <b> Allergy </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabD')">
-                <span class="fa fa-close"/>
-              </button>
-            </va-notification>
-          </div>
-
           <!-- Form -->
           <va-card>
-            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard">
-              <h3 slot="title"></h3>
-
-              <!-- 1st tab: Risk Factors-->
-              <tab-content icon="fa fa-user-circle-o" title="1. Risk Factors">
-                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
-                </vue-form-generator>
-                <h6>{{model}}</h6>
-              </tab-content>
-
-              <!-- 2nd tab: Protective Factors-->
-              <tab-content icon="fa fa-vcard" title="2. Protective Factors">
-                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
-                </vue-form-generator>
-              </tab-content>
-
-              <!-- 3rd tab: The Self-harm Act and Suicidal Intent-->
-              <tab-content icon="fa fa-group" title="3. The Self-harm Act and Suicidal Intent">
-                <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="theSelfHarmActAndSuicidalIntent" @model-updated="onModelUpdated" >
-                </vue-form-generator>
-              </tab-content>
-
-              <!-- 4th tab: Suicide Risk-->
-              <tab-content icon="fa fa-info" title="4. Suicide Risk">
-                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="suicideRisk" @model-updated="onModelUpdated">
-                </vue-form-generator>
-              </tab-content>
-
-              <!-- 5th tab: Hospital Management-->
-              <tab-content icon="fa fa-info" title="5. Hospital Management">
-                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
-                </vue-form-generator>
-              </tab-content>
-
-              <!-- 4th tab: Source Data Producer-->
-              <tab-content icon="fa fa-info" title="6. Source Data Producer">
-                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
-                </vue-form-generator>
-              </tab-content>
-
-              <!-- Button footer-->
-              <template slot="footer" slot-scope="{
-                activeTabIndex,
-                isLastStep,
-                nextTab,
-                prevTab
-              }">
-                <div class="float-left">
-                  <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-step-backward" /> &nbsp; Previous
-                  </button>
-                </div>
-
-                <div class="float-right">
-                  <button v-if="!isLastStep" @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
-                    Next <div class="fa fa-step-forward" />
-                  </button>
-
-                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
-                    <div class="fa fa-play-circle" /> &nbsp;Preview
-                  </button>
-
-                  <button v-if="isLastStep" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp;Submit
-                  </button>
-                </div>
-              </template>
-            </form-wizard>
+            <br>
+            <b-tabs content-class="mt-3">
+              <b-tab title="First" active>
+                <p>I'm the first tab</p>
+              </b-tab>
+              <b-tab title="Second">
+                <p>I'm the second tab</p>
+              </b-tab>
+              <b-tab title="Disabled" disabled>
+                <p>I'm a disabled tab!</p>
+              </b-tab>
+            </b-tabs>
           </va-card>
 
           <!-- Modal -->

@@ -120,27 +120,100 @@
         <div class="col-xl mt-3">
           <va-card :title="$t('General Actions')">
             <va-tree-root>
+              <!-- Clinical Information -->
               <va-tree-category label="Clinical Information" class="ga-one">
                 <va-tree-node class="ga-two">Navigation 1</va-tree-node>
               </va-tree-category>
+              <!-- Psychometric Test -->
               <va-tree-category label="Psychometric Test" class="ga-one">
-                <va-tree-category label="Navigation 1" >
-                  <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                <va-tree-node class="ga-two">View History</va-tree-node>
+                <va-tree-category label="Take New Test" >
+                  <va-tree-node class="ga-two">DASS</va-tree-node>
+                  <va-tree-node class="ga-two">PHQ-9</va-tree-node>
+                  <va-tree-node class="ga-two">CBI</va-tree-node>
+                  <va-tree-node class="ga-two">WHO DAS</va-tree-node>
+                  <va-tree-node class="ga-two">BDI</va-tree-node>
+                  <va-tree-node class="ga-two">BAI</va-tree-node>
+                  <va-tree-node class="ga-two">ATQ</va-tree-node>
+                  <va-tree-node class="ga-two">PSP</va-tree-node>
+                  <va-tree-node class="ga-two">Self-Harm Act & Suicidal Intent Scale</va-tree-node>
+                  <va-tree-node class="ga-two">Suicidal Risk</va-tree-node>
                 </va-tree-category>
-                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
               </va-tree-category>
+              <!-- Clinical Documentation -->
               <va-tree-category label="Clinical Documentation" class="ga-one">
-                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                <va-tree-category label="Clinical and Intervention Notes" >
+                  <va-tree-category label="Clerking Notes" >
+                    <va-tree-node class="ga-two">Patient Index Form</va-tree-node>
+                    <va-tree-node class="ga-two">Counsellor Clerking Note</va-tree-node>
+                    <va-tree-node class="ga-two">Psychiatry Clerking Note</va-tree-node>
+                  </va-tree-category>
+                  <va-tree-category label="Progress Notes" >
+                    <va-tree-node class="ga-two">Link 1</va-tree-node>
+                  </va-tree-category>
+                  <va-tree-category label="Discharge Notes" >
+                    <va-tree-node class="ga-two">Consultation Discharge Note</va-tree-node>
+                    <va-tree-node class="ga-two">Rehab Discharge Note</va-tree-node>
+                    <va-tree-node class="ga-two">CPI Discharge Note</va-tree-node>
+                  </va-tree-category>
+                </va-tree-category>
+                <va-tree-category label="Consent Forms and Information Sheets" >
+                  <va-tree-category label="Consent Form">
+                    <va-tree-node class="ga-two">CPS Homevisit Consent Form</va-tree-node>
+                    <va-tree-node class="ga-two">CPS Homevisit Withdrawal Form</va-tree-node>
+                    <va-tree-node class="ga-two">CPS Police Referral Form</va-tree-node>
+                    <va-tree-node class="ga-two">Photography Consent Form</va-tree-node>
+                    <va-tree-node class="ga-two">SE Consent Form</va-tree-node>
+                    <va-tree-node class="ga-two">ETP Consent Form</va-tree-node>
+                    <va-tree-node class="ga-two">Job Club Consent Form</va-tree-node>
+                  </va-tree-category>
+                  <va-tree-category label="Information Sheet">
+                    <va-tree-node class="ga-two">Information on CPS</va-tree-node>
+                    <va-tree-node class="ga-two">Information on SE</va-tree-node>
+                    <va-tree-node class="ga-two">Information on ETP/JOB CLUB</va-tree-node>
+                  </va-tree-category>
+                </va-tree-category>
+                <va-tree-category label="Assessment Forms and Checklist" >
+                  <va-tree-category label="Assessment Forms" >
+                    <va-tree-node class="ga-two">Patient Care Plan and Case Review Form</va-tree-node>
+                    <va-tree-node class="ga-two">Job Commencement Report</va-tree-node>
+                    <va-tree-node class="ga-two">Job Cessation Report</va-tree-node>
+                    <va-tree-node class="ga-two">Job Transition Report</va-tree-node>
+                    <va-tree-node class="ga-two">L.A.S.E.R.Form (Motivation)</va-tree-node>
+                    <va-tree-node class="ga-two">Triage Form</va-tree-node>
+                  </va-tree-category>
+                  <va-tree-category label="Checklist" >
+                    <va-tree-node class="ga-two">Job Interest Checklist</va-tree-node>
+                    <va-tree-node class="ga-two">Work Analysis Form</va-tree-node>
+                    <va-tree-node class="ga-two">List of Job Search</va-tree-node>
+                    <va-tree-node class="ga-two">List of Employment Transition Program</va-tree-node>
+                    <va-tree-node class="ga-two">Log Meeting with Employer</va-tree-node>
+                    <va-tree-node class="ga-two">List of Previous or Current Job</va-tree-node>
+                  </va-tree-category>
+                </va-tree-category>
+                <va-tree-category label="Referral letters" >
+                  <va-tree-node class="ga-two">Internal Referral (To Hospital/Mentari)</va-tree-node>
+                  <va-tree-node class="ga-two">External Referral Form</va-tree-node>
+                  <va-tree-node class="ga-two">CPS Referral Form</va-tree-node>
+                  <va-tree-node class="ga-two">OCCT Referral Form</va-tree-node>
+                  <va-tree-node class="ga-two">Psychology Referral Form</va-tree-node>
+                  <va-tree-node class="ga-two">Rehab Referral Form and Clinical Summary</va-tree-node>
+                </va-tree-category>
               </va-tree-category>
+              <!-- Appointment -->
               <va-tree-category label="Appointment" class="ga-one">
                 <va-tree-node class="ga-two">Navigation 1</va-tree-node>
               </va-tree-category>
+              <!-- Attachment -->
               <va-tree-category label="Attachment" class="ga-one">
-                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                <va-tree-node class="ga-two">Add Attachment</va-tree-node>
               </va-tree-category>
+              <!-- SHHARP -->
               <va-tree-category label="SHHARP" class="ga-one">
                 <va-tree-node class="ga-two">View History</va-tree-node>
-                <va-tree-node class="ga-two">Add New Registry</va-tree-node>
+                <router-link to="/SHHARP-management/SHHARP-registration">
+                  <va-tree-node class="ga-two">Add New Registry</va-tree-node>
+                </router-link>
               </va-tree-category>
             </va-tree-root>
           </va-card>
@@ -242,6 +315,10 @@ export default {
     margin-bottom: 5px;
     cursor: pointer;
     background-color: #f5f8f9;
+  }
+
+  .ga-two {
+    color: #212529;
   }
 
   .ga-two:hover {
