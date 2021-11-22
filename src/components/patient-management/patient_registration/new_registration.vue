@@ -89,21 +89,21 @@
               }">
                 <div class="float-left">
                   <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="btn btn-primary btn-fill btn-md">
-                    <i class="fa fa-step-backward" /> &nbsp; Previous
+                    <div class="fa fa-step-backward" /> &nbsp; Previous
                   </button>
                 </div>
 
                 <div class="float-right">
                   <button v-if="!isLastStep" @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
-                    Next <i class="fa fa-step-forward" />
+                    Next <div class="fa fa-step-forward" />
                   </button>
 
                   <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
-                    <i class="fa fa-play-circle" /> &nbsp;View
+                    <div class="fa fa-play-circle" /> &nbsp;Preview
                   </button>
 
                   <button v-if="isLastStep" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    Submit
+                    <div class="fa fa-paper-plane" /> &nbsp;Submit
                   </button>
                 </div>
               </template>
@@ -114,9 +114,9 @@
           <va-modal
             v-model="showLargeModal"
             size="large"
-            :title=" $t('Patient Registration Details Preview') "
             :okText=" $t('Confirm') "
             :cancelText=" $t('Close') "
+            :hide-default-actions= "true"
           >
             <div class="modal-preview">
               <h5 class="tab-title">1. Demographic</h5>
@@ -127,6 +127,11 @@
               <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
               <h5 class="tab-title">4. Allergy</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+              <div style="float: right;">
+                <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
+                  Close
+                </button>
+              </div>
             </div>
           </va-modal>
         </div>
@@ -185,13 +190,11 @@ export default {
         { name: 'MR.', value: 1 },
         { name: 'MRS.', value: 2 },
       ],
-
       radioCitizenship: [
         { value: 1, name: 'Malaysian' },
         { value: 2, name: 'Permanent Resident' },
         { value: 3, name: 'Foreigner' },
       ],
-
       selectNRICType: [
         { name: 'Old IC', value: 1 },
         { name: 'New IC', value: 2 },
@@ -205,12 +208,10 @@ export default {
         { name: 'Pension Card', value: 10 },
         { name: 'Others (Please Specify)', value: 11 },
       ],
-
       radioGender: [
         { value: 1, name: 'Male' },
         { value: 2, name: 'Female' },
       ],
-
       selectServiceType: [
         { name: 'Consultation', value: 1 },
         { name: 'Rehabilitation', value: 2 },
@@ -219,7 +220,6 @@ export default {
         { name: 'Rehabilitation - Job Club', value: 5 },
         { name: 'Community Psychiatric Service (CPS)', value: 6 },
       ],
-
       selectReferralType: [
         { name: 'Self-Referral', value: 1 },
         { name: 'Psychiatric Department Own Hospital', value: 2 },
@@ -229,13 +229,11 @@ export default {
         { name: 'Private Hospital', value: 6 },
         { name: 'Others', value: 7 },
       ],
-
       selectIssuingCountry: [
         { id: '1', name: 'Malaysia' },
         { id: '2', name: 'China' },
         { id: '3', name: 'India' },
       ],
-
       selectState: [
         { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
         { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
@@ -254,7 +252,6 @@ export default {
         { id: 'MY-10', name: 'Selangor' },
         { id: 'MY-11', name: 'Terengganu' },
       ],
-
       selectCity: [
         { id: '1', name: 'Subang Jaya' },
         { id: '2', name: 'Klang' },
@@ -308,14 +305,12 @@ export default {
         { name: 'Indian', value: 3 },
         { name: 'Others', value: 4 },
       ],
-
       selectReligion: [
         { name: 'Islam', value: 1 },
         { name: 'Buddha', value: 2 },
         { name: 'Hindu', value: 3 },
         { name: 'Others', value: 4 },
       ],
-
       selectMaritalStatus: [
         { name: 'Single', value: 1 },
         { name: 'Married', value: 2 },
@@ -328,7 +323,6 @@ export default {
         { name: 'Nursing Home', value: 3 },
         { name: 'Others', value: 4 },
       ],
-
       selectEducationLevel: [
         { name: 'No Info', value: 1 },
         { name: 'Primary', value: 2 },
@@ -341,14 +335,12 @@ export default {
         { name: 'student', value: 3 },
         { name: 'Others', value: 4 },
       ],
-
       selectFeeExemptionStatus: [
         { name: 'Government Servant', value: 1 },
         { name: 'People with Disability (OKU)', value: 2 },
         { name: 'Pensioner', value: 3 },
         { name: 'Others', value: 4 },
       ],
-
       selectOccupationSector: [
         { name: 'Government', value: 1 },
         { name: 'Private', value: 2 },
@@ -1773,7 +1765,6 @@ export default {
           },
         ],
       },
-
       // Allergy Modal Preview
       tabDModalSchema: {
         groups: [
@@ -1881,6 +1872,7 @@ export default {
           },
         ],
       },
+
       formOptions: {
         validateAfterLoad: false,
         validateAfterChanged: true,
@@ -2132,7 +2124,7 @@ export default {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 10px;
-    background-color: orange;
+    background-color: #f2a444;
     border-radius: 10px;
     color: white;
   }
