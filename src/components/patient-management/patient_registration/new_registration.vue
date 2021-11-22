@@ -1443,12 +1443,15 @@ export default {
           {
             type: 'radios',
             label: 'Citizenship',
-            model: 'MD_CITIZENSHIP',
+            model: 'CITIZENSHIP',
             required: true,
             validator: 'required',
             styleClasses: 'col-md-12',
             values: () => {
               return this.radioCitizenship
+            },
+            onChanged: function (model) {
+              model.MD_CITIZENSHIP = model.CITIZENSHIP
             },
           },
           {
@@ -1463,6 +1466,7 @@ export default {
               closeOnSelect: true,
               maxHeight: 200,
               showLabels: false,
+              allowEmpty: false,
               key: 'value',
               label: 'name',
             },
@@ -1487,7 +1491,22 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2)
+              return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'NRIC NO',
+            model: 'NRIC_NO',
+            validator: 'string',
+            required: true,
+            styleClasses: 'col-md-6',
+            visible: function (model) {
+              return model && (model.NRIC_TYPE.value === 1 || model.NRIC_TYPE.value === 3 || model.NRIC_TYPE.value === 4 ||
+                              model.NRIC_TYPE.value === 5 || model.NRIC_TYPE.value === 6 || model.NRIC_TYPE.value === 7 ||
+                              model.NRIC_TYPE.value === 8 || model.NRIC_TYPE.value === 9 || model.NRIC_TYPE.value === 10 ||
+                              model.NRIC_TYPE.value === 11)
             },
           },
           {
@@ -1542,12 +1561,15 @@ export default {
           {
             type: 'radios',
             label: 'Gender',
-            model: 'MD_GENDER',
+            model: 'GENDER',
             required: true,
             validator: 'required',
             styleClasses: 'col-md-12 display-inline',
             values: () => {
               return this.radioGender
+            },
+            onChanged: function (model) {
+              model.MD_GENDER = model.GENDER
             },
           },
           {
@@ -1666,11 +1688,14 @@ export default {
             },
           },
           {
-            type: 'upload',
-            label: 'Upload Referral Letter',
+            labels: 'Upload Referral Letter',
+            accept: '.xlxs',
+            multiple: true,
+            text: 'Choose a File',
             model: 'REFERRAL_LETTER',
-            inputName: 'file1',
+            type: 'vfg-custom-file-excel',
             styleClasses: 'col-md-6',
+            hint: '*Please upload excel only (max file size 2MB)',
           },
           {
             type: 'input',
@@ -1715,6 +1740,13 @@ export default {
             values: () => {
               return this.selectState
             },
+            // onChanged: function(model){
+            //     this.$axios
+            //         .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
+            //         .then((response) =>{
+            //             this.selectDMCity = response.data.data
+            //         })
+            // },
           },
           {
             type: 'vueMultiSelect',
@@ -1732,8 +1764,15 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectCity
+              return this.selectDMCity
             },
+            // onChanged: function(model){
+            //     this.$axios
+            //         .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
+            //         .then((response) =>{
+            //             this.selectDMPostcode = response.data.data
+            //         })
+            // },
           },
           {
             type: 'vueMultiSelect',
@@ -1749,18 +1788,52 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectPostcode
+              return this.selectDMPostcode
             },
           },
+        ],
+        groups: [
           {
-            type: 'radios',
-            label: 'Is this person an existing patient?',
-            model: 'MD_EXISTING_PATIENT',
-            required: true,
-            values: [
-              { value: 1, name: 'Yes' },
-              { value: 2, name: 'No' },
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is this person an existing patient?',
+                model: 'EXISTING_PATIENT',
+                required: true,
+                values: [
+                  { value: 1, name: 'Yes' },
+                  { value: 2, name: 'No' },
+                ],
+                validator: 'required',
+                styleClasses: 'col-md-6 display-inline',
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mentari Branch',
+                model: 'BRANCH',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectBranch
+                },
+                visible: function (model) {
+                  return model && model.EXISTING_PATIENT === 1
+                },
+              },
             ],
+            onChanged: function (model) {
+              model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
+            },
             validator: 'required',
             styleClasses: 'col-md-12 display-inline',
           },
