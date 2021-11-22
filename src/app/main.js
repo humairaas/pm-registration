@@ -20,7 +20,7 @@ import { consoleBuildInfo } from 'vue-cli-plugin-build-info/plugin'
 
 import VueFileAgent from 'vue-file-agent'
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css'
-import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel'
+import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel.vue'
 
 consoleBuildInfo()
 

@@ -60,6 +60,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -266,10 +267,32 @@ export default {
         { id: '3', name: 'Semenyih' },
         { id: '3', name: 'Serdang' },
       ],
+
+      selectDMCity: [
+        { id: '1', name: 'Subang Jaya' },
+        { id: '2', name: 'Klang' },
+        { id: '3', name: 'Ampang Jaya' },
+        { id: '3', name: 'Shah Alam' },
+        { id: '3', name: 'Petaling Jaya' },
+        { id: '3', name: 'Cheras' },
+        { id: '3', name: 'Kajang' },
+        { id: '3', name: 'Selayang Baru' },
+        { id: '3', name: 'Rawang' },
+        { id: '3', name: 'Taman Greenwood' },
+        { id: '3', name: 'Semenyih' },
+        { id: '3', name: 'Serdang' },
+      ],
+
       selectPostcode: [
         '54200',
         '53849',
       ],
+
+      selectDMPostcode: [
+        '54200',
+        '53849',
+      ],
+
       selectBranch: [
         { name: 'Mentari Selayang', value: 1 },
         { name: 'Mentari Klang', value: 2 },
@@ -360,7 +383,7 @@ export default {
         SERVICE_TYPE: '',
         REFERRAL_TYPE: '',
         SPECIFY_REFERRAL: '',
-        REFERRAL_LETTER: '',
+        REFERRAL_LETTER: [],
         DM_ADDRESS_LINE_1: '',
         DM_ADDRESS_LINE_2: '',
         DM_ADDRESS_LINE_3: '',
@@ -744,6 +767,13 @@ export default {
             values: () => {
               return this.selectState
             },
+            // onChanged: function(model){
+            //     this.$axios
+            //         .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
+            //         .then((response) =>{
+            //             this.selectDMCity = response.data.data
+            //         })
+            // },
           },
           {
             type: 'vueMultiSelect',
@@ -761,11 +791,16 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectCity
+              return this.selectDMCity
             },
+            // onChanged: function(model){
+            //     this.$axios
+            //         .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
+            //         .then((response) =>{
+            //             this.selectDMPostcode = response.data.data
+            //         })
+            // },
           },
-        ],
-        groups: [
           {
             type: 'vueMultiSelect',
             placeholder: 'Please select',
@@ -780,9 +815,11 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: () => {
-              return this.selectPostcode
+              return this.selectDMPostcode
             },
           },
+        ],
+        groups: [
           {
             fields: [
               {
@@ -1851,6 +1888,90 @@ export default {
     //     .get('http://127.0.0.1:8000/api/getState?country_id=0')
     //     .then((response) =>{
     //         this.selectState = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getSalutation')
+    //     .then((response) =>{
+    //         this.selectSalutation = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getIssuingCountry')
+    //     .then((response) =>{
+    //         this.selectIssuingCountry = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getServiceType')
+    //     .then((response) =>{
+    //         this.selectServiceType = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getReferralType')
+    //     .then((response) =>{
+    //         this.selectReferralType = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getDMState')
+    //     .then((response) =>{
+    //         this.selectState = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getBranch')
+    //     .then((response) =>{
+    //         this.selectBranch = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getRace')
+    //     .then((response) =>{
+    //         this.selectRace = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getReligion')
+    //     .then((response) =>{
+    //         this.selectReligion = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getMaritalStatus')
+    //     .then((response) =>{
+    //         this.selectMaritalStatus = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getAccommodation')
+    //     .then((response) =>{
+    //         this.selectAccommodation = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getEducationLevel')
+    //     .then((response) =>{
+    //         this.selectEducationLevel = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getOccupationStatus')
+    //     .then((response) =>{
+    //         this.selectOccupationStatus = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getFeeExemptionStatus')
+    //     .then((response) =>{
+    //         this.selectFeeExemptionStatus = response.data.data
+    //     })
+
+    // this.$axios
+    //     .get('http://127.0.0.1:8000/api/getOccupationSector')
+    //     .then((response) =>{
+    //         this.selectOccupationSector = response.data.data
     //     })
   },
   methods: {

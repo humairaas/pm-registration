@@ -500,5 +500,24 @@ export default new Router({
 
       ],
     },
+    // SHHARP Management
+    {
+      name: 'SHHARP-management',
+      path: '/SHHARP-management',
+      component: AppLayout,
+      children: [{
+        name: 'sh-record',
+        path: 'SHHARP-record',
+        component: () =>
+          import('../components/SHHARP-management/sh-record.vue'),
+      },
+      {
+        name: 'sh-registration',
+        path: 'SHHARP-registration',
+        component: () =>
+          import('../components/SHHARP-management/sh-registration.vue'),
+      },
+      ],
+    },
   ],
 })
