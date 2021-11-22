@@ -113,6 +113,23 @@ export const navigationRoutes = {
     ],
   },
   {
+    name: 'SHHARP-management',
+    displayName: 'SHHARP Management',
+    meta: {
+      iconClass: 'vuestic-iconset vuestic-iconset-extras',
+    },
+    disabled: true,
+    children: [{
+      name: 'sh-record',
+      displayName: 'SHHARP Record',
+    },
+    {
+      name: 'sh-registration',
+      displayName: 'SHHARP Registration',
+    },
+    ],
+  },
+  {
     name: 'company-management',
     displayName: 'Company Management',
     meta: {
