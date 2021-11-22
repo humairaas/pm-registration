@@ -56,28 +56,40 @@
             <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard">
               <h3 slot="title"></h3>
 
-              <!-- 1st tab: Demographic-->
-              <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
-                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
+              <!-- 1st tab: Risk Factors-->
+              <tab-content icon="fa fa-user-circle-o" title="1. Risk Factors">
+                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
                 <h6>{{model}}</h6>
               </tab-content>
 
-              <!-- 2nd tab: Socio Demographic-->
-              <tab-content icon="fa fa-vcard" title="2. Socio Demographic">
-                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="socioDemographic" @model-updated="onModelUpdated" >
+              <!-- 2nd tab: Protective Factors-->
+              <tab-content icon="fa fa-vcard" title="2. Protective Factors">
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </tab-content>
 
-              <!-- 3rd tab: Next of Kin-->
-              <tab-content icon="fa fa-group" title="3. Next of Kin">
-                <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="nextOfKin" @model-updated="onModelUpdated" >
+              <!-- 3rd tab: The Self-harm Act and Suicidal Intent-->
+              <tab-content icon="fa fa-group" title="3. The Self-harm Act and Suicidal Intent">
+                <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="theSelfHarmActAndSuicidalIntent" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </tab-content>
 
-              <!-- 4th tab: Allergy-->
-              <tab-content icon="fa fa-info" title="4. Allergy">
-                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated">
+              <!-- 4th tab: Suicide Risk-->
+              <tab-content icon="fa fa-info" title="4. Suicide Risk">
+                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="suicideRisk" @model-updated="onModelUpdated">
+                </vue-form-generator>
+              </tab-content>
+
+              <!-- 5th tab: Hospital Management-->
+              <tab-content icon="fa fa-info" title="5. Hospital Management">
+                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
+                </vue-form-generator>
+              </tab-content>
+
+              <!-- 4th tab: Source Data Producer-->
+              <tab-content icon="fa fa-info" title="6. Source Data Producer">
+                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </tab-content>
 
@@ -120,14 +132,18 @@
             :hide-default-actions= "true"
           >
             <div class="modal-preview">
-              <h5 class="tab-title">1. Demographic</h5>
+              <h5 class="tab-title">1. Risk Factors</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabAModalSchema"></vue-form-generator>
-              <h5 class="tab-title">2. Sosio Demographic</h5>
+              <h5 class="tab-title">2. Protective Factors</h5>
               <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
-              <h5 class="tab-title">3. Next of Kin</h5>
+              <h5 class="tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
-              <h5 class="tab-title">4. Allergy</h5>
+              <h5 class="tab-title">4. Suicide Risk</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+              <h5 class="tab-title">5. Hospital Management</h5>
+              <vue-form-generator class="read-only" :model="model" :schema="tabEModalSchema"></vue-form-generator>
+              <h5 class="tab-title">6. Source Data Producer</h5>
+              <vue-form-generator class="read-only" :model="model" :schema="tabFModalSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
                   Close
@@ -188,59 +204,68 @@ export default {
 
       submitPath: false,
 
-      // Demographic  Data
+      // Risk Factors Data
 
-      // Socio Demographic Data
+      // Protective Factors Data
 
-      // Next of Kin Data
+      // The Self-harm Act and Suicidal Intent Data
 
-      // Allergy Data
+      // Suicide Risk Data
 
-      // Form Model
+      // Hospital Management Data
+
+      // Source Data Producer Data
+
       model: {
-        // Demographic
+        // Risk Factors
 
-        // Socio Demographic
+        // Protective Factors
 
-        // Next Of Kin
+        // The Self-harm Act and Suicidal Intent
 
-        // Allergy
+        // Suicide Risk
 
-        // Preview Modal
+        // Hospital Management
+
+        // Source Data Producer
 
       },
 
-      // Demographic
+      // Risk Factors
       tabASchema: {
         fields: [
 
         ],
       },
-      // Sosio Demographic
+      // Protective Factors
       tabBSchema: {
         fields: [
 
         ],
       },
-      // Next Of Kin
+
+      // The Self-harm Act and Suicidal Intent
       tabCSchema: {
         fields: [
 
         ],
       },
-      // Allergy
+
+      // Suicide Risk
       tabDSchema: {
         fields: [
 
         ],
       },
 
+      // Hospital Management
       tabESchema: {
         fields: [
 
         ],
       },
 
+      // Source Data Producer
       tabFSchema: {
         fields: [
 
@@ -264,15 +289,17 @@ export default {
       var tabB = this.validateTabB()
       var tabC = this.validateTabC()
       var tabD = this.validateTabD()
+      var tabE = this.validateTabE()
+      var tabF = this.validateTabF()
 
-      if (tabA && tabB && tabC && tabD) {
+      if (tabA && tabB && tabC && tabD && tabE && tabF) {
         this.launchToast()
         this.submitPath = true
         this.$router.push({ path: 'patient_consultation' })
       }
     },
     validateTabA () {
-      var errors = this.$refs.demographic.validate()
+      var errors = this.$refs.riskFactors.validate()
       if (errors) {
         this.tabA = false
         return true
@@ -282,7 +309,7 @@ export default {
       }
     },
     validateTabB () {
-      var errors = this.$refs.socioDemographic.validate()
+      var errors = this.$refs.protectiveFactors.validate()
       if (errors) {
         this.tabB = false
         return true
@@ -292,7 +319,7 @@ export default {
       }
     },
     validateTabC () {
-      var errors = this.$refs.nextOfKin.validate()
+      var errors = this.$refs.theSelfHarmActAndSuicidalIntent.validate()
       if (errors) {
         this.tabC = false
         return true
@@ -302,12 +329,32 @@ export default {
       }
     },
     validateTabD () {
-      var errors = this.$refs.allergy.validate()
+      var errors = this.$refs.suicideRisk.validate()
       if (errors) {
         this.tabD = false
         return true
       } else {
         this.tabD = true
+        return false
+      }
+    },
+    validateTabE () {
+      var errors = this.$refs.hospitalManagement.validate()
+      if (errors) {
+        this.tabE = false
+        return true
+      } else {
+        this.tabE = true
+        return false
+      }
+    },
+    validateTabF () {
+      var errors = this.$refs.sourceDataProducer.validate()
+      if (errors) {
+        this.tabF = false
+        return true
+      } else {
+        this.tabF = true
         return false
       }
     },
@@ -323,6 +370,12 @@ export default {
       }
       if (tab === 'tabD') {
         this.tabD = false
+      }
+      if (tab === 'tabE') {
+        this.tabE = false
+      }
+      if (tab === 'tabF') {
+        this.tabF = false
       }
     },
     launchToast () {
