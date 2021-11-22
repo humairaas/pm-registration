@@ -9,14 +9,23 @@
           <va-card>
             <br>
             <b-tabs content-class="mt-3">
-              <b-tab title="First" active>
+              <b-tab title="Tab A" active>
                 <p>I'm the first tab</p>
               </b-tab>
-              <b-tab title="Second">
+              <b-tab title="Tab B">
                 <p>I'm the second tab</p>
               </b-tab>
-              <b-tab title="Disabled" disabled>
-                <p>I'm a disabled tab!</p>
+              <b-tab title="Tab C" active>
+                <p>I'm the first tab</p>
+              </b-tab>
+              <b-tab title="Tab D">
+                <p>I'm the second tab</p>
+              </b-tab>
+              <b-tab title="Tab E" active>
+                <p>I'm the first tab</p>
+              </b-tab>
+              <b-tab title="Tab F">
+                <p>I'm the second tab</p>
               </b-tab>
             </b-tabs>
           </va-card>
