@@ -1123,7 +1123,7 @@ export default {
             type: 'vueMultiSelect',
             model: 'NOK_RELATIONSHIP',
             label: 'Relationship',
-            placeholder: 'Choose Relationship',
+            placeholder: 'Please Select',
             selectOptions: {
               multiple: false,
               closeOnSelect: true,
@@ -1195,7 +1195,7 @@ export default {
               type: 'vueMultiSelect',
               model: 'NOK_STATE',
               label: 'State',
-              placeholder: 'Choose State',
+              placeholder: 'Please Select',
               selectOptions: {
                 multiple: false,
                 closeOnSelect: true,
@@ -1220,7 +1220,7 @@ export default {
               type: 'vueMultiSelect',
               model: 'NOK_CITY',
               label: 'City',
-              placeholder: 'Choose City',
+              placeholder: 'Please Select',
               selectOptions: {
                 multiple: false,
                 closeOnSelect: true,
@@ -1245,7 +1245,7 @@ export default {
               type: 'vueMultiSelect',
               model: 'NOK_POSTCODE',
               label: 'Postcode',
-              placeholder: 'Choose Postcode',
+              placeholder: 'Please Select',
               selectOptions: {
                 multiple: false,
                 closeOnSelect: true,

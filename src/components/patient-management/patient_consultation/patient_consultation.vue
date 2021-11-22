@@ -9,7 +9,7 @@
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link to="/admin/patient-management/patient_registration">
+              <router-link to="/patient-management/patient_registration">
                 <button type="button" class="btn sizebtn">
                   <i class="fa fa-pencil-square-o"/>
                 </button>
@@ -119,58 +119,35 @@
         <!--General Actions-->
         <div class="col-xl mt-3">
           <va-card :title="$t('General Actions')">
-            <va-accordion>
-              <!--Clinical Information-->
-              <va-collapse withBackground>
-                <span slot="header">Clinical Information</span>
-                <div slot="body">
-                  <div>
-                    Button 1
-                  </div>
-                </div>
-              </va-collapse>
-              <!--Psychometrci Test-->
-              <va-collapse withBackground>
-                <span slot="header">Psychometric Test</span>
-                <div slot="body">
-                  <div>
-                    Button 1
-                  </div>
-                </div>
-              </va-collapse>
-              <!--Clinical Documentation-->
-              <va-collapse withBackground>
-                <span slot="header">Clinical Documentation</span>
-                <div slot="body">
-                  <div>
-                    Button 1
-                  </div>
-                </div>
-              </va-collapse>
-              <!--Appointment-->
-              <va-collapse withBackground>
-                <span slot="header">Appointment</span>
-                <div slot="body">
-                  <div>
-                    Button 1
-                  </div>
-                </div>
-              </va-collapse>
-              <!--Attachments-->
-              <va-collapse withBackground>
-                <span slot="header">Attachment</span>
-                <div slot="body">
-                  <div>
-                    Button 1
-                  </div>
-                </div>
-              </va-collapse>
-            </va-accordion>
+            <va-tree-root>
+              <va-tree-category label="Clinical Information" class="ga-one">
+                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+              </va-tree-category>
+              <va-tree-category label="Psychometric Test" class="ga-one">
+                <va-tree-category label="Navigation 1" >
+                  <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                </va-tree-category>
+                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+              </va-tree-category>
+              <va-tree-category label="Clinical Documentation" class="ga-one">
+                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+              </va-tree-category>
+              <va-tree-category label="Appointment" class="ga-one">
+                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+              </va-tree-category>
+              <va-tree-category label="Attachment" class="ga-one">
+                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+              </va-tree-category>
+              <va-tree-category label="SHHARP" class="ga-one">
+                <va-tree-node class="ga-two">View History</va-tree-node>
+                <va-tree-node class="ga-two">Add New Registry</va-tree-node>
+              </va-tree-category>
+            </va-tree-root>
           </va-card>
         </div>
       </div>
       <div>
-        <router-link to="/admin/patient-management/clinical_history">
+        <router-link to="/patient-management/clinical_history">
           <button type="button" class="btn log-button">
             <b>View Transaction Log</b>
           </button>
@@ -249,5 +226,25 @@ export default {
   .log-button:hover {
     text-decoration: underline;
     color: blue;
+  }
+
+  .no-padding {
+    padding: none;
+    margin: none;
+  }
+
+  .ga-one {
+    border-radius: 0.375rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1rem;
+    box-shadow: 0 2px 3px 0 rgba(168, 168, 168, 0.795);
+    margin-bottom: 5px;
+    cursor: pointer;
+    background-color: #f5f8f9;
+  }
+
+  .ga-two:hover {
+    text-decoration: underline;
   }
 </style>
