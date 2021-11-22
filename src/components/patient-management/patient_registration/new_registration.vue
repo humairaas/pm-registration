@@ -114,7 +114,6 @@
           <va-modal
             v-model="showLargeModal"
             size="large"
-            :title=" $t('Patient Registration Details Preview') "
             :okText=" $t('Confirm') "
             :cancelText=" $t('Close') "
             :hide-default-actions= "true"
