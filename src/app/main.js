@@ -22,6 +22,8 @@ import VueFileAgent from 'vue-file-agent'
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css'
 import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel.vue'
 
+import axios from 'axios'
+
 consoleBuildInfo()
 
 Vue.use(VuesticPlugin)
@@ -36,6 +38,9 @@ Vue.component('VueFileAgent', VueFileAgent)
 Vue.use(VueFileAgent)
 Vue.use(VueFileAgentStyles)
 Vue.component('field-vfg-custom-file-excel', VfgCustomFileExcel)
+
+Vue.prototype.$axios = axios
+Vue.use(axios)
 
 router.beforeEach((to, from, next) => {
   store.commit('setLoading', true)

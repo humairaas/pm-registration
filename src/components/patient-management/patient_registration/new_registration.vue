@@ -60,7 +60,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -235,38 +234,7 @@ export default {
         { id: '2', name: 'China' },
         { id: '3', name: 'India' },
       ],
-      selectState: [
-        { id: 'MY-14', name: 'Wilayah Persekutuan Kuala Lumpur' },
-        { id: 'MY-15', name: 'Wilayah Persekutuan Labuan' },
-        { id: 'MY-16', name: 'Wilayah Persekutuan Putrajaya' },
-        { id: 'MY-01', name: 'Johor' },
-        { id: 'MY-02', name: 'Kedah' },
-        { id: 'MY-03', name: 'Kelantan' },
-        { id: 'MY-04', name: 'Melaka' },
-        { id: 'MY-05', name: 'Negeri Sembilan' },
-        { id: 'MY-06', name: 'Pahang' },
-        { id: 'MY-08', name: 'Perak' },
-        { id: 'MY-09', name: 'Perlis' },
-        { id: 'MY-07', name: 'Pulau Pinang' },
-        { id: 'MY-12', name: 'Sabah' },
-        { id: 'MY-13', name: 'Sarawak' },
-        { id: 'MY-10', name: 'Selangor' },
-        { id: 'MY-11', name: 'Terengganu' },
-      ],
-      selectCity: [
-        { id: '1', name: 'Subang Jaya' },
-        { id: '2', name: 'Klang' },
-        { id: '3', name: 'Ampang Jaya' },
-        { id: '3', name: 'Shah Alam' },
-        { id: '3', name: 'Petaling Jaya' },
-        { id: '3', name: 'Cheras' },
-        { id: '3', name: 'Kajang' },
-        { id: '3', name: 'Selayang Baru' },
-        { id: '3', name: 'Rawang' },
-        { id: '3', name: 'Taman Greenwood' },
-        { id: '3', name: 'Semenyih' },
-        { id: '3', name: 'Serdang' },
-      ],
+      selectState: [],
 
       selectDMCity: [
         { id: '1', name: 'Subang Jaya' },
@@ -281,11 +249,6 @@ export default {
         { id: '3', name: 'Taman Greenwood' },
         { id: '3', name: 'Semenyih' },
         { id: '3', name: 'Serdang' },
-      ],
-
-      selectPostcode: [
-        '54200',
-        '53849',
       ],
 
       selectDMPostcode: [
@@ -350,11 +313,7 @@ export default {
       ],
 
       // Next of Kin Data
-      selectRelationship: [
-        { name: 'Husband', value: '1' },
-        { name: 'Wife', value: '2' },
-        { name: 'Father', value: '3' },
-      ],
+      selectRelationship: [],
 
       // Allergy Data
       radioAllergy: [
@@ -433,6 +392,9 @@ export default {
         MD_EXISTING_PATIENT: '',
         MD_GENDER: '',
         MD_ALLERGY: [],
+
+        selectCity: [],
+        selectPostcode: [],
       },
 
       // Demographic
@@ -767,13 +729,13 @@ export default {
             values: () => {
               return this.selectState
             },
-            // onChanged: function(model){
-            //     this.$axios
-            //         .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
-            //         .then((response) =>{
-            //             this.selectDMCity = response.data.data
-            //         })
-            // },
+            onChanged: function (model) {
+              this.$axios
+                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.id)
+                .then((response) => {
+                  model.selectCity = response.data.data
+                })
+            },
           },
           {
             type: 'vueMultiSelect',
@@ -790,16 +752,16 @@ export default {
               label: 'name',
             },
             styleClasses: 'col-md-6',
-            values: () => {
-              return this.selectDMCity
+            values: function (model) {
+              return model.selectCity
             },
-            // onChanged: function(model){
-            //     this.$axios
-            //         .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
-            //         .then((response) =>{
-            //             this.selectDMPostcode = response.data.data
-            //         })
-            // },
+            onChanged: function (model) {
+              this.$axios
+                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.id)
+                .then((response) => {
+                  model.selectPostcode = response.data.data
+                })
+            },
           },
           {
             type: 'vueMultiSelect',
@@ -812,10 +774,12 @@ export default {
               closeOnSelect: true,
               maxHeight: 200,
               showLabels: false,
+              key: 'value',
+              label: 'name',
             },
             styleClasses: 'col-md-6',
-            values: () => {
-              return this.selectDMPostcode
+            values: function (model) {
+              return model.selectPostcode
             },
           },
         ],
@@ -1240,13 +1204,13 @@ export default {
                 key: 'value',
                 label: 'name',
               },
-              // onChanged: function(model){
-              //     this.$axios
-              //         .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.id)
-              //         .then((response) =>{
-              //             this.selectCity = response.data.data
-              //         })
-              // },
+              onChanged: function (model) {
+                this.$axios
+                  .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.id)
+                  .then((response) => {
+                    model.selectCity = response.data.data
+                  })
+              },
               values: () => {
                 return this.selectState
               },
@@ -1265,15 +1229,15 @@ export default {
                 key: 'value',
                 label: 'name',
               },
-              // onChanged: function(model){
-              // this.$axios
-              //     .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.id)
-              //     .then((response) =>{
-              //         this.selectPostcode = response.data.data
-              //     })
-              // },
-              values: () => {
-                return this.selectCity
+              onChanged: function (model) {
+                this.$axios
+                  .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.id)
+                  .then((response) => {
+                    model.selectPostcode = response.data.data
+                  })
+              },
+              values: function (model) {
+                return model.selectCity
               },
               validator: 'required',
               styleClasses: 'col-xl-2',
@@ -1287,9 +1251,11 @@ export default {
                 multiple: false,
                 closeOnSelect: true,
                 showLabels: false,
+                key: 'value',
+                label: 'name',
               },
-              values: () => {
-                return this.selectPostcode
+              values: function (model) {
+                return model.selectPostcode
               },
               validator: 'required',
               styleClasses: 'col-xl-2',
@@ -1450,9 +1416,6 @@ export default {
             values: () => {
               return this.radioCitizenship
             },
-            onChanged: function (model) {
-              model.MD_CITIZENSHIP = model.CITIZENSHIP
-            },
           },
           {
             type: 'vueMultiSelect',
@@ -1568,9 +1531,6 @@ export default {
             values: () => {
               return this.radioGender
             },
-            onChanged: function (model) {
-              model.MD_GENDER = model.GENDER
-            },
           },
           {
             type: 'input',
@@ -1581,9 +1541,6 @@ export default {
             required: true,
             format: 'YYYY/MM/DD',
             styleClasses: 'col-md-6',
-            onChanged: function (model, newVal, oldVal, field) {
-              model.AGE = new Date().getFullYear() - model.BIRTH_DATE.toString().substring(0, 4)
-            },
           },
           {
             type: 'input',
@@ -1740,13 +1697,6 @@ export default {
             values: () => {
               return this.selectState
             },
-            // onChanged: function(model){
-            //     this.$axios
-            //         .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
-            //         .then((response) =>{
-            //             this.selectDMCity = response.data.data
-            //         })
-            // },
           },
           {
             type: 'vueMultiSelect',
@@ -1766,13 +1716,6 @@ export default {
             values: () => {
               return this.selectDMCity
             },
-            // onChanged: function(model){
-            //     this.$axios
-            //         .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
-            //         .then((response) =>{
-            //             this.selectDMPostcode = response.data.data
-            //         })
-            // },
           },
           {
             type: 'vueMultiSelect',
@@ -1831,9 +1774,6 @@ export default {
                 },
               },
             ],
-            onChanged: function (model) {
-              model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
-            },
             validator: 'required',
             styleClasses: 'col-md-12 display-inline',
           },
@@ -1957,11 +1897,11 @@ export default {
     window.onbeforeunload = function () {
       return 'Data will be lost if you leave the page, are you sure?'
     }
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getState?country_id=0')
-    //     .then((response) =>{
-    //         this.selectState = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getState?country_id=1')
+      .then((response) => {
+        this.selectState = response.data.data
+      })
 
     // this.$axios
     //     .get('http://127.0.0.1:8000/api/getSalutation')
@@ -1986,13 +1926,6 @@ export default {
     //     .then((response) =>{
     //         this.selectReferralType = response.data.data
     //     })
-
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getDMState')
-    //     .then((response) =>{
-    //         this.selectState = response.data.data
-    //     })
-
     // this.$axios
     //     .get('http://127.0.0.1:8000/api/getBranch')
     //     .then((response) =>{
@@ -2046,6 +1979,11 @@ export default {
     //     .then((response) =>{
     //         this.selectOccupationSector = response.data.data
     //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getRelationship')
+      .then((response) => {
+        this.selectRelationship = response.data.data
+      })
   },
   methods: {
     validateForm () {
