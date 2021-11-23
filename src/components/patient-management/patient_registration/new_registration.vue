@@ -2149,7 +2149,7 @@ export default {
     background: hsl(0, 0%, 91%);
   }
 
-  .display-inline label {
+  .display-inline {
     display: inline !important;
     align-content: center;
     margin-right: 10px;

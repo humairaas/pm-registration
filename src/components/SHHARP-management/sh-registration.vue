@@ -265,6 +265,12 @@ export default {
         Q12: '',
 
         // Protective Factors
+        PQ1: '',
+        PQ2: '',
+        PQ3: '',
+        PQ4: '',
+        PQ5: '',
+        PQ6: '',
 
         // The Self-harm Act and Suicidal Intent
         secA: {
@@ -739,7 +745,78 @@ export default {
       // Protective Factors
       tabBSchema: {
         fields: [
-
+          {
+            type: 'radios',
+            label: '1. Ability to cope with stress/tolerate frustrations',
+            model: 'PQ1',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '2. Strongly held religious/cultural beliefs',
+            model: 'PQ2',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '3. Realistic life goals or future plans',
+            model: 'PQ3',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '4. Responsibility to children/beloved pets',
+            model: 'PQ4',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '5. Social support',
+            model: 'PQ5',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '6. Positive therapeutic relationship',
+            model: 'PQ6',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
         ],
       },
 
@@ -2011,5 +2088,16 @@ export default {
 
   .close-button:focus {
     box-shadow: none !important;
+  }
+
+  .stretch-row {
+    display: flex !important;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .vue-form-generator .field-radios .radio-list label {
+    display: inline-table;
+    margin-right: 1rem;
   }
 </style>
