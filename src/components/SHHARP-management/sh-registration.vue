@@ -8,7 +8,7 @@
           <!-- Form -->
           <va-card>
             <br>
-            <b-tabs content-class="mt-3">
+            <b-tabs content-class="mt-3" justified>
               <b-tab title="Risk Factors" active>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
