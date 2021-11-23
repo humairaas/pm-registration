@@ -12,6 +12,7 @@
               <b-tab title="Risk Factors" active>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </b-tab>
               <b-tab title="Protective Factors">
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
@@ -332,11 +333,11 @@ export default {
       tabASchema: {
         groups: [
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '1'><li class='label-width'>Presence of psychiatric disorder</li></ol>",
+                label: '1. Presence of psychiatric disorder',
                 model: 'Q1',
                 values: [
                   { name: 'No', value: 0 },
@@ -344,7 +345,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -371,7 +372,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q1 === 1
                 },
@@ -379,11 +380,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '2'><li class='label-width'>Hopelessness or despair</li></ol>",
+                label: '2. Hopelessness or despair',
                 model: 'Q2',
                 values: [
                   { name: 'No', value: 0 },
@@ -391,16 +392,16 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
             ],
           },
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '3'><li class='label-width'> Previous suicide attempt</li></ol>",
+                label: '3. Previous suicide attempt',
                 model: 'Q3',
                 values: [
                   { name: 'No', value: 0 },
@@ -408,7 +409,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'input',
@@ -418,7 +419,7 @@ export default {
                 min: 0,
                 required: true,
                 validator: 'number',
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q3 === 1
                 },
@@ -426,11 +427,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '4'><li class='label-width'>Presence of substance use/abuse</li></ol>",
+                label: '4. Presence of substance use/abuse',
                 model: 'Q4',
                 values: [
                   { name: 'No', value: 0 },
@@ -438,7 +439,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -472,11 +473,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '5'><li class='label-width'>Family history of suicidal behaviour</li></ol>",
+                label: '5. Family history of suicidal behaviour',
                 model: 'Q5',
                 values: [
                   { name: 'No', value: 0 },
@@ -484,16 +485,16 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '6'><li class='label-width'>Family history of psychiatric disorder</li></ol>",
+                label: '6. Family history of psychiatric disorder',
                 model: 'Q6',
                 values: [
                   { name: 'No', value: 0 },
@@ -501,7 +502,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -528,7 +529,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q6 === 1
                 },
@@ -536,11 +537,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '7'><li class='label-width'>Family histroy of substance abuse</li></ol>",
+                label: '7. Family histroy of substance abuse',
                 model: 'Q7',
                 values: [
                   { name: 'No', value: 0 },
@@ -548,7 +549,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -574,7 +575,7 @@ export default {
                   label: 'name',
                   key: 'value',
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q7 === 1
                 },
@@ -582,11 +583,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '8'><li class='label-width'>Stressful life events</li></ol>",
+                label: '8. Stressful life events',
                 model: 'Q8',
                 values: [
                   { name: 'No', value: 0 },
@@ -594,7 +595,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -619,7 +620,7 @@ export default {
                   label: 'name',
                   key: 'value',
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q8 === 1
                 },
@@ -627,11 +628,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '9'><li class='label-width'>Isolation, rejection, or feelings of shame</li></ol>",
+                label: '9. Isolation, rejection, or feelings of shame',
                 model: 'Q9',
                 values: [
                   { name: 'No', value: 0 },
@@ -639,16 +640,16 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '10'><li class='label-width'>Chronic physical illness or condition</li></ol>",
+                label: '10. Chronic physical illness or condition',
                 model: 'Q10',
                 values: [
                   { name: 'No', value: 0 },
@@ -656,7 +657,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
               {
                 type: 'vueMultiSelect',
@@ -682,7 +683,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: ['col-md-5'],
                 visible: function (model) {
                   return model && model.Q10 === 1
                 },
@@ -690,11 +691,11 @@ export default {
             ],
           },
           {
-            styleClasses: ['row', 'odd-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '11'><li class='label-width'>History of physical, sexual or emotional abuse</li></ol>",
+                label: '11. History of physical, sexual or emotional abuse',
                 model: 'Q11',
                 values: [
                   { name: 'No', value: 0 },
@@ -702,16 +703,16 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
             ],
           },
           {
-            styleClasses: ['row', 'even-row'],
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
-                label: "<ol start = '12'><li class='label-width'>Access to lethal methods/weapons</li></ol>",
+                label: '12. Access to lethal methods/weapons',
                 model: 'Q12',
                 values: [
                   { name: 'No', value: 0 },
@@ -719,24 +720,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
-              },
-            ],
-          },
-          {
-            styleClasses: 'groupBtn',
-            fields: [
-              {
-                type: 'submit',
-                onSubmit: () => {
-                  this.redirectToNext()
-                },
-                label: '',
-                buttonText: 'Next',
-                validateBeforeSubmit: true,
-                visible: () => {
-                  return this.showButton
-                },
+                styleClasses: ['col-md-7', 'stretch-row'],
               },
             ],
           },
