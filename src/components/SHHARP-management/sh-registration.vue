@@ -10,10 +10,12 @@
             <br>
             <b-tabs content-class="mt-3" justified>
               <b-tab title="Risk Factors" active>
+                <br/>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
               <b-tab title="Protective Factors">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </b-tab>
@@ -62,14 +64,17 @@
                 </va-accordion>
               </b-tab>
               <b-tab title="Suicide Risk">
+                <br/>
                 <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions"></vue-form-generator>
               </b-tab>
               <b-tab title="Hospital Management">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
                 <h6>{{model}}</h6>
               </b-tab>
               <b-tab title="Source Data Producer">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
