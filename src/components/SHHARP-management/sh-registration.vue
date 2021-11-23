@@ -67,7 +67,6 @@
               <b-tab title="Hospital Management">
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </b-tab>
               <b-tab title="Source Data Producer">
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
@@ -195,6 +194,48 @@ export default {
       // Suicide Risk Data
 
       // Hospital Management Data
+      selectReferral: [
+        { name: 'ED', value: 1 },
+        { name: 'Ward', value: 2 },
+        { name: 'Clinic', value: 3 },
+        { name: 'Mentari', value: 4 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
+
+      selectArrivalMode: [
+        { name: 'Self', value: 1 },
+        { name: 'Family', value: 2 },
+        { name: 'Ambulance', value: 3 },
+        { name: 'Police', value: 4 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
+
+      radioPhysicalConseq: [
+        { name: 'No significant physical harm, no medical treatment required', value: 0 },
+        { name: 'Medical attention/surgery required, but no danger to life', value: 1 },
+        { name: 'Medical attention/surgery required, had/has danger to life', value: 2 },
+        { name: 'Lethal', value: 3 },
+        { name: 'Aborted (specify)', value: 99 },
+      ],
+
+      radioAdmission: [
+        { name: 'No', value: 0 },
+        { name: 'Yes', value: 1 },
+      ],
+
+      radioDischargeStatus: [
+        { name: 'Dead', value: 0 },
+        { name: 'Alive', value: 1 },
+      ],
+
+      selectPSYMX: [
+        { name: 'Transferred to PSY ward', value: 1 },
+        { name: 'Given appt to PSY clinic', value: 2 },
+        { name: 'Referred to counsellor', value: 3 },
+        { name: 'Discharge without any PSY follow-up', value: 4 },
+        { name: 'Refer community PSY services', value: 5 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
 
       // Source Data Producer Data
 
@@ -254,6 +295,23 @@ export default {
         level: [],
 
         // Hospital Management
+        REFERRAL: '',
+        REFERRAL_SPECIFY: '',
+        ARRIVAL_MODE: '',
+        ARRIVAL_SPECIFY: '',
+        FIRST_ASSESSMENT_DATE: '',
+        FIRST_ASSESSMENT_TIME: '',
+        PHYSICAL_CONSEQ: '',
+        PHYSICAL_CONSEQ_SPECIFY: '',
+        ADMISSION: '',
+        ADMISSION_SPECIFY: '',
+        DISCHARGE_STATUS: '',
+        DISCHARGE_DATE: '',
+        NO_OF_DAYS: '',
+        MAIN_DIAGNOSIS: '',
+        EXTERNAL_DIAGNOSIS: '',
+        PSYMX: [],
+        PSYMX_SPECIFY: '',
 
         // Source Data Producer
         REG_OFF_NAME: '',
@@ -1365,8 +1423,296 @@ export default {
       },
       // Hospital Management
       tabESchema: {
-        fields: [
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Referral or Contact point',
+                model: 'REFERRAL',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectReferral
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'REFERRAL_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.REFERRAL.value === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mode of Arrival',
+                model: 'ARRIVAL_MODE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectArrivalMode
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'ARRIVAL_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ARRIVAL_MODE.value === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'First psychiatry assessment after current attempt',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'FIRST_ASSESSMENT_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'time',
+                label: 'Time',
+                model: 'FIRST_ASSESSMENT_TIME',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Physical consequences of current attempt',
+                model: 'PHYSICAL_CONSEQ',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.radioPhysicalConseq
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'PHYSICAL_CONSEQ_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PHYSICAL_CONSEQ === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is patient admitted for current attempt?',
+                model: 'ADMISSION',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioAdmission
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify the first admitting ward',
+                model: 'ADMISSION_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ADMISSION === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Status on discharge',
+                model: 'DISCHARGE_STATUS',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioDischargeStatus
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge details',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DISCHARGE_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'number',
+                label: 'Number of days in ward',
+                model: 'NO_OF_DAYS',
+                min: 0,
+                required: true,
+                validator: 'number',
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge Diagnosis (ICD)',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Main diagnosis',
+                placeholder: 'Please specify',
+                model: 'MAIN_DIAGNOSIS',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'External causes',
+                placeholder: 'Please specify',
+                model: 'EXTERNAL_DIAGNOSIS',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-5'],
+              },
 
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'checklist',
+                label: 'PSY Mx on Discharge',
+                model: 'PSYMX',
+                required: true,
+                validator: 'array',
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectPSYMX
+                },
+              },
+              // {
+              //   type: "vueMultiSelect",
+              //   placeholder: "Please select",
+              //   label: "PSY Mx on Discharge",
+              //   model: "PSYMX",
+              //   required: true,
+              //   validator: "array",
+              //   selectOptions: {
+              //     multiple: true,
+              //     closeOnSelect: false,
+              //     maxHeight: 200,
+              //     showLabels: false,
+              //     key: "value",
+              //     label: "name"
+              //   },
+              //   styleClasses: ["col-md-6"],
+              //   values: () => {
+              //       return this.selectPSYMX
+              //     },
+              // },
+              {
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Please specify',
+                model: 'PSYMX_SPECIFY',
+                label: '',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PSYMX.includes(99)
+                },
+              },
+            ],
+          },
         ],
       },
 
