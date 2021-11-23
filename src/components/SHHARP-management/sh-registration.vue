@@ -67,7 +67,7 @@
               <b-tab title="Hospital Management">
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                 <h6>{{model}}</h6>
+                <h6>{{model}}</h6>
               </b-tab>
               <b-tab title="Source Data Producer">
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
@@ -90,13 +90,13 @@
               <h5 class="tab-title">2. Protective Factors</h5>
               <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
               <h5 class="tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabCASchema"></vue-form-generator>
               <h5 class="tab-title">4. Suicide Risk</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabDSchema"></vue-form-generator>
               <h5 class="tab-title">5. Hospital Management</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabEModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabESchema"></vue-form-generator>
               <h5 class="tab-title">6. Source Data Producer</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabFModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabFSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
                   Close
@@ -261,7 +261,7 @@ export default {
         REPORT_DATE: '',
         HOSPITAL_NAME: '',
         PSYCHIATRIST_NAME: '',
-        VERIFICATION_DATE: ''
+        VERIFICATION_DATE: '',
 
       },
       // Risk Factors
@@ -310,7 +310,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q1 === 1
-                }
+                },
               },
             ],
           },
@@ -357,7 +357,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q3 === 1
-                }
+                },
               },
             ],
           },
@@ -374,7 +374,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0']
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
               },
               {
                 type: 'vueMultiSelect',
@@ -403,7 +403,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q4 === 1
-                }
+                },
               },
             ],
           },
@@ -420,7 +420,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0']
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
               },
             ],
           },
@@ -437,7 +437,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0']
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
               },
               {
                 type: 'vueMultiSelect',
@@ -467,7 +467,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q6 === 1
-                }
+                },
               },
             ],
           },
@@ -484,7 +484,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0']
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
               },
               {
                 type: 'vueMultiSelect',
@@ -513,7 +513,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q7 === 1
-                }
+                },
               },
             ],
           },
@@ -530,7 +530,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0']
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
               },
               {
                 type: 'vueMultiSelect',
@@ -558,7 +558,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q8 === 1
-                }
+                },
               },
             ],
           },
@@ -575,7 +575,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0']
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
               },
             ],
           },
@@ -592,7 +592,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0']
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
               },
               {
                 type: 'vueMultiSelect',
@@ -621,7 +621,7 @@ export default {
                 styleClasses: ['col-md-5', 'mb-0'],
                 visible: function (model) {
                   return model && model.Q10 === 1
-                }
+                },
               },
             ],
           },
@@ -638,7 +638,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'odd-row', 'mb-0']
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
               },
             ],
           },
@@ -655,7 +655,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'even-row', 'mb-0']
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
               },
             ],
           },
@@ -1373,80 +1373,80 @@ export default {
       // Source Data Producer
       tabFSchema: {
         groups: [
-            {
-                styleClasses: 'row',
-                fields: [
-                  {
-                    type: "input",
-                    inputType: "text",
-                    label: "Name of Registering Officer",
-                    model: "REG_OFF_NAME",
-                    validator: "string",
-                    required: true,
-                    styleClasses: "col-md-6"
-                  },
-                  {
-                    type: "input",
-                    inputType: "text",
-                    label: "Name of Hospital",
-                    model: "HOSPITAL_NAME",
-                    validator: "string",
-                    required: true,
-                    styleClasses: "col-md-6"
-                  },
-                ]
-            },
-            {
-                styleClasses: 'row',
-                fields: [
-                  {
-                    type: "input",
-                    inputType: "text",
-                    label: "Designation",
-                    model: "DESIGNATION",
-                    validator: "string",
-                    required: true,
-                    styleClasses: "col-md-6"
-                  },
-                  {
-                    type: "input",
-                    inputType: "text",
-                    label: "Name of Psychiatrist",
-                    model: "PSYCHIATRIST_NAME",
-                    validator: "string",
-                    required: true,
-                    styleClasses: "col-md-6"
-                  },
-                ]
-            },
-            {
-                styleClasses: 'row',
-                fields: [
-                  {
-                    type: "input",
-                    inputType: "date",
-                    label: "Date of Reporting",
-                    model: "REPORT_DATE",
-                    min: "1990-01-01",
-                    required: true,
-                    validator: "date",
-                    format: "YYYY/MM/DD",
-                    styleClasses: "col-md-6"
-                  },
-                  {
-                    type: "input",
-                    inputType: "date",
-                    label: "Date of Verification",
-                    model: "VERIFICATION_DATE",
-                    min: "1990-01-01",
-                    required: true,
-                    validator: "date",
-                    format: "YYYY/MM/DD",
-                    styleClasses: "col-md-6"
-                  },
-                ]
-            }
-        ]
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Registering Officer',
+                model: 'REG_OFF_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Hospital',
+                model: 'HOSPITAL_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Designation',
+                model: 'DESIGNATION',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Psychiatrist',
+                model: 'PSYCHIATRIST_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date of Reporting',
+                model: 'REPORT_DATE',
+                min: '1990-01-01',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date of Verification',
+                model: 'VERIFICATION_DATE',
+                min: '1990-01-01',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+        ],
       },
 
       formOptions: {
