@@ -9,11 +9,14 @@
           <va-card>
             <br>
             <b-tabs content-class="mt-3">
-              <b-tab title="Tab A">
-                <p>I'm the first tab</p>
+              <b-tab title="Risk Factors" active>
+                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
+                </vue-form-generator>
+                <h6>{{model}}</h6>
               </b-tab>
-              <b-tab title="Tab B">
-                <p>I'm the second tab</p>
+              <b-tab title="Protective Factors">
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
+                </vue-form-generator>
               </b-tab>
               <b-tab title="The Self-Harm Act and Suicidal Intent">
                 <va-accordion>
@@ -62,11 +65,13 @@
               <b-tab title="Suicide Risk">
                 <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions"></vue-form-generator>
               </b-tab>
-              <b-tab title="Tab E">
-                <p>I'm the first tab</p>
+              <b-tab title="Hospital Management">
+                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
+                </vue-form-generator>
               </b-tab>
-              <b-tab title="Tab F">
-                <p>I'm the second tab</p>
+              <b-tab title="Source Data Producer">
+                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
+                </vue-form-generator>
               </b-tab>
             </b-tabs>
           </va-card>
@@ -81,17 +86,17 @@
           >
             <div class="modal-preview">
               <h5 class="tab-title">1. Risk Factors</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabAModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
               <h5 class="tab-title">2. Protective Factors</h5>
               <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
               <h5 class="tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabCSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabCASchema"></vue-form-generator>
               <h5 class="tab-title">4. Suicide Risk</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabDSchema"></vue-form-generator>
               <h5 class="tab-title">5. Hospital Management</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabEModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabESchema"></vue-form-generator>
               <h5 class="tab-title">6. Source Data Producer</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabFModalSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabFSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
                   Close
@@ -153,6 +158,35 @@ export default {
       submitPath: false,
 
       // Risk Factors Data
+      selectDiagnosis: [
+        'one',
+        'two',
+        'three',
+        'four',
+        'five',
+        'six',
+      ],
+
+      selectSubstance: [
+        { name: 'Alcohol', value: 0 },
+        { name: 'Opioids', value: 1 },
+        { name: 'Cannabinoids', value: 2 },
+        { name: 'Sedatives or hypnotics', value: 3 },
+        { name: 'Cocaine', value: 4 },
+        { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+        { name: 'Hallucinogens', value: 6 },
+        { name: 'Volatile solvents', value: 7 },
+      ],
+
+      selectStressfulLifeEvents: [
+        { name: 'Intimate relationship problems', value: 0 },
+        { name: 'Other relationship problems', value: 1 },
+        { name: 'Death of loved one', value: 2 },
+        { name: 'Job-related problems', value: 3 },
+        { name: 'Financial problems', value: 4 },
+        { name: 'Academic-related problems', value: 5 },
+        { name: 'Criminals/Legal problems', value: 6 },
+      ],
 
       // Protective Factors Data
 
@@ -161,13 +195,83 @@ export default {
       // Suicide Risk Data
 
       // Hospital Management Data
+      selectReferral: [
+        { name: 'ED', value: 1 },
+        { name: 'Ward', value: 2 },
+        { name: 'Clinic', value: 3 },
+        { name: 'Mentari', value: 4 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
+
+      selectArrivalMode: [
+        { name: 'Self', value: 1 },
+        { name: 'Family', value: 2 },
+        { name: 'Ambulance', value: 3 },
+        { name: 'Police', value: 4 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
+
+      radioPhysicalConseq: [
+        { name: 'No significant physical harm, no medical treatment required', value: 0 },
+        { name: 'Medical attention/surgery required, but no danger to life', value: 1 },
+        { name: 'Medical attention/surgery required, had/has danger to life', value: 2 },
+        { name: 'Lethal', value: 3 },
+        { name: 'Aborted (specify)', value: 99 },
+      ],
+
+      radioAdmission: [
+        { name: 'No', value: 0 },
+        { name: 'Yes', value: 1 },
+      ],
+
+      radioDischargeStatus: [
+        { name: 'Dead', value: 0 },
+        { name: 'Alive', value: 1 },
+      ],
+
+      selectPSYMX: [
+        { name: 'Transferred to PSY ward', value: 1 },
+        { name: 'Given appt to PSY clinic', value: 2 },
+        { name: 'Referred to counsellor', value: 3 },
+        { name: 'Discharge without any PSY follow-up', value: 4 },
+        { name: 'Refer community PSY services', value: 5 },
+        { name: 'Others (Specify)', value: 99 },
+      ],
 
       // Source Data Producer Data
 
       model: {
+
         // Risk Factors
+        Q1: '',
+        Q1_ICD: '',
+        Q1_SPECIFY: '',
+        Q2: '',
+        Q3: '',
+        Q3_SPECIFY: '',
+        Q4: '',
+        Q4_SPECIFY: '',
+        Q5: '',
+        Q6: '',
+        Q6_ICD: '',
+        Q6_SPECIFY: '',
+        Q7: '',
+        Q7_SPECIFY: '',
+        Q8: '',
+        Q8_SPECIFY: '',
+        Q9: '',
+        Q10: '',
+        Q10_SPECIFY: '',
+        Q11: '',
+        Q12: '',
 
         // Protective Factors
+        PQ1: '',
+        PQ2: '',
+        PQ3: '',
+        PQ4: '',
+        PQ5: '',
+        PQ6: '',
 
         // The Self-harm Act and Suicidal Intent
         secA: {
@@ -198,20 +302,505 @@ export default {
         level: [],
 
         // Hospital Management
+        REFERRAL: '',
+        REFERRAL_SPECIFY: '',
+        ARRIVAL_MODE: '',
+        ARRIVAL_SPECIFY: '',
+        FIRST_ASSESSMENT_DATE: '',
+        FIRST_ASSESSMENT_TIME: '',
+        PHYSICAL_CONSEQ: '',
+        PHYSICAL_CONSEQ_SPECIFY: '',
+        ADMISSION: '',
+        ADMISSION_SPECIFY: '',
+        DISCHARGE_STATUS: '',
+        DISCHARGE_DATE: '',
+        NO_OF_DAYS: '',
+        MAIN_DIAGNOSIS: '',
+        EXTERNAL_DIAGNOSIS: '',
+        PSYMX: [],
+        PSYMX_SPECIFY: '',
 
         // Source Data Producer
+        REG_OFF_NAME: '',
+        DESIGNATION: '',
+        REPORT_DATE: '',
+        HOSPITAL_NAME: '',
+        PSYCHIATRIST_NAME: '',
+        VERIFICATION_DATE: '',
 
       },
       // Risk Factors
       tabASchema: {
-        fields: [
-
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '1. Presence of psychiatric disorder',
+                model: 'Q1',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q1_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  closeOnSelect: false,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q1 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '2. Hopelessness or despair',
+                model: 'Q2',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '3. Previous suicide attempt',
+                model: 'Q3',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'input',
+                inputType: 'number',
+                placeholder: 'Please specify (times)',
+                model: 'Q3_SPECIFY',
+                min: 0,
+                required: true,
+                validator: 'number',
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q3 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '4. Presence of substance use/abuse',
+                model: 'Q4',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q4_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Alcohol', value: 0 },
+                  { name: 'Opioids', value: 1 },
+                  { name: 'Cannabinoids', value: 2 },
+                  { name: 'Sedatives or hypnotics', value: 3 },
+                  { name: 'Cocaine', value: 4 },
+                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+                  { name: 'Hallucinogens', value: 6 },
+                  { name: 'Volatile solvents', value: 7 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q4 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '5. Family history of suicidal behaviour',
+                model: 'Q5',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '6. Family history of psychiatric disorder',
+                model: 'Q6',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q6_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q6 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '7. Family histroy of substance abuse',
+                model: 'Q7',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q7_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Alcohol', value: 0 },
+                  { name: 'Opioids', value: 1 },
+                  { name: 'Cannabinoids', value: 2 },
+                  { name: 'Sedatives or hypnotics', value: 3 },
+                  { name: 'Cocaine', value: 4 },
+                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+                  { name: 'Hallucinogens', value: 6 },
+                  { name: 'Volatile solvents', value: 7 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q7 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '8. Stressful life events',
+                model: 'Q8',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q8_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Intimate relationship problems', value: 0 },
+                  { name: 'Other relationship problems', value: 1 },
+                  { name: 'Death of loved one', value: 2 },
+                  { name: 'Job-related problems', value: 3 },
+                  { name: 'Financial problems', value: 4 },
+                  { name: 'Academic-related problems', value: 5 },
+                  { name: 'Criminals/Legal problems', value: 6 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q8 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '9. Isolation, rejection, or feelings of shame',
+                model: 'Q9',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '10. Chronic physical illness or condition',
+                model: 'Q10',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify (can choose more than 1)',
+                model: 'Q10_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5'],
+                visible: function (model) {
+                  return model && model.Q10 === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '11. History of physical, sexual or emotional abuse',
+                model: 'Q11',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: '12. Access to lethal methods/weapons',
+                model: 'Q12',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'stretch-row'],
+              },
+            ],
+          },
         ],
       },
       // Protective Factors
       tabBSchema: {
         fields: [
-
+          {
+            type: 'radios',
+            label: '1. Ability to cope with stress/tolerate frustrations',
+            model: 'PQ1',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '2. Strongly held religious/cultural beliefs',
+            model: 'PQ2',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '3. Realistic life goals or future plans',
+            model: 'PQ3',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '4. Responsibility to children/beloved pets',
+            model: 'PQ4',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '5. Social support',
+            model: 'PQ5',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
+          {
+            type: 'radios',
+            label: '6. Positive therapeutic relationship',
+            model: 'PQ6',
+            values: [
+              { name: 'No', value: 0 },
+              { name: 'Yes', value: 1 },
+            ],
+            required: true,
+            validator: 'required',
+            styleClasses: ['stretch-row'],
+          },
         ],
       },
 
@@ -895,15 +1484,375 @@ export default {
       },
       // Hospital Management
       tabESchema: {
-        fields: [
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Referral or Contact point',
+                model: 'REFERRAL',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectReferral
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'REFERRAL_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.REFERRAL.value === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mode of Arrival',
+                model: 'ARRIVAL_MODE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectArrivalMode
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'ARRIVAL_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ARRIVAL_MODE.value === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'First psychiatry assessment after current attempt',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'FIRST_ASSESSMENT_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'time',
+                label: 'Time',
+                model: 'FIRST_ASSESSMENT_TIME',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Physical consequences of current attempt',
+                model: 'PHYSICAL_CONSEQ',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.radioPhysicalConseq
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'PHYSICAL_CONSEQ_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PHYSICAL_CONSEQ === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is patient admitted for current attempt?',
+                model: 'ADMISSION',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioAdmission
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify the first admitting ward',
+                model: 'ADMISSION_SPECIFY',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ADMISSION === 1
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Status on discharge',
+                model: 'DISCHARGE_STATUS',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioDischargeStatus
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge details',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DISCHARGE_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'number',
+                label: 'Number of days in ward',
+                model: 'NO_OF_DAYS',
+                min: 0,
+                required: true,
+                validator: 'number',
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge Diagnosis (ICD)',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Main diagnosis',
+                placeholder: 'Please specify',
+                model: 'MAIN_DIAGNOSIS',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'External causes',
+                placeholder: 'Please specify',
+                model: 'EXTERNAL_DIAGNOSIS',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-5'],
+              },
 
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'checklist',
+                label: 'PSY Mx on Discharge',
+                model: 'PSYMX',
+                required: true,
+                validator: 'array',
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectPSYMX
+                },
+              },
+              // {
+              //   type: "vueMultiSelect",
+              //   placeholder: "Please select",
+              //   label: "PSY Mx on Discharge",
+              //   model: "PSYMX",
+              //   required: true,
+              //   validator: "array",
+              //   selectOptions: {
+              //     multiple: true,
+              //     closeOnSelect: false,
+              //     maxHeight: 200,
+              //     showLabels: false,
+              //     key: "value",
+              //     label: "name"
+              //   },
+              //   styleClasses: ["col-md-6"],
+              //   values: () => {
+              //       return this.selectPSYMX
+              //     },
+              // },
+              {
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Please specify',
+                model: 'PSYMX_SPECIFY',
+                label: '',
+                validator: 'string',
+                required: true,
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PSYMX.includes(99)
+                },
+              },
+            ],
+          },
         ],
       },
 
       // Source Data Producer
       tabFSchema: {
-        fields: [
-
+        groups: [
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Registering Officer',
+                model: 'REG_OFF_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Hospital',
+                model: 'HOSPITAL_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Designation',
+                model: 'DESIGNATION',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name of Psychiatrist',
+                model: 'PSYCHIATRIST_NAME',
+                validator: 'string',
+                required: true,
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date of Reporting',
+                model: 'REPORT_DATE',
+                min: '1990-01-01',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date of Verification',
+                model: 'VERIFICATION_DATE',
+                min: '1990-01-01',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
         ],
       },
 
@@ -1123,5 +2072,16 @@ export default {
 
   .close-button:focus {
     box-shadow: none !important;
+  }
+
+  .stretch-row {
+    display: flex !important;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .vue-form-generator .field-radios .radio-list label {
+    display: inline-table;
+    margin-right: 1rem;
   }
 </style>

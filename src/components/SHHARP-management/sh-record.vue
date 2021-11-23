@@ -1,0 +1,150 @@
+<template>
+  <va-card>
+
+    <div class="row align--center">
+      <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
+      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient_registration'}">+</va-button></div>
+    </div>
+
+    <div class="row">
+      <div class="flex xs12 md6">
+        <va-input
+          :value="term"
+          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
+          @input="search"
+          removable
+        >
+          <va-icon name="fa fa-search" slot="prepend" />
+        </va-input>
+      </div>
+    </div>
+
+    <va-data-table
+      :fields="fields"
+      :data="filteredData"
+      :per-page="parseInt(perPage)"
+      @row-clicked="showUser"
+      :hoverable="true"
+      clickable
+    >
+    </va-data-table>
+
+    <div class="row">
+      <div class="flex xs12 md2 offset--md10">
+        <va-select
+          v-model="perPage"
+          :label="$t('tables.perPage')"
+          :options="perPageOptions"
+          noClear
+        />
+      </div>
+    </div>
+
+  </va-card>
+</template>
+
+<script>
+import { debounce } from 'lodash'
+import users from '../../data/patient.json'
+
+export default {
+  data () {
+    return {
+      term: '',
+      no: 1,
+      perPage: '5',
+      perPageOptions: ['5', '10', '50', '100'],
+      users: users,
+    }
+  },
+  computed: {
+    fields () {
+      return [{
+        name: 'no',
+        title: this.$t('NO'),
+        width: '30px',
+        height: '45px',
+        dataClass: 'text-center',
+      }, {
+        name: 'mrn',
+        title: this.$t('MRN'),
+        width: '15%',
+      }, {
+        name: 'name',
+        title: this.$t('NAME'),
+        width: '20%',
+      }, {
+        name: 'age',
+        title: this.$t('AGE'),
+        width: '10%',
+      }, {
+        name: 'nric/passport',
+        title: this.$t('NRIC/PASSPORT'),
+        width: '20%',
+      }, {
+        name: 'next visit',
+        title: this.$t('LAST SEEN'),
+        width: '10%',
+      },
+      {
+        name: 'assigned doctor',
+        title: this.$t('ATTENDED BY'),
+        width: '20%',
+      }]
+    },
+    filteredData () {
+      if ((!this.term || this.term.length < 1) && this.branch === '' && this.service === '') {
+        return this.users
+      }
+
+      return this.users.filter(item => {
+        return item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase())
+      })
+    },
+  },
+  methods: {
+    getTrendIcon (user) {
+      if (user.trend === 'up') {
+        return 'fa fa-caret-up'
+      }
+
+      if (user.trend === 'down') {
+        return 'fa fa-caret-down'
+      }
+
+      return 'fa fa-minus'
+    },
+    getTrendColor (user) {
+      if (user.trend === 'up') {
+        return 'primary'
+      }
+
+      if (user.trend === 'down') {
+        return 'danger'
+      }
+
+      return 'grey'
+    },
+    showUser (user) {
+      // alert(JSON.stringify(user))
+      this.$router.push({ name: 'patient_consultation' })
+    },
+    search: debounce(function (term) {
+      this.term = term
+    }, 400),
+  },
+}
+</script>
+
+<style>
+thead {
+  background-color: #bbf2eb;
+}
+
+.va-card__header-title {
+  color: #000000 !important;
+  font-size: 1rem !important;
+}
+</style>
