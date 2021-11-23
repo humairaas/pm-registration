@@ -112,6 +112,7 @@ export const navigationRoutes = {
     },
     ],
   },
+  // SHARRP Management
   {
     name: 'SHHARP-management',
     displayName: 'SHHARP Management',

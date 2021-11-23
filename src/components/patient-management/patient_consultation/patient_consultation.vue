@@ -274,7 +274,7 @@ export default {
 
 <style lang="scss">
   .app-layout__main {
-    background: #e8e8e8;
+    background: hsl(0, 0%, 91%);
   }
 
   .p {

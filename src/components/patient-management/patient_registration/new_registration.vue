@@ -2146,7 +2146,7 @@ export default {
 
 <style lang="scss">
   .app_layout__main {
-    background: #686868;
+    background: hsl(0, 0%, 91%);
   }
 
   .display-inline label {

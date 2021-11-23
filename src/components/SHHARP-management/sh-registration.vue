@@ -9,23 +9,27 @@
           <va-card>
             <br>
             <b-tabs content-class="mt-3">
-              <b-tab title="Tab A" active>
-                <p>I'm the first tab</p>
+              <b-tab title="Risk Factors" active>
+                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
+                </vue-form-generator>
               </b-tab>
-              <b-tab title="Tab B">
-                <p>I'm the second tab</p>
+              <b-tab title="Protective Factors">
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
+                </vue-form-generator>
               </b-tab>
-              <b-tab title="Tab C" active>
+              <b-tab title="Tab C">
                 <p>I'm the first tab</p>
               </b-tab>
               <b-tab title="Tab D">
                 <p>I'm the second tab</p>
               </b-tab>
-              <b-tab title="Tab E" active>
-                <p>I'm the first tab</p>
+              <b-tab title="Hospital Management">
+                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
+                </vue-form-generator>
               </b-tab>
-              <b-tab title="Tab F">
-                <p>I'm the second tab</p>
+              <b-tab title="Source Data Producer">
+                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
+                </vue-form-generator>
               </b-tab>
             </b-tabs>
           </va-card>
@@ -112,6 +116,35 @@ export default {
       submitPath: false,
 
       // Risk Factors Data
+      selectDiagnosis: [
+        'one',
+        'two',
+        'three',
+        'four',
+        'five',
+        'six',
+      ],
+
+      selectSubstance: [
+        { name: 'Alcohol', value: 0 },
+        { name: 'Opioids', value: 1 },
+        { name: 'Cannabinoids', value: 2 },
+        { name: 'Sedatives or hypnotics', value: 3 },
+        { name: 'Cocaine', value: 4 },
+        { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+        { name: 'Hallucinogens', value: 6 },
+        { name: 'Volatile solvents', value: 7 },
+      ],
+
+      selectStressfulLifeEvents: [
+        { name: 'Intimate relationship problems', value: 0 },
+        { name: 'Other relationship problems', value: 1 },
+        { name: 'Death of loved one', value: 2 },
+        { name: 'Job-related problems', value: 3 },
+        { name: 'Financial problems', value: 4 },
+        { name: 'Academic-related problems', value: 5 },
+        { name: 'Criminals/Legal problems', value: 6 },
+      ],
 
       // Protective Factors Data
 
@@ -124,7 +157,29 @@ export default {
       // Source Data Producer Data
 
       model: {
+
         // Risk Factors
+        Q1: '',
+        Q1_ICD: '',
+        Q1_SPECIFY: '',
+        Q2: '',
+        Q3: '',
+        Q3_SPECIFY: '',
+        Q4: '',
+        Q4_SPECIFY: '',
+        Q5: '',
+        Q6: '',
+        Q6_ICD: '',
+        Q6_SPECIFY: '',
+        Q7: '',
+        Q7_SPECIFY: '',
+        Q8: '',
+        Q8_SPECIFY: '',
+        Q9: '',
+        Q10: '',
+        Q10_SPECIFY: '',
+        Q11: '',
+        Q12: '',
 
         // Protective Factors
 
@@ -140,8 +195,473 @@ export default {
 
       // Risk Factors
       tabASchema: {
-        fields: [
-
+        groups: [
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '1'><li class='label-width'>Presence of psychiatric disorder</li></ol>",
+                model: 'Q1',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q1_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  closeOnSelect: false,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q1 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '2'><li class='label-width'>Hopelessness or despair</li></ol>",
+                model: 'Q2',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '3'><li class='label-width'> Previous suicide attempt</li></ol>",
+                model: 'Q3',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'number',
+                placeholder: 'Please specify (times)',
+                model: 'Q3_SPECIFY',
+                min: 0,
+                required: true,
+                validator: 'number',
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q3 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '4'><li class='label-width'>Presence of substance use/abuse</li></ol>",
+                model: 'Q4',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q4_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Alcohol', value: 0 },
+                  { name: 'Opioids', value: 1 },
+                  { name: 'Cannabinoids', value: 2 },
+                  { name: 'Sedatives or hypnotics', value: 3 },
+                  { name: 'Cocaine', value: 4 },
+                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+                  { name: 'Hallucinogens', value: 6 },
+                  { name: 'Volatile solvents', value: 7 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q4 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '5'><li class='label-width'>Family history of suicidal behaviour</li></ol>",
+                model: 'Q5',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '6'><li class='label-width'>Family history of psychiatric disorder</li></ol>",
+                model: 'Q6',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q6_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q6 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '7'><li class='label-width'>Family histroy of substance abuse</li></ol>",
+                model: 'Q7',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q7_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Alcohol', value: 0 },
+                  { name: 'Opioids', value: 1 },
+                  { name: 'Cannabinoids', value: 2 },
+                  { name: 'Sedatives or hypnotics', value: 3 },
+                  { name: 'Cocaine', value: 4 },
+                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
+                  { name: 'Hallucinogens', value: 6 },
+                  { name: 'Volatile solvents', value: 7 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q7 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '8'><li class='label-width'>Stressful life events</li></ol>",
+                model: 'Q8',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q8_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  { name: 'Intimate relationship problems', value: 0 },
+                  { name: 'Other relationship problems', value: 1 },
+                  { name: 'Death of loved one', value: 2 },
+                  { name: 'Job-related problems', value: 3 },
+                  { name: 'Financial problems', value: 4 },
+                  { name: 'Academic-related problems', value: 5 },
+                  { name: 'Criminals/Legal problems', value: 6 },
+                ],
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q8 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '9'><li class='label-width'>Isolation, rejection, or feelings of shame</li></ol>",
+                model: 'Q9',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '10'><li class='label-width'>Chronic physical illness or condition</li></ol>",
+                model: 'Q10',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify (can choose more than 1)',
+                model: 'Q10_SPECIFY',
+                required: true,
+                validator: 'required',
+                values: [
+                  'one',
+                  'two',
+                  'three',
+                  'four',
+                  'five',
+                  'six',
+                  'seven',
+                  'eight',
+                ],
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: ['col-md-5', 'mb-0'],
+                visible: function (model) {
+                  return model && model.Q10 === 1
+                },
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'odd-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '11'><li class='label-width'>History of physical, sexual or emotional abuse</li></ol>",
+                model: 'Q11',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'odd-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'even-row'],
+            fields: [
+              {
+                type: 'radios',
+                label: "<ol start = '12'><li class='label-width'>Access to lethal methods/weapons</li></ol>",
+                model: 'Q12',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-7', 'even-row', 'mb-0'],
+                disabled: () => {
+                  return this.disable
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: 'groupBtn',
+            fields: [
+              {
+                type: 'submit',
+                onSubmit: () => {
+                  this.redirectToNext()
+                },
+                label: '',
+                buttonText: 'Next',
+                validateBeforeSubmit: true,
+                visible: () => {
+                  return this.showButton
+                },
+              },
+            ],
+          },
         ],
       },
       // Protective Factors
