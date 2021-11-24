@@ -186,131 +186,27 @@ export default {
       submitPath: false,
 
       // Demographic  Data
-      selectSalutation: [
-        { name: 'MR.', value: 1 },
-        { name: 'MRS.', value: 2 },
-      ],
-      radioCitizenship: [
-        { value: 1, name: 'Malaysian' },
-        { value: 2, name: 'Permanent Resident' },
-        { value: 3, name: 'Foreigner' },
-      ],
-      selectNRICType: [
-        { name: 'Old IC', value: 1 },
-        { name: 'New IC', value: 2 },
-        { name: 'Army', value: 3 },
-        { name: 'Police', value: 4 },
-        { name: "Mother's IC", value: 5 },
-        { name: "Father's IC", value: 6 },
-        { name: 'Work Permit', value: 7 },
-        { name: 'Passport', value: 8 },
-        { name: 'Birth Certificate', value: 9 },
-        { name: 'Pension Card', value: 10 },
-        { name: 'Others (Please Specify)', value: 11 },
-      ],
-      radioGender: [
-        { value: 1, name: 'Male' },
-        { value: 2, name: 'Female' },
-      ],
-      selectServiceType: [
-        { name: 'Consultation', value: 1 },
-        { name: 'Rehabilitation', value: 2 },
-        { name: 'Rehabilitation - SE', value: 3 },
-        { name: 'Rehabilitation - ETP', value: 4 },
-        { name: 'Rehabilitation - Job Club', value: 5 },
-        { name: 'Community Psychiatric Service (CPS)', value: 6 },
-      ],
-      selectReferralType: [
-        { name: 'Self-Referral', value: 1 },
-        { name: 'Psychiatric Department Own Hospital', value: 2 },
-        { name: 'Government Clinic', value: 3 },
-        { name: 'Private Clinic', value: 4 },
-        { name: 'Government Hospital', value: 5 },
-        { name: 'Private Hospital', value: 6 },
-        { name: 'Others', value: 7 },
-      ],
-      selectIssuingCountry: [
-        { id: '1', name: 'Malaysia' },
-        { id: '2', name: 'China' },
-        { id: '3', name: 'India' },
-      ],
+      selectSalutation: [],
+      radioCitizenship: [],
+      selectNRICType: [],
+      radioGender: [],
+      selectServiceType: [],
+      selectReferralType: [],
+      selectIssuingCountry: [],
       selectState: [],
-
-      selectDMCity: [
-        { id: '1', name: 'Subang Jaya' },
-        { id: '2', name: 'Klang' },
-        { id: '3', name: 'Ampang Jaya' },
-        { id: '3', name: 'Shah Alam' },
-        { id: '3', name: 'Petaling Jaya' },
-        { id: '3', name: 'Cheras' },
-        { id: '3', name: 'Kajang' },
-        { id: '3', name: 'Selayang Baru' },
-        { id: '3', name: 'Rawang' },
-        { id: '3', name: 'Taman Greenwood' },
-        { id: '3', name: 'Semenyih' },
-        { id: '3', name: 'Serdang' },
-      ],
-
-      selectDMPostcode: [
-        '54200',
-        '53849',
-      ],
-
-      selectBranch: [
-        { name: 'Mentari Selayang', value: 1 },
-        { name: 'Mentari Klang', value: 2 },
-        { name: 'Mentari Kluang', value: 3 },
-      ],
+      selectDMCity: [],
+      selectDMPostcode: [],
+      selectBranch: [],
 
       // Socio Demographic Data
-      selectRace: [
-        { name: 'Malay', value: 1 },
-        { name: 'Chinese', value: 2 },
-        { name: 'Indian', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectReligion: [
-        { name: 'Islam', value: 1 },
-        { name: 'Buddha', value: 2 },
-        { name: 'Hindu', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectMaritalStatus: [
-        { name: 'Single', value: 1 },
-        { name: 'Married', value: 2 },
-        { name: 'Widowed', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectAccommodation: [
-        { name: 'Homeless', value: 1 },
-        { name: 'Institution', value: 2 },
-        { name: 'Nursing Home', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectEducationLevel: [
-        { name: 'No Info', value: 1 },
-        { name: 'Primary', value: 2 },
-        { name: 'Secondary', value: 3 },
-        { name: 'Tertiary', value: 4 },
-      ],
-      selectOccupationStatus: [
-        { name: 'Employee', value: 1 },
-        { name: 'Employer', value: 2 },
-        { name: 'student', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectFeeExemptionStatus: [
-        { name: 'Government Servant', value: 1 },
-        { name: 'People with Disability (OKU)', value: 2 },
-        { name: 'Pensioner', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
-      selectOccupationSector: [
-        { name: 'Government', value: 1 },
-        { name: 'Private', value: 2 },
-        { name: 'Self-Employed', value: 3 },
-        { name: 'Others', value: 4 },
-      ],
+      selectRace: [],
+      selectReligion: [],
+      selectMaritalStatus: [],
+      selectAccommodation: [],
+      selectEducationLevel: [],
+      selectOccupationStatus: [],
+      selectFeeExemptionStatus: [],
+      selectOccupationSector: [],
 
       // Next of Kin Data
       selectRelationship: [],
@@ -553,7 +449,7 @@ export default {
             model: 'GENDER',
             required: true,
             validator: 'required',
-            styleClasses: 'col-md-12 display-inline',
+            styleClasses: 'col-12',
             values: () => {
               return this.radioGender
             },
@@ -726,15 +622,15 @@ export default {
               label: 'name',
             },
             styleClasses: 'col-md-6',
-            values: () => {
-              return this.selectState
-            },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.id)
+                .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
                 .then((response) => {
-                  model.selectCity = response.data.data
+                  model.selectDMCity = response.data.data
                 })
+            },
+            values: () => {
+              return this.selectState
             },
           },
           {
@@ -753,13 +649,13 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectCity
+              return model.selectDMCity
             },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.id)
+                .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
                 .then((response) => {
-                  model.selectPostcode = response.data.data
+                  model.selectDMPostcode = response.data.data
                 })
             },
           },
@@ -785,6 +681,7 @@ export default {
         ],
         groups: [
           {
+            styleClasses: ['row'],
             fields: [
               {
                 type: 'radios',
@@ -796,7 +693,7 @@ export default {
                   { value: 2, name: 'No' },
                 ],
                 validator: 'required',
-                styleClasses: 'col-md-6 display-inline',
+                styleClasses: 'col-md-6',
               },
               {
                 type: 'vueMultiSelect',
@@ -820,13 +717,11 @@ export default {
                 visible: function (model) {
                   return model && model.EXISTING_PATIENT === 1
                 },
+                onChanged: function (model) {
+                  model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
+                },
               },
             ],
-            onChanged: function (model) {
-              model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
-            },
-            validator: 'required',
-            styleClasses: 'col-md-12 display-inline',
           },
         ],
       },
@@ -1527,7 +1422,7 @@ export default {
             model: 'GENDER',
             required: true,
             validator: 'required',
-            styleClasses: 'col-md-12 display-inline',
+            styleClasses: 'col-12 display-inline',
             values: () => {
               return this.radioGender
             },
@@ -1903,82 +1798,102 @@ export default {
         this.selectState = response.data.data
       })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getSalutation')
-    //     .then((response) =>{
-    //         this.selectSalutation = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getSalutation')
+      .then((response) => {
+        this.selectSalutation = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getIssuingCountry')
-    //     .then((response) =>{
-    //         this.selectIssuingCountry = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getCitizenship')
+      .then((response) => {
+        this.radioCitizenship = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getServiceType')
-    //     .then((response) =>{
-    //         this.selectServiceType = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getNRICType')
+      .then((response) => {
+        this.selectNRICType = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getReferralType')
-    //     .then((response) =>{
-    //         this.selectReferralType = response.data.data
-    //     })
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getBranch')
-    //     .then((response) =>{
-    //         this.selectBranch = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getIssuingCountry')
+      .then((response) => {
+        this.selectIssuingCountry = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getRace')
-    //     .then((response) =>{
-    //         this.selectRace = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getGender')
+      .then((response) => {
+        this.radioGender = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getReligion')
-    //     .then((response) =>{
-    //         this.selectReligion = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getServiceType')
+      .then((response) => {
+        this.selectServiceType = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getMaritalStatus')
-    //     .then((response) =>{
-    //         this.selectMaritalStatus = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getReferralType')
+      .then((response) => {
+        this.selectReferralType = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getAccommodation')
-    //     .then((response) =>{
-    //         this.selectAccommodation = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getBranch')
+      .then((response) => {
+        this.selectBranch = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getEducationLevel')
-    //     .then((response) =>{
-    //         this.selectEducationLevel = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getRace')
+      .then((response) => {
+        this.selectRace = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getOccupationStatus')
-    //     .then((response) =>{
-    //         this.selectOccupationStatus = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getReligion')
+      .then((response) => {
+        this.selectReligion = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getFeeExemptionStatus')
-    //     .then((response) =>{
-    //         this.selectFeeExemptionStatus = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getMaritalStatus')
+      .then((response) => {
+        this.selectMaritalStatus = response.data.data
+      })
 
-    // this.$axios
-    //     .get('http://127.0.0.1:8000/api/getOccupationSector')
-    //     .then((response) =>{
-    //         this.selectOccupationSector = response.data.data
-    //     })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAccommodation')
+      .then((response) => {
+        this.selectAccommodation = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getEducationLevel')
+      .then((response) => {
+        this.selectEducationLevel = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getOccupationStatus')
+      .then((response) => {
+        this.selectOccupationStatus = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getFeeExemptionStatus')
+      .then((response) => {
+        this.selectFeeExemptionStatus = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getOccupationSector')
+      .then((response) => {
+        this.selectOccupationSector = response.data.data
+      })
+
     this.$axios
       .get('http://127.0.0.1:8000/api/getRelationship')
       .then((response) => {
