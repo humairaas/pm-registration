@@ -8,9 +8,10 @@
           <!-- Form -->
           <va-card>
             <br>
-            <!-- RISK FACTORS -->
-            <b-tabs content-class="mt-3" justified>
-              <b-tab title="Risk Factors" active>
+            <b-tabs content-class="mt-3" v-model="tabIndex" fill>
+
+              <!-- RISK FACTORS -->
+              <b-tab title="Risk Factors" class="py-3 pr-2" active>
                 <br/>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
@@ -24,110 +25,128 @@
               </b-tab>
 
               <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
-              <b-tab title="The Self-Harm Act and Suicidal Intent">
-                <div class="py-3">
-                  <va-accordion >
-                    <!-- Section A -->
-                    <va-collapse>
-                      <span slot="header">
-                        Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
-                      </span>
-                      <div slot="body">
-                        <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" @model-updated="onModelUpdated" >
-                        </vue-form-generator>
-                      </div>
-                    </va-collapse>
+              <b-tab title="The Self-Harm Act and Suicidal Intent" class="py-3">
+                <va-accordion >
+                  <!-- Section A -->
+                  <va-collapse>
+                    <span slot="header">
+                      Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
+                    </span>
+                    <div slot="body">
+                      <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" @model-updated="onModelUpdated" >
+                      </vue-form-generator>
+                    </div>
+                  </va-collapse>
 
-                    <!-- Section B -->
-                    <va-collapse>
-                      <span slot="header">
-                        Section B:<br><b>METHOD OF SELF-HARM</b> (please document the recent method only)
-                      </span>
-                      <div slot="body">
-                        <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
-                        <div class="row">
-                          <div class="col-lg-auto">
-                            <vue-form-generator :schema="tabCB1Schema" :model="model" :options="formOptions" ref="selfHarmSectionB1" @model-updated="onModelUpdated" ></vue-form-generator>
-                          </div>
-                          <div class="col-lg">
-                            <vue-form-generator :schema="tabCB2Schema" :model="model" :options="formOptions" ref="selfHarmSectionB2" @model-updated="onModelUpdated" ></vue-form-generator>
-                          </div>
+                  <!-- Section B -->
+                  <va-collapse>
+                    <span slot="header">
+                      Section B:<br><b>METHOD OF SELF-HARM</b> (please document the recent method only)
+                    </span>
+                    <div slot="body">
+                      <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+                      <div class="row">
+                        <div class="col-lg-auto">
+                          <vue-form-generator :schema="tabCB1Schema" :model="model" :options="formOptions" ref="selfHarmSectionB1" @model-updated="onModelUpdated" ></vue-form-generator>
+                        </div>
+                        <div class="col-lg">
+                          <vue-form-generator :schema="tabCB2Schema" :model="model" :options="formOptions" ref="selfHarmSectionB2" @model-updated="onModelUpdated" ></vue-form-generator>
                         </div>
                       </div>
-                    </va-collapse>
+                    </div>
+                  </va-collapse>
 
-                    <!-- Section C -->
-                    <va-collapse>
-                      <span slot="header">
-                        Section C:<br><b>HOW DID PATIENT GET IDEA ABOUT METHOD</b>
-                      </span>
-                      <div slot="body">
-                        <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
-                        <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions" ref="selfHarmSectionC" @model-updated="onModelUpdated"></vue-form-generator>
-                      </div>
-                    </va-collapse>
+                  <!-- Section C -->
+                  <va-collapse>
+                    <span slot="header">
+                      Section C:<br><b>HOW DID PATIENT GET IDEA ABOUT METHOD</b>
+                    </span>
+                    <div slot="body">
+                      <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+                      <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions" ref="selfHarmSectionC" @model-updated="onModelUpdated"></vue-form-generator>
+                    </div>
+                  </va-collapse>
 
-                    <!-- Section D -->
-                    <va-collapse>
-                      <span slot="header">
-                        Section D:<br><b>SUICIDAL INTENT</b>
-                      </span>
-                      <div slot="body">
-                        <div class="row mt-3">
-                          <div class="col-lg-3 mt-2">
-                            <vue-form-generator :schema="tabCD1Schema" :model="model" :options="formOptions" ref="selfHarmSectionD1" @model-updated="onModelUpdated"></vue-form-generator>
-                          </div>
-                          <div class="col-lg">
-                            <vue-form-generator :schema="tabCD2Schema" :model="model" :options="formOptions" ref="selfHarmSectionD2" @model-updated="onModelUpdated"></vue-form-generator>
-                          </div>
+                  <!-- Section D -->
+                  <va-collapse>
+                    <span slot="header">
+                      Section D:<br><b>SUICIDAL INTENT</b>
+                    </span>
+                    <div slot="body">
+                      <div class="row mt-3">
+                        <div class="col-lg-3 mt-2">
+                          <vue-form-generator :schema="tabCD1Schema" :model="model" :options="formOptions" ref="selfHarmSectionD1" @model-updated="onModelUpdated"></vue-form-generator>
+                        </div>
+                        <div class="col-lg">
+                          <vue-form-generator :schema="tabCD2Schema" :model="model" :options="formOptions" ref="selfHarmSectionD2" @model-updated="onModelUpdated"></vue-form-generator>
                         </div>
                       </div>
-                    </va-collapse>
+                    </div>
+                  </va-collapse>
 
-                    <!-- Section E -->
-                    <va-collapse>
-                      <span slot="header">
-                        Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
-                      </span>
-                      <div slot="body">
-                        <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE" @model-updated="onModelUpdated"></vue-form-generator>
-                        <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="totalScore" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
-                      </div>
-                    </va-collapse>
-                  </va-accordion>
-                </div>
+                  <!-- Section E -->
+                  <va-collapse>
+                    <span slot="header">
+                      Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
+                    </span>
+                    <div slot="body">
+                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE" @model-updated="onModelUpdated"></vue-form-generator>
+                      <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="totalScore" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
+                    </div>
+                  </va-collapse>
+                </va-accordion>
               </b-tab>
+
               <!-- SUICIDE RISK -->
-              <b-tab title="Suicide Risk">
-                <div class="px-3 py-2 mb-3">
-                  <h6 class="mb-4">Instruction: Please tick (/) in the box provided</h6>
-                  <div class="row" >
-                    <div class="col-md-3 p-3">
-                      <b>Level of Suicide Risk for Current Attempt</b>
-                    </div>
-                    <div class="col-md box">
-                      <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
+              <b-tab title="Suicide Risk" class="px-3 py-2 mb-3">
+                <h6 class="mb-4">Instruction: Please tick (/) in the box provided</h6>
+                <div class="row" >
+                  <div class="col-md-3 p-3">
+                    <b>Level of Suicide Risk for Current Attempt</b>
+                  </div>
+                  <div class="col-md mt-3 mr-2 box">
+                    <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions" ref="suicideRisk" @model-updated="onModelUpdated"></vue-form-generator>
                   </div>
                 </div>
               </b-tab>
+
               <!-- HOSPITAL MANAGEMENT -->
-              <b-tab title="Hospital Management">
+              <b-tab title="Hospital Management" class="p-3">
                 <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
                 <h6>{{model}}</h6>
               </b-tab>
+
               <!-- SOURCE DATA PRODUCER -->
-              <b-tab title="Source Data Producer">
+              <b-tab title="Source Data Producer" class="p-3">
                 <br/>
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
             </b-tabs>
-            <button @click="validateTabC" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-              <div class="fa fa-paper-plane" /> &nbsp;Submit
-            </button>
+
+            <!-- Buttons -->
+            <div class="my-3">
+              <div class="float-left">
+                <button v-if="!tabIndex==0" @click="tabIndex--" type="button" class="btn btn-primary btn-fill btn-md">
+                  <div class="fa fa-step-backward" /> &nbsp; Previous
+                </button>
+              </div>
+              <div class="float-right">
+                <button v-if="tabIndex < 5" @click="tabIndex++" type="button" class="btn btn-info btn-fill btn-md">
+                  Next <div class="fa fa-step-forward" />
+                </button>
+
+                <button v-if="tabIndex==5" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
+                  <div class="fa fa-play-circle" /> &nbsp;Preview
+                </button>
+
+                <button v-if="tabIndex==5" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                  <div class="fa fa-paper-plane" /> &nbsp;Submit
+                </button>
+              </div>
+            </div>
           </va-card>
 
           <!-- Modal -->
@@ -139,17 +158,17 @@
             :hide-default-actions= "true"
           >
             <div class="modal-preview">
-              <h5 class="tab-title">1. Risk Factors</h5>
+              <h5 class="sh-tab-title">1. Risk Factors</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
-              <h5 class="tab-title">2. Protective Factors</h5>
+              <h5 class="sh-tab-title">2. Protective Factors</h5>
               <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
-              <h5 class="tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
+              <h5 class="sh-tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabCASchema"></vue-form-generator>
-              <h5 class="tab-title">4. Suicide Risk</h5>
+              <h5 class="sh-tab-title">4. Suicide Risk</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabDSchema"></vue-form-generator>
-              <h5 class="tab-title">5. Hospital Management</h5>
+              <h5 class="sh-tab-title">5. Hospital Management</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabESchema"></vue-form-generator>
-              <h5 class="tab-title">6. Source Data Producer</h5>
+              <h5 class="sh-tab-title">6. Source Data Producer</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabFSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
@@ -200,6 +219,8 @@ export default {
   },
   data () {
     return {
+      tabIndex: 1,
+
       tabA: false,
       tabB: false,
       tabC: false,
@@ -361,7 +382,7 @@ export default {
         INTENT_LEVEL: '',
 
         // Suicide Risk
-        RISK_LEVEL: [],
+        RISK_LEVEL: '',
 
         // Hospital Management
         REFERRAL: '',
@@ -390,15 +411,19 @@ export default {
         PSYCHIATRIST_NAME: '',
         VERIFICATION_DATE: '',
       },
-      // Risk Factors
+      // RISK FACTORS
       tabASchema: {
         groups: [
           {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '1. Presence of psychiatric disorder',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q1',
                 values: [
                   { name: 'No', value: 0 },
@@ -406,7 +431,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -423,7 +448,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 values: () => {
                   return this.selectDiagnosis
                 },
@@ -437,8 +462,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '2. Hopelessness or despair',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q2',
                 values: [
                   { name: 'No', value: 0 },
@@ -446,7 +475,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
             ],
           },
@@ -454,8 +483,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '3. Previous suicide attempt',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q3',
                 values: [
                   { name: 'No', value: 0 },
@@ -463,7 +496,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'input',
@@ -473,7 +506,7 @@ export default {
                 min: 0,
                 required: true,
                 validator: 'number',
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 visible: function (model) {
                   return model && model.Q3 === 1
                 },
@@ -484,8 +517,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '4. Presence of substance use/abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q4',
                 values: [
                   { name: 'No', value: 0 },
@@ -493,7 +530,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -509,7 +546,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: ['col-md-5', 'mb-0'],
+                styleClasses: 'col-md mb-0',
                 values: () => {
                   return this.selectSubstance
                 },
@@ -523,8 +560,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '5. Family history of suicidal behaviour',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q5',
                 values: [
                   { name: 'No', value: 0 },
@@ -532,7 +573,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
             ],
           },
@@ -540,8 +581,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '6. Family history of psychiatric disorder',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q6',
                 values: [
                   { name: 'No', value: 0 },
@@ -549,7 +594,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -566,7 +611,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 values: () => {
                   return this.selectDiagnosis
                 },
@@ -580,8 +625,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '7. Family histroy of substance abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q7',
                 values: [
                   { name: 'No', value: 0 },
@@ -589,7 +638,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -605,7 +654,7 @@ export default {
                   label: 'name',
                   key: 'value',
                 },
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 values: () => {
                   return this.selectSubstance
                 },
@@ -619,8 +668,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '8. Stressful life events',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q8',
                 values: [
                   { name: 'No', value: 0 },
@@ -628,7 +681,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -644,7 +697,7 @@ export default {
                   label: 'name',
                   key: 'value',
                 },
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 values: () => {
                   return this.selectStressfulLifeEvents
                 },
@@ -658,8 +711,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '9. Isolation, rejection, or feelings of shame',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q9',
                 values: [
                   { name: 'No', value: 0 },
@@ -667,7 +724,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
             ],
           },
@@ -675,8 +732,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '10. Chronic physical illness or condition',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q10',
                 values: [
                   { name: 'No', value: 0 },
@@ -684,7 +745,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
               {
                 type: 'vueMultiSelect',
@@ -700,7 +761,7 @@ export default {
                   limit: 3,
                   maxHeight: 200,
                 },
-                styleClasses: ['col-md-5'],
+                styleClasses: 'col-md',
                 values: () => {
                   return this.selectDiagnosis
                 },
@@ -714,8 +775,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '11. History of physical, sexual or emotional abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q11',
                 values: [
                   { name: 'No', value: 0 },
@@ -723,7 +788,7 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
             ],
           },
@@ -731,8 +796,12 @@ export default {
             styleClasses: ['row'],
             fields: [
               {
-                type: 'radios',
+                type: 'label',
                 label: '12. Access to lethal methods/weapons',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
                 model: 'Q12',
                 values: [
                   { name: 'No', value: 0 },
@@ -740,18 +809,22 @@ export default {
                 ],
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-7', 'stretch-row'],
+                styleClasses: 'col-md-auto display-inline',
               },
             ],
           },
         ],
       },
-      // Protective Factors
+      // PROTECTIVE FACTORS
       tabBSchema: {
         fields: [
           {
-            type: 'radios',
+            type: 'label',
             label: '1. Ability to cope with stress/tolerate frustrations',
+            styleClasses: 'col-md-6',
+          },
+          {
+            type: 'radios',
             model: 'PQ1',
             values: [
               { name: 'No', value: 0 },
@@ -759,11 +832,15 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
+          },
+          {
+            type: 'label',
+            label: '2. Strongly held religious/cultural beliefs',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'radios',
-            label: '2. Strongly held religious/cultural beliefs',
             model: 'PQ2',
             values: [
               { name: 'No', value: 0 },
@@ -771,11 +848,15 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
+          },
+          {
+            type: 'label',
+            label: '3. Realistic life goals or future plans',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'radios',
-            label: '3. Realistic life goals or future plans',
             model: 'PQ3',
             values: [
               { name: 'No', value: 0 },
@@ -783,11 +864,15 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
+          },
+          {
+            type: 'label',
+            label: '4. Responsibility to children/beloved pets',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'radios',
-            label: '4. Responsibility to children/beloved pets',
             model: 'PQ4',
             values: [
               { name: 'No', value: 0 },
@@ -795,11 +880,15 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
+          },
+          {
+            type: 'label',
+            label: '5. Social support',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'radios',
-            label: '5. Social support',
             model: 'PQ5',
             values: [
               { name: 'No', value: 0 },
@@ -807,11 +896,15 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
+          },
+          {
+            type: 'label',
+            label: '6. Positive therapeutic relationship',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'radios',
-            label: '6. Positive therapeutic relationship',
             model: 'PQ6',
             values: [
               { name: 'No', value: 0 },
@@ -819,11 +912,11 @@ export default {
             ],
             required: true,
             validator: 'required',
-            styleClasses: ['stretch-row'],
+            styleClasses: 'col-md-6 display-inline',
           },
         ],
       },
-      // The Self-harm Act and Suicidal Intent
+      // THE SELF-HARM ACT AND SUICIDAL INTENT
       // -Section A (1)
       tabCASchema: {
         fields: [
@@ -1308,33 +1401,9 @@ export default {
             label: 'Total Score',
             placeholder: 'Click Calculate',
             model: 'INTENT_SCORE',
-            buttons: [
-              {
-                label: 'Calculate',
-                onclick: (model) => {
-                  var errors = this.validateTabCE()
-                  if (errors) {
-                    var score = 0
-                    for (let i = 0; i < model.INTENTS.length; i++) {
-                      score += model.INTENTS[i]
-                    }
-                    model.INTENT_SCORE = score
-
-                    if (model.INTENT_SCORE <= 10) {
-                      model.INTENT_LEVEL = 'Low Intent'
-                    } else if (model.INTENT_SCORE > 10 && model.INTENT_SCORE <= 20) {
-                      model.INTENT_LEVEL = 'Medium Intent'
-                    } else {
-                      model.INTENT_LEVEL = 'High Intent'
-                    }
-                  }
-                },
-              },
-            ],
-            disabled: true,
             required: true,
-            validator: 'string',
-            styleClasses: 'col-md-3',
+            validator: 'integer',
+            styleClasses: 'col-md-3 read-only',
           },
           {
             type: 'input',
@@ -1342,78 +1411,98 @@ export default {
             label: 'Level of Suicidal Intent',
             placeholder: 'Click Calculate',
             model: 'INTENT_LEVEL',
-            disabled: true,
             required: true,
             validator: 'string',
-            styleClasses: 'col-md-3',
+            styleClasses: 'col-md-3 read-only',
+          },
+          {
+            type: 'submit',
+            buttonText: 'Calculate',
+            onSubmit: (model) => {
+              var errors = this.validateTabCE()
+              if (errors) {
+                var score = 0
+                for (let i = 0; i < model.INTENTS.length; i++) {
+                  score += model.INTENTS[i]
+                }
+                model.INTENT_SCORE = score
+
+                if (model.INTENT_SCORE <= 10) {
+                  model.INTENT_LEVEL = 'Low Intent'
+                } else if (model.INTENT_SCORE > 10 && model.INTENT_SCORE <= 20) {
+                  model.INTENT_LEVEL = 'Medium Intent'
+                } else {
+                  model.INTENT_LEVEL = 'High Intent'
+                }
+              }
+            },
+            styleClasses: 'col-md-auto margin-top',
           },
         ],
 
       },
 
-      // Suicide Risk
+      // SUICIDE RISK
       tabDSchema: {
         groups: [
           {
             fields: [
               {
-                type: 'checklist',
+                type: 'radios',
                 values: [
                   { value: 1, name: 'High' },
                 ],
-                listBox: true,
                 model: 'RISK_LEVEL',
-                styleClasses: 'col-4',
-                validator: 'required',
+                required: true,
+                styleClasses: 'col-3',
               },
               {
                 type: 'label',
                 label: 'Psychiatric diagnoses with severe symptoms or acute precipitating events; protective factors not relevant; high suicidal intent',
-                styleClasses: 'col-8',
+                styleClasses: 'col-9',
               },
             ],
           },
           {
             fields: [
               {
-                type: 'checklist',
+                type: 'radios',
                 values: [
                   { value: 2, name: 'Moderate' },
                 ],
-                listBox: true,
                 model: 'RISK_LEVEL',
-                styleClasses: 'col-4',
-                validator: 'required',
+                required: true,
+                styleClasses: 'col-3',
               },
               {
                 type: 'label',
                 label: 'Multiple risk factors, few protective factors, moderate suicidal intent',
-                styleClasses: 'col-8',
+                styleClasses: 'col-9',
               },
             ],
           },
           {
             fields: [
               {
-                type: 'checklist',
+                type: 'radios',
                 values: [
                   { value: 3, name: 'Low' },
                 ],
-                listBox: true,
                 model: 'RISK_LEVEL',
-                styleClasses: 'col-4',
+                required: true,
                 validator: 'required',
+                styleClasses: 'col-3',
               },
               {
                 type: 'label',
                 label: 'Modifiable risk factors, strong protective factors, no or low suicidal intent',
-                styleClasses: 'col-8',
+                styleClasses: 'col-9',
               },
             ],
           },
         ],
       },
-      // Hospital Management
+      // HOSPITAL MANAGEMENT
       tabESchema: {
         groups: [
           {
@@ -1712,7 +1801,7 @@ export default {
         ],
       },
 
-      // Source Data Producer
+      // SOURCE DATA PRODUCER
       tabFSchema: {
         groups: [
           {
@@ -1879,16 +1968,12 @@ export default {
       var errors = this.$refs.totalScore.validate()
       return errors
     },
+
     validateTabD () {
       var errors = this.$refs.suicideRisk.validate()
-      if (errors) {
-        this.tabD = false
-        return true
-      } else {
-        this.tabD = true
-        return false
-      }
+      return errors
     },
+
     validateTabE () {
       var errors = this.$refs.hospitalManagement.validate()
       if (errors) {
@@ -1991,6 +2076,11 @@ export default {
     background-color: #2c82e000;
   }
 
+  ul.va-unordered > li,
+  .content ul > li {
+    padding-left: 0;
+  }
+
   .dropdown {
     box-sizing: border-box;
   }
@@ -2009,11 +2099,11 @@ export default {
     padding: 10px;
   }
 
-  .tab-title {
+  .sh-tab-title {
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 10px;
-    background-color: #f2a444;
+    background-color: #bf1304;
     border-radius: 10px;
     color: white;
   }
@@ -2047,13 +2137,13 @@ export default {
     flex-wrap: wrap;
   }
 
-  // .vue-form-generator .field-radios .radio-list label {
+  // .vue-form-generator .field-radios .radio-list label{
   //   display: inline-table;
   //   margin-right: 1rem;
   // }
 
   .box {
-    border: 1px solid rgb(82, 81, 81);
+    border: 1px solid #918f8d;
     padding: 20px;
     border-radius: 10px;
   }
@@ -2064,11 +2154,24 @@ export default {
     overflow: auto;
   }
 
-  .red {
-    background-color: red;
+  .nav-tabs .nav-link {
+    border: 1px solid #918f8d;
+    color: #918f8d;
   }
 
-  .blue {
-    background-color: blue;
+  .nav-tabs .nav-link:hover {
+    border: 1px solid #bf1304;
+    color: #bf1304;
   }
+
+  .nav-tabs .nav-link.active {
+    background-color: #bf1304;
+    color: #ffffff;
+    border: 1px solid #bf1304;
+  }
+
+  .margin-top {
+    margin-top: 31px;
+  }
+
 </style>
