@@ -2083,7 +2083,7 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
-  .app_layout__main {
+  .app-layout__main {
     background: hsl(0, 0%, 91%);
   }
 

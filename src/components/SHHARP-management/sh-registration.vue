@@ -9,71 +9,121 @@
           <va-card>
             <br>
             <b-tabs content-class="mt-3">
+              <!-- Risk Factors -->
               <b-tab title="Risk Factors" active>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
                 <h6>{{model}}</h6>
               </b-tab>
-              <b-tab title="Protective Factors">
+              <!-- Protective Factors -->
+              <b-tab title="Protective Factors"
+                active-nav-item-class="font-weight-bold text-uppercase text-danger">
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </b-tab>
+
+              <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
               <b-tab title="The Self-Harm Act and Suicidal Intent">
-                <va-accordion>
-                  <va-collapse>
-                    <span slot="header">
-                      <b>Section A: CURRENT SELF-HARM ACT (within past 2 weeks from time of presentation)</b>
-                    </span>
-                    <div slot="body">
-                      <vue-form-generator :schema="tabCASchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
-                  </va-collapse>
-                  <va-collapse>
-                    <span slot="header">
-                      <b>Section B: METHOD OF SELF-HARM (please document the recent method only)</b>
-                    </span>
-                    <div slot="body">
-                      <vue-form-generator :schema="tabCBSchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
-                  </va-collapse>
-                  <va-collapse>
-                    <span slot="header">
-                      <b>Section C: HOW DID PATIENT GET IDEA ABOUT METHOD</b>
-                    </span>
-                    <div slot="body">
-                      <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
-                  </va-collapse>
-                  <va-collapse>
-                    <span slot="header">
-                      <b>Section D: SUICIDAL INTENT</b>
-                    </span>
-                    <div slot="body">
-                      <vue-form-generator :schema="tabCDSchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
-                  </va-collapse>
-                  <va-collapse>
-                    <span slot="header">
-                      <b>Section E: LEVEL OF SUICIDAL INTENT (Beck's Suicide Intent Scale)</b>
-                    </span>
-                    <div slot="body">
-                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions"></vue-form-generator>
-                    </div>
-                  </va-collapse>
-                </va-accordion>
+                <div class="py-3">
+                  <va-accordion >
+                    <!-- Section A -->
+                    <va-collapse>
+                      <span slot="header">
+                        Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
+                      </span>
+                      <div slot="body">
+                        <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" @model-updated="onModelUpdated" >
+                        </vue-form-generator>
+                      </div>
+                    </va-collapse>
+
+                    <!-- Section B -->
+                    <va-collapse>
+                      <span slot="header">
+                        Section B:<br><b>METHOD OF SELF-HARM</b> (please document the recent method only)
+                      </span>
+                      <div slot="body">
+                        <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+                        <div class="row">
+                          <div class="col-lg-auto">
+                            <vue-form-generator :schema="tabCB1Schema" :model="model" :options="formOptions" ref="selfHarmSectionB1" @model-updated="onModelUpdated" ></vue-form-generator>
+                          </div>
+                          <div class="col-lg">
+                            <vue-form-generator :schema="tabCB2Schema" :model="model" :options="formOptions" ref="selfHarmSectionB2" @model-updated="onModelUpdated" ></vue-form-generator>
+                          </div>
+                        </div>
+                      </div>
+                    </va-collapse>
+
+                    <!-- Section C -->
+                    <va-collapse>
+                      <span slot="header">
+                        Section C:<br><b>HOW DID PATIENT GET IDEA ABOUT METHOD</b>
+                      </span>
+                      <div slot="body">
+                        <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+                        <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions" ref="selfHarmSectionC" @model-updated="onModelUpdated"></vue-form-generator>
+                      </div>
+                    </va-collapse>
+
+                    <!-- Section D -->
+                    <va-collapse>
+                      <span slot="header">
+                        Section D:<br><b>SUICIDAL INTENT</b>
+                      </span>
+                      <div slot="body">
+                        <div class="row mt-3">
+                          <div class="col-lg-3 mt-2">
+                            <vue-form-generator :schema="tabCD1Schema" :model="model" :options="formOptions" ref="selfHarmSectionD1" @model-updated="onModelUpdated"></vue-form-generator>
+                          </div>
+                          <div class="col-lg">
+                            <vue-form-generator :schema="tabCD2Schema" :model="model" :options="formOptions" ref="selfHarmSectionD2" @model-updated="onModelUpdated"></vue-form-generator>
+                          </div>
+                        </div>
+                      </div>
+                    </va-collapse>
+
+                    <!-- Section E -->
+                    <va-collapse>
+                      <span slot="header">
+                        Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
+                      </span>
+                      <div slot="body">
+                        <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE" @model-updated="onModelUpdated"></vue-form-generator>
+                        <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="totalScore" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
+                      </div>
+                    </va-collapse>
+                  </va-accordion>
+                </div>
               </b-tab>
+              <!-- SUICIDE RISK -->
               <b-tab title="Suicide Risk">
-                <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions"></vue-form-generator>
+                <div class="px-3 py-2 mb-3">
+                  <h6 class="mb-4">Instruction: Please tick (/) in the box provided</h6>
+                  <div class="row" >
+                    <div class="col-md-3 p-3">
+                      <b>Level of Suicide Risk for Current Attempt</b>
+                    </div>
+                    <div class="col-md box">
+                      <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions"></vue-form-generator>
+                    </div>
+                  </div>
+                </div>
               </b-tab>
+              <!-- HOSPITAL MANAGEMENT -->
               <b-tab title="Hospital Management">
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
+              <!-- SOURCE DATA PRODUCER -->
               <b-tab title="Source Data Producer">
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
             </b-tabs>
+            <button @click="validateTabC" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+              <div class="fa fa-paper-plane" /> &nbsp;Submit
+            </button>
           </va-card>
 
           <!-- Modal -->
@@ -115,7 +165,7 @@ import Multiselect from 'vue-multiselect'
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg-core.css'
 import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin, TabsPlugin } from 'bootstrap-vue'
 // import * as servicesModule1 from '../../../app/module1/services01'
 
 // Import Bootstrap an BootstrapVue CSS files (order is important)
@@ -125,6 +175,7 @@ import 'vue-select/dist/vue-select.css'
 
 import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+Vue.use(TabsPlugin)
 Vue.use(VueFormWizard)
 
 // Make BootstrapVue available throughout your project
@@ -191,6 +242,23 @@ export default {
       // Protective Factors Data
 
       // The Self-harm Act and Suicidal Intent Data
+      selectOccurance: [
+        { name: 'Home', id: 1 },
+        { name: 'Residential instituition', id: 2 },
+        { name: 'School & public admin area', id: 3 },
+        { name: 'Sports & athletics area', id: 4 },
+        { name: 'Street & highway', id: 5 },
+        { name: 'Trade & service area', id: 6 },
+        { name: 'Industrial & construction area', id: 7 },
+        { name: 'Farm / plantation', id: 8 },
+        { name: 'Others specified areas', id: 99 },
+      ],
+
+      selectOverdoseType: [
+        { name: 'Medications, specify', id: 1 },
+        { name: 'Illicit substances, specify', id: 2 },
+        { name: 'Chemicals (including pesticides), specify', id: 3 },
+      ],
 
       // Suicide Risk Data
 
@@ -241,7 +309,6 @@ export default {
       // Source Data Producer Data
 
       model: {
-
         // Risk Factors
         Q1: '',
         Q1_ICD: '',
@@ -274,32 +341,25 @@ export default {
         PQ6: '',
 
         // The Self-harm Act and Suicidal Intent
-        secA: {
-          date: '',
-          time: '',
-          occurance: '',
-          occur_other: '',
-        },
-        secB: {
-          method: '',
-          m1_select: '',
-          m1_specify: '',
-          m99_specify: '',
-        },
-        secC: {
-          idea: '',
-          idea_specify: '',
-        },
-        secD: {
-          intent: '',
-          yes: '',
-          y99_specify: '',
-        },
-        secE: [],
-        secE_score: '',
+        SH_DATE: '',
+        SH_TIME: '',
+        OCCUR: '',
+        OCCUR_OTHER_SPECIFY: '',
+        METHOD: [],
+        OVERDOSE_TYPE: '',
+        OVERDOSE_TYPE_SPECIFY: '',
+        METHOD_OTHER_SPECIFY: '',
+        IDEA: [],
+        IDEA_SPECIFY: '',
+        INTENT: 2,
+        INTENT_YES: [],
+        INTENT_OTHER_SPECIFY: '',
+        INTENTS: [],
+        INTENT_SCORE: '',
+        INTENT_LEVEL: '',
 
         // Suicide Risk
-        level: [],
+        RISK_LEVEL: [],
 
         // Hospital Management
         REFERRAL: '',
@@ -327,7 +387,6 @@ export default {
         HOSPITAL_NAME: '',
         PSYCHIATRIST_NAME: '',
         VERIFICATION_DATE: '',
-
       },
       // Risk Factors
       tabASchema: {
@@ -803,15 +862,15 @@ export default {
           },
         ],
       },
-
       // The Self-harm Act and Suicidal Intent
+      // -Section A (1)
       tabCASchema: {
         fields: [
           {
             type: 'input',
             inputType: 'date',
             label: 'Date',
-            model: 'secA.date',
+            model: 'SH_DATE',
             format: 'YYYY-MM-DD',
             styleClasses: 'col-sm-6',
             required: true,
@@ -821,7 +880,7 @@ export default {
             type: 'input',
             inputType: 'time',
             label: 'Time',
-            model: 'secA.time',
+            model: 'SH_TIME',
             styleClasses: 'col-sm-6',
             required: true,
             validator: 'required',
@@ -829,18 +888,10 @@ export default {
           {
             type: 'select',
             label: 'Place of Occurance',
-            model: 'secA.occurance',
-            values: [
-              { name: 'Home', id: 1 },
-              { name: 'Residential instituition', id: 2 },
-              { name: 'School & public admin area', id: 3 },
-              { name: 'Sports & athletics area', id: 4 },
-              { name: 'Street & highway', id: 5 },
-              { name: 'Trade & service area', id: 6 },
-              { name: 'Industrial & construction area', id: 7 },
-              { name: 'Farm / plantation', id: 8 },
-              { name: 'Others specified areas', id: 99 },
-            ],
+            model: 'OCCUR',
+            values: () => {
+              return this.selectOccurance
+            },
             selectOptions: {
               hideNoneSelectedText: true,
             },
@@ -851,214 +902,126 @@ export default {
           {
             type: 'input',
             inputType: 'text',
-            label: '&nbsp',
-            model: 'secA.occur_other',
+            label: 'Specify',
+            model: 'OCCUR_OTHER_SPECIFY',
             placeholder: 'Other specified areas',
             styleClasses: 'col-sm-3',
             visible: function (model) {
-              return model && model.secA.occurance === 99
+              return model && model.OCCUR === 99
             },
             required: true,
             validator: 'string',
           },
         ],
       },
-
-      tabCBSchema: {
+      // -Section B (2)
+      tabCB1Schema: {
         fields: [
           {
-            type: 'label',
-            label: 'Instruction: Please tick (/) in the box provided',
-          },
-          {
             type: 'checklist',
+            model: 'METHOD',
             values: [
               { value: 1, name: 'Overdose / Poisoning' },
+              { value: 2, name: 'Hanging / suffocation' },
+              { value: 3, name: 'Drowning' },
+              { value: 4, name: 'Firearms or explosives' },
+              { value: 5, name: 'Fire / flames' },
+              { value: 6, name: 'Cutting or Piercing' },
+              { value: 7, name: 'Jumping from height' },
+              { value: 99, name: 'Others, specify' },
             ],
             listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
+            required: true,
+            validator: 'array',
+            styleClasses: 'col-md-auto',
           },
+        ],
+      },
+      tabCB2Schema: {
+        fields: [
           {
             type: 'select',
-            model: 'secB.m1_select',
-            values: [
-              { name: 'Medications, specify', id: 1 },
-              { name: 'Illicit substances, specify', id: 2 },
-              { name: 'Chemicals (including pesticides), specify', id: 3 },
-            ],
+            model: 'OVERDOSE_TYPE',
+            values: () => {
+              return this.selectOverdoseType
+            },
             selectOptions: {
               hideNoneSelectedText: true,
             },
-            styleClasses: 'col-sm-4',
             visible: function (model) {
-              return model && model.secB.method.includes(1)
+              return model && model.METHOD.includes(1)
             },
+            required: true,
+            validator: 'required',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'input',
             inputType: 'text',
-            model: 'secB.m1_specify',
-            placeholder: 'Please specify',
-            styleClasses: 'col-sm-3',
+            model: 'OVERDOSE_TYPE_SPECIFY',
+            placeholder: 'Specify overdose type',
             visible: function (model) {
-              if (model.secB.method.includes(1)) {
-                return model && (model.secB.m1_select === 1 || model.secB.m1_select === 2 || model.secB.m1_select === 3)
+              if (model.METHOD.includes(1)) {
+                return model && (model.OVERDOSE_TYPE === 1 || model.OVERDOSE_TYPE === 2 || model.OVERDOSE_TYPE === 3)
               }
             },
             required: true,
             validator: 'string',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 2, name: 'Hanging / suffocation' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 3, name: 'Drowning' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 4, name: 'Firearms or explosives' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 5, name: 'Fire / flames' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 6, name: 'Cutting or Piercing' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 7, name: 'Jumping from height' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 99, name: 'Others, specify' },
-            ],
-            listBox: true,
-            model: 'secB.method',
-            styleClasses: 'col-sm-4',
+            styleClasses: 'col-md-6',
           },
           {
             type: 'input',
             inputType: 'text',
-            model: 'secB.m99_specify',
-            placeholder: 'Please specify',
-            styleClasses: 'col-sm-4',
+            model: 'METHOD_OTHER_SPECIFY',
+            placeholder: 'Others, specify',
             visible: function (model) {
-              return model && model.secB.method.includes(99)
+              return model && model.METHOD.includes(99)
             },
             required: true,
             validator: 'string',
+            styleClasses: 'col-md-6',
           },
         ],
       },
-
+      // -Section C (1)
       tabCCSchema: {
         fields: [
           {
-            type: 'label',
-            label: 'Instruction: Please tick (/) in the box provided',
-          },
-          {
             type: 'checklist',
+            model: 'IDEA',
             values: [
               { value: 1, name: 'Family, friend, peer group' },
-            ],
-            listBox: true,
-            model: 'secC.idea',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 2, name: 'Internet (website, social media platform, app, blog, forum, video/photosharing)' },
-            ],
-            listBox: true,
-            model: 'secC.idea',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 3, name: 'Printed media (newspaper, books, magazine, etc)' },
-            ],
-            listBox: true,
-            model: 'secC.idea',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 4, name: 'Broadcast media (television, radio)' },
-            ],
-            listBox: true,
-            model: 'secC.idea',
-            styleClasses: 'col-sm-4',
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 99, name: 'Specify patient actual words' },
             ],
             listBox: true,
-            model: 'secC.idea',
-            styleClasses: 'col-sm-4',
+            required: true,
+            validator: 'array',
+            styleClasses: 'col-sm-auto',
           },
           {
             type: 'input',
             inputType: 'text',
-            model: 'secC.idea_specify',
+            model: 'IDEA_SPECIFY',
             placeholder: 'Specify patient actual words',
             styleClasses: 'col-sm-4',
             visible: function (model) {
-              return model && model.secC.idea.includes(99)
+              return model && model.IDEA.includes(99)
             },
             required: true,
             validator: 'string',
           },
         ],
       },
-
-      tabCDSchema: {
+      // -Section D (2)
+      tabCD1Schema: {
         fields: [
           {
             type: 'radios',
-            label: '&nbsp Was there an intent?',
-            model: 'secD.intent',
+            label: 'Was there an intent?',
+            model: 'INTENT',
             values: [
               { value: 1, name: 'No' },
               { value: 2, name: 'Yes' },
@@ -1066,358 +1029,365 @@ export default {
             ],
             required: true,
             validator: 'required',
+            styleClasses: 'col-xl-auto',
           },
+        ],
+      },
+      tabCD2Schema: {
+        fields: [
           {
             type: 'label',
-            label: 'Instruction: Please tick (/) in the box<br>If yes, mode of expression (can tick more than 1)',
+            label: '<h6 class="mt-3 mb-4">Instruction: Please tick (/) in the box<br>If yes, mode of expression (can tick more than 1)</h6>',
             visible: function (model) {
-              return model && model.secD.intent === 2
+              return model && model.INTENT === 2
             },
           },
           {
             type: 'checklist',
+            model: 'INTENT_YES',
             values: [
               { value: 1, name: 'Verbal' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 2, name: 'Messaging' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 3, name: 'Rehearsing' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 4, name: 'Not expressed' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 5, name: 'Handwritten' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 6, name: 'Social Media' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 7, name: 'Efforts to learn more' },
-            ],
-            listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
-            visible: function (model) {
-              return model && model.secD.intent === 2
-            },
-          },
-          {
-            type: 'checklist',
-            values: [
               { value: 99, name: 'Others, specify' },
             ],
             listBox: true,
-            model: 'secD.yes',
-            styleClasses: 'col-sm-4',
             visible: function (model) {
-              return model && model.secD.intent === 2
+              return model && model.INTENT === 2
             },
+            required: true,
+            validator: 'array',
+            styleClasses: 'col-sm-auto',
           },
           {
             type: 'input',
             inputType: 'text',
-            model: 'secD.y99_specify',
+            model: 'INTENT_OTHER_SPECIFY',
             placeholder: 'Please specify',
-            styleClasses: 'col-sm-4',
             visible: function (model) {
-              if (model.secD.intent === 2) {
-                return model && model.secD.yes.includes(99)
+              if (model.INTENT === 2) {
+                return model && model.INTENT_YES.includes(99)
               }
             },
             required: true,
             validator: 'string',
+            styleClasses: 'col-sm-4',
           },
         ],
       },
-
+      // -Section E (2)
       tabCESchema: {
         fields: [
           {
             type: 'radios',
-            label: '<ol><li>Isolation</li></ol>',
-            model: 'secE[0]',
+            label: '<b>1. Isolation</b>',
+            model: 'INTENTS[0]',
             values: [
               { value: 0, name: 'Somebody present' },
               { value: 1, name: 'Somebody nearby, or in visual or vocal contact' },
               { value: 2, name: 'No one nearby or in visual or vocal contact' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol  start='2'><li>Timing</li></ol>",
-            model: 'secE[1]',
+            label: '<b>2. Timing</b>',
+            model: 'INTENTS[1]',
             values: [
               { value: 0, name: 'Intervention is probable' },
               { value: 1, name: 'Intervention is not likely' },
               { value: 2, name: 'Intervention is highly unlikely' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='3'><li>Precautions against discovery / intervention</li></ol>",
-            model: 'secE[2]',
+            label: '<b>3. Precautions against discovery / intervention</b>',
+            model: 'INTENTS[2]',
             values: [
               { value: 0, name: 'No precautions' },
-              { value: 1, name: 'Passive precautions (eg; alone in room with unlocked door' },
+              { value: 1, name: 'Passive precautions (eg; alone in room with unlocked door)' },
               { value: 2, name: 'Active precautions (as locked door)' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol  start='4'><li>Acting to get help during / after attempt</li></ol>",
-            model: 'secE[3]',
+            label: '<b>4. Acting to get help during / after attempt</b>',
+            model: 'INTENTS[3]',
             values: [
               { value: 0, name: 'Notified potential helper regarding attempt' },
               { value: 1, name: 'Contacted but did not specifically notify regarding attempt' },
               { value: 2, name: 'Did not contact or notify potential helper' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='5'><li>Final acts in anticipating of death (will, gifts, insurance)</li></ol>",
-            model: 'secE[4]',
+            label: '<b>5. Final acts in anticipating of death (will, gifts, insurance)</b>',
+            model: 'INTENTS[4]',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Thought about or made some arrangements' },
               { value: 2, name: 'Made definite plans or completed arrangements' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='6'><li>Active preparation for attempt</li></ol>",
-            model: 'secE[5]',
+            label: '<b>6. Active preparation for attempt</b>',
+            model: 'INTENTS[5]',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Minimal to moderate' },
               { value: 2, name: 'Extensive' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='7'><li>Suicide note</li></ol>",
-            model: 'secE[6]',
+            label: '<b>7. Suicide note</b>',
+            model: 'INTENTS[6]',
             values: [
               { value: 0, name: 'Absence of note' },
               { value: 1, name: 'Note written, but torn up; note thought about' },
               { value: 2, name: 'Presence of note' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='8'><li>Overt communication of intent before the attempt</li></ol>",
-            model: 'secE[7]',
+            label: '<b>8. Overt communication of intent before the attempt</b>',
+            model: 'INTENTS[7]',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Equivocal communication' },
               { value: 2, name: 'Unequivocal communication' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='9'><li>Allged purpose of attempt</li></ol>",
-            model: 'secE[8]',
+            label: '<b>9. Allged purpose of attempt</b>',
+            model: 'INTENTS[8]',
             values: [
               { value: 0, name: 'To manipulate environment, get attention, get revenge' },
               { value: 1, name: 'Components of above and below' },
               { value: 2, name: 'To escape, surcease, solve problems' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='10'><li>Expectations of fatality</li></ol>",
-            model: 'secE[9]',
+            label: '<b>10. Expectations of fatality</b>',
+            model: 'INTENTS[9]',
             values: [
               { value: 0, name: 'Thought that death was unlikely' },
               { value: 1, name: 'Thought that death was possible but not probable' },
               { value: 2, name: 'Thought that death was probable or certain' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='11'><li>Conception of method's lethality</li></ol>",
-            model: 'secE[10]',
+            label: "<b>11. Conception of method's lethality</b>",
+            model: 'INTENTS[10]',
             values: [
               { value: 0, name: 'Did less to self that s/he thought would be lethal' },
               { value: 1, name: "Wasn't sure if what s/he did would be lethal" },
               { value: 2, name: 'Equaled or exceed what s/he thought would be lethal' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='12'><li>Seriousness of attempt</li></ol>",
-            model: 'secE[11]',
+            label: '<b>12. Seriousness of attempt</b>',
+            model: 'INTENTS[11]',
             values: [
               { value: 0, name: 'Did not seriously attempt to end life' },
               { value: 1, name: 'Uncertain about seriousness to end life' },
               { value: 2, name: 'Seriously attempted to end life' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='13'><li>Attitude towards living/dying</li></ol>",
-            model: 'secE[12]',
+            label: '<b>13. Attitude towards living/dying</b>',
+            model: 'INTENTS[12]',
             values: [
               { value: 0, name: 'Did not want to die' },
               { value: 1, name: 'Components of above and below' },
               { value: 2, name: 'Wanted to die' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='14'><li>Conception of medical rescuability</li></ol>",
-            model: 'secE[13]',
+            label: '<b>14. Conception of medical rescuability</b>',
+            model: 'INTENTS[13]',
             values: [
               { value: 0, name: 'Thought death would be unlikely if received medical attention' },
               { value: 1, name: 'Was uncertain if death could be averted by medical attention' },
               { value: 2, name: 'Was certain of death even if received medical attention' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-6'],
           },
           {
             type: 'radios',
-            label: "<ol start='15'><li>Degree of premeditation</li></ol>",
-            model: 'secE[14]',
+            label: '<b>15. Degree of premeditation</b>',
+            model: 'INTENTS[14]',
             values: [
               { value: 0, name: 'None; impulsive' },
               { value: 1, name: 'Suicide contemplated for 3 hours or less prior to attempt' },
               { value: 2, name: 'Suicide contemplated for more than 3 hours prior to attempt' },
             ],
+            onChanged: function (model) {
+              model.INTENT_SCORE = ''
+              model.INTENT_LEVEL = ''
+            },
             required: true,
             validator: 'required',
-            styleClasses: 'line-top',
+            styleClasses: ['my-3', 'col-xl-12'],
           },
-          {
-            type: 'label',
-            label: 'Total Score',
-            styleClasses: 'line-top',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 1, name: '0-10  Low Intent' },
-            ],
-            listBox: true,
-            model: 'secE_score',
-            styleClasses: 'col-sm-3',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 2, name: '11-20  Medium Intent' },
-            ],
-            listBox: true,
-            model: 'secE_score',
-            styleClasses: 'col-sm-3',
-          },
-          {
-            type: 'checklist',
-            values: [
-              { value: 3, name: '21+  High Intent' },
-            ],
-            listBox: true,
-            model: 'secE_score',
-            styleClasses: 'col-sm-3',
-          },
-
         ],
+      },
+      totalScoreSchema: {
+        fields: [
+          {
+            type: 'input',
+            inputType: 'number',
+            label: 'Total Score',
+            placeholder: 'Click Calculate',
+            model: 'INTENT_SCORE',
+            buttons: [
+              {
+                label: 'Calculate',
+                onclick: (model) => {
+                  var errors = this.validateTabCE()
+                  if (errors) {
+                    var score = 0
+                    for (let i = 0; i < model.INTENTS.length; i++) {
+                      score += model.INTENTS[i]
+                    }
+                    model.INTENT_SCORE = score
+
+                    if (model.INTENT_SCORE <= 10) {
+                      model.INTENT_LEVEL = 'Low Intent'
+                    } else if (model.INTENT_SCORE > 10 && model.INTENT_SCORE <= 20) {
+                      model.INTENT_LEVEL = 'Medium Intent'
+                    } else {
+                      model.INTENT_LEVEL = 'High Intent'
+                    }
+                  }
+                },
+              },
+            ],
+            disabled: true,
+            required: true,
+            validator: 'string',
+            styleClasses: 'col-md-3',
+          },
+          {
+            type: 'input',
+            inputType: 'text',
+            label: 'Level of Suicidal Intent',
+            placeholder: 'Click Calculate',
+            model: 'INTENT_LEVEL',
+            disabled: true,
+            required: true,
+            validator: 'string',
+            styleClasses: 'col-md-3',
+          },
+        ],
+
       },
 
       // Suicide Risk
@@ -1431,7 +1401,7 @@ export default {
                   { value: 1, name: 'High' },
                 ],
                 listBox: true,
-                model: 'level',
+                model: 'RISK_LEVEL',
                 styleClasses: 'col-4',
                 validator: 'required',
               },
@@ -1450,7 +1420,7 @@ export default {
                   { value: 2, name: 'Moderate' },
                 ],
                 listBox: true,
-                model: 'level',
+                model: 'RISK_LEVEL',
                 styleClasses: 'col-4',
                 validator: 'required',
               },
@@ -1469,7 +1439,7 @@ export default {
                   { value: 3, name: 'Low' },
                 ],
                 listBox: true,
-                model: 'level',
+                model: 'RISK_LEVEL',
                 styleClasses: 'col-4',
                 validator: 'required',
               },
@@ -1903,14 +1873,46 @@ export default {
       }
     },
     validateTabC () {
-      var errors = this.$refs.theSelfHarmActAndSuicidalIntent.validate()
-      if (errors) {
-        this.tabC = false
-        return true
-      } else {
-        this.tabC = true
-        return false
-      }
+      this.validateTabCA()
+      this.validateTabCB1()
+      this.validateTabCB2()
+      this.validateTabCC()
+      this.validateTabCD1()
+      this.validateTabCD2()
+      this.validateTabCE()
+      this.validateTotalScore()
+    },
+    validateTabCA () {
+      var errors = this.$refs.selfHarmSectionA.validate()
+      return errors
+    },
+    validateTabCB1 () {
+      var errors = this.$refs.selfHarmSectionB1.validate()
+      return errors
+    },
+    validateTabCB2 () {
+      var errors = this.$refs.selfHarmSectionB2.validate()
+      return errors
+    },
+    validateTabCC () {
+      var errors = this.$refs.selfHarmSectionC.validate()
+      return errors
+    },
+    validateTabCD1 () {
+      var errors = this.$refs.selfHarmSectionD1.validate()
+      return errors
+    },
+    validateTabCD2 () {
+      var errors = this.$refs.selfHarmSectionD2.validate()
+      return errors
+    },
+    validateTabCE () {
+      var errors = this.$refs.selfHarmSectionE.validate()
+      return errors
+    },
+    validateTotalScore () {
+      var errors = this.$refs.totalScore.validate()
+      return errors
     },
     validateTabD () {
       var errors = this.$refs.suicideRisk.validate()
@@ -1993,8 +1995,8 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
-  .app_layout__main {
-    background: #686868;
+  .app-layout__main {
+    background: hsl(0, 0%, 91%);
   }
 
   .display-inline label {
@@ -2080,8 +2082,28 @@ export default {
     flex-wrap: wrap;
   }
 
-  .vue-form-generator .field-radios .radio-list label {
-    display: inline-table;
-    margin-right: 1rem;
+  // .vue-form-generator .field-radios .radio-list label {
+  //   display: inline-table;
+  //   margin-right: 1rem;
+  // }
+
+  .box {
+    border: 1px solid rgb(82, 81, 81);
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .vue-form-generator .field-checklist .listbox {
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+  }
+
+  .red {
+    background-color: red;
+  }
+
+  .blue {
+    background-color: blue;
   }
 </style>
