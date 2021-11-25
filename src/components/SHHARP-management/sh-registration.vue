@@ -8,16 +8,17 @@
           <!-- Form -->
           <va-card>
             <br>
-            <b-tabs content-class="mt-3">
-              <!-- Risk Factors -->
+            <!-- RISK FACTORS -->
+            <b-tabs content-class="mt-3" justified>
               <b-tab title="Risk Factors" active>
+                <br/>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </b-tab>
-              <!-- Protective Factors -->
-              <b-tab title="Protective Factors"
-                active-nav-item-class="font-weight-bold text-uppercase text-danger">
+
+              <!-- PROTECTIVE FACTORS -->
+              <b-tab title="Protective Factors">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </b-tab>
@@ -112,11 +113,14 @@
               </b-tab>
               <!-- HOSPITAL MANAGEMENT -->
               <b-tab title="Hospital Management">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </b-tab>
               <!-- SOURCE DATA PRODUCER -->
               <b-tab title="Source Data Producer">
+                <br/>
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
@@ -311,7 +315,6 @@ export default {
       model: {
         // Risk Factors
         Q1: '',
-        Q1_ICD: '',
         Q1_SPECIFY: '',
         Q2: '',
         Q3: '',
@@ -320,7 +323,6 @@ export default {
         Q4_SPECIFY: '',
         Q5: '',
         Q6: '',
-        Q6_ICD: '',
         Q6_SPECIFY: '',
         Q7: '',
         Q7_SPECIFY: '',
@@ -412,16 +414,6 @@ export default {
                 model: 'Q1_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  'one',
-                  'two',
-                  'three',
-                  'four',
-                  'five',
-                  'six',
-                  'seven',
-                  'eight',
-                ],
                 selectOptions: {
                   multiple: true,
                   closeOnSelect: false,
@@ -432,6 +424,9 @@ export default {
                   maxHeight: 200,
                 },
                 styleClasses: ['col-md-5'],
+                values: () => {
+                  return this.selectDiagnosis
+                },
                 visible: function (model) {
                   return model && model.Q1 === 1
                 },
@@ -506,16 +501,6 @@ export default {
                 model: 'Q4_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  { name: 'Alcohol', value: 0 },
-                  { name: 'Opioids', value: 1 },
-                  { name: 'Cannabinoids', value: 2 },
-                  { name: 'Sedatives or hypnotics', value: 3 },
-                  { name: 'Cocaine', value: 4 },
-                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
-                  { name: 'Hallucinogens', value: 6 },
-                  { name: 'Volatile solvents', value: 7 },
-                ],
                 selectOptions: {
                   multiple: false,
                   closeOnSelect: true,
@@ -525,6 +510,9 @@ export default {
                   label: 'name',
                 },
                 styleClasses: ['col-md-5', 'mb-0'],
+                values: () => {
+                  return this.selectSubstance
+                },
                 visible: function (model) {
                   return model && model.Q4 === 1
                 },
@@ -569,16 +557,6 @@ export default {
                 model: 'Q6_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  'one',
-                  'two',
-                  'three',
-                  'four',
-                  'five',
-                  'six',
-                  'seven',
-                  'eight',
-                ],
                 selectOptions: {
                   multiple: true,
                   searchable: true,
@@ -589,6 +567,9 @@ export default {
                   maxHeight: 200,
                 },
                 styleClasses: ['col-md-5'],
+                values: () => {
+                  return this.selectDiagnosis
+                },
                 visible: function (model) {
                   return model && model.Q6 === 1
                 },
@@ -616,16 +597,6 @@ export default {
                 model: 'Q7_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  { name: 'Alcohol', value: 0 },
-                  { name: 'Opioids', value: 1 },
-                  { name: 'Cannabinoids', value: 2 },
-                  { name: 'Sedatives or hypnotics', value: 3 },
-                  { name: 'Cocaine', value: 4 },
-                  { name: 'Other stimulants (including amphetamine-type)', value: 5 },
-                  { name: 'Hallucinogens', value: 6 },
-                  { name: 'Volatile solvents', value: 7 },
-                ],
                 selectOptions: {
                   multiple: false,
                   closeOnSelect: true,
@@ -635,6 +606,9 @@ export default {
                   key: 'value',
                 },
                 styleClasses: ['col-md-5'],
+                values: () => {
+                  return this.selectSubstance
+                },
                 visible: function (model) {
                   return model && model.Q7 === 1
                 },
@@ -662,15 +636,6 @@ export default {
                 model: 'Q8_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  { name: 'Intimate relationship problems', value: 0 },
-                  { name: 'Other relationship problems', value: 1 },
-                  { name: 'Death of loved one', value: 2 },
-                  { name: 'Job-related problems', value: 3 },
-                  { name: 'Financial problems', value: 4 },
-                  { name: 'Academic-related problems', value: 5 },
-                  { name: 'Criminals/Legal problems', value: 6 },
-                ],
                 selectOptions: {
                   multiple: false,
                   closeOnSelect: true,
@@ -680,6 +645,9 @@ export default {
                   key: 'value',
                 },
                 styleClasses: ['col-md-5'],
+                values: () => {
+                  return this.selectStressfulLifeEvents
+                },
                 visible: function (model) {
                   return model && model.Q8 === 1
                 },
@@ -724,16 +692,6 @@ export default {
                 model: 'Q10_SPECIFY',
                 required: true,
                 validator: 'required',
-                values: [
-                  'one',
-                  'two',
-                  'three',
-                  'four',
-                  'five',
-                  'six',
-                  'seven',
-                  'eight',
-                ],
                 selectOptions: {
                   multiple: true,
                   searchable: true,
@@ -743,6 +701,9 @@ export default {
                   maxHeight: 200,
                 },
                 styleClasses: ['col-md-5'],
+                values: () => {
+                  return this.selectDiagnosis
+                },
                 visible: function (model) {
                   return model && model.Q10 === 1
                 },
@@ -1698,37 +1659,39 @@ export default {
           {
             styleClasses: ['row', 'align-items-end'],
             fields: [
+              // {
+              //   type: 'checklist',
+              //   label: 'PSY Mx on Discharge',
+              //   model: 'PSYMX',
+              //   required: true,
+              //   validator: 'array',
+              //   styleClasses: ['col-md-6'],
+              //   values: () => {
+              //     return this.selectPSYMX
+              //   },
+              // },
               {
-                type: 'checklist',
+                type: 'vueMultiSelect',
+                placeholder: 'Please select (can select more than 1)',
                 label: 'PSY Mx on Discharge',
                 model: 'PSYMX',
                 required: true,
-                validator: 'array',
+                validator: 'required',
+                selectOptions: {
+                  multiple: true,
+                  closeOnSelect: false,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  maxHeight: 200,
+                  key: 'value',
+                  label: 'name',
+                },
                 styleClasses: ['col-md-6'],
                 values: () => {
                   return this.selectPSYMX
                 },
               },
-              // {
-              //   type: "vueMultiSelect",
-              //   placeholder: "Please select",
-              //   label: "PSY Mx on Discharge",
-              //   model: "PSYMX",
-              //   required: true,
-              //   validator: "array",
-              //   selectOptions: {
-              //     multiple: true,
-              //     closeOnSelect: false,
-              //     maxHeight: 200,
-              //     showLabels: false,
-              //     key: "value",
-              //     label: "name"
-              //   },
-              //   styleClasses: ["col-md-6"],
-              //   values: () => {
-              //       return this.selectPSYMX
-              //     },
-              // },
               {
                 type: 'input',
                 inputType: 'text',
@@ -1739,7 +1702,9 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.PSYMX.includes(99)
+                  if (model.PSYMX.some(e => e.value === 99)) {
+                    return true
+                  }
                 },
               },
             ],
