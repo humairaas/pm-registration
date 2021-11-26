@@ -377,7 +377,7 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
+              return model && ((model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1) || model.CITIZENSHIP === 2)
             },
           },
           {
