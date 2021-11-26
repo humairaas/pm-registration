@@ -194,8 +194,6 @@ export default {
       selectReferralType: [],
       selectIssuingCountry: [],
       selectState: [],
-      selectDMCity: [],
-      selectDMPostcode: [],
       selectBranch: [],
 
       // Socio Demographic Data
@@ -291,6 +289,8 @@ export default {
 
         selectCity: [],
         selectPostcode: [],
+        selectDMCity: [],
+        selectDMPostcode: [],
       },
 
       // Demographic
@@ -675,7 +675,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectPostcode
+              return model.selectDMPostcode
             },
           },
         ],
