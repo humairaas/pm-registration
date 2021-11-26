@@ -194,8 +194,7 @@ export default {
       selectReferralType: [],
       selectIssuingCountry: [],
       selectState: [],
-      selectDMCity: [],
-      selectDMPostcode: [],
+      selectDMState: [],
       selectBranch: [],
 
       // Socio Demographic Data
@@ -291,6 +290,8 @@ export default {
 
         selectCity: [],
         selectPostcode: [],
+        selectDMCity: [],
+        selectDMPostcode: [],
       },
 
       // Demographic
@@ -624,13 +625,13 @@ export default {
             styleClasses: 'col-md-6',
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.id)
+                .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.value)
                 .then((response) => {
                   model.selectDMCity = response.data.data
                 })
             },
             values: () => {
-              return this.selectState
+              return this.selectDMState
             },
           },
           {
@@ -653,7 +654,7 @@ export default {
             },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.id)
+                .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.value)
                 .then((response) => {
                   model.selectDMPostcode = response.data.data
                 })
@@ -675,7 +676,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectPostcode
+              return model.selectDMPostcode
             },
           },
         ],
@@ -1796,6 +1797,12 @@ export default {
       .get('http://127.0.0.1:8000/api/getState?country_id=1')
       .then((response) => {
         this.selectState = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getDMState?country_id=1')
+      .then((response) => {
+        this.selectDMState = response.data.data
       })
 
     this.$axios
