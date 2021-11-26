@@ -11,21 +11,21 @@
             <b-tabs content-class="mt-3" v-model="tabIndex" fill>
 
               <!-- RISK FACTORS -->
-              <b-tab title="Risk Factors" class="py-3 pr-2" active>
+              <b-tab title="1. Risk Factors" class="py-3 pr-2" active>
                 <br/>
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
                 </vue-form-generator>
               </b-tab>
 
               <!-- PROTECTIVE FACTORS -->
-              <b-tab title="Protective Factors">
+              <b-tab title="2. Protective Factors">
                 <br/>
                 <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
                 </vue-form-generator>
               </b-tab>
 
               <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
-              <b-tab title="The Self-Harm Act and Suicidal Intent" class="py-3">
+              <b-tab title="3. The Self-Harm Act and Suicidal Intent" class="py-3">
                 <va-accordion >
                   <!-- Section A -->
                   <va-collapse>
@@ -98,7 +98,7 @@
               </b-tab>
 
               <!-- SUICIDE RISK -->
-              <b-tab title="Suicide Risk" class="px-3 py-2 mb-3">
+              <b-tab title="4. Suicide Risk" class="px-3 py-2 mb-3">
                 <h6 class="mb-4">Instruction: Please tick (/) in the box provided</h6>
                 <div class="row" >
                   <div class="col-md-3 p-3">
@@ -111,7 +111,7 @@
               </b-tab>
 
               <!-- HOSPITAL MANAGEMENT -->
-              <b-tab title="Hospital Management" class="p-3">
+              <b-tab title="5. Hospital Management" class="p-3">
                 <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
@@ -119,7 +119,7 @@
               </b-tab>
 
               <!-- SOURCE DATA PRODUCER -->
-              <b-tab title="Source Data Producer" class="p-3">
+              <b-tab title="6. Source Data Producer" class="p-3">
                 <br/>
                 <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
                 </vue-form-generator>
@@ -158,16 +158,54 @@
             :hide-default-actions= "true"
           >
             <div class="modal-preview">
+              <!-- RISK FACTORS -->
               <h5 class="sh-tab-title">1. Risk Factors</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
+
+              <!-- PROTECTIVE FACTORS -->
               <h5 class="sh-tab-title">2. Protective Factors</h5>
-              <vue-form-generator class="sosio-margin read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+              <vue-form-generator class="read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+
+              <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
               <h5 class="sh-tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
+              <h6 class="sh-sub-title">Section A : CURRENT SELF-HARM ACT (within past 2 weeks from time of presentation)</h6>
               <vue-form-generator class="read-only" :model="model" :schema="tabCASchema"></vue-form-generator>
+              <h6 class="sh-sub-title">Section B: METHOD OF SELF-HARM (please document the recent method only)</h6>
+              <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+              <div class="row">
+                <div class="col-lg-auto">
+                  <vue-form-generator class="read-only" :schema="tabCB1Schema" :model="model"></vue-form-generator>
+                </div>
+                <div class="col-lg">
+                  <vue-form-generator class="read-only" :schema="tabCB2Schema" :model="model"></vue-form-generator>
+                </div>
+              </div>
+              <h6 class="sh-sub-title">Section C: HOW DID PATIENT GET IDEA ABOUT METHOD</h6>
+              <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
+              <vue-form-generator class="read-only" :schema="tabCCSchema" :model="model"></vue-form-generator>
+              <h6 class="sh-sub-title">Section D: SUICIDAL INTENT</h6>
+              <div class="row mt-3">
+                <div class="col-lg-3 mt-2">
+                  <vue-form-generator class="read-only" :schema="tabCD1Schema" :model="model"></vue-form-generator>
+                </div>
+                <div class="col-lg">
+                  <vue-form-generator class="read-only" :schema="tabCD2Schema" :model="model"></vue-form-generator>
+                </div>
+              </div>
+              <h6 class="sh-sub-title">Section E: LEVEL OF SUICIDAL INTENT (Beck's Suicide Intent Scale)</h6>
+              <vue-form-generator class="read-only" :schema="tabCESchema" :model="model"></vue-form-generator>
+              <vue-form-generator class="read-only mt-3" :schema="totalScoreSchema" :model="model"></vue-form-generator>
+
+              <!-- SUICIDE RISK -->
               <h5 class="sh-tab-title">4. Suicide Risk</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabDSchema"></vue-form-generator>
+              <b class="p-3">Level of Suicide Risk for Current Attempt</b>
+              <vue-form-generator class="read-only m-4 box" :model="model" :schema="tabDSchema"></vue-form-generator>
+
+              <!-- HOSPITAL MANAGEMENT -->
               <h5 class="sh-tab-title">5. Hospital Management</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabESchema"></vue-form-generator>
+
+              <!-- SOURCE DATA PRODUCER -->
               <h5 class="sh-tab-title">6. Source Data Producer</h5>
               <vue-form-generator class="read-only" :model="model" :schema="tabFSchema"></vue-form-generator>
               <div style="float: right;">
@@ -2108,8 +2146,12 @@ export default {
     color: white;
   }
 
-  .sosio-margin {
-    margin-left: 20px;
+  .sh-sub-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f0ecec;
+    border-radius: 10px;
   }
 
   .read-only {
