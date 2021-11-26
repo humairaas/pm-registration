@@ -271,7 +271,7 @@ export default {
         NOK_HOUSE_NO: '',
         NOK_ADDRESS_L1: '',
         NOK_ADDRESS_L2: '',
-        // NOK_ADDRESS_L3: "",
+        NOK_ADDRESS_L3: '',
         NOK_STATE: '',
         NOK_CITY: '',
         NOK_POSTCODE: '',
@@ -1077,14 +1077,14 @@ export default {
             validator: 'string',
             styleClasses: 'col-xl-8',
           },
-          // {
-          //     type: 'input',
-          //     inputType: 'text',
-          //     model: 'NOK_ADDRESS_L3',
-          //     placeholder: 'Address Line 3',
-          //     validator: 'string',
-          //     styleClasses: "col-md-8"
-          // },
+          {
+            type: 'input',
+            inputType: 'text',
+            model: 'NOK_ADDRESS_L3',
+            placeholder: 'Address Line 3',
+            validator: 'string',
+            styleClasses: 'col-xl-8',
+          },
         ],
         groups: [{
           fields: [
@@ -1102,7 +1102,7 @@ export default {
               },
               onChanged: function (model) {
                 this.$axios
-                  .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.id)
+                  .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.value)
                   .then((response) => {
                     model.selectCity = response.data.data
                   })
@@ -1127,7 +1127,7 @@ export default {
               },
               onChanged: function (model) {
                 this.$axios
-                  .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.id)
+                  .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.value)
                   .then((response) => {
                     model.selectPostcode = response.data.data
                   })
