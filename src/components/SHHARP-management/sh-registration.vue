@@ -926,102 +926,132 @@ export default {
       },
       // PROTECTIVE FACTORS
       tabBSchema: {
-        fields: [
+        groups: [
           {
-            type: 'label',
-            label: '1. Ability to cope with stress/tolerate frustrations',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ1',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '1. Ability to cope with stress/tolerate frustrations',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ1',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '2. Strongly held religious/cultural beliefs',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ2',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '2. Strongly held religious/cultural beliefs',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ2',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '3. Realistic life goals or future plans',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ3',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '3. Realistic life goals or future plans',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ3',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '4. Responsibility to children/beloved pets',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ4',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '4. Responsibility to children/beloved pets',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ4',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '5. Social support',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ5',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '5. Social support',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ5',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '6. Positive therapeutic relationship',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ6',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '6. Positive therapeutic relationship',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ6',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
         ],
       },
@@ -2275,11 +2305,6 @@ export default {
     justify-content: space-between;
     flex-wrap: wrap;
   }
-
-  // .vue-form-generator .field-radios .radio-list label{
-  //   display: inline-table;
-  //   margin-right: 1rem;
-  // }
 
   .box {
     border: 1px solid #918f8d;
