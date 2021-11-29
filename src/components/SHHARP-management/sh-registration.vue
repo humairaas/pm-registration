@@ -186,7 +186,6 @@
                 <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </b-tab>
 
               <!-- SOURCE DATA PRODUCER -->
@@ -2029,21 +2028,41 @@ export default {
     window.onbeforeunload = function () {
       return 'Data will be lost if you leave the page, are you sure?'
     }
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getReferral')
+      .then((response) => {
+        this.selectReferral = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getArrivalMode')
+      .then((response) => {
+        this.selectArrivalMode = response.data.data
+      })
   },
   methods: {
     validateForm () {
-      var tabA = this.validateTabA()
-      var tabB = this.validateTabB()
-      var tabC = this.validateTabC()
-      var tabD = this.validateTabD()
-      var tabE = this.validateTabE()
-      var tabF = this.validateTabF()
+      const data = new FormData()
+      data.append('shData', JSON.stringify(this.model))
+      this.$axios
+        .post('http://127.0.0.1:8000/api/registerSHHARP', data)
+        .then((response) => {
+          return response.data
+        })
+      // var tabA = this.validateTabA()
+      // var tabB = this.validateTabB()
+      // var tabC = this.validateTabC()
+      // var tabD = this.validateTabD()
+      // var tabE = this.validateTabE()
+      // var tabF = this.validateTabF()
 
-      if (tabA && tabB && tabC && tabD && tabE && tabF) {
-        this.launchToast()
-        this.submitPath = true
-        this.$router.push({ path: 'patient_consultation' })
-      }
+      // if (tabA && tabB && tabC && tabD && tabE && tabF) {
+
+      //   this.launchToast()
+      //   this.submitPath = true
+      //   this.$router.push({ path: 'patient_consultation' })
+      // }
     },
     validateTabA () {
       var errors = this.$refs.riskFactors.validate()
