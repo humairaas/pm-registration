@@ -78,7 +78,6 @@
               <tab-content icon="fa fa-info" title="4. Allergy">
                 <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{this.model}}</h6>
               </tab-content>
 
               <!-- Button footer-->
