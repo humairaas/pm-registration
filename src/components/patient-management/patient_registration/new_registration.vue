@@ -1905,24 +1905,23 @@ export default {
   },
   methods: {
     validateForm () {
-      const data = new FormData()
-      data.append('ptData', JSON.stringify(this.model))
-      this.$axios
-        .post('http://127.0.0.1:8000/api/registerPatient', data)
-        .then((response) => {
-          return response.data
-        })
-      console.log(this.model)
-      // var tabA = this.validateTabA()
-      // var tabB = this.validateTabB()
-      // var tabC = this.validateTabC()
-      // var tabD = this.validateTabD()
+      var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
 
-      // if (tabA && tabB && tabC && tabD) {
-      //   this.launchToast()
-      //   this.submitPath = true
-      //   this.$router.push({ path: 'patient_consultation' })
-      // }
+      if (tabA && tabB && tabC && tabD) {
+        const data = new FormData()
+        data.append('ptData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/registerPatient', data)
+          .then((response) => {
+            return response.data
+          })
+        this.launchToast()
+        this.submitPath = true
+        this.$router.push({ path: 'patient_consultation' })
+      }
     },
     validateTabA () {
       var errors = this.$refs.demographic.validate()
