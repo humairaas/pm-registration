@@ -78,6 +78,7 @@
               <tab-content icon="fa fa-info" title="4. Allergy">
                 <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{this.model}}</h6>
               </tab-content>
 
               <!-- Button footer-->
@@ -693,7 +694,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 2, name: 'No' },
+                  { value: 0, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6',
@@ -1643,7 +1644,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 2, name: 'No' },
+                  { value: 0, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6 display-inline',
