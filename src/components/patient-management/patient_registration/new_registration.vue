@@ -627,7 +627,7 @@ export default {
             styleClasses: 'col-md-6',
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.id)
+                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.value)
                 .then((response) => {
                   model.selectDMCity = response.data.data
                 })
@@ -656,7 +656,7 @@ export default {
             },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.id)
+                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.value)
                 .then((response) => {
                   model.selectDMPostcode = response.data.data
                 })
@@ -678,7 +678,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectPostcode
+              return model.selectDMPostcode
             },
           },
         ],
