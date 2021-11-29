@@ -1979,7 +1979,7 @@ export default {
     if (this.submitPath === true) {
       next(true)
     } else {
-      const answer = window.confirm('Changes you made may not be saved.')
+      const answer = window.confirm('Data will be lost if you leave the page, are you sure?')
       if (answer) {
         next(true)
       } else {
