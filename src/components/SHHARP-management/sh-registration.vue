@@ -5,6 +5,76 @@
       <div class="row">
         <div class="col-12">
 
+          <!-- Notification Alert -->
+          <div>
+            <div class="mb-3" v-if="tabA==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> Risk Factors </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabA = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+            <div class="mb-3" v-if="tabB==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> Protective Factors </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabB = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+            <div class="mb-3" v-if="tabC==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> The Self-Harm Act and Suicidal Intent </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabC = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+            <div class="mb-3" v-if="tabD==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> Suicide Risk </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabD = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+            <div class="mb-3" v-if="tabE==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> Hospital Management </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabE = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+            <div class="mb-3" v-if="tabF==true">
+              <va-notification color="danger">
+                <va-badge color="danger">
+                  {{ $t('Incomplete') }}
+                </va-badge>
+                <span>Please fill all <b> Source Data Producer </b> required fields.</span>
+                <button type="button" class="btn close-button" @click="tabF = false">
+                  <span class="fa fa-close"/>
+                </button>
+              </va-notification>
+            </div>
+          </div>
+
           <!-- Form -->
           <va-card>
             <br>
@@ -27,10 +97,11 @@
               <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
               <b-tab title="3. The Self-Harm Act and Suicidal Intent" class="py-3">
                 <va-accordion >
+
                   <!-- Section A -->
-                  <va-collapse>
+                  <va-collapse id="secA">
                     <span slot="header">
-                      Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
+                      <div class="fa fa-exclamation-circle"/> Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
                     </span>
                     <div slot="body">
                       <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" @model-updated="onModelUpdated" >
@@ -90,8 +161,8 @@
                       Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
                     </span>
                     <div slot="body">
-                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE" @model-updated="onModelUpdated"></vue-form-generator>
-                      <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="totalScore" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
+                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE1" @model-updated="onModelUpdated"></vue-form-generator>
+                      <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="selfHarmSectionE2" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
                     </div>
                   </va-collapse>
                 </va-accordion>
@@ -1965,51 +2036,97 @@ export default {
       }
     },
     validateTabC () {
-      this.validateTabCA()
-      this.validateTabCB1()
-      this.validateTabCB2()
-      this.validateTabCC()
-      this.validateTabCD1()
-      this.validateTabCD2()
-      this.validateTabCE()
-      this.validateTotalScore()
+      var tabCA = this.validateTabCA()
+      var tabCB1 = this.validateTabCB1()
+      var tabCB2 = this.validateTabCB2()
+      var tabCC = this.validateTabCC()
+      var tabCD1 = this.validateTabCD1()
+      var tabCD2 = this.validateTabCD2()
+      var tabCE1 = this.validateTabCE1()
+      var tabCE2 = this.validateTabCE2()
+
+      if (tabCA && tabCB1 && tabCB2 && tabCC && tabCD1 && tabCD2 && tabCE1 && tabCE2) {
+        this.tabC = false
+        return true
+      } else {
+        this.tabC = true
+        return false
+      }
     },
     validateTabCA () {
       var errors = this.$refs.selfHarmSectionA.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
     validateTabCB1 () {
       var errors = this.$refs.selfHarmSectionB1.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
     validateTabCB2 () {
       var errors = this.$refs.selfHarmSectionB2.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
     validateTabCC () {
       var errors = this.$refs.selfHarmSectionC.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
     validateTabCD1 () {
       var errors = this.$refs.selfHarmSectionD1.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
     validateTabCD2 () {
       var errors = this.$refs.selfHarmSectionD2.validate()
-      return errors
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
-    validateTabCE () {
-      var errors = this.$refs.selfHarmSectionE.validate()
-      return errors
+    validateTabCE1 () {
+      var errors = this.$refs.selfHarmSectionE1.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
-    validateTotalScore () {
-      var errors = this.$refs.totalScore.validate()
-      return errors
+    validateTabCE2 () {
+      var errors = this.$refs.selfHarmSectionE2.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
     },
 
     validateTabD () {
       var errors = this.$refs.suicideRisk.validate()
-      return errors
+      if (errors) {
+        this.tabD = false
+        return true
+      } else {
+        this.tabD = true
+        return false
+      }
     },
 
     validateTabE () {
@@ -2030,26 +2147,6 @@ export default {
       } else {
         this.tabF = true
         return false
-      }
-    },
-    hideNoti (tab) {
-      if (tab === 'tabA') {
-        this.tabA = false
-      }
-      if (tab === 'tabB') {
-        this.tabB = false
-      }
-      if (tab === 'tabC') {
-        this.tabC = false
-      }
-      if (tab === 'tabD') {
-        this.tabD = false
-      }
-      if (tab === 'tabE') {
-        this.tabE = false
-      }
-      if (tab === 'tabF') {
-        this.tabF = false
       }
     },
     launchToast () {

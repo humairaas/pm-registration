@@ -517,6 +517,12 @@ export default new Router({
         component: () =>
           import('../components/SHHARP-management/sh-registration.vue'),
       },
+      {
+        name: 'sh-demographic',
+        path: 'SHHARP-demographic',
+        component: () =>
+          import('../components/SHHARP-management/sh-demographic.vue'),
+      },
       ],
     },
   ],

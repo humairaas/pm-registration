@@ -12,7 +12,7 @@
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Demographic </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabA')">
+              <button type="button" class="btn close-button" @click="tabA = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -23,7 +23,7 @@
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Sosio Demographic </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabB')">
+              <button type="button" class="btn close-button" @click="tabB = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -34,7 +34,7 @@
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Next of Kin </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabC')">
+              <button type="button" class="btn close-button" @click="tabC = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -45,7 +45,7 @@
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Allergy </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="hideNoti('tabD')">
+              <button type="button" class="btn close-button" @click="tabD = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -194,7 +194,8 @@ export default {
       selectReferralType: [],
       selectIssuingCountry: [],
       selectState: [],
-      selectDMState: [],
+      selectDMCity: [],
+      selectDMPostcode: [],
       selectBranch: [],
 
       // Socio Demographic Data
@@ -288,10 +289,11 @@ export default {
         MD_GENDER: '',
         MD_ALLERGY: [],
 
-        selectCity: [],
-        selectPostcode: [],
         selectDMCity: [],
         selectDMPostcode: [],
+
+        selectCity: [],
+        selectPostcode: [],
       },
 
       // Demographic
@@ -625,13 +627,13 @@ export default {
             styleClasses: 'col-md-6',
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getDMCity?state_id=' + model.DM_STATE.value)
+                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.id)
                 .then((response) => {
                   model.selectDMCity = response.data.data
                 })
             },
             values: () => {
-              return this.selectDMState
+              return this.selectState
             },
           },
           {
@@ -654,7 +656,7 @@ export default {
             },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getDMPostcode?city_id=' + model.DM_CITY.value)
+                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.id)
                 .then((response) => {
                   model.selectDMPostcode = response.data.data
                 })
@@ -676,7 +678,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectDMPostcode
+              return model.selectPostcode
             },
           },
         ],
@@ -1800,12 +1802,6 @@ export default {
       })
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getDMState?country_id=1')
-      .then((response) => {
-        this.selectDMState = response.data.data
-      })
-
-    this.$axios
       .get('http://127.0.0.1:8000/api/getSalutation')
       .then((response) => {
         this.selectSalutation = response.data.data
@@ -1958,20 +1954,6 @@ export default {
       } else {
         this.tabD = true
         return false
-      }
-    },
-    hideNoti (tab) {
-      if (tab === 'tabA') {
-        this.tabA = false
-      }
-      if (tab === 'tabB') {
-        this.tabB = false
-      }
-      if (tab === 'tabC') {
-        this.tabC = false
-      }
-      if (tab === 'tabD') {
-        this.tabD = false
       }
     },
     launchToast () {

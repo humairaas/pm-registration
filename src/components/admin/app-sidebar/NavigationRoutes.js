@@ -128,6 +128,10 @@ export const navigationRoutes = {
       name: 'sh-registration',
       displayName: 'SHHARP Registration',
     },
+    {
+      name: 'sh-demographic',
+      displayName: 'SHHARP Demographic',
+    },
     ],
   },
   {

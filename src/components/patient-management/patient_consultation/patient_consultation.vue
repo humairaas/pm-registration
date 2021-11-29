@@ -11,7 +11,7 @@
             <div class="float-right">
               <router-link to="/patient-management/patient_registration">
                 <button type="button" class="btn sizebtn">
-                  <i class="fa fa-pencil-square-o"/>
+                  <div class="fa fa-pencil-square-o"/>
                 </button>
               </router-link>
             </div>
