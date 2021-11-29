@@ -272,7 +272,7 @@ export default {
         NOK_HOUSE_NO: '',
         NOK_ADDRESS_L1: '',
         NOK_ADDRESS_L2: '',
-        // NOK_ADDRESS_L3: "",
+        NOK_ADDRESS_L3: '',
         NOK_STATE: '',
         NOK_CITY: '',
         NOK_POSTCODE: '',
@@ -379,7 +379,7 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
+              return model && ((model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1) || model.CITIZENSHIP === 2)
             },
           },
           {
@@ -1079,14 +1079,14 @@ export default {
             validator: 'string',
             styleClasses: 'col-xl-8',
           },
-          // {
-          //     type: 'input',
-          //     inputType: 'text',
-          //     model: 'NOK_ADDRESS_L3',
-          //     placeholder: 'Address Line 3',
-          //     validator: 'string',
-          //     styleClasses: "col-md-8"
-          // },
+          {
+            type: 'input',
+            inputType: 'text',
+            model: 'NOK_ADDRESS_L3',
+            placeholder: 'Address Line 3',
+            validator: 'string',
+            styleClasses: 'col-xl-8',
+          },
         ],
         groups: [{
           fields: [
@@ -1104,7 +1104,7 @@ export default {
               },
               onChanged: function (model) {
                 this.$axios
-                  .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.id)
+                  .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.NOK_STATE.value)
                   .then((response) => {
                     model.selectCity = response.data.data
                   })
@@ -1129,7 +1129,7 @@ export default {
               },
               onChanged: function (model) {
                 this.$axios
-                  .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.id)
+                  .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.NOK_CITY.value)
                   .then((response) => {
                     model.selectPostcode = response.data.data
                   })
@@ -1905,16 +1905,24 @@ export default {
   },
   methods: {
     validateForm () {
-      var tabA = this.validateTabA()
-      var tabB = this.validateTabB()
-      var tabC = this.validateTabC()
-      var tabD = this.validateTabD()
+      const data = new FormData()
+      data.append('ptData', JSON.stringify(this.model))
+      this.$axios
+        .post('http://127.0.0.1:8000/api/registerPatient', data)
+        .then((response) => {
+          return response.data
+        })
+      console.log(this.model)
+      // var tabA = this.validateTabA()
+      // var tabB = this.validateTabB()
+      // var tabC = this.validateTabC()
+      // var tabD = this.validateTabD()
 
-      if (tabA && tabB && tabC && tabD) {
-        this.launchToast()
-        this.submitPath = true
-        this.$router.push({ path: 'patient_consultation' })
-      }
+      // if (tabA && tabB && tabC && tabD) {
+      //   this.launchToast()
+      //   this.submitPath = true
+      //   this.$router.push({ path: 'patient_consultation' })
+      // }
     },
     validateTabA () {
       var errors = this.$refs.demographic.validate()
