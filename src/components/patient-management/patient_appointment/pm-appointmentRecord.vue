@@ -1,8 +1,7 @@
 <template>
   <va-card>
-
     <div class="row align--center">
-      <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
+      <div class="flex xs12 md6"><h5>LIST OF APPOINTMENTS</h5></div>
       <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient_registration'}">+</va-button></div>
     </div>
 
@@ -18,11 +17,11 @@
         </va-input>
       </div>
       <div class="flex xs12 md3">
-        <va-select
-          v-model="branch"
-          :label="$t('Branch')"
-          :placeholder="$t('Filter By Branch')"
-          :options="selectBranch"
+        <va-date-picker
+          v-model="date"
+          mode="single"
+          placeholder="Filter By Date"
+          label="Date"
         />
       </div>
       <div class="flex xs12 md3">
@@ -39,10 +38,19 @@
       :fields="fields"
       :data="filteredData"
       :per-page="parseInt(perPage)"
-      @row-clicked="showUser"
       :hoverable="true"
       clickable
     >
+
+      <template slot="actions">
+        <va-button flat small color="#61CE70" icon="fa fa-check" @click="launchToast()" class="ma-0">
+        </va-button>
+        <va-button flat small color="#75757" icon="fa fa-edit" @click="showForm()" class="ma-0">
+        </va-button>
+        <va-button flat small color="#DC3545" icon="fa fa-close" @click="launchToast()" class="ma-0">
+        </va-button>
+      </template>
+
     </va-data-table>
 
     <div class="row">
@@ -61,7 +69,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import users from '../../data/patient.json'
+import users from '../../../data/patient.json'
 
 export default {
   data () {
@@ -71,11 +79,10 @@ export default {
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
       users: users,
-      branch: '',
-      selectBranch: ['Mentari Selayang', 'Mentari Klang', 'Mentari Kluang'],
+      date: '',
+      formatDate: '',
       service: '',
-      selectService: ['Consultation', 'Rehab', 'Rehab - SE', 'Rehab - ETP', 'Rehab - Job Club',
-        'CPS'],
+      selectService: ['Consultation', 'Rehab', 'Rehab - SE', 'Rehab - ETP', 'Rehab - Job Club', 'CPS'],
     }
   },
   computed: {
@@ -97,38 +104,45 @@ export default {
       }, {
         name: 'name',
         title: this.$t('NAME'),
-        width: '20%',
-      }, {
-        name: 'age',
-        title: this.$t('AGE'),
-        width: '5%',
+        width: '18%',
       }, {
         name: 'nric/passport',
         title: this.$t('NRIC/PASSPORT'),
         width: '15%',
       }, {
-        name: 'next visit',
-        title: this.$t('NEXT VISIT'),
+        name: 'status',
+        title: this.$t('STATUS'),
+        width: '5%',
+      }, {
+        name: 'appointment date',
+        title: this.$t('APPT. DATE'),
         width: '10%',
-      },
-      {
+      }, {
+        name: 'appointment time',
+        title: this.$t('APPT. TIME'),
+        width: '10%',
+      }, {
         name: 'assigned doctor',
         title: this.$t('ASSIGNED DOCTOR'),
-        width: '15%',
+        width: '10%',
       }, {
         name: 'services',
         title: this.$t('SERVICES'),
-        width: '15%',
+        width: '5%',
+      }, {
+        name: '__slot:actions',
+        title: this.$t('ACTION'),
+        width: '12%',
       }]
     },
     filteredData () {
-      if ((!this.term || this.term.length < 1) && this.branch === '' && this.service === '') {
+      if ((!this.term || this.term.length < 1) && this.date === '' && this.service === '') {
         return this.users
       }
 
       return this.users.filter(item => {
         return item.services.startsWith(this.service) &&
-                  item.branch.startsWith(this.branch) &&
+                  item['appointment date'].startsWith(this.formatDate) &&
                   (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
                   item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
                   item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
@@ -158,13 +172,32 @@ export default {
 
       return 'grey'
     },
-    showUser (user) {
-      // alert(JSON.stringify(user))
+    showForm () {
       this.$router.push({ name: 'patient_consultation' })
+    },
+    launchToast () {
+      this.showToast(
+        ' Registration Successful !',
+        {
+          icon: 'fa-check',
+          position: 'top-center',
+          duration: 2500,
+          fullWidth: false,
+        },
+      )
     },
     search: debounce(function (term) {
       this.term = term
     }, 400),
+  },
+  watch: {
+    date: function () {
+      var year = this.date.toString().slice(0, 4)
+      var month = this.date.toString().slice(5, 7)
+      var day = this.date.toString().slice(8, 10)
+      var formatted = day + '-' + month + '-' + year
+      this.formatDate = formatted
+    },
   },
 }
 </script>

@@ -103,6 +103,10 @@ export const navigationRoutes = {
       displayName: 'Patient Registration',
     },
     {
+      name: 'patient-appointmentRecord',
+      displayName: 'Patient Appointment Record',
+    },
+    {
       name: 'patient_screening',
       displayName: 'Patient Screening',
     },
