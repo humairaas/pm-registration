@@ -24,6 +24,20 @@ import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel.vue
 
 import axios from 'axios'
 
+import Multiselect from 'vue-multiselect'
+import VueFormGenerator from 'vue-form-generator'
+import 'vue-form-generator/dist/vfg-core.css'
+import { BootstrapVue, IconsPlugin, TabsPlugin } from 'bootstrap-vue'
+// import * as servicesModule1 from '../../../app/module1/services01'
+
+// Import Bootstrap an BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vue-select/dist/vue-select.css'
+
+import VueFormWizard from 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
 consoleBuildInfo()
 
 Vue.use(VuesticPlugin)
@@ -41,6 +55,20 @@ Vue.component('field-vfg-custom-file-excel', VfgCustomFileExcel)
 
 Vue.prototype.$axios = axios
 Vue.use(axios)
+
+Vue.use(TabsPlugin)
+Vue.use(VueFormWizard)
+
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+Vue.use(VueFormGenerator)
+Vue.component('multiselect', Multiselect)
+
+// cleave.js
+require('cleave.js')
+require('cleave.js/dist/addons/cleave-phone.my')
 
 router.beforeEach((to, from, next) => {
   store.commit('setLoading', true)

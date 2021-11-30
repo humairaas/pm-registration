@@ -417,7 +417,6 @@ export default {
             placeholder: 'Enter Date',
             required: true,
             format: 'YYYY/MM/DD',
-            min: 1,
             styleClasses: 'col-md-4',
             visible: function (model) {
               return model && model.CITIZENSHIP === 3

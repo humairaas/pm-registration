@@ -468,6 +468,12 @@ export default new Router({
           import('../components/patient-management/patient_appointment/pm-appointmentRecord.vue'),
       },
       {
+        name: 'patient-appointmentBooking',
+        path: 'patient-appointment-booking',
+        component: () =>
+          import('../components/patient-management/patient_appointment/pm-appointmentBooking.vue'),
+      },
+      {
         name: 'patient_screening',
         path: 'patient_screening',
         component: () =>
