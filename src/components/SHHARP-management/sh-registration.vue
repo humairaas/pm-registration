@@ -396,21 +396,15 @@ export default {
       // Suicide Risk Data
 
       // Hospital Management Data
-      selectReferral: [
-        { name: 'ED', value: 1 },
-        { name: 'Ward', value: 2 },
-        { name: 'Clinic', value: 3 },
-        { name: 'Mentari', value: 4 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      selectReferral: [],
 
-      selectArrivalMode: [
-        { name: 'Self', value: 1 },
-        { name: 'Family', value: 2 },
-        { name: 'Ambulance', value: 3 },
-        { name: 'Police', value: 4 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      // { name: 'ED', value: 1 },
+      //   { name: 'Ward', value: 2 },
+      //   { name: 'Clinic', value: 3 },
+      //   { name: 'Mentari', value: 4 },
+      //   { name: 'Others (Specify)', value: 99 },
+
+      selectArrivalMode: [],
 
       radioPhysicalConseq: [
         { name: 'No significant physical harm, no medical treatment required', value: 0 },
@@ -1676,7 +1670,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.REFERRAL.value === 99
+                  return model && model.REFERRAL.value === 7
                 },
               },
             ],
@@ -1714,7 +1708,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.ARRIVAL_MODE.value === 99
+                  return model && model.ARRIVAL_MODE.value === 5
                 },
               },
             ],
