@@ -3,7 +3,7 @@
 
     <div class="row align--center">
       <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
-      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'sh-demographic'}">+</va-button></div>
+      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'shharp-demographic'}">+</va-button></div>
     </div>
 
     <div class="row">

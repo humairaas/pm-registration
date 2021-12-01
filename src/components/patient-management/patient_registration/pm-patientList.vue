@@ -3,7 +3,7 @@
 
     <div class="row align--center">
       <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
-      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient_registration'}">+</va-button></div>
+      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient-registration'}">+</va-button></div>
     </div>
 
     <div class="row">
@@ -61,7 +61,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import users from '../../data/patient.json'
+import users from '../../../data/patient.json'
 
 export default {
   data () {
