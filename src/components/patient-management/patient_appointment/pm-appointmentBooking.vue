@@ -6,24 +6,42 @@
         <div class="col-12">
 
           <!-- Notification Alert -->
-          <!-- <div class="mb-3" v-if="tabA==true">
+          <div class="mb-3" v-if="tabA==true">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all <b> Demographic </b> required fields.</span>
+              <span>Please fill all required fields.</span>
               <button type="button" class="btn close-button" @click="tabA = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
-          </div> -->
+          </div>
 
           <va-card>
-            <h2>BOOK APPOINTMENT</h2>
-            <br>
-            <!-- Form -->
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment" @model-updated="onModelUpdated">
-            </vue-form-generator>
+            <form-wizard color="#F2A444" error-color="#a94442" ref="wizard" title="" subtitle="">
+
+              <!-- 1st tab: Book Appointment-->
+              <tab-content icon="fa fa-calendar-check-o" title="Book Appointment">
+                <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment" @model-updated="onModelUpdated">
+                </vue-form-generator>
+              </tab-content>
+
+              <!-- Button footer-->
+              <template slot="footer" slot-scope="{
+              }">
+                <div class="float-left">
+                  <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
+                    <div class="fa fa-step-backward" /> &nbsp; Cancel
+                  </button>
+                </div>
+                <div class="float-right">
+                  <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                    <div class="fa fa-paper-plane" /> &nbsp; Confirm
+                  </button>
+                </div>
+              </template>
+            </form-wizard>
           </va-card>
 
         </div>
@@ -64,6 +82,9 @@ require('cleave.js/dist/addons/cleave-phone.my')
 export default {
   data () {
     return {
+      tabA: false,
+      submitPath: false,
+
       selectAppointmentType: [
         { name: 'Supported Employment', value: '1' },
         { name: 'ETP', value: '2' },
@@ -107,6 +128,7 @@ export default {
                 label: 'NRIC/PASSPORT NUMBER',
                 model: 'NRIC',
                 required: true,
+                validator: 'required',
                 cleaveOptions: {
                   blocks: [6, 2, 4],
                   delimiter: '-',
@@ -127,6 +149,7 @@ export default {
                 model: 'DATE',
                 placeholder: 'Enter Date',
                 required: true,
+                validator: 'date',
                 format: 'YYYY/MM/DD',
                 styleClasses: 'col-md-4',
               },
@@ -247,6 +270,53 @@ export default {
         validateAfterLoad: false,
         validateAfterChanged: true,
       },
+    }
+  },
+  methods: {
+    navigateBack () {
+      this.$router.push({ name: 'patient-appointmentList' })
+    },
+    validateForm () {
+      var tabA = this.validateTabA()
+
+      if (tabA) {
+        this.launchToast()
+        this.submitPath = true
+        this.$router.push({ name: 'patient-appointmentList' })
+      }
+    },
+    validateTabA () {
+      var errors = this.$refs.appointment.validate()
+      if (errors) {
+        this.tabA = false
+        return true
+      } else {
+        this.tabA = true
+        return false
+      }
+    },
+    launchToast () {
+      this.showToast(
+        ' Appointment for ' + this.model.NRIC + ' Booked Successful !',
+        {
+          icon: 'fa-check',
+          position: 'top-center',
+          duration: 2500,
+          fullWidth: false,
+        },
+      )
+    },
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.submitPath === true) {
+      next(true)
+    } else {
+      const answer = window.confirm('Changes you made may not be saved.')
+      if (answer) {
+        next(true)
+      } else {
+        next(false)
+      }
     }
   },
 }

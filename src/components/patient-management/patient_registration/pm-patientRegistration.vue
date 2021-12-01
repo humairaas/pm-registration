@@ -53,8 +53,7 @@
 
           <!-- Form -->
           <va-card>
-            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard">
-              <h3 slot="title"></h3>
+            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard" title="" subtitle="">
 
               <!-- 1st tab: Demographic-->
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
