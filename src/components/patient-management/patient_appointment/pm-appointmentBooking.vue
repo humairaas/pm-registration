@@ -18,6 +18,18 @@
             </va-notification>
           </div>
 
+          <div class="mb-3" v-if="!this.model.PATIENT_FK">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Patient with NRIC/PASSPORT ({{this.model.NRIC_PASSPORT_NO}}) does not exist.</span>
+              <button type="button" class="btn close-button" @click="tabA = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+
           <va-card>
             <form-wizard color="#F2A444" error-color="#a94442" ref="wizard" title="" subtitle="">
 
@@ -85,31 +97,13 @@ export default {
       tabA: false,
       submitPath: false,
 
-      selectAppointmentType: [
-        { name: 'Supported Employment', value: '1' },
-        { name: 'ETP', value: '2' },
-        { name: 'Job Club', value: '3' },
-        { name: 'Rehabilitation', value: '4' },
-        { name: 'Consultation', value: '5' },
-      ],
-
-      selectVisitType: [
-        { name: 'New', value: '1' },
-        { name: 'Follow Up', value: '2' },
-      ],
-
-      selectPatientCategory: [
-        { name: 'Daycare', value: '1' },
-        { name: 'Outpatient', value: '2' },
-      ],
-
-      selectAssignedTeam: [
-        { name: 'Team 1', value: '1' },
-        { name: 'Team 2', value: '2' },
-      ],
+      selectAppointmentType: [],
+      selectVisitType: [],
+      selectPatientCategory: [],
+      selectAssignedTeam: [],
 
       model: {
-        NRIC: '',
+        NRIC_PASSPORT_NO: '',
         DATE: '',
         TIME: '',
         DURATION: '',
@@ -117,6 +111,7 @@ export default {
         VISIT_TYPE: '',
         PATIENT_CATEGORY: '',
         ASSIGNED_TEAM: '',
+        PATIENT_FK: '',
       },
       schema: {
         groups: [
@@ -124,17 +119,13 @@ export default {
             styleClasses: 'row',
             fields: [
               {
-                type: 'cleave',
+                type: 'input',
+                inputType: 'text',
                 label: 'NRIC/PASSPORT NUMBER',
-                model: 'NRIC',
+                model: 'NRIC_PASSPORT_NO',
                 required: true,
-                validator: 'required',
-                cleaveOptions: {
-                  blocks: [6, 2, 4],
-                  delimiter: '-',
-                  numericOnly: true,
-                },
-                placeholder: 'XXXXXX-XX-XXXX',
+                validator: 'string',
+                hint: "Without ''-''",
                 styleClasses: 'col-md-6',
               },
             ],
@@ -272,18 +263,59 @@ export default {
       },
     }
   },
+  mounted () {
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getVisitType')
+      .then((response) => {
+        this.selectVisitType = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPatientCategory')
+      .then((response) => {
+        this.selectPatientCategory = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAppointmentType')
+      .then((response) => {
+        this.selectAppointmentType = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAssignedTeam')
+      .then((response) => {
+        this.selectAssignedTeam = response.data.data
+      })
+  },
   methods: {
     navigateBack () {
       this.$router.push({ name: 'patient-appointmentList' })
     },
     validateForm () {
       var tabA = this.validateTabA()
+      this.validatePatient()
 
-      if (tabA) {
+      if (tabA && this.model.PATIENT_FK) {
+        const data = new FormData()
+        data.append('apptData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/bookAppointment', data)
+          .then((response) => {
+            return response.data
+          })
         this.launchToast()
         this.submitPath = true
         this.$router.push({ name: 'patient-appointmentList' })
       }
+    },
+    validatePatient () {
+      this.$axios
+        .get('http://127.0.0.1:8000/api/verifyPatient?id=' + this.model.NRIC_PASSPORT_NO)
+        .then((response) => {
+          this.model.PATIENT_FK = response.data.data
+        })
+      console.log('patient id: ', this.model.PATIENT_FK)
     },
     validateTabA () {
       var errors = this.$refs.appointment.validate()
@@ -297,7 +329,7 @@ export default {
     },
     launchToast () {
       this.showToast(
-        ' Appointment for ' + this.model.NRIC + ' Booked Successful !',
+        ' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !',
         {
           icon: 'fa-check',
           position: 'top-center',
@@ -305,6 +337,11 @@ export default {
           fullWidth: false,
         },
       )
+    },
+  },
+  watch: {
+    nric_passport_no_2: function () {
+      console.log(this.model.NRIC_PASSPORT_NO)
     },
   },
   beforeRouteLeave (to, from, next) {
