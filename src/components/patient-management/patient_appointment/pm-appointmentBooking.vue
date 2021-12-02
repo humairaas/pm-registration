@@ -18,42 +18,33 @@
             </va-notification>
           </div>
 
-          <div class="mb-3" v-if="!this.model.PATIENT_FK">
+          <!-- <div class="mb-3" v-if="!this.model.PATIENT_FK">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Patient with NRIC/PASSPORT ({{this.model.NRIC_PASSPORT_NO}}) does not exist.</span>
-              <button type="button" class="btn close-button" @click="tabA = false">
-                <span class="fa fa-close"/>
-              </button>
             </va-notification>
-          </div>
+          </div> -->
 
           <va-card>
-            <form-wizard color="#F2A444" error-color="#a94442" ref="wizard" title="" subtitle="">
 
-              <!-- 1st tab: Book Appointment-->
-              <tab-content icon="fa fa-calendar-check-o" title="Book Appointment">
-                <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment" @model-updated="onModelUpdated">
-                </vue-form-generator>
-              </tab-content>
+            <div class="text-center"><h4 class="mt-4 mb-5 text-dark">BOOK APPOINTMENT</h4></div>
+            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment" @model-updated="onModelUpdated">
+            </vue-form-generator>
 
-              <!-- Button footer-->
-              <template slot="footer" slot-scope="{
-              }">
-                <div class="float-left">
-                  <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-step-backward" /> &nbsp; Cancel
-                  </button>
-                </div>
-                <div class="float-right">
-                  <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp; Confirm
-                  </button>
-                </div>
-              </template>
-            </form-wizard>
+            <!-- Button footer-->
+            <div class="float-left">
+              <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
+                <div class="fa fa-step-backward" /> &nbsp; Cancel
+              </button>
+            </div>
+            <div class="float-right">
+              <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                <div class="fa fa-paper-plane" /> &nbsp; Confirm
+              </button>
+            </div>
+
           </va-card>
 
         </div>
@@ -337,11 +328,6 @@ export default {
           fullWidth: false,
         },
       )
-    },
-  },
-  watch: {
-    nric_passport_no_2: function () {
-      console.log(this.model.NRIC_PASSPORT_NO)
     },
   },
   beforeRouteLeave (to, from, next) {
