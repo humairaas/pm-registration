@@ -398,12 +398,6 @@ export default {
       // Hospital Management Data
       selectReferral: [],
 
-      // { name: 'ED', value: 1 },
-      //   { name: 'Ward', value: 2 },
-      //   { name: 'Clinic', value: 3 },
-      //   { name: 'Mentari', value: 4 },
-      //   { name: 'Others (Specify)', value: 99 },
-
       selectArrivalMode: [],
 
       radioPhysicalConseq: [
@@ -424,14 +418,7 @@ export default {
         { name: 'Alive', value: 1 },
       ],
 
-      selectPSYMX: [
-        { name: 'Transferred to PSY ward', value: 1 },
-        { name: 'Given appt to PSY clinic', value: 2 },
-        { name: 'Referred to counsellor', value: 3 },
-        { name: 'Discharge without any PSY follow-up', value: 4 },
-        { name: 'Refer community PSY services', value: 5 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      selectPSYMX: [],
 
       // Source Data Producer Data
 
@@ -1670,7 +1657,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.REFERRAL.value === 7
+                  return model && model.REFERRAL.value === 5
                 },
               },
             ],
@@ -1923,7 +1910,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  if (model.PSYMX.some(e => e.value === 99)) {
+                  if (model.PSYMX.some(e => e.value === 6)) {
                     return true
                   }
                 },
@@ -2033,6 +2020,12 @@ export default {
       .get('http://127.0.0.1:8000/api/getArrivalMode')
       .then((response) => {
         this.selectArrivalMode = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPSYMX')
+      .then((response) => {
+        this.selectPSYMX = response.data.data
       })
   },
   methods: {
