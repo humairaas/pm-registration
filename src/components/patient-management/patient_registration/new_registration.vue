@@ -175,6 +175,7 @@ export default {
   },
   data () {
     return {
+      id: '',
       tabA: false,
       tabB: false,
       tabC: false,
@@ -184,6 +185,8 @@ export default {
       showLargeModal: false,
 
       submitPath: false,
+
+      patient_data: '',
 
       // Demographic  Data
       selectSalutation: [],
@@ -1902,6 +1905,39 @@ export default {
       .then((response) => {
         this.selectRelationship = response.data.data
       })
+
+    if (this.$route.query.id) {
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + this.$route.query.id)
+        .then((response) => {
+          this.model.SALUTATION = response.data.data[0].salutation_fk
+          this.model.DM_NAME = response.data.data[0].name
+          this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
+          this.model.NRIC_TYPE = response.data.data[0].nric_type_fk
+          this.model.NRIC_NO = response.data.data[0].nric_no
+          // this.model.PASSPORT_NO = response.data.data[0].citizenship_fk,
+          // this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].citizenship_fk,
+          // this.model.ISSUING_COUNTRY = response.data.data[0].citizenship_fk,
+          this.model.GENDER = response.data.data[0].gender_fk
+          this.model.BIRTH_DATE = response.data.data[0].birthdate
+          this.model.DM_MOBILE_NO = response.data.data[0].phone_no_1
+          this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
+          // this.model.HOSPITAL_MRN = response.data.data[0].citizenship_fk,
+          // this.model.MENTARI_MRN = response.data.data[0].citizenship_fk,
+          // this.model.SERVICE_TYPE = response.data.data[0].citizenship_fk,
+          // this.model.REFERRAL_TYPE = response.data.data[0].citizenship_fk,
+          // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
+          // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
+          // this.model.DM_ADDRESS_LINE_1 = response.data.data[0].citizenship_fk,
+          // this.model.DM_ADDRESS_LINE_2 = response.data.data[0].citizenship_fk,
+          // this.model.DM_ADDRESS_LINE_3 = response.data.data[0].citizenship_fk,
+          // this.model.DM_POSTCODE = response.data.data[0].citizenship_fk,
+          // this.model.DM_CITY = response.data.data[0].citizenship_fk,
+          // this.model.DM_STATE = response.data.data[0].citizenship_fk,
+          this.model.EXISTING_PATIENT = response.data.data[0].status_fk
+          // this.model.BRANCH = response.data.data[0].citizenship_fk,
+        })
+    }
   },
   methods: {
     validateForm () {
@@ -1910,7 +1946,7 @@ export default {
       this.$axios
         .post('http://127.0.0.1:8000/api/registerPatient', data)
         .then((response) => {
-          return response.data
+          this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
         })
       console.log(this.model)
       // var tabA = this.validateTabA()

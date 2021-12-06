@@ -2,14 +2,14 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <h2 class="patient-name">Ms. Nuha Binti Ahmad Soleh</h2>
+      <h2 class="patient-name">{{pt_data[0].name}}</h2>
 
       <div class="row">
         <!--Demographic--->
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link to="/patient-management/patient_registration">
+              <router-link v-bind:to="'/patient-management/patient_registration?id='+id">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
@@ -39,19 +39,19 @@
                 <div class="row">
                   <div class="col-md-4"><b>Gender</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">Female</div>
+                  <div class="col-md-5">{{pt_data[0].gender}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-4"><b>Date of Birth</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">20/12/2000 (21 years old)</div>
+                  <div class="col-md-5">{{pt_data[0].birthdate}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-4"><b>Marital Status</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">Single</div>
+                  <div class="col-md-5">{{pt_data[0].marital}}</div>
                 </div>
 
                 <div class="row">
@@ -63,7 +63,7 @@
                 <div class="row mb-3">
                   <div class="col-md-4"><b>Contact No</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">018-2875425</div>
+                  <div class="col-md-5">{{pt_data[0].phone_no_1}}</div>
                 </div>
               </div>
               <div class="col-xl-3">
@@ -250,21 +250,22 @@ export default {
   },
   data () {
     return {
-      show: false,
-      show_second: false,
-      show_third: false,
-      modalClass: 'modal-90per',
+      id: this.$route.params.id,
+      pt_data: [],
     }
   },
   methods: {
-    showmodal () {
-      this.$modals.simpleModal.$show()
-    },
     onComplete () {
       alert(JSON.stringify(this.model))
       // this.$router.push("/admin/director-details");
     },
-
+  },
+  mounted () {
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + this.id)
+      .then((response) => {
+        this.pt_data = response.data.data
+      })
   },
 }
 </script>
