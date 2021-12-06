@@ -475,7 +475,7 @@ export default new Router({
       },
       {
         name: 'patient_consultation',
-        path: 'patient_consultation',
+        path: 'patient_consultation/:id',
         component: () =>
           import('../components/patient-management/patient_consultation/patient_consultation.vue'),
       },
