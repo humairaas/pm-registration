@@ -53,8 +53,7 @@
 
           <!-- Form -->
           <va-card>
-            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard">
-              <h3 slot="title"></h3>
+            <form-wizard  color="#f2a444" error-color="#a94442" ref="wizard" title="" subtitle="">
 
               <!-- 1st tab: Demographic-->
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
@@ -420,7 +419,6 @@ export default {
             placeholder: 'Enter Date',
             required: true,
             format: 'YYYY/MM/DD',
-            min: 1,
             styleClasses: 'col-md-4',
             visible: function (model) {
               return model && model.CITIZENSHIP === 3
@@ -630,7 +628,7 @@ export default {
             styleClasses: 'col-md-6',
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.id)
+                .get('http://127.0.0.1:8000/api/getCity?state_id=' + model.DM_STATE.value)
                 .then((response) => {
                   model.selectDMCity = response.data.data
                 })
@@ -659,7 +657,7 @@ export default {
             },
             onChanged: function (model) {
               this.$axios
-                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.id)
+                .get('http://127.0.0.1:8000/api/getPostcode?city_id=' + model.DM_CITY.value)
                 .then((response) => {
                   model.selectDMPostcode = response.data.data
                 })
@@ -681,7 +679,7 @@ export default {
             },
             styleClasses: 'col-md-6',
             values: function (model) {
-              return model.selectPostcode
+              return model.selectDMPostcode
             },
           },
         ],
@@ -696,7 +694,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 2, name: 'No' },
+                  { value: 0, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6',
@@ -1646,7 +1644,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 2, name: 'No' },
+                  { value: 0, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6 display-inline',
@@ -1959,6 +1957,23 @@ export default {
       //   this.submitPath = true
       //   this.$router.push({ path: 'patient_consultation' })
       // }
+      /* var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
+
+      if (tabA && tabB && tabC && tabD) {
+        const data = new FormData()
+        data.append('ptData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/registerPatient', data)
+          .then((response) => {
+            return response.data
+          })
+        this.launchToast()
+        this.submitPath = true
+        this.$router.push({ path: 'patient_consultation' })
+      } */
     },
     validateTabA () {
       var errors = this.$refs.demographic.validate()
@@ -2016,7 +2031,7 @@ export default {
     if (this.submitPath === true) {
       next(true)
     } else {
-      const answer = window.confirm('Changes you made may not be saved.')
+      const answer = window.confirm('Data will be lost if you leave the page, are you sure?')
       if (answer) {
         next(true)
       } else {

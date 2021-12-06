@@ -186,7 +186,6 @@
                 <br/>
                 <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </b-tab>
 
               <!-- SOURCE DATA PRODUCER -->
@@ -397,21 +396,9 @@ export default {
       // Suicide Risk Data
 
       // Hospital Management Data
-      selectReferral: [
-        { name: 'ED', value: 1 },
-        { name: 'Ward', value: 2 },
-        { name: 'Clinic', value: 3 },
-        { name: 'Mentari', value: 4 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      selectReferral: [],
 
-      selectArrivalMode: [
-        { name: 'Self', value: 1 },
-        { name: 'Family', value: 2 },
-        { name: 'Ambulance', value: 3 },
-        { name: 'Police', value: 4 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      selectArrivalMode: [],
 
       radioPhysicalConseq: [
         { name: 'No significant physical harm, no medical treatment required', value: 0 },
@@ -431,14 +418,7 @@ export default {
         { name: 'Alive', value: 1 },
       ],
 
-      selectPSYMX: [
-        { name: 'Transferred to PSY ward', value: 1 },
-        { name: 'Given appt to PSY clinic', value: 2 },
-        { name: 'Referred to counsellor', value: 3 },
-        { name: 'Discharge without any PSY follow-up', value: 4 },
-        { name: 'Refer community PSY services', value: 5 },
-        { name: 'Others (Specify)', value: 99 },
-      ],
+      selectPSYMX: [],
 
       // Source Data Producer Data
 
@@ -926,102 +906,132 @@ export default {
       },
       // PROTECTIVE FACTORS
       tabBSchema: {
-        fields: [
+        groups: [
           {
-            type: 'label',
-            label: '1. Ability to cope with stress/tolerate frustrations',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ1',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '1. Ability to cope with stress/tolerate frustrations',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ1',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '2. Strongly held religious/cultural beliefs',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ2',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '2. Strongly held religious/cultural beliefs',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ2',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '3. Realistic life goals or future plans',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ3',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '3. Realistic life goals or future plans',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ3',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '4. Responsibility to children/beloved pets',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ4',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '4. Responsibility to children/beloved pets',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ4',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '5. Social support',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ5',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '5. Social support',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ5',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
           {
-            type: 'label',
-            label: '6. Positive therapeutic relationship',
-            styleClasses: 'col-md-6',
-          },
-          {
-            type: 'radios',
-            model: 'PQ6',
-            values: [
-              { name: 'No', value: 0 },
-              { name: 'Yes', value: 1 },
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '6. Positive therapeutic relationship',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'PQ6',
+                values: [
+                  { name: 'No', value: 0 },
+                  { name: 'Yes', value: 1 },
+                ],
+                required: true,
+                validator: 'required',
+                styleClasses: 'col-md-auto display-inline',
+              },
             ],
-            required: true,
-            validator: 'required',
-            styleClasses: 'col-md-6 display-inline',
           },
         ],
       },
@@ -1647,7 +1657,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.REFERRAL.value === 99
+                  return model && model.REFERRAL.value === 5
                 },
               },
             ],
@@ -1685,7 +1695,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.ARRIVAL_MODE.value === 99
+                  return model && model.ARRIVAL_MODE.value === 5
                 },
               },
             ],
@@ -1900,7 +1910,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  if (model.PSYMX.some(e => e.value === 99)) {
+                  if (model.PSYMX.some(e => e.value === 6)) {
                     return true
                   }
                 },
@@ -1999,21 +2009,47 @@ export default {
     window.onbeforeunload = function () {
       return 'Data will be lost if you leave the page, are you sure?'
     }
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getReferral')
+      .then((response) => {
+        this.selectReferral = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getArrivalMode')
+      .then((response) => {
+        this.selectArrivalMode = response.data.data
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPSYMX')
+      .then((response) => {
+        this.selectPSYMX = response.data.data
+      })
   },
   methods: {
     validateForm () {
-      var tabA = this.validateTabA()
-      var tabB = this.validateTabB()
-      var tabC = this.validateTabC()
-      var tabD = this.validateTabD()
-      var tabE = this.validateTabE()
-      var tabF = this.validateTabF()
+      const data = new FormData()
+      data.append('shData', JSON.stringify(this.model))
+      this.$axios
+        .post('http://127.0.0.1:8000/api/registerSHHARP', data)
+        .then((response) => {
+          return response.data
+        })
+      // var tabA = this.validateTabA()
+      // var tabB = this.validateTabB()
+      // var tabC = this.validateTabC()
+      // var tabD = this.validateTabD()
+      // var tabE = this.validateTabE()
+      // var tabF = this.validateTabF()
 
-      if (tabA && tabB && tabC && tabD && tabE && tabF) {
-        this.launchToast()
-        this.submitPath = true
-        this.$router.push({ path: 'patient_consultation' })
-      }
+      // if (tabA && tabB && tabC && tabD && tabE && tabF) {
+
+      //   this.launchToast()
+      //   this.submitPath = true
+      //   this.$router.push({ path: 'patient_consultation' })
+      // }
     },
     validateTabA () {
       var errors = this.$refs.riskFactors.validate()
@@ -2275,11 +2311,6 @@ export default {
     justify-content: space-between;
     flex-wrap: wrap;
   }
-
-  // .vue-form-generator .field-radios .radio-list label{
-  //   display: inline-table;
-  //   margin-right: 1rem;
-  // }
 
   .box {
     border: 1px solid #918f8d;

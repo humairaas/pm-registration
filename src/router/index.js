@@ -444,22 +444,28 @@ export default new Router({
       path: '/patient-management',
       component: AppLayout,
       children: [{
-        name: 'patient_management',
-        path: 'patient_management',
+        name: 'patient-list',
+        path: 'patient-list',
         component: () =>
-          import('../components/patient-management/patient_management.vue'),
+          import('../components/patient-management/patient_registration/pm-patientList.vue'),
       },
       {
-        name: 'calendar_management',
-        path: 'calendar_management',
+        name: 'patient-registration',
+        path: 'patient-registration',
         component: () =>
-          import('../components/patient-management/calendar_management.vue'),
+          import('../components/patient-management/patient_registration/pm-patientRegistration.vue'),
       },
       {
-        name: 'patient_registration',
-        path: 'patient_registration',
+        name: 'patient-appointmentList',
+        path: 'patient-appointment-list',
         component: () =>
-          import('../components/patient-management/patient_registration/new_registration.vue'),
+          import('../components/patient-management/patient_appointment/pm-appointmentList.vue'),
+      },
+      {
+        name: 'patient-appointmentBooking',
+        path: 'book-appointment',
+        component: () =>
+          import('../components/patient-management/patient_appointment/pm-appointmentBooking.vue'),
       },
       {
         name: 'patient_screening',
@@ -497,6 +503,12 @@ export default new Router({
         component: () =>
           import('../components/patient-management/patient_consultation/visit_note.vue'),
       },
+      {
+        name: 'calendar_management',
+        path: 'calendar_management',
+        component: () =>
+          import('../components/patient-management/calendar_management.vue'),
+      },
 
       ],
     },
@@ -506,19 +518,19 @@ export default new Router({
       path: '/SHHARP-management',
       component: AppLayout,
       children: [{
-        name: 'sh-record',
-        path: 'SHHARP-record',
+        name: 'shharp-list',
+        path: 'SHHARP-list',
         component: () =>
-          import('../components/SHHARP-management/sh-record.vue'),
+          import('../components/SHHARP-management/sh-list.vue'),
       },
       {
-        name: 'sh-registration',
-        path: 'SHHARP-registration',
+        name: 'shharp-registry',
+        path: 'SHHARP-registry',
         component: () =>
-          import('../components/SHHARP-management/sh-registration.vue'),
+          import('../components/SHHARP-management/sh-registry.vue'),
       },
       {
-        name: 'sh-demographic',
+        name: 'shharp-demographic',
         path: 'SHHARP-demographic',
         component: () =>
           import('../components/SHHARP-management/sh-demographic.vue'),

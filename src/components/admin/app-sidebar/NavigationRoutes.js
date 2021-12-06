@@ -91,16 +91,24 @@ export const navigationRoutes = {
     },
     disabled: true,
     children: [{
-      name: 'patient_management',
-      displayName: 'Manage Patient',
+      name: 'patient-list',
+      displayName: 'Patient List',
+    },
+    {
+      name: 'patient-registration',
+      displayName: 'Patient Registration',
+    },
+    {
+      name: 'patient-appointmentList',
+      displayName: 'Appointment List',
+    },
+    {
+      name: 'patient-appointmentBooking',
+      displayName: 'Book New Appointment',
     },
     {
       name: 'calendar_management',
       displayName: 'Appointment Calendar',
-    },
-    {
-      name: 'patient_registration',
-      displayName: 'Patient Registration',
     },
     {
       name: 'patient_screening',
@@ -121,16 +129,16 @@ export const navigationRoutes = {
     },
     disabled: true,
     children: [{
-      name: 'sh-record',
-      displayName: 'SHHARP Record',
+      name: 'shharp-list',
+      displayName: 'SHHARP List',
     },
     {
-      name: 'sh-registration',
-      displayName: 'SHHARP Registration',
-    },
-    {
-      name: 'sh-demographic',
+      name: 'shharp-demographic',
       displayName: 'SHHARP Demographic',
+    },
+    {
+      name: 'shharp-registry',
+      displayName: 'SHHARP Registry',
     },
     ],
   },

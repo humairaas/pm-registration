@@ -3,7 +3,7 @@
 
     <div class="row align--center">
       <div class="flex xs12 md6"><h5>LIST OF PATIENTS</h5></div>
-      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient_registration'}">+</va-button></div>
+      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient-registration'}">+</va-button></div>
     </div>
 
     <div class="row">
@@ -23,7 +23,6 @@
           :label="$t('Branch')"
           :placeholder="$t('Filter By Branch')"
           :options="selectBranch"
-          noClear
         />
       </div>
       <div class="flex xs12 md3">
@@ -32,7 +31,6 @@
           :label="$t('Services')"
           :placeholder="$t('Filter By Service')"
           :options="selectService"
-          noClear
         />
       </div>
     </div>
@@ -63,7 +61,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import users from '../../data/patient.json'
+import users from '../../../data/patient.json'
 
 export default {
   data () {
