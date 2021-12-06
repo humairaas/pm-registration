@@ -375,17 +375,7 @@ export default {
       // Protective Factors Data
 
       // The Self-harm Act and Suicidal Intent Data
-      selectOccurance: [
-        { name: 'Home', id: 1 },
-        { name: 'Residential instituition', id: 2 },
-        { name: 'School & public admin area', id: 3 },
-        { name: 'Sports & athletics area', id: 4 },
-        { name: 'Street & highway', id: 5 },
-        { name: 'Trade & service area', id: 6 },
-        { name: 'Industrial & construction area', id: 7 },
-        { name: 'Farm / plantation', id: 8 },
-        { name: 'Others specified areas', id: 99 },
-      ],
+      selectOccurance: [],
 
       selectOverdoseType: [
         { name: 'Medications, specify', id: 1 },
@@ -1059,7 +1049,7 @@ export default {
             validator: 'required',
           },
           {
-            type: 'select',
+            type: 'vueMultiSelect',
             label: 'Place of Occurance',
             model: 'OCCUR',
             values: () => {
@@ -1067,6 +1057,12 @@ export default {
             },
             selectOptions: {
               hideNoneSelectedText: true,
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 200,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
             },
             styleClasses: 'col-sm-6',
             required: true,
@@ -1080,7 +1076,7 @@ export default {
             placeholder: 'Other specified areas',
             styleClasses: 'col-sm-3',
             visible: function (model) {
-              return model && model.OCCUR === 99
+              return model && model.OCCUR.value === 9
             },
             required: true,
             validator: 'string',
@@ -1538,7 +1534,7 @@ export default {
             type: 'submit',
             buttonText: 'Calculate',
             onSubmit: (model) => {
-              var errors = this.validateTabCE()
+              var errors = this.validateTabCE1()
               if (errors) {
                 var score = 0
                 for (let i = 0; i < model.INTENTS.length; i++) {
@@ -2009,6 +2005,12 @@ export default {
     window.onbeforeunload = function () {
       return 'Data will be lost if you leave the page, are you sure?'
     }
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getOccurance')
+      .then((response) => {
+        this.selectOccurance = response.data.data
+      })
 
     this.$axios
       .get('http://127.0.0.1:8000/api/getReferral')
