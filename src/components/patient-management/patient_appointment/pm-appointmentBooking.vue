@@ -18,14 +18,17 @@
             </va-notification>
           </div>
 
-          <!-- <div class="mb-3" v-if="!this.model.PATIENT_FK">
+          <div class="mb-3" v-if="patientExist==true">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Patient with NRIC/PASSPORT ({{this.model.NRIC_PASSPORT_NO}}) does not exist.</span>
+              <span>Patient with the specified NRIC/PASSPORT does not exist.</span>
+              <button type="button" class="btn close-button" @click="patientExist = false">
+                <span class="fa fa-close"/>
+              </button>
             </va-notification>
-          </div> -->
+          </div>
 
           <va-card>
 
@@ -86,13 +89,40 @@ export default {
   data () {
     return {
       tabA: false,
+      patientExist: false,
       submitPath: false,
 
       selectAppointmentType: [],
       selectVisitType: [],
       selectPatientCategory: [],
-      selectAssignedTeam: [],
-
+      selectAppointmentTime: [
+        { name: '08:00', value: 1 },
+        { name: '08:30', value: 2 },
+        { name: '09:00', value: 3 },
+        { name: '09:30', value: 4 },
+        { name: '10:00', value: 5 },
+        { name: '10:30', value: 6 },
+        { name: '11:00', value: 7 },
+        { name: '11:30', value: 8 },
+        { name: '12:00', value: 9 },
+        { name: '12:30', value: 10 },
+        { name: '14:00', value: 11 },
+        { name: '14:30', value: 12 },
+        { name: '15:00', value: 13 },
+        { name: '15:30', value: 14 },
+        { name: '16:00', value: 15 },
+        { name: '16:30', value: 16 },
+      ],
+      selectAppointmentDuration: [
+        { name: '30 min', value: 1 },
+        { name: '1 hour', value: 2 },
+        { name: '1 hour 30 min', value: 3 },
+        { name: '2 hours', value: 4 },
+        { name: '2 hour 30 min', value: 5 },
+        { name: '3 hours', value: 6 },
+        { name: '3 hour 30 min', value: 7 },
+        { name: '4 hours', value: 8 },
+      ],
       model: {
         NRIC_PASSPORT_NO: '',
         DATE: '',
@@ -102,7 +132,8 @@ export default {
         VISIT_TYPE: '',
         PATIENT_CATEGORY: '',
         ASSIGNED_TEAM: '',
-        PATIENT_FK: '',
+        PATIENT_FK: [],
+        selectAssignedTeam: [],
       },
       schema: {
         groups: [
@@ -136,23 +167,44 @@ export default {
                 styleClasses: 'col-md-4',
               },
               {
-                type: 'input',
-                inputType: 'time',
+                type: 'vueMultiSelect',
                 label: 'Time',
+                placeholder: 'Please select',
                 model: 'TIME',
-                styleClasses: 'col-md-4',
                 required: true,
                 validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectAppointmentTime
+                },
               },
               {
-                type: 'input',
-                inputType: 'number',
+                type: 'vueMultiSelect',
                 label: 'Duration',
+                placeholder: 'Please select',
                 model: 'DURATION',
-                min: 0,
                 required: true,
-                validator: 'number',
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
                 styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectAppointmentDuration
+                },
               },
             ],
           },
@@ -223,6 +275,13 @@ export default {
                 values: () => {
                   return this.selectPatientCategory
                 },
+                onChanged: function (model) {
+                  this.$axios
+                    .get('http://127.0.0.1:8000/api/getAssignedTeam?id=' + model.PATIENT_CATEGORY.value)
+                    .then((response) => {
+                      this.model.selectAssignedTeam = response.data.data
+                    })
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -241,7 +300,7 @@ export default {
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectAssignedTeam
+                  return this.model.selectAssignedTeam
                 },
               },
             ],
@@ -272,12 +331,6 @@ export default {
       .then((response) => {
         this.selectAppointmentType = response.data.data
       })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getAssignedTeam')
-      .then((response) => {
-        this.selectAssignedTeam = response.data.data
-      })
   },
   methods: {
     navigateBack () {
@@ -287,7 +340,7 @@ export default {
       var tabA = this.validateTabA()
       this.validatePatient()
 
-      if (tabA && this.model.PATIENT_FK) {
+      if (tabA && this.model.PATIENT_FK.length !== 0) {
         const data = new FormData()
         data.append('apptData', JSON.stringify(this.model))
         this.$axios
@@ -306,7 +359,12 @@ export default {
         .then((response) => {
           this.model.PATIENT_FK = response.data.data
         })
-      console.log('patient id: ', this.model.PATIENT_FK)
+
+      if (this.model.PATIENT_FK.length !== 0) {
+        this.patientExist = false
+      } else {
+        this.patientExist = true
+      }
     },
     validateTabA () {
       var errors = this.$refs.appointment.validate()
