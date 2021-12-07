@@ -114,10 +114,6 @@ export const navigationRoutes = {
       name: 'patient_screening',
       displayName: 'Patient Screening',
     },
-    {
-      name: 'patient_consultation',
-      displayName: 'Patient Consultation',
-    },
     ],
   },
   // SHARRP Management
