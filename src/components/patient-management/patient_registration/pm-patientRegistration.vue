@@ -101,8 +101,12 @@
                     <div class="fa fa-play-circle" /> &nbsp;Preview
                   </button>
 
-                  <button v-if="isLastStep" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                  <button v-if="isLastStep && update==false" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
                     <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  </button>
+
+                  <button v-if="isLastStep && update==true" @click="validateUpdateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                    <div class="fa fa-paper-plane" /> &nbsp;Update
                   </button>
                 </div>
               </template>
@@ -184,6 +188,7 @@ export default {
       showLargeModal: false,
 
       submitPath: false,
+      update: false,
 
       patient_data: '',
 
@@ -1904,76 +1909,117 @@ export default {
         this.selectRelationship = response.data.data
       })
 
+    // update patient profile
     if (this.$route.query.id) {
+      this.update = true
       this.$axios
         .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + this.$route.query.id)
         .then((response) => {
-          this.model.SALUTATION = response.data.data[0].salutation_fk
+          // Demographic
+          this.model.SALUTATION = response.data.salutation[0]
           this.model.DM_NAME = response.data.data[0].name
           this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
-          this.model.NRIC_TYPE = response.data.data[0].nric_type_fk
+          this.model.NRIC_TYPE = response.data.nric_type[0]
           this.model.NRIC_NO = response.data.data[0].nric_no
-          // this.model.PASSPORT_NO = response.data.data[0].citizenship_fk,
-          // this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].citizenship_fk,
-          // this.model.ISSUING_COUNTRY = response.data.data[0].citizenship_fk,
+          // this.model.PASSPORT_NO = response.data.data[0].passport_no
+          // this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
+          this.model.ISSUING_COUNTRY = response.data.issuing_country[0]
           this.model.GENDER = response.data.data[0].gender_fk
           this.model.BIRTH_DATE = response.data.data[0].birthdate
           this.model.DM_MOBILE_NO = response.data.data[0].phone_no_1
           this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
           // this.model.HOSPITAL_MRN = response.data.data[0].citizenship_fk,
           // this.model.MENTARI_MRN = response.data.data[0].citizenship_fk,
-          // this.model.SERVICE_TYPE = response.data.data[0].citizenship_fk,
-          // this.model.REFERRAL_TYPE = response.data.data[0].citizenship_fk,
+          this.model.SERVICE_TYPE = response.data.service_type[0]
+          // this.model.REFERRAL_TYPE = response.data.referral_type[0]
           // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
           // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
-          // this.model.DM_ADDRESS_LINE_1 = response.data.data[0].citizenship_fk,
-          // this.model.DM_ADDRESS_LINE_2 = response.data.data[0].citizenship_fk,
-          // this.model.DM_ADDRESS_LINE_3 = response.data.data[0].citizenship_fk,
-          // this.model.DM_POSTCODE = response.data.data[0].citizenship_fk,
-          // this.model.DM_CITY = response.data.data[0].citizenship_fk,
-          // this.model.DM_STATE = response.data.data[0].citizenship_fk,
+          this.model.DM_ADDRESS_LINE_1 = response.data.data[0].address1
+          this.model.DM_ADDRESS_LINE_2 = response.data.data[0].address2
+          this.model.DM_ADDRESS_LINE_3 = response.data.data[0].address3
+          this.model.DM_STATE = response.data.state[0]
+          this.model.DM_CITY = response.data.city[0]
+          this.model.DM_POSTCODE = response.data.postcode[0]
           this.model.EXISTING_PATIENT = response.data.data[0].status_fk
-          // this.model.BRANCH = response.data.data[0].citizenship_fk,
+          this.model.BRANCH = response.data.branch[0]
+
+          // Sosio Demographic
+          this.model.RACE = response.data.data[0].ethnic_fk
+          // this.model.SPECIFY_RACE = response.data.data[0].ethnic_fk
+          this.model.RELIGION = response.data.data[0].religion_fk
+          // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
+          this.model.MARITAL_STATUS = response.data.data[0].marital_fk
+          // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
+          this.model.ACCOMMODATION = response.data.data[0].accomodation_fk
+          // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
+          this.model.EDUCATION_LEVEL = response.data.data[0].education_fk
+          this.model.OCCUPATION_STATUS = response.data.data[0].occupation_status_fk
+          // this.model.SPECIFY_OCCUPATION_STATUS = response.data.data[0].soccupation_status_fk
+          this.model.FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
+          // this.model.SPECIFY_FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
+          this.model.OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
+          // this.model.SPECIFY_OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
+          /*
+          // Next Of Kin
+          this.model.NOK_NAME = response.data.data[0].name
+          this.model.NOK_RELATIONSHIP = response.data.data[0].relation_fk
+          this.model.NOK_MOBILE_NO = response.data.data[0].phone_no_1
+          this.model.NOK_HOUSE_NO = response.data.data[0].phone_no_2
+          this.model.NOK_ADDRESS_L1 = response.data.data[0].address1
+          this.model.NOK_ADDRESS_L2 = response.data.data[0].address2
+          this.model.NOK_ADDRESS_L3 = response.data.data[0].address3
+          this.model.NOK_STATE = response.data.data[0].state_fk
+          this.model.NOK_CITY = response.data.data[0].city_fk
+          this.model.NOK_POSTCODE = response.data.data[0].postcode
+          */
         })
+
+      // kene buat axios & query asing ni, complicated sgt
+      // Allergy
+      // this.model.ALLERGY = response.data.data[0].postcode
+      // this.model.DRUG_ALL_SPECIFY = response.data.data[0].postcode
+      // this.model.SUPP_ALL_SPECIFY = response.data.data[0].postcode
+      // this.model.OTHERS_SPECIFY = response.data.data[0].postcode
     }
   },
   methods: {
     validateForm () {
-      const data = new FormData()
-      data.append('ptData', JSON.stringify(this.model))
-      this.$axios
-        .post('http://127.0.0.1:8000/api/registerPatient', data)
-        .then((response) => {
-          this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
-        })
-      console.log(this.model)
-      // var tabA = this.validateTabA()
-      // var tabB = this.validateTabB()
-      // var tabC = this.validateTabC()
-      // var tabD = this.validateTabD()
-
-      // if (tabA && tabB && tabC && tabD) {
-      //   this.launchToast()
-      //   this.submitPath = true
-      //   this.$router.push({ path: 'patient_consultation' })
-      // }
-      /* var tabA = this.validateTabA()
+      var tabA = this.validateTabA()
       var tabB = this.validateTabB()
       var tabC = this.validateTabC()
       var tabD = this.validateTabD()
 
       if (tabA && tabB && tabC && tabD) {
+        console.log(this.model)
+        this.submitPath = true
         const data = new FormData()
         data.append('ptData', JSON.stringify(this.model))
         this.$axios
           .post('http://127.0.0.1:8000/api/registerPatient', data)
           .then((response) => {
-            return response.data
+            this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
           })
-        this.launchToast()
+        this.launchToast('Registration Successful')
+      }
+    },
+    validateUpdateForm () {
+      var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
+
+      if (tabA && tabB && tabC && tabD) {
+        console.log(this.model)
         this.submitPath = true
-        this.$router.push({ path: 'patient_consultation' })
-      } */
+        const data = new FormData()
+        data.append('ptUpdateData', JSON.stringify(this.model))
+        // this.$axios
+        //   .post('http://127.0.0.1:8000/api/updatePatient', data)
+        //   .then((response) => {
+        //     this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
+        //   })
+        this.launchToast('Details Updated')
+      }
     },
     validateTabA () {
       var errors = this.$refs.demographic.validate()
@@ -2015,9 +2061,9 @@ export default {
         return false
       }
     },
-    launchToast () {
+    launchToast (text) {
       this.showToast(
-        this.model.DM_NAME + ' Registration Successful !',
+        this.model.DM_NAME + ' ' + text + '!',
         {
           icon: 'fa-check',
           position: 'top-center',

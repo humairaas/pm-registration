@@ -9,7 +9,7 @@
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link v-bind:to="'/patient-management/patient_registration?id='+id">
+              <router-link :to="{ name: 'patient-registration', query: { id: id }}">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
