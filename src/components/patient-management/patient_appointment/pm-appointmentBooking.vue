@@ -37,15 +37,17 @@
             </vue-form-generator>
 
             <!-- Button footer-->
-            <div class="float-left">
-              <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
-                <div class="fa fa-step-backward" /> &nbsp; Cancel
-              </button>
-            </div>
-            <div class="float-right">
-              <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                <div class="fa fa-paper-plane" /> &nbsp; Confirm
-              </button>
+            <div class="mt-3">
+              <div class="float-left">
+                <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
+                  <div class="fa fa-step-backward" /> &nbsp; Cancel
+                </button>
+              </div>
+              <div class="float-right">
+                <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                  <div class="fa fa-paper-plane" /> &nbsp; Confirm
+                </button>
+              </div>
             </div>
 
           </va-card>
@@ -143,7 +145,7 @@ export default {
               {
                 type: 'input',
                 inputType: 'text',
-                label: 'NRIC/PASSPORT NUMBER',
+                label: 'NRIC/Passport Number',
                 model: 'NRIC_PASSPORT_NO',
                 required: true,
                 validator: 'string',
@@ -357,7 +359,9 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/verifyPatient?id=' + this.model.NRIC_PASSPORT_NO)
         .then((response) => {
-          this.model.PATIENT_FK = response.data.data
+          console.log(response)
+          console.log('this is response on validate: ', JSON.stringify(response.data.data))
+          this.model.PATIENT_FK = JSON.stringify(response.data.data.value)
         })
 
       if (this.model.PATIENT_FK.length !== 0) {

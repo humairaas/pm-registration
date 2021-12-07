@@ -587,7 +587,7 @@ export default {
             multiple: true,
             text: 'Choose a File',
             model: 'REFERRAL_LETTER',
-            type: 'vfg-custom-file-excel',
+            type: 'vfg-custom-file',
             styleClasses: 'col-md-6',
             hint: '*Please upload excel only (max file size 2MB)',
           },
@@ -2010,14 +2010,16 @@ export default {
 
       if (tabA && tabB && tabC && tabD) {
         console.log(this.model)
+        console.log(this.model.REFERRAL_LETTER)
         this.submitPath = true
         const data = new FormData()
         data.append('ptUpdateData', JSON.stringify(this.model))
-        // this.$axios
-        //   .post('http://127.0.0.1:8000/api/updatePatient', data)
-        //   .then((response) => {
-        //     this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
-        //   })
+        data.append('ptDoc', this.model.REFERRAL_LETTER)
+        this.$axios
+          .post('http://127.0.0.1:8000/api/updatePatient', data)
+          .then((response) => {
+            this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
+          })
         this.launchToast('Details Updated')
       }
     },

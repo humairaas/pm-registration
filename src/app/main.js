@@ -21,6 +21,7 @@ import { consoleBuildInfo } from 'vue-cli-plugin-build-info/plugin'
 import VueFileAgent from 'vue-file-agent'
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css'
 import VfgCustomFileExcel from '../components/custom-file/VfgCustomFileExcel.vue'
+import VfgCustomFile from '../components/custom-file/VfgCustomFile.vue'
 
 import axios from 'axios'
 
@@ -52,6 +53,7 @@ Vue.component('VueFileAgent', VueFileAgent)
 Vue.use(VueFileAgent)
 Vue.use(VueFileAgentStyles)
 Vue.component('field-vfg-custom-file-excel', VfgCustomFileExcel)
+Vue.component('field-vfg-custom-file', VfgCustomFile)
 
 Vue.prototype.$axios = axios
 Vue.use(axios)
