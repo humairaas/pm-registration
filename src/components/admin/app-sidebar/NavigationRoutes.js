@@ -221,6 +221,10 @@ export const navigationRoutes = {
       displayName: 'menu.buttons',
     },
     {
+      name: 'customButton',
+      displayName: 'Customized Buttons',
+    },
+    {
       name: 'cards',
       displayName: 'menu.cards',
     },

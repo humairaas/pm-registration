@@ -46,4 +46,61 @@ body {
     height: 100%;
   }
 }
+
+.btn-blue {
+  color: #ffffff !important;
+  background-color: #1ba1a1 !important;
+  border-color: #1ba1a1 !important;
+}
+
+.btn-blue:hover {
+  color: #ffffff !important;
+  background-color: #178a8a !important;
+  border-color: #178a8a !important;
+}
+
+.btn-yellow {
+  color: #000000 !important;
+  background-color: #f59f26 !important;
+  border-color: #f59f26 !important;
+}
+
+.btn-yellow:hover {
+  color: #000000 !important;
+  background-color: #d98c21 !important;
+  border-color: #d98c21 !important;
+}
+
+.btn-circle {
+  border-radius: 50% !important;
+}
+
+.btn-green {
+  color: #000000 !important;
+  background-color: #61ce70 !important;
+  border-color: #61ce70 !important;
+}
+
+.btn-green:hover {
+  color: #000000 !important;
+  background-color: #51ad5e !important;
+  border-color: #51ad5e !important;
+}
+
+.icon-rotate-90 {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  transform: rotate(90deg);
+}
+
+.btn-red {
+  color: #ffffff !important;
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.btn-red:hover {
+  color: #ffffff !important;
+  background-color: #bd2d3b !important;
+  border-color: #bd2d3b !important;
+}
 </style>

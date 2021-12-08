@@ -44,9 +44,14 @@
                 </button>
               </div>
               <div class="float-right">
-                <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                <!-- <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
                   <div class="fa fa-paper-plane" /> &nbsp; Confirm
+                </button> -->
+
+                <button @click="navigateBack" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
+                  <div class="fa fa-check" /> &nbsp; APPROVE
                 </button>
+
               </div>
             </div>
 
