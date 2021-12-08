@@ -59,6 +59,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -345,8 +346,24 @@ export default {
             values: () => {
               return this.radioCitizenship
             },
-            onChanged: function (model) {
+            onChanged: function (model, newVal, oldVal, field) {
               model.MD_CITIZENSHIP = model.CITIZENSHIP
+              if (newVal === 1) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              } else if (newVal === 2) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              } else if (newVal === 3) {
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              }
             },
           },
           {
@@ -372,6 +389,9 @@ export default {
             visible: function (model) {
               return model && model.CITIZENSHIP === 1
             },
+            onChanged: function (model, newVal, oldVal, field) {
+              model.NRIC_NO = ''
+            },
           },
           {
             type: 'cleave',
@@ -386,7 +406,7 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && ((model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1) || model.CITIZENSHIP === 2)
+              return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 2) || model.CITIZENSHIP === 2)
             },
           },
           {
@@ -398,10 +418,16 @@ export default {
             required: true,
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.NRIC_TYPE.value === 1 || model.NRIC_TYPE.value === 3 || model.NRIC_TYPE.value === 4 ||
-                              model.NRIC_TYPE.value === 5 || model.NRIC_TYPE.value === 6 || model.NRIC_TYPE.value === 7 ||
-                              model.NRIC_TYPE.value === 8 || model.NRIC_TYPE.value === 9 || model.NRIC_TYPE.value === 10 ||
-                              model.NRIC_TYPE.value === 11)
+              return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 1) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 3) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 4) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 5) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 6) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 7) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 8) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 9) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 10) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 11))
             },
           },
           {
