@@ -39,19 +39,14 @@
             <!-- Button footer-->
             <div class="mt-3">
               <div class="float-left">
-                <button @click="navigateBack" type="button" class="btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-step-backward" /> &nbsp; Cancel
+                <button @click="navigateBack" type="button" class="ml-2 btn btn-fill btn-md btn-red">
+                  CANCEL
                 </button>
               </div>
               <div class="float-right">
-                <!-- <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-paper-plane" /> &nbsp; Confirm
-                </button> -->
-
-                <button @click="navigateBack" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
-                  <div class="fa fa-check" /> &nbsp; APPROVE
+                <button @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
+                  <div class="fa fa-paper-plane" /> &nbsp; CONFIRM
                 </button>
-
               </div>
             </div>
 

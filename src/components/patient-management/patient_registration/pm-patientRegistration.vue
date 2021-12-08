@@ -87,22 +87,22 @@
                 prevTab
               }">
                 <div class="float-left">
-                  <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-step-backward" /> &nbsp; Previous
+                  <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+                    <div class="fa fa-angle-double-left" /> &nbsp; PREVIOUS
                   </button>
                 </div>
 
                 <div class="float-right">
-                  <button v-if="!isLastStep" @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
-                    Next <div class="fa fa-step-forward" />
+                  <button v-if="!isLastStep" @click="nextTab" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+                    NEXT &nbsp; <div class="fa fa-angle-double-right" />
                   </button>
 
-                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
-                    <div class="fa fa-play-circle" /> &nbsp;Preview
+                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
+                    <div class="fa fa-play" /> &nbsp; PREVIEW
                   </button>
 
-                  <button v-if="isLastStep && update==false" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  <button v-if="isLastStep && update==false" @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
+                    <div class="fa fa-paper-plane" /> &nbsp; SUBMIT
                   </button>
 
                   <button v-if="isLastStep && update==true" @click="validateUpdateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
