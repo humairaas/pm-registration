@@ -1916,13 +1916,13 @@ export default {
         .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + this.$route.query.id)
         .then((response) => {
           // Demographic
-          this.model.SALUTATION = response.data.salutation[0]
+          this.model.SALUTATION = this.selectSalutation[(response.data.data[0].salutation_fk) - 1]
           this.model.DM_NAME = response.data.data[0].name
           this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
-          this.model.NRIC_TYPE = response.data.nric_type[0]
+          this.model.NRIC_TYPE = this.selectNRICType[(response.data.data[0].nric_type_fk) - 1]
           this.model.NRIC_NO = response.data.data[0].nric_no
-          // this.model.PASSPORT_NO = response.data.data[0].passport_no
-          // this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
+          this.model.PASSPORT_NO = response.data.data[0].passport_no
+          this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
           this.model.ISSUING_COUNTRY = response.data.issuing_country[0]
           this.model.GENDER = response.data.data[0].gender_fk
           this.model.BIRTH_DATE = response.data.data[0].birthdate
@@ -1930,53 +1930,57 @@ export default {
           this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
           // this.model.HOSPITAL_MRN = response.data.data[0].citizenship_fk,
           // this.model.MENTARI_MRN = response.data.data[0].citizenship_fk,
-          this.model.SERVICE_TYPE = response.data.service_type[0]
+          this.model.SERVICE_TYPE = this.selectServiceType[(response.data.data[0].service_fk) - 1]
           // this.model.REFERRAL_TYPE = response.data.referral_type[0]
           // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
           // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
           this.model.DM_ADDRESS_LINE_1 = response.data.data[0].address1
           this.model.DM_ADDRESS_LINE_2 = response.data.data[0].address2
           this.model.DM_ADDRESS_LINE_3 = response.data.data[0].address3
-          this.model.DM_STATE = response.data.state[0]
+          this.model.DM_STATE = this.selectState[(response.data.data[0].state_fk) - 1]
           this.model.DM_CITY = response.data.city[0]
           this.model.DM_POSTCODE = response.data.postcode[0]
           this.model.EXISTING_PATIENT = response.data.data[0].status_fk
-          this.model.BRANCH = response.data.branch[0]
+          this.model.BRANCH = this.selectBranch[(response.data.data[0].branch_fk) - 1]
 
           // Sosio Demographic
-          this.model.RACE = response.data.data[0].ethnic_fk
+          this.model.RACE = this.selectRace[(response.data.data[0].ethnic_fk) - 1]
           // this.model.SPECIFY_RACE = response.data.data[0].ethnic_fk
-          this.model.RELIGION = response.data.data[0].religion_fk
+          this.model.RELIGION = this.selectReligion[(response.data.data[0].religion_fk) - 1]
           // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
-          this.model.MARITAL_STATUS = response.data.data[0].marital_fk
+          this.model.MARITAL_STATUS = this.selectMaritalStatus[(response.data.data[0].marital_fk) - 1]
           // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
-          this.model.ACCOMMODATION = response.data.data[0].accomodation_fk
+          this.model.ACCOMMODATION = this.selectAccommodation[(response.data.data[0].accomodation_fk) - 1]
           // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
-          this.model.EDUCATION_LEVEL = response.data.data[0].education_fk
-          this.model.OCCUPATION_STATUS = response.data.data[0].occupation_status_fk
+          this.model.EDUCATION_LEVEL = this.selectEducationLevel[(response.data.data[0].education_fk) - 1]
+          this.model.OCCUPATION_STATUS = this.selectOccupationStatus[(response.data.data[0].occupation_status_fk) - 1]
           // this.model.SPECIFY_OCCUPATION_STATUS = response.data.data[0].soccupation_status_fk
-          this.model.FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
+          this.model.FEE_EXEMPTION_STATUS = this.selectFeeExemptionStatus[(response.data.data[0].fee_exemption_fk) - 1]
           // this.model.SPECIFY_FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
-          this.model.OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
+          this.model.OCCUPATION_SECTOR = this.selectOccupationSector[(response.data.data[0].occupation_sector_fk) - 1]
           // this.model.SPECIFY_OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
-          /*
+
           // Next Of Kin
-          this.model.NOK_NAME = response.data.data[0].name
-          this.model.NOK_RELATIONSHIP = response.data.data[0].relation_fk
-          this.model.NOK_MOBILE_NO = response.data.data[0].phone_no_1
-          this.model.NOK_HOUSE_NO = response.data.data[0].phone_no_2
-          this.model.NOK_ADDRESS_L1 = response.data.data[0].address1
-          this.model.NOK_ADDRESS_L2 = response.data.data[0].address2
-          this.model.NOK_ADDRESS_L3 = response.data.data[0].address3
-          this.model.NOK_STATE = response.data.data[0].state_fk
-          this.model.NOK_CITY = response.data.data[0].city_fk
-          this.model.NOK_POSTCODE = response.data.data[0].postcode
-          */
+          this.model.NOK_NAME = response.data.data[0].nok_name
+          this.model.NOK_RELATIONSHIP = this.selectRelationship[(response.data.data[0].relation_fk) - 1]
+          this.model.NOK_MOBILE_NO = response.data.data[0].nok_phone_no_1
+          this.model.NOK_HOUSE_NO = response.data.data[0].nok_phone_no_2
+          this.model.NOK_ADDRESS_L1 = response.data.data[0].nok_address1
+          this.model.NOK_ADDRESS_L2 = response.data.data[0].nok_address2
+          this.model.NOK_ADDRESS_L3 = response.data.data[0].nok_address3
+          this.model.NOK_STATE = this.selectState[(response.data.data[0].nok_state_fk) - 1]
+          this.model.NOK_CITY = response.data.nok_city[0]
+          this.model.NOK_POSTCODE = response.data.nok_postcode[0]
         })
 
-      // kene buat axios & query asing ni, complicated sgt
       // Allergy
-      // this.model.ALLERGY = response.data.data[0].postcode
+      /*
+        var allergyType = response.data.allergy
+        for (var i=0; i < allergyType.length; i++){
+          if (allergyType[i].allergy_type_fk === i){
+            this.model.ALLERGY[i] === i
+          }
+        } */
       // this.model.DRUG_ALL_SPECIFY = response.data.data[0].postcode
       // this.model.SUPP_ALL_SPECIFY = response.data.data[0].postcode
       // this.model.OTHERS_SPECIFY = response.data.data[0].postcode
@@ -2013,10 +2017,9 @@ export default {
         console.log(this.model.REFERRAL_LETTER)
         this.submitPath = true
         const data = new FormData()
-        data.append('ptUpdateData', JSON.stringify(this.model))
-        data.append('ptDoc', this.model.REFERRAL_LETTER)
+        data.append('updateData', JSON.stringify(this.model))
         this.$axios
-          .post('http://127.0.0.1:8000/api/updatePatient', data)
+          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=80', data)
           .then((response) => {
             this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
           })
@@ -2065,7 +2068,7 @@ export default {
     },
     launchToast (text) {
       this.showToast(
-        this.model.DM_NAME + ' ' + text + '!',
+        this.model.DM_NAME + ' ' + text,
         {
           icon: 'fa-check',
           position: 'top-center',
