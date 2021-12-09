@@ -18,7 +18,7 @@
             </va-notification>
           </div>
 
-          <div class="mb-3" v-if="patientExist==true">
+          <div class="mb-3" v-if="patientNotExist==true">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
@@ -33,8 +33,9 @@
           <va-card>
 
             <div class="text-center"><h4 class="mt-4 mb-5 text-dark">BOOK APPOINTMENT</h4></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment" @model-updated="onModelUpdated">
+            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment">
             </vue-form-generator>
+            <h6>{{model}}</h6>
 
             <!-- Button footer-->
             <div class="mt-3">
@@ -91,8 +92,8 @@ export default {
   data () {
     return {
       tabA: false,
-      patientExist: false,
       submitPath: false,
+      patientNotExist: false,
 
       selectAppointmentType: [],
       selectVisitType: [],
@@ -134,7 +135,7 @@ export default {
         VISIT_TYPE: '',
         PATIENT_CATEGORY: '',
         ASSIGNED_TEAM: '',
-        PATIENT_FK: [],
+        PATIENT_FK: '',
         selectAssignedTeam: [],
       },
       schema: {
@@ -338,11 +339,11 @@ export default {
     navigateBack () {
       this.$router.push({ name: 'patient-appointmentList' })
     },
-    validateForm () {
+    async validateForm () {
       var tabA = this.validateTabA()
-      this.validatePatient()
+      var patientVerified = await this.validatePatient()
 
-      if (tabA && this.model.PATIENT_FK.length !== 0) {
+      if (tabA && patientVerified) {
         const data = new FormData()
         data.append('apptData', JSON.stringify(this.model))
         this.$axios
@@ -350,24 +351,25 @@ export default {
           .then((response) => {
             return response.data
           })
+
         this.launchToast()
         this.submitPath = true
         this.$router.push({ name: 'patient-appointmentList' })
       }
     },
-    validatePatient () {
-      this.$axios
-        .get('http://127.0.0.1:8000/api/verifyPatient?id=' + this.model.NRIC_PASSPORT_NO)
-        .then((response) => {
-          console.log(response)
-          console.log('this is response on validate: ', JSON.stringify(response.data.data))
-          this.model.PATIENT_FK = JSON.stringify(response.data.data.value)
-        })
+    async validatePatient () {
+      const url = 'http://127.0.0.1:8000/api/verifyPatient?id=' + this.model.NRIC_PASSPORT_NO
+      const response = await this.$axios.get(url)
+      if (response.data.data !== '') {
+        this.model.PATIENT_FK = JSON.stringify(response.data.data[0].value)
+      }
 
-      if (this.model.PATIENT_FK.length !== 0) {
-        this.patientExist = false
+      if (this.model.PATIENT_FK !== '') {
+        this.patientNotExist = false
+        return true
       } else {
-        this.patientExist = true
+        this.patientNotExist = true
+        return false
       }
     },
     validateTabA () {

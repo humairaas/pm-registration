@@ -59,6 +59,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -608,7 +609,7 @@ export default {
           },
           {
             labels: 'Upload Referral Letter',
-            accept: '.xlxs',
+            accept: '.pdf',
             multiple: true,
             text: 'Choose a File',
             model: 'REFERRAL_LETTER',
