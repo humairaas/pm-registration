@@ -286,7 +286,7 @@ export default {
         NOK_POSTCODE: '',
 
         // Allergy
-        ALLERGY: [],
+        ALLERGY: [0, 0, 0],
         DRUG_ALL_SPECIFY: '',
         SUPP_ALL_SPECIFY: '',
         OTHERS_SPECIFY: '',
@@ -1828,188 +1828,129 @@ export default {
       return 'Data will be lost if you leave the page, are you sure?'
     }
     this.$axios
-      .get('http://127.0.0.1:8000/api/getState?country_id=1')
+      .get('http://127.0.0.1:8000/api/getRegistrationData?country_id=1')
       .then((response) => {
-        this.selectState = response.data.data
+        this.selectSalutation = response.data.salutation
+        this.radioCitizenship = response.data.citizenship
+        this.selectNRICType = response.data.NRICType
+        this.selectIssuingCountry = response.data.issuingCountry
+        this.radioGender = response.data.gender
+        this.selectServiceType = response.data.serviceType
+        this.selectReferralType = response.data.referralType
+        this.selectState = response.data.state
+        this.selectBranch = response.data.branch
+        this.selectRace = response.data.race
+        this.selectReligion = response.data.religion
+        this.selectMaritalStatus = response.data.marital
+        this.selectAccommodation = response.data.accommodation
+        this.selectEducationLevel = response.data.education
+        this.selectOccupationStatus = response.data.occStatus
+        this.selectFeeExemptionStatus = response.data.feeExemption
+        this.selectOccupationSector = response.data.occSector
+        this.selectRelationship = response.data.relationship
       })
 
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getSalutation')
-      .then((response) => {
-        this.selectSalutation = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getCitizenship')
-      .then((response) => {
-        this.radioCitizenship = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getNRICType')
-      .then((response) => {
-        this.selectNRICType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getIssuingCountry')
-      .then((response) => {
-        this.selectIssuingCountry = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getGender')
-      .then((response) => {
-        this.radioGender = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getServiceType')
-      .then((response) => {
-        this.selectServiceType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getReferralType')
-      .then((response) => {
-        this.selectReferralType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getBranch')
-      .then((response) => {
-        this.selectBranch = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getRace')
-      .then((response) => {
-        this.selectRace = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getReligion')
-      .then((response) => {
-        this.selectReligion = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getMaritalStatus')
-      .then((response) => {
-        this.selectMaritalStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getAccommodation')
-      .then((response) => {
-        this.selectAccommodation = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getEducationLevel')
-      .then((response) => {
-        this.selectEducationLevel = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getOccupationStatus')
-      .then((response) => {
-        this.selectOccupationStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getFeeExemptionStatus')
-      .then((response) => {
-        this.selectFeeExemptionStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getOccupationSector')
-      .then((response) => {
-        this.selectOccupationSector = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getRelationship')
-      .then((response) => {
-        this.selectRelationship = response.data.data
-      })
-
-    // update patient profile
-    if (this.$route.query.id) {
+    // Update patient profile
+    if (this.$route.query.st === 'edit') {
+      var getID = JSON.parse(localStorage.getItem('ID'))
       this.update = true
+
       this.$axios
-        .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + this.$route.query.id)
+        .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + getID.patientId)
         .then((response) => {
           // Demographic
-          this.model.SALUTATION = this.selectSalutation[(response.data.data[0].salutation_fk) - 1]
+          this.model.SALUTATION = { value: response.data.data[0].salutation_fk, name: response.data.data[0].salutation }
           this.model.DM_NAME = response.data.data[0].name
           this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
-          this.model.NRIC_TYPE = this.selectNRICType[(response.data.data[0].nric_type_fk) - 1]
+          this.model.NRIC_TYPE = { value: response.data.data[0].nric_type_fk, name: response.data.data[0].nric_type }
           this.model.NRIC_NO = response.data.data[0].nric_no
           this.model.PASSPORT_NO = response.data.data[0].passport_no
           this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
-          this.model.ISSUING_COUNTRY = response.data.issuing_country[0]
+          this.model.ISSUING_COUNTRY = { value: response.data.data[0].issuing_country_fk, name: response.data.data[0].issuing_country }
           this.model.GENDER = response.data.data[0].gender_fk
           this.model.BIRTH_DATE = response.data.data[0].birthdate
+          this.model.AGE = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
           this.model.DM_MOBILE_NO = response.data.data[0].phone_no_1
           this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
           // this.model.HOSPITAL_MRN = response.data.data[0].citizenship_fk,
           // this.model.MENTARI_MRN = response.data.data[0].citizenship_fk,
-          this.model.SERVICE_TYPE = this.selectServiceType[(response.data.data[0].service_fk) - 1]
+          this.model.SERVICE_TYPE = { value: response.data.data[0].service_fk, name: response.data.data[0].service }
           // this.model.REFERRAL_TYPE = response.data.referral_type[0]
           // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
           // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
           this.model.DM_ADDRESS_LINE_1 = response.data.data[0].address1
           this.model.DM_ADDRESS_LINE_2 = response.data.data[0].address2
           this.model.DM_ADDRESS_LINE_3 = response.data.data[0].address3
-          this.model.DM_STATE = this.selectState[(response.data.data[0].state_fk) - 1]
-          this.model.DM_CITY = response.data.city[0]
-          this.model.DM_POSTCODE = response.data.postcode[0]
-          this.model.EXISTING_PATIENT = response.data.data[0].status_fk
-          this.model.BRANCH = this.selectBranch[(response.data.data[0].branch_fk) - 1]
+
+          if (response.data.data[0].dm_state_fk != null) {
+            this.model.DM_STATE = { value: response.data.data[0].dm_state_fk, name: response.data.data[0].dm_state }
+          }
+          if (response.data.data[0].dm_city_fk != null) {
+            this.model.DM_CITY = { value: response.data.data[0].dm_city_fk, name: response.data.data[0].dm_city }
+          }
+          if (response.data.data[0].dm_postcode != null) {
+            this.model.DM_POSTCODE = { value: response.data.data[0].dm_postcode_fk, name: response.data.data[0].dm_postcode }
+          }
+
+          if (response.data.data[0].status_fk === null) {
+            this.model.EXISTING_PATIENT = 0
+          } else {
+            this.model.EXISTING_PATIENT = response.data.data[0].status_fk
+          }
+
+          this.model.BRANCH = { value: response.data.data[0].branch_fk, name: response.data.data[0].branch }
 
           // Sosio Demographic
-          this.model.RACE = this.selectRace[(response.data.data[0].ethnic_fk) - 1]
+          this.model.RACE = { value: response.data.data[0].ethnic_fk, name: response.data.data[0].ethnic }
           // this.model.SPECIFY_RACE = response.data.data[0].ethnic_fk
-          this.model.RELIGION = this.selectReligion[(response.data.data[0].religion_fk) - 1]
+          this.model.RELIGION = { value: response.data.data[0].religion_fk, name: response.data.data[0].religion }
           // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
-          this.model.MARITAL_STATUS = this.selectMaritalStatus[(response.data.data[0].marital_fk) - 1]
+          this.model.MARITAL_STATUS = { value: response.data.data[0].marital_fk, name: response.data.data[0].marital }
           // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
-          this.model.ACCOMMODATION = this.selectAccommodation[(response.data.data[0].accomodation_fk) - 1]
+          this.model.ACCOMMODATION = { value: response.data.data[0].accomodation_fk, name: response.data.data[0].accomodation }
           // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
-          this.model.EDUCATION_LEVEL = this.selectEducationLevel[(response.data.data[0].education_fk) - 1]
-          this.model.OCCUPATION_STATUS = this.selectOccupationStatus[(response.data.data[0].occupation_status_fk) - 1]
-          // this.model.SPECIFY_OCCUPATION_STATUS = response.data.data[0].soccupation_status_fk
-          this.model.FEE_EXEMPTION_STATUS = this.selectFeeExemptionStatus[(response.data.data[0].fee_exemption_fk) - 1]
+          this.model.EDUCATION_LEVEL = { value: response.data.data[0].education_fk, name: response.data.data[0].education }
+          this.model.OCCUPATION_STATUS = { value: response.data.data[0].occupation_status_fk, name: response.data.data[0].occupation_status }
+          // this.model.SPECIFY_OCCUPATION_STATUS = response.data.data[0].occupation_status_fk
+          this.model.FEE_EXEMPTION_STATUS = { value: response.data.data[0].fee_exemption_fk, name: response.data.data[0].fee_exemption }
           // this.model.SPECIFY_FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
-          this.model.OCCUPATION_SECTOR = this.selectOccupationSector[(response.data.data[0].occupation_sector_fk) - 1]
+          this.model.OCCUPATION_SECTOR = { value: response.data.data[0].occupation_sector_fk, name: response.data.data[0].occupation_sector }
           // this.model.SPECIFY_OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
 
           // Next Of Kin
           this.model.NOK_NAME = response.data.data[0].nok_name
-          this.model.NOK_RELATIONSHIP = this.selectRelationship[(response.data.data[0].relation_fk) - 1]
+          this.model.NOK_RELATIONSHIP = { value: response.data.data[0].relation_fk, name: response.data.data[0].relation }
           this.model.NOK_MOBILE_NO = response.data.data[0].nok_phone_no_1
           this.model.NOK_HOUSE_NO = response.data.data[0].nok_phone_no_2
           this.model.NOK_ADDRESS_L1 = response.data.data[0].nok_address1
           this.model.NOK_ADDRESS_L2 = response.data.data[0].nok_address2
           this.model.NOK_ADDRESS_L3 = response.data.data[0].nok_address3
-          this.model.NOK_STATE = this.selectState[(response.data.data[0].nok_state_fk) - 1]
-          this.model.NOK_CITY = response.data.nok_city[0]
-          this.model.NOK_POSTCODE = response.data.nok_postcode[0]
-        })
 
-      // Allergy
-      /*
-        var allergyType = response.data.allergy
-        for (var i=0; i < allergyType.length; i++){
-          if (allergyType[i].allergy_type_fk === i){
-            this.model.ALLERGY[i] === i
+          if (response.data.data[0].nok_state_fk != null) {
+            this.model.NOK_STATE = { value: response.data.data[0].nok_state_fk, name: response.data.nokAddress[0].nok_state }
           }
-        } */
-      // this.model.DRUG_ALL_SPECIFY = response.data.data[0].postcode
-      // this.model.SUPP_ALL_SPECIFY = response.data.data[0].postcode
-      // this.model.OTHERS_SPECIFY = response.data.data[0].postcode
+          if (response.data.data[0].nok_city_fk != null) {
+            this.model.NOK_CITY = { value: response.data.data[0].nok_city_fk, name: response.data.nokAddress[0].nok_city }
+          }
+          if (response.data.data[0].nok_postcode_fk != null) {
+            this.model.NOK_POSTCODE = { value: response.data.data[0].nok_postcode_fk, name: response.data.nokAddress[0].nok_postcode }
+          }
+
+          // Allergy
+          var allergyType = response.data.allergy
+          for (var i = 0; i < allergyType.length; i++) {
+            if (allergyType[i].allergy_type_fk === 1) {
+              this.model.ALLERGY.splice(0, 1, 1)
+              this.model.DRUG_ALL_SPECIFY = allergyType[i].allergy_desc
+            } else if (allergyType[i].allergy_type_fk === 2) {
+              this.model.ALLERGY.splice(1, 1, 1)
+              this.model.SUPP_ALL_SPECIFY = allergyType[i].allergy_desc
+            } else if (allergyType[i].allergy_type_fk === 3) {
+              this.model.ALLERGY.splice(2, 1, 1)
+              this.model.OTHERS_SPECIFY = allergyType[i].allergy_desc
+            }
+          }
+        })
     }
   },
   methods: {
@@ -2020,14 +1961,26 @@ export default {
       var tabD = this.validateTabD()
 
       if (tabA && tabB && tabC && tabD) {
-        console.log(this.model)
         this.submitPath = true
+
         const data = new FormData()
         data.append('ptData', JSON.stringify(this.model))
         this.$axios
           .post('http://127.0.0.1:8000/api/registerPatient', data)
           .then((response) => {
-            this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
+            var ID = {
+              patientId: response.data.patientId,
+              patientPassportId: response.data.patientPassportId,
+              patientServicesId: response.data.patientServicesId,
+              patientAddressId: response.data.patientAddressId,
+              patientRelationshipId: response.data.patientRelationshipId,
+              patientBranch: response.data.patientBranch,
+              patientAllergy1: response.data.patientAllergy1,
+              patientAllergy2: response.data.patientAllergy2,
+              patientAllergy3: response.data.patientAllergy3,
+            }
+            localStorage.setItem('ID', JSON.stringify(ID))
+            this.$router.push({ path: 'patient_consultation' })
           })
         this.launchToast('Registration Successful')
       }
@@ -2039,15 +1992,23 @@ export default {
       var tabD = this.validateTabD()
 
       if (tabA && tabB && tabC && tabD) {
-        console.log(this.model)
-        console.log(this.model.REFERRAL_LETTER)
+        var getID = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
+
         const data = new FormData()
         data.append('updateData', JSON.stringify(this.model))
+        console.log(this.model.ALLERGY)
         this.$axios
-          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=80', data)
+          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&allergy1=' + getID.patientAllergy1 + '&allergy2=' + getID.patientAllergy2 + '&allergy3=' + getID.patientAllergy3, data)
           .then((response) => {
-            this.$router.push({ path: 'patient_consultation/' + response.data.patientId })
+            var getID = JSON.parse(localStorage.getItem('ID'))
+
+            getID.patientAllergy1 = response.data.patientAllergy1
+            getID.patientAllergy2 = response.data.patientAllergy2
+            getID.patientAllergy3 = response.data.patientAllergy3
+            localStorage.setItem('ID', JSON.stringify(getID))
+
+            this.$router.push({ path: 'patient_consultation' })
           })
         this.launchToast('Details Updated')
       }

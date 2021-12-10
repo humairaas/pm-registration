@@ -9,7 +9,7 @@
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link :to="{ name: 'patient-registration', query: { id: id }}">
+              <router-link :to="{ name: 'patient-registration', query: { st: 'edit'}}">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
@@ -68,7 +68,10 @@
               </div>
               <div class="col-xl-3">
                 <b>Allergies :</b>
-                <p>Peanut, Dairy Products, Peanut, Dairy Products, Peanut, Dairy Products</p>
+                <i v-if="empty"> No allergies</i>
+                <div v-for="allergy in allergies" :key="allergy.allergy_desc">
+                  {{allergy.allergy_desc}}
+                </div>
               </div>
             </div>
           </va-card>
@@ -250,21 +253,23 @@ export default {
   },
   data () {
     return {
-      id: this.$route.params.id,
       pt_data: [],
+      allergies: [],
+      empty: true,
     }
   },
   methods: {
-    onComplete () {
-      alert(JSON.stringify(this.model))
-      // this.$router.push("/admin/director-details");
-    },
   },
   mounted () {
+    var getID = JSON.parse(localStorage.getItem('ID'))
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + this.id)
+      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.allergies = response.data.allergy
+        if (this.allergies.length > 0) {
+          this.empty = false
+        }
       })
   },
 }
