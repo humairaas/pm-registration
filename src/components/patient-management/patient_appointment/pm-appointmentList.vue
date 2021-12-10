@@ -131,7 +131,7 @@ export default {
           width: '18%',
         },
         {
-          name: 'nric',
+          name: 'nricPassport',
           title: this.$t('NRIC/PASSPORT'),
           width: '15%',
         },
@@ -186,29 +186,37 @@ export default {
       }
       return this.users.filter(item => {
         return (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                item.nric.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase()) ||
                 item.mrn.toLowerCase().startsWith(this.term.toLowerCase()))
         // item.services === this.service
       })
     },
   },
   methods: {
-    tick (rowData) {
-      var id = rowData.id
-      this.$axios
-        .post('http://127.0.0.1:8000/api/tickAttendance?id=', id)
-        .then((response) => {
-          return response.data
-        })
+    async tick (rowData) {
+      const data = new FormData()
+      data.append('appointmentId', rowData.appointment_id)
+      data.append('serviceType', rowData.services)
+      const url = 'http://127.0.0.1:8000/api/tickAttendance'
+      await this.$axios.post(url, data)
+      this.refreshList()
     },
     edit (rowData) {
-      console.log(rowData)
+      console.log(rowData.patient_id)
     },
-    noShow (rowData) {
-      console.log(rowData)
+    async noShow (rowData) {
+      const data = new FormData()
+      data.append('appointmentId', rowData.appointment_id)
+      const url = 'http://127.0.0.1:8000/api/noShowAttendance'
+      await this.$axios.post(url, data)
+      this.refreshList()
     },
-    showForm () {
-      this.$router.push({ name: 'patient_consultation' })
+    refreshList () {
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getAppointmentList')
+        .then((response) => {
+          this.users = response.data.data
+        })
     },
     launchToast () {
       this.showToast(
