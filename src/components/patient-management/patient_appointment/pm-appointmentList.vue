@@ -2,7 +2,11 @@
   <va-card>
     <div class="row align--center">
       <div class="flex xs12 md6"><h5>LIST OF APPOINTMENTS</h5></div>
-      <div class="flex xs12 md1 offset--md5"><va-button color="warning" size="small" :to="{ name: 'patient-appointmentBooking'}">+</va-button></div>
+      <div class="flex xs12 md1 offset--md5">
+        <button @click="$router.push({name: 'patient-appointmentBooking'})" type="button" class="ml-2 btn btn-fill btn-md btn-yellow btn-circle">
+          <div class="fa fa-plus" />
+        </button>
+      </div>
     </div>
 
     <div class="row">

@@ -59,6 +59,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
+                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -87,22 +88,22 @@
                 prevTab
               }">
                 <div class="float-left">
-                  <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-step-backward" /> &nbsp; Previous
+                  <button v-if="activeTabIndex > 0" @click="prevTab" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+                    <div class="fa fa-angle-double-left" /> &nbsp; PREVIOUS
                   </button>
                 </div>
 
                 <div class="float-right">
-                  <button v-if="!isLastStep" @click="nextTab" type="button" class="btn btn-info btn-fill btn-md">
-                    Next <div class="fa fa-step-forward" />
+                  <button v-if="!isLastStep" @click="nextTab" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+                    NEXT &nbsp; <div class="fa fa-angle-double-right" />
                   </button>
 
-                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
-                    <div class="fa fa-play-circle" /> &nbsp;Preview
+                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
+                    <div class="fa fa-play" /> &nbsp; PREVIEW
                   </button>
 
-                  <button v-if="isLastStep && update==false" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  <button v-if="isLastStep && update==false" @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
+                    <div class="fa fa-paper-plane" /> &nbsp; SUBMIT
                   </button>
 
                   <button v-if="isLastStep && update==true" @click="validateUpdateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
@@ -345,8 +346,24 @@ export default {
             values: () => {
               return this.radioCitizenship
             },
-            onChanged: function (model) {
+            onChanged: function (model, newVal, oldVal, field) {
               model.MD_CITIZENSHIP = model.CITIZENSHIP
+              if (newVal === 1) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              } else if (newVal === 2) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              } else if (newVal === 3) {
+                model.NRIC_TYPE = ''
+                model.NRIC_NO = ''
+              }
             },
           },
           {
@@ -372,6 +389,9 @@ export default {
             visible: function (model) {
               return model && model.CITIZENSHIP === 1
             },
+            onChanged: function (model, newVal, oldVal, field) {
+              model.NRIC_NO = ''
+            },
           },
           {
             type: 'cleave',
@@ -386,7 +406,7 @@ export default {
             placeholder: 'XXXXXX-XX-XXXX',
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && ((model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1) || model.CITIZENSHIP === 2)
+              return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 2) || model.CITIZENSHIP === 2)
             },
           },
           {
@@ -398,10 +418,16 @@ export default {
             required: true,
             styleClasses: 'col-md-6',
             visible: function (model) {
-              return model && (model.NRIC_TYPE.value === 1 || model.NRIC_TYPE.value === 3 || model.NRIC_TYPE.value === 4 ||
-                              model.NRIC_TYPE.value === 5 || model.NRIC_TYPE.value === 6 || model.NRIC_TYPE.value === 7 ||
-                              model.NRIC_TYPE.value === 8 || model.NRIC_TYPE.value === 9 || model.NRIC_TYPE.value === 10 ||
-                              model.NRIC_TYPE.value === 11)
+              return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 1) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 3) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 4) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 5) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 6) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 7) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 8) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 9) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 10) ||
+                                (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 11))
             },
           },
           {
@@ -583,7 +609,7 @@ export default {
           },
           {
             labels: 'Upload Referral Letter',
-            accept: '.xlxs',
+            accept: '.pdf',
             multiple: true,
             text: 'Choose a File',
             model: 'REFERRAL_LETTER',

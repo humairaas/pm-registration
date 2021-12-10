@@ -183,6 +183,12 @@ export default new Router({
             import('../components/ui/typography/Typography.vue'),
         },
         {
+          name: 'customButton',
+          path: 'custom-button',
+          component: () =>
+            import('../components/ui/custom/customButton.vue'),
+        },
+        {
           name: 'buttons',
           path: 'buttons',
           component: () =>
