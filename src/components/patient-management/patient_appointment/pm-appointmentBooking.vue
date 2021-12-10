@@ -333,6 +333,16 @@ export default {
       .then((response) => {
         this.selectAppointmentType = response.data.data
       })
+
+    if (this.$route.query.st === 'edit') {
+      var patientId = localStorage.getItem('ID')
+
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getAppointmentData?patientId=' + patientId)
+        .then((response) => {
+          console.log(response.data.data)
+        })
+    }
   },
   methods: {
     navigateBack () {

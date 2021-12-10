@@ -202,7 +202,8 @@ export default {
       this.refreshList()
     },
     edit (rowData) {
-      console.log(rowData.patient_id)
+      localStorage.setItem('ID', rowData.patient_id)
+      this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'edit' } })
     },
     async noShow (rowData) {
       const data = new FormData()
