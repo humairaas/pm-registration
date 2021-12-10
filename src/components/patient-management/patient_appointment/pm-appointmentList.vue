@@ -46,12 +46,16 @@
       clickable
     >
 
-      <template slot="actions">
-        <va-button flat small color="#61CE70" icon="fa fa-check" @click="launchToast()" class="ma-0">
+      <template slot="no" slot-scope="row">
+        {{ row.rowIndex + 1 }}
+      </template>
+
+      <template slot="actions" slot-scope="props">
+        <va-button flat small color="#61CE70" icon="fa fa-check" @click="tick(props.rowData)" class="ma-0">
         </va-button>
-        <va-button flat small color="#75757" icon="fa fa-edit" @click="showForm()" class="ma-0">
+        <va-button flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
         </va-button>
-        <va-button flat small color="#DC3545" icon="fa fa-close" @click="launchToast()" class="ma-0">
+        <va-button flat small color="#DC3545" icon="fa fa-close" @click="noShow(props.rowData)" class="ma-0">
         </va-button>
       </template>
 
@@ -73,7 +77,6 @@
 
 <script>
 import { debounce } from 'lodash'
-import users from '../../../data/patient.json'
 
 export default {
   data () {
@@ -82,99 +85,127 @@ export default {
       no: 1,
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
-      users: users,
+      users: [],
       date: '',
       formatDate: '',
       service: '',
-      selectService: ['Consultation', 'Rehab', 'Rehab - SE', 'Rehab - ETP', 'Rehab - Job Club', 'CPS'],
+      selectService: [],
     }
+  },
+  mounted () {
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getService')
+      .then((response) => {
+        this.selectService = response.data.data.map(function (obj) { return obj.name })
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAppointmentList')
+      .then((response) => {
+        this.users = response.data.data
+      })
   },
   computed: {
     fields () {
-      return [{
-        name: 'no',
-        title: this.$t('NO'),
-        width: '30px',
-        height: '45px',
-        dataClass: 'text-center',
-      }, {
-        name: 'mrn',
-        title: this.$t('MRN'),
-        width: '10%',
-      }, {
-        name: 'salutation',
-        title: this.$t('SALUTATION'),
-        width: '5%',
-      }, {
-        name: 'name',
-        title: this.$t('NAME'),
-        width: '18%',
-      }, {
-        name: 'nric/passport',
-        title: this.$t('NRIC/PASSPORT'),
-        width: '15%',
-      }, {
-        name: 'status',
-        title: this.$t('STATUS'),
-        width: '5%',
-      }, {
-        name: 'appointment date',
-        title: this.$t('APPT. DATE'),
-        width: '10%',
-      }, {
-        name: 'appointment time',
-        title: this.$t('APPT. TIME'),
-        width: '10%',
-      }, {
-        name: 'assigned doctor',
-        title: this.$t('ASSIGNED DOCTOR'),
-        width: '10%',
-      }, {
-        name: 'services',
-        title: this.$t('SERVICES'),
-        width: '5%',
-      }, {
-        name: '__slot:actions',
-        title: this.$t('ACTION'),
-        width: '12%',
-      }]
+      return [
+        {
+          name: '__slot:no',
+          title: this.$t('NO'),
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
+        {
+          name: 'mrn',
+          title: this.$t('MRN'),
+          width: '10%',
+        },
+        {
+          name: 'salutation',
+          title: this.$t('SALUTATION'),
+          width: '5%',
+        },
+        {
+          name: 'name',
+          title: this.$t('NAME'),
+          width: '18%',
+        },
+        {
+          name: 'nric',
+          title: this.$t('NRIC/PASSPORT'),
+          width: '15%',
+        },
+        {
+          name: 'status',
+          title: this.$t('STATUS'),
+          width: '5%',
+        },
+        {
+          name: 'date',
+          title: this.$t('APPT. DATE'),
+          width: '10%',
+        },
+        {
+          name: 'time',
+          title: this.$t('APPT. TIME'),
+          width: '10%',
+        },
+        // {
+        //   name: 'assigned doctor',
+        //   title: this.$t('ASSIGNED DOCTOR'),
+        //   width: '10%',
+        // },
+        {
+          name: 'services',
+          title: this.$t('SERVICES'),
+          width: '5%',
+        },
+        {
+          name: '__slot:actions',
+          title: this.$t('ACTION'),
+          width: '12%',
+        },
+      ]
     },
     filteredData () {
-      if ((!this.term || this.term.length < 1) && this.date === '' && this.service === '') {
+    //   if ((!this.term || this.term.length < 1) && this.date === '' && this.service === '') {
+    //     return this.users
+    //   }
+
+      //   return this.users.filter(item => {
+      //     return item.services.startsWith(this.service) &&
+      //               item['appointment date'].startsWith(this.formatDate) &&
+      //               (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+      //               item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
+      //               item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
+      //   })
+      // },
+
+      if ((!this.term || this.term.length < 1)) {
         return this.users
       }
-
       return this.users.filter(item => {
-        return item.services.startsWith(this.service) &&
-                  item['appointment date'].startsWith(this.formatDate) &&
-                  (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                  item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                  item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
+        return (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.nric.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.mrn.toLowerCase().startsWith(this.term.toLowerCase()))
+        // item.services === this.service
       })
     },
   },
   methods: {
-    getTrendIcon (user) {
-      if (user.trend === 'up') {
-        return 'fa fa-caret-up'
-      }
-
-      if (user.trend === 'down') {
-        return 'fa fa-caret-down'
-      }
-
-      return 'fa fa-minus'
+    tick (rowData) {
+      var id = rowData.id
+      this.$axios
+        .post('http://127.0.0.1:8000/api/tickAttendance?id=', id)
+        .then((response) => {
+          return response.data
+        })
     },
-    getTrendColor (user) {
-      if (user.trend === 'up') {
-        return 'primary'
-      }
-
-      if (user.trend === 'down') {
-        return 'danger'
-      }
-
-      return 'grey'
+    edit (rowData) {
+      console.log(rowData)
+    },
+    noShow (rowData) {
+      console.log(rowData)
     },
     showForm () {
       this.$router.push({ name: 'patient_consultation' })
@@ -199,7 +230,7 @@ export default {
       var year = this.date.toString().slice(0, 4)
       var month = this.date.toString().slice(5, 7)
       var day = this.date.toString().slice(8, 10)
-      var formatted = day + '-' + month + '-' + year
+      var formatted = year + '/' + month + '/' + day
       this.formatDate = formatted
     },
   },
