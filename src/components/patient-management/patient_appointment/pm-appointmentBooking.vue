@@ -59,34 +59,6 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
-import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg-core.css'
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin, TabsPlugin } from 'bootstrap-vue'
-// import * as servicesModule1 from '../../../app/module1/services01'
-
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'vue-select/dist/vue-select.css'
-
-import VueFormWizard from 'vue-form-wizard'
-import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-Vue.use(TabsPlugin)
-Vue.use(VueFormWizard)
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-Vue.use(VueFormGenerator)
-Vue.component('multiselect', Multiselect)
-
-// cleave.js
-require('cleave.js')
-require('cleave.js/dist/addons/cleave-phone.my')
-
 export default {
   data () {
     return {
@@ -99,31 +71,31 @@ export default {
       selectPatientCategory: [],
       selectAppointmentTime: [
         { name: '08:00', value: 1 },
-        { name: '08:30', value: 2 },
-        { name: '09:00', value: 3 },
-        { name: '09:30', value: 4 },
-        { name: '10:00', value: 5 },
-        { name: '10:30', value: 6 },
-        { name: '11:00', value: 7 },
-        { name: '11:30', value: 8 },
-        { name: '12:00', value: 9 },
-        { name: '12:30', value: 10 },
-        { name: '14:00', value: 11 },
-        { name: '14:30', value: 12 },
-        { name: '15:00', value: 13 },
-        { name: '15:30', value: 14 },
-        { name: '16:00', value: 15 },
-        { name: '16:30', value: 16 },
+        { name: '08:30', value: 1 },
+        { name: '09:00', value: 1 },
+        { name: '09:30', value: 1 },
+        { name: '10:00', value: 1 },
+        { name: '10:30', value: 1 },
+        { name: '11:00', value: 1 },
+        { name: '11:30', value: 1 },
+        { name: '12:00', value: 1 },
+        { name: '12:30', value: 1 },
+        { name: '14:00', value: 1 },
+        { name: '14:30', value: 1 },
+        { name: '15:00', value: 1 },
+        { name: '15:30', value: 1 },
+        { name: '16:00', value: 1 },
+        { name: '16:30', value: 1 },
       ],
       selectAppointmentDuration: [
         { name: '30 min', value: 1 },
-        { name: '1 hour', value: 2 },
-        { name: '1 hour 30 min', value: 3 },
-        { name: '2 hours', value: 4 },
-        { name: '2 hour 30 min', value: 5 },
-        { name: '3 hours', value: 6 },
-        { name: '3 hour 30 min', value: 7 },
-        { name: '4 hours', value: 8 },
+        { name: '1 hour', value: 1 },
+        { name: '1 hour 30 min', value: 1 },
+        { name: '2 hours', value: 1 },
+        { name: '2 hour 30 min', value: 1 },
+        { name: '3 hours', value: 1 },
+        { name: '3 hour 30 min', value: 1 },
+        { name: '4 hours', value: 1 },
       ],
       model: {
         NRIC_PASSPORT_NO: '',
@@ -135,6 +107,7 @@ export default {
         PATIENT_CATEGORY: '',
         ASSIGNED_TEAM: '',
         PATIENT_FK: '',
+        APPOINTMENT_ID: '',
         selectAssignedTeam: [],
       },
       schema: {
@@ -335,12 +308,21 @@ export default {
       })
 
     if (this.$route.query.st === 'edit') {
-      var patientId = localStorage.getItem('ID')
+      var appointmentId = localStorage.getItem('ID')
 
       this.$axios
-        .get('http://127.0.0.1:8000/api/getAppointmentData?patientId=' + patientId)
+        .get('http://127.0.0.1:8000/api/getAppointmentData?appointmentId=' + appointmentId)
         .then((response) => {
           console.log(response.data.data)
+          this.model.NRIC_PASSPORT_NO = response.data.data[0].nricPassport
+          this.model.DATE = response.data.data[0].date
+          this.model.TIME = { value: 1, name: response.data.data[0].time }
+          this.model.DURATION = { name: response.data.data[0].duration, value: 1 }
+          this.model.APPOINTMENT_TYPE = { value: response.data.data[0].appointmentTypeValue, name: response.data.data[0].appointmentTypeName }
+          this.model.VISIT_TYPE = { value: response.data.data[0].visitTypeValue, name: response.data.data[0].visitTypeName }
+          this.model.PATIENT_CATEGORY = { value: response.data.data[0].patientCategoryValue, name: response.data.data[0].patientCategoryName }
+          this.model.ASSIGNED_TEAM = { value: response.data.data[0].assignedTeamValue, name: response.data.data[0].assignedTeamName }
+          this.model.APPOINTMENT_ID = response.data.data[0].appointment_id
         })
     }
   },
@@ -353,15 +335,25 @@ export default {
       var patientVerified = await this.validatePatient()
 
       if (tabA && patientVerified) {
-        const data = new FormData()
-        data.append('apptData', JSON.stringify(this.model))
-        this.$axios
-          .post('http://127.0.0.1:8000/api/bookAppointment', data)
-          .then((response) => {
-            return response.data
-          })
-
-        this.launchToast()
+        if (this.$route.query.st === 'edit') {
+          const data = new FormData()
+          data.append('apptData', JSON.stringify(this.model))
+          this.$axios
+            .post('http://127.0.0.1:8000/api/updateAppointment', data)
+            .then((response) => {
+              return response.data
+            })
+          this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Updated Successful !')
+        } else {
+          const data = new FormData()
+          data.append('apptData', JSON.stringify(this.model))
+          this.$axios
+            .post('http://127.0.0.1:8000/api/bookAppointment', data)
+            .then((response) => {
+              return response.data
+            })
+          this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !')
+        }
         this.submitPath = true
         this.$router.push({ name: 'patient-appointmentList' })
       }
@@ -391,9 +383,9 @@ export default {
         return false
       }
     },
-    launchToast () {
+    launchToast (message) {
       this.showToast(
-        ' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !',
+        message,
         {
           icon: 'fa-check',
           position: 'top-center',
@@ -417,8 +409,6 @@ export default {
   },
 }
 </script>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
 .app-layout__main {
