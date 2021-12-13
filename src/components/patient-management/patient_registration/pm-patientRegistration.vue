@@ -59,7 +59,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
                 </vue-form-generator>
-                <h6>{{model}}</h6>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -107,7 +106,7 @@
                   </button>
 
                   <button v-if="isLastStep && update==true" @click="validateUpdateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp;Update
+                    <div class="fa fa-paper-plane" /> &nbsp;UPDATE
                   </button>
                 </div>
               </template>
@@ -663,6 +662,8 @@ export default {
                 .then((response) => {
                   model.selectDMCity = response.data.data
                 })
+              this.model.DM_CITY = ''
+              this.model.DM_POSTCODE = ''
             },
             values: () => {
               return this.selectState
@@ -692,6 +693,7 @@ export default {
                 .then((response) => {
                   model.selectDMPostcode = response.data.data
                 })
+              this.model.DM_POSTCODE = ''
             },
           },
           {
@@ -750,7 +752,11 @@ export default {
                   return this.selectBranch
                 },
                 visible: function (model) {
-                  return model && model.EXISTING_PATIENT === 1
+                  if (model.EXISTING_PATIENT === 1) {
+                    return model && model.EXISTING_PATIENT === 1
+                  } else {
+                    model.BRANCH = ''
+                  }
                 },
                 onChanged: function (model) {
                   model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
@@ -1140,6 +1146,8 @@ export default {
                   .then((response) => {
                     model.selectCity = response.data.data
                   })
+                this.model.NOK_CITY = ''
+                this.model.NOK_POSTCODE = ''
               },
               values: () => {
                 return this.selectState
@@ -1165,6 +1173,7 @@ export default {
                   .then((response) => {
                     model.selectPostcode = response.data.data
                   })
+                this.model.NOK_POSTCODE = ''
               },
               values: function (model) {
                 return model.selectCity
@@ -1872,8 +1881,8 @@ export default {
           this.model.AGE = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
           this.model.DM_MOBILE_NO = response.data.data[0].phone_no_1
           this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
-          // this.model.HOSPITAL_MRN = response.data.data[0].citizenship_fk,
-          // this.model.MENTARI_MRN = response.data.data[0].citizenship_fk,
+          this.model.HOSPITAL_MRN = response.data.data[0].hospital_mrn
+          this.model.MENTARI_MRN = response.data.data[0].mentari_mrn
           this.model.SERVICE_TYPE = { value: response.data.data[0].service_fk, name: response.data.data[0].service }
           // this.model.REFERRAL_TYPE = response.data.referral_type[0]
           // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
@@ -1963,6 +1972,10 @@ export default {
       if (tabA && tabB && tabC && tabD) {
         this.submitPath = true
 
+        // if(this.model.DM_STATE == null){
+        //   this.model.DM_CITY = ''
+        //   this.model.DM_POSTCODE = ''
+        // }
         const data = new FormData()
         data.append('ptData', JSON.stringify(this.model))
         this.$axios
@@ -1995,14 +2008,19 @@ export default {
         var getID = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
+        // if(this.model.DM_STATE == null){
+        //   this.model.DM_CITY = ''
+        //   this.model.DM_POSTCODE = ''
+        // }
         const data = new FormData()
         data.append('updateData', JSON.stringify(this.model))
         console.log(this.model.ALLERGY)
         this.$axios
-          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&allergy1=' + getID.patientAllergy1 + '&allergy2=' + getID.patientAllergy2 + '&allergy3=' + getID.patientAllergy3, data)
+          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&patientPassportId=' + getID.patientPassportId + '&allergy1=' + getID.patientAllergy1 + '&allergy2=' + getID.patientAllergy2 + '&allergy3=' + getID.patientAllergy3, data)
           .then((response) => {
             var getID = JSON.parse(localStorage.getItem('ID'))
 
+            getID.patientPassportId = response.data.patientPassportId
             getID.patientAllergy1 = response.data.patientAllergy1
             getID.patientAllergy2 = response.data.patientAllergy2
             getID.patientAllergy3 = response.data.patientAllergy3
