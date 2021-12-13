@@ -27,13 +27,13 @@
                 <div class="row">
                   <div class="col-md-4"><b>Hospital's MRN</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5"> HS30399</div>
+                  <div class="col-md-5">{{pt_data[0].hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-4"><b>Mentari's MRN</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">HS30399</div>
+                  <div class="col-md-5">{{pt_data[0].mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
@@ -45,7 +45,7 @@
                 <div class="row">
                   <div class="col-md-4"><b>Date of Birth</b></div>
                   <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].birthdate}}</div>
+                  <div class="col-md-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
@@ -255,6 +255,7 @@ export default {
     return {
       pt_data: [],
       allergies: [],
+      age: '',
       empty: true,
     }
   },
@@ -266,6 +267,7 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
           this.empty = false
