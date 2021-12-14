@@ -97,6 +97,7 @@ export default {
       .get('http://127.0.0.1:8000/api/getService')
       .then((response) => {
         this.selectService = response.data.data.map(function (obj) { return obj.name })
+        console.log(this.selectService)
       })
 
     this.$axios
@@ -150,11 +151,11 @@ export default {
           title: this.$t('APPT. TIME'),
           width: '10%',
         },
-        // {
-        //   name: 'assigned doctor',
-        //   title: this.$t('ASSIGNED DOCTOR'),
-        //   width: '10%',
-        // },
+        {
+          name: 'doctor',
+          title: this.$t('ASSIGNED DOCTOR'),
+          width: '10%',
+        },
         {
           name: 'services',
           title: this.$t('SERVICES'),
@@ -168,27 +169,16 @@ export default {
       ]
     },
     filteredData () {
-    //   if ((!this.term || this.term.length < 1) && this.date === '' && this.service === '') {
-    //     return this.users
-    //   }
-
-      //   return this.users.filter(item => {
-      //     return item.services.startsWith(this.service) &&
-      //               item['appointment date'].startsWith(this.formatDate) &&
-      //               (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-      //               item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
-      //               item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
-      //   })
-      // },
-
-      if ((!this.term || this.term.length < 1)) {
+      if ((!this.term || this.term.length < 1) && this.date === '' && this.service === '') {
         return this.users
       }
+
       return this.users.filter(item => {
-        return (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                item.mrn.toLowerCase().startsWith(this.term.toLowerCase()))
-        // item.services === this.service
+        return item.services === this.service &&
+                    item.date.startsWith(this.formatDate) &&
+                    (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                    item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                    item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase()))
       })
     },
   },

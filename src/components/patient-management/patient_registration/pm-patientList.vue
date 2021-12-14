@@ -201,7 +201,10 @@ export default {
       return 'grey'
     },
     showPatientProfile (user) {
-      localStorage.setItem('ID', user.patient_id)
+      var ID = {
+        patientId: user.patient_id,
+      }
+      localStorage.setItem('ID', JSON.stringify(ID))
       this.$router.push({ name: 'patient_consultation' })
     },
     search: debounce(function (term) {
