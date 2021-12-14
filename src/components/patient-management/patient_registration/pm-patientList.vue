@@ -43,10 +43,19 @@
       :fields="fields"
       :data="filteredData"
       :per-page="parseInt(perPage)"
-      @row-clicked="showUser"
+      @row-clicked="showPatientProfile"
       :hoverable="true"
       clickable
     >
+
+      <template slot="no" slot-scope="row">
+        {{ row.rowIndex + 1 }}
+      </template>
+
+      <template slot="age" slot-scope="props">
+        {{ getAge(props.rowData.age) }}
+      </template>
+
     </va-data-table>
 
     <div class="row">
@@ -65,7 +74,6 @@
 
 <script>
 import { debounce } from 'lodash'
-import users from '../../../data/patient.json'
 
 export default {
   data () {
@@ -74,56 +82,64 @@ export default {
       no: 1,
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
-      users: users,
+      users: [],
       branch: '',
-      selectBranch: ['Mentari Selayang', 'Mentari Klang', 'Mentari Kluang'],
+      selectBranch: [],
       service: '',
-      selectService: ['Consultation', 'Rehab', 'Rehab - SE', 'Rehab - ETP', 'Rehab - Job Club',
-        'CPS'],
+      selectService: [],
     }
   },
   computed: {
     fields () {
-      return [{
-        name: 'no',
-        title: this.$t('NO'),
-        width: '30px',
-        height: '45px',
-        dataClass: 'text-center',
-      }, {
-        name: 'mrn',
-        title: this.$t('MRN'),
-        width: '10%',
-      }, {
-        name: 'salutation',
-        title: this.$t('SALUTATION'),
-        width: '5%',
-      }, {
-        name: 'name',
-        title: this.$t('NAME'),
-        width: '20%',
-      }, {
-        name: 'age',
-        title: this.$t('AGE'),
-        width: '5%',
-      }, {
-        name: 'nric/passport',
-        title: this.$t('NRIC/PASSPORT'),
-        width: '15%',
-      }, {
-        name: 'next visit',
-        title: this.$t('NEXT VISIT'),
-        width: '10%',
-      },
-      {
-        name: 'assigned doctor',
-        title: this.$t('ASSIGNED DOCTOR'),
-        width: '15%',
-      }, {
-        name: 'services',
-        title: this.$t('SERVICES'),
-        width: '15%',
-      }]
+      return [
+        {
+          name: '__slot:no',
+          title: this.$t('NO'),
+          width: '30px',
+          height: '45px',
+          dataClass: 'text-center',
+        },
+        {
+          name: 'mrn',
+          title: this.$t('MRN'),
+          width: '10%',
+        },
+        {
+          name: 'salutation',
+          title: this.$t('SALUTATION'),
+          width: '5%',
+        },
+        {
+          name: 'name',
+          title: this.$t('NAME'),
+          width: '20%',
+        },
+        {
+          name: '__slot:age',
+          title: this.$t('AGE'),
+          width: '5%',
+        },
+        {
+          name: 'nricPassport',
+          title: this.$t('NRIC/PASSPORT'),
+          width: '15%',
+        },
+        // {
+        //   name: 'next visit',
+        //   title: this.$t('NEXT VISIT'),
+        //   width: '10%',
+        // },
+        // {
+        //   name: 'assigned doctor',
+        //   title: this.$t('ASSIGNED DOCTOR'),
+        //   width: '15%',
+        // },
+        {
+          name: 'services',
+          title: this.$t('SERVICES'),
+          width: '15%',
+        },
+      ]
     },
     filteredData () {
       if ((!this.term || this.term.length < 1) && this.branch === '' && this.service === '') {
@@ -139,7 +155,29 @@ export default {
       })
     },
   },
+  mounted () {
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getService')
+      .then((response) => {
+        this.selectService = response.data.data.map(function (obj) { return obj.name })
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getBranch')
+      .then((response) => {
+        this.selectBranch = response.data.data.map(function (obj) { return obj.name })
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPatientList')
+      .then((response) => {
+        this.users = response.data.data
+      })
+  },
   methods: {
+    getAge (birthdate) {
+      return new Date().getFullYear() - birthdate.toString().substring(0, 4)
+    },
     getTrendIcon (user) {
       if (user.trend === 'up') {
         return 'fa fa-caret-up'
@@ -162,8 +200,8 @@ export default {
 
       return 'grey'
     },
-    showUser (user) {
-      // alert(JSON.stringify(user))
+    showPatientProfile (user) {
+      localStorage.setItem('ID', user.patient_id)
       this.$router.push({ name: 'patient_consultation' })
     },
     search: debounce(function (term) {
