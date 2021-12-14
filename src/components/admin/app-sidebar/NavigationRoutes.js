@@ -129,10 +129,6 @@ export const navigationRoutes = {
       displayName: 'SHHARP List',
     },
     {
-      name: 'shharp-demographic',
-      displayName: 'SHHARP Demographic',
-    },
-    {
       name: 'shharp-registry',
       displayName: 'SHHARP Registry',
     },
