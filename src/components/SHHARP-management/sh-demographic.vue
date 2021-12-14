@@ -34,7 +34,7 @@
               }">
                 <div class="float-right">
                   <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                    <div class="fa fa-paper-plane" /> &nbsp;Submit
+                    <div class="fa fa-paper-plane" /> &nbsp;SUBMIT
                   </button>
                 </div>
               </template>
@@ -104,19 +104,7 @@ export default {
 
       // Socio Demographic Data
       selectRace: [],
-      selectIncomeStatus: [
-        { id: 1, name: 'Less than RM 2,000' },
-        { id: 2, name: 'RM 2,000 - RM 3,999' },
-        { id: 3, name: 'RM 4,000 - RM 5,999' },
-        { id: 4, name: 'RM 6,000 - RM 7,999' },
-        { id: 5, name: 'RM 8,000 - RM 9,999' },
-        { id: 6, name: 'RM 10,000 - RM 11,999' },
-        { id: 7, name: 'RM 12,000 - RM 13,999' },
-        { id: 8, name: 'RM 14,000 - RM 15,999' },
-        { id: 9, name: 'RM 16,000 - RM 17,999' },
-        { id: 10, name: 'RM 18,000 - RM 19,999' },
-        { id: 11, name: 'RM 20,000 and above' },
-      ],
+      selectIncomeStatus: [],
       selectReligion: [],
       selectMaritalStatus: [],
       selectEducationLevel: [],
@@ -159,7 +147,7 @@ export default {
                 model: 'SH_NAME',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-8',
+                styleClasses: 'col-lg-8',
               },
             ],
           },
@@ -171,7 +159,7 @@ export default {
                 model: 'CITIZENSHIP',
                 required: true,
                 validator: 'required',
-                styleClasses: 'col-md-12',
+                styleClasses: 'col-lg-12',
                 values: () => {
                   return this.radioCitizenship
                 },
@@ -192,7 +180,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 values: () => {
                   return this.selectNRICType
                 },
@@ -211,7 +199,7 @@ export default {
                   numericOnly: true,
                 },
                 placeholder: 'XXXXXX-XX-XXXX',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1
                 },
@@ -223,7 +211,7 @@ export default {
                 model: 'NRIC_NO',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2) && (model.NRIC_TYPE.value !== 2)
                 },
@@ -235,7 +223,7 @@ export default {
                 model: 'PASSPORT_NO',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.CITIZENSHIP === 3
                 },
@@ -249,7 +237,7 @@ export default {
                 required: true,
                 format: 'YYYY/MM/DD',
                 min: 1,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.CITIZENSHIP === 3
                 },
@@ -269,7 +257,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 values: () => {
                   return this.selectIssuingCountry
                 },
@@ -283,7 +271,7 @@ export default {
                 model: 'GENDER',
                 required: true,
                 validator: 'required',
-                styleClasses: 'col-12',
+                styleClasses: 'col-lg-12',
                 values: () => {
                   return this.radioGender
                 },
@@ -300,7 +288,7 @@ export default {
                 placeholder: 'Enter Date',
                 required: true,
                 format: 'YYYY/MM/DD',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 onChanged: function (model, newVal, oldVal, field) {
                   model.AGE = new Date().getFullYear() - model.BIRTH_DATE.toString().substring(0, 4)
                 },
@@ -312,7 +300,7 @@ export default {
                 model: 'AGE',
                 min: 0,
                 validator: 'number',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -325,7 +313,7 @@ export default {
                 model: 'HOSPITAL_MRN',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'input',
@@ -334,7 +322,7 @@ export default {
                 model: 'MENTARI_MRN',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -357,7 +345,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectEmpStatus
                 },
@@ -383,7 +371,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectIncomeStatus
                 },
@@ -409,7 +397,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectRace
                 },
@@ -421,7 +409,7 @@ export default {
                 model: 'SPECIFY_RACE',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.RACE.value === 99
                 },
@@ -447,7 +435,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectReligion
                 },
@@ -459,7 +447,7 @@ export default {
                 model: 'SPECIFY_RELIGION',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.RELIGION.value === 99
                 },
@@ -485,7 +473,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectMaritalStatus
                 },
@@ -497,7 +485,7 @@ export default {
                 model: 'SPECIFY_MARITAL_STATUS',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.MARITAL_STATUS.value === 99
                 },
@@ -525,7 +513,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-md-4 ml-3',
+                styleClasses: 'col-lg-4 ml-3',
                 values: () => {
                   return this.selectEducationLevel
                 },
@@ -537,7 +525,7 @@ export default {
                 model: 'EDUCATION_LEVEL_SPECIFY',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
                 visible: function (model) {
                   return model && model.EDUCATION_LEVEL.value === 99
                 },
@@ -558,105 +546,29 @@ export default {
       return 'Data will be lost if you leave the page, are you sure?'
     }
     this.$axios
-      .get('http://127.0.0.1:8000/api/getState?country_id=1')
+      .get('http://127.0.0.1:8000/api/getDemographicData')
       .then((response) => {
-        this.selectState = response.data.data
-      })
+        this.radioCitizenship = response.data.citizenship
+        this.radioGender = response.data.gender
+        this.selectNRICType = response.data.NRICType
+        this.selectIssuingCountry = response.data.issuingCountry
 
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getCitizenship')
-      .then((response) => {
-        this.radioCitizenship = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getNRICType')
-      .then((response) => {
-        this.selectNRICType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getIssuingCountry')
-      .then((response) => {
-        this.selectIssuingCountry = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getGender')
-      .then((response) => {
-        this.radioGender = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getServiceType')
-      .then((response) => {
-        this.selectServiceType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getReferralType')
-      .then((response) => {
-        this.selectReferralType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getBranch')
-      .then((response) => {
-        this.selectBranch = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getRace')
-      .then((response) => {
-        this.selectRace = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getReligion')
-      .then((response) => {
-        this.selectReligion = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getMaritalStatus')
-      .then((response) => {
-        this.selectMaritalStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getAccommodation')
-      .then((response) => {
-        this.selectAccommodation = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getEducationLevel')
-      .then((response) => {
-        this.selectEducationLevel = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getOccupationStatus')
-      .then((response) => {
-        this.selectOccupationStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getFeeExemptionStatus')
-      .then((response) => {
-        this.selectFeeExemptionStatus = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getOccupationSector')
-      .then((response) => {
-        this.selectOccupationSector = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getRelationship')
-      .then((response) => {
-        this.selectRelationship = response.data.data
+        const tempHousehold = []
+        const n = response.data.householdIncome.length
+        for (var i = 0; i < n; i++) {
+          if (response.data.householdIncome[i].min === 0) {
+            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'Less than RM ' + (response.data.householdIncome[i].max + 1) }
+          } else if (i === n - 1) {
+            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'RM ' + (response.data.householdIncome[i].min) + ' and above' }
+          } else {
+            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'RM ' + response.data.householdIncome[i].min + ' - ' + 'RM ' + response.data.householdIncome[i].max }
+          }
+        }
+        this.selectIncomeStatus = tempHousehold
+        this.selectRace = response.data.race
+        this.selectReligion = response.data.religion
+        this.selectMaritalStatus = response.data.marital
+        this.selectEducationLevel = response.data.education
       })
   },
   methods: {
@@ -664,9 +576,21 @@ export default {
       var tabA = this.validateTabA()
 
       if (tabA) {
-        this.launchToast()
         this.submitPath = true
-        this.$router.push({ path: 'SHHARP-registration' })
+
+        const data = new FormData()
+        data.append('ptData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/registerDemoSHHARP', data)
+          .then((response) => {
+            var ID = {
+              patientId: response.data.patientId,
+              shharpId: response.data.patientPassportId,
+            }
+            localStorage.setItem('ID', JSON.stringify(ID))
+            this.$router.push({ path: '/patient-management/patient_consultation' })
+          })
+        this.launchToast('Registration Successful')
       }
     },
     validateTabA () {

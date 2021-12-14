@@ -486,10 +486,10 @@ export default new Router({
           import('../components/patient-management/patient_consultation/patient_consultation.vue'),
       },
       {
-        name: 'clinical_information',
-        path: 'clinical_information',
+        name: 'clinical-information',
+        path: 'clinical-information',
         component: () =>
-          import('../components/patient-management/patient_consultation/clinical_information.vue'),
+          import('../components/patient-management/patient_consultation/pm-clinicalInformation.vue'),
       },
       {
         name: 'clinical_history',
