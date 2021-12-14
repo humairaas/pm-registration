@@ -1906,7 +1906,6 @@ export default {
           } else {
             this.model.EXISTING_PATIENT = response.data.data[0].status_fk
           }
-
           this.model.BRANCH = { value: response.data.data[0].branch_fk, name: response.data.data[0].branch }
 
           // Sosio Demographic

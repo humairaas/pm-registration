@@ -376,18 +376,12 @@ export default {
 
       // The Self-harm Act and Suicidal Intent Data
       selectOccurance: [],
-
-      selectOverdoseType: [
-        { name: 'Medications, specify', id: 1 },
-        { name: 'Illicit substances, specify', id: 2 },
-        { name: 'Chemicals (including pesticides), specify', id: 3 },
-      ],
+      selectOverdoseType: [],
 
       // Suicide Risk Data
 
       // Hospital Management Data
       selectReferral: [],
-
       selectArrivalMode: [],
 
       radioPhysicalConseq: [
@@ -1109,13 +1103,19 @@ export default {
       tabCB2Schema: {
         fields: [
           {
-            type: 'select',
+            type: 'vueMultiSelect',
             model: 'OVERDOSE_TYPE',
+            placeholder: 'Please select',
             values: () => {
               return this.selectOverdoseType
             },
             selectOptions: {
-              hideNoneSelectedText: true,
+              multiple: false,
+              closeOnSelect: true,
+              maxHeight: 100,
+              showLabels: false,
+              key: 'value',
+              label: 'name',
             },
             visible: function (model) {
               return model && model.METHOD.includes(1)
@@ -1128,10 +1128,10 @@ export default {
             type: 'input',
             inputType: 'text',
             model: 'OVERDOSE_TYPE_SPECIFY',
-            placeholder: 'Specify overdose type',
+            placeholder: 'Specify overdose/poisoning type',
             visible: function (model) {
               if (model.METHOD.includes(1)) {
-                return model && (model.OVERDOSE_TYPE === 1 || model.OVERDOSE_TYPE === 2 || model.OVERDOSE_TYPE === 3)
+                return model && (model.OVERDOSE_TYPE.value === 1 || model.OVERDOSE_TYPE.value === 2 || model.OVERDOSE_TYPE.value === 3)
               }
             },
             required: true,
@@ -2007,35 +2007,47 @@ export default {
     }
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getOccurance')
+      .get('http://127.0.0.1:8000/api/getSHHARPData')
       .then((response) => {
-        this.selectOccurance = response.data.data
+        this.selectOccurance = response.data.occurance
+        this.selectOverdoseType = response.data.overdoseType
+        this.selectReferral = response.data.referral
+        this.selectArrivalMode = response.data.modeArrival
+        this.selectPSYMX = response.data.psyMX
       })
 
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getReferral')
-      .then((response) => {
-        this.selectReferral = response.data.data
-      })
+    // this.$axios
+    //   .get('http://127.0.0.1:8000/api/getOccurance')
+    //   .then((response) => {
+    //     this.selectOccurance = response.data.data
+    //   })
 
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getArrivalMode')
-      .then((response) => {
-        this.selectArrivalMode = response.data.data
-      })
+    // this.$axios
+    //   .get('http://127.0.0.1:8000/api/getReferral')
+    //   .then((response) => {
+    //     this.selectReferral = response.data.data
+    //   })
 
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getPSYMX')
-      .then((response) => {
-        this.selectPSYMX = response.data.data
-      })
+    // this.$axios
+    //   .get('http://127.0.0.1:8000/api/getArrivalMode')
+    //   .then((response) => {
+    //     this.selectArrivalMode = response.data.data
+    //   })
+
+    // this.$axios
+    //   .get('http://127.0.0.1:8000/api/getPSYMX')
+    //   .then((response) => {
+    //     this.selectPSYMX = response.data.data
+    //   })
   },
   methods: {
     validateForm () {
+      var getID = JSON.parse(localStorage.getItem('ID'))
       const data = new FormData()
+
       data.append('shData', JSON.stringify(this.model))
       this.$axios
-        .post('http://127.0.0.1:8000/api/registerSHHARP', data)
+        .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + getID.patientId, data)
         .then((response) => {
           return response.data
         })

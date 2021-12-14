@@ -125,7 +125,10 @@
             <va-tree-root>
               <!-- Clinical Information -->
               <va-tree-category label="Clinical Information" class="ga-one">
-                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                <va-tree-node class="ga-two">View History</va-tree-node>
+                <router-link :to="{ name: 'clinical-information'}">
+                  <va-tree-node class="ga-two">Add New Reading</va-tree-node>
+                </router-link>
               </va-tree-category>
               <!-- Psychometric Test -->
               <va-tree-category label="Psychometric Test" class="ga-one">
@@ -214,7 +217,7 @@
               <!-- SHHARP -->
               <va-tree-category label="SHHARP" class="ga-one">
                 <va-tree-node class="ga-two">View History</va-tree-node>
-                <router-link to="/SHHARP-management/SHHARP-registration">
+                <router-link :to="{ name: 'shharp-registry'}">
                   <va-tree-node class="ga-two">Add New Registry</va-tree-node>
                 </router-link>
               </va-tree-category>
