@@ -10,16 +10,6 @@
     </div>
 
     <div class="row">
-      <div class="flex xs12 md6">
-        <va-input
-          :value="term"
-          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
-          @input="search"
-          removable
-        >
-          <va-icon name="fa fa-search" slot="prepend" />
-        </va-input>
-      </div>
       <div class="flex xs12 md3">
         <va-date-picker
           v-model="date"
@@ -35,6 +25,16 @@
           :placeholder="$t('Filter By Service')"
           :options="selectService"
         />
+      </div>
+      <div class="flex xs12 md6">
+        <va-input
+          :value="term"
+          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
+          @input="search"
+          removable
+        >
+          <va-icon name="fa fa-search" slot="prepend" />
+        </va-input>
       </div>
     </div>
 
@@ -97,7 +97,6 @@ export default {
       .get('http://127.0.0.1:8000/api/getService')
       .then((response) => {
         this.selectService = response.data.data.map(function (obj) { return obj.name })
-        console.log(this.selectService)
       })
 
     this.$axios

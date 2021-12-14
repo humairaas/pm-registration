@@ -11,16 +11,6 @@
     </div>
 
     <div class="row">
-      <div class="flex xs12 md6">
-        <va-input
-          :value="term"
-          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
-          @input="search"
-          removable
-        >
-          <va-icon name="fa fa-search" slot="prepend" />
-        </va-input>
-      </div>
       <div class="flex xs12 md3">
         <va-select
           v-model="branch"
@@ -36,6 +26,16 @@
           :placeholder="$t('Filter By Service')"
           :options="selectService"
         />
+      </div>
+      <div class="flex xs12 md6">
+        <va-input
+          :value="term"
+          :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
+          @input="search"
+          removable
+        >
+          <va-icon name="fa fa-search" slot="prepend" />
+        </va-input>
       </div>
     </div>
 
@@ -124,16 +124,16 @@ export default {
           title: this.$t('NRIC/PASSPORT'),
           width: '15%',
         },
-        // {
-        //   name: 'next visit',
-        //   title: this.$t('NEXT VISIT'),
-        //   width: '10%',
-        // },
-        // {
-        //   name: 'assigned doctor',
-        //   title: this.$t('ASSIGNED DOCTOR'),
-        //   width: '15%',
-        // },
+        {
+          name: 'visit',
+          title: this.$t('NEXT VISIT'),
+          width: '10%',
+        },
+        {
+          name: 'doctor',
+          title: this.$t('ASSIGNED DOCTOR'),
+          width: '15%',
+        },
         {
           name: 'services',
           title: this.$t('SERVICES'),
@@ -142,16 +142,16 @@ export default {
       ]
     },
     filteredData () {
-      if ((!this.term || this.term.length < 1) && this.branch === '' && this.service === '') {
+      if ((!this.term || this.term.length < 1) && this.service === '' && this.branch === '') {
         return this.users
       }
 
       return this.users.filter(item => {
-        return item.services.startsWith(this.service) &&
-                  item.branch.startsWith(this.branch) &&
-                  (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                  item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                  item['nric/passport'].toLowerCase().startsWith(this.term.toLowerCase()))
+        return item.services === this.service &&
+                item.branch.startsWith(this.branch) &&
+                (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase()))
       })
     },
   },
