@@ -39,6 +39,10 @@
         {{ getAge(props.rowData.age) }}
       </template>
 
+      <template slot="date" slot-scope="props">
+        {{ getDate(props.rowData.date) }}
+      </template>
+
     </va-data-table>
 
     <div class="row">
@@ -72,7 +76,7 @@ export default {
     this.$axios
       .get('http://127.0.0.1:8000/api/getSHHARPList')
       .then((response) => {
-        this.users = response.data.data
+        this.users = response.data.list
       })
   },
   computed: {
@@ -101,7 +105,7 @@ export default {
           width: '20%',
         },
         {
-          name: 'date',
+          name: '__slot:date',
           title: this.$t('LAST SEEN'),
           width: '20%',
         },
@@ -121,6 +125,9 @@ export default {
   methods: {
     getAge (birthdate) {
       return new Date().getFullYear() - birthdate.toString().substring(0, 4)
+    },
+    getDate (datetime) {
+      return datetime.substring(0, 10)
     },
     showPatientProfile (user) {
       var ID = {
@@ -150,10 +157,6 @@ export default {
       }
 
       return 'grey'
-    },
-    showUser (user) {
-      // alert(JSON.stringify(user))
-      this.$router.push({ name: 'patient_consultation' })
     },
     search: debounce(function (term) {
       this.term = term
