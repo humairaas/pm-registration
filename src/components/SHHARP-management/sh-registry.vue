@@ -83,14 +83,14 @@
               <!-- RISK FACTORS -->
               <b-tab title="1. Risk Factors" class="py-3 pr-2" active>
                 <br/>
-                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors" @model-updated="onModelUpdated">
+                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="riskFactors">
                 </vue-form-generator>
               </b-tab>
 
               <!-- PROTECTIVE FACTORS -->
               <b-tab title="2. Protective Factors">
                 <br/>
-                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors" @model-updated="onModelUpdated" >
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="protectiveFactors">
                 </vue-form-generator>
               </b-tab>
 
@@ -104,7 +104,7 @@
                       <div class="fa fa-exclamation-circle"/> Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
                     </span>
                     <div slot="body">
-                      <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" @model-updated="onModelUpdated" >
+                      <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA">
                       </vue-form-generator>
                     </div>
                   </va-collapse>
@@ -118,10 +118,10 @@
                       <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
                       <div class="row">
                         <div class="col-lg-auto">
-                          <vue-form-generator :schema="tabCB1Schema" :model="model" :options="formOptions" ref="selfHarmSectionB1" @model-updated="onModelUpdated" ></vue-form-generator>
+                          <vue-form-generator :schema="tabCB1Schema" :model="model" :options="formOptions" ref="selfHarmSectionB1"></vue-form-generator>
                         </div>
                         <div class="col-lg">
-                          <vue-form-generator :schema="tabCB2Schema" :model="model" :options="formOptions" ref="selfHarmSectionB2" @model-updated="onModelUpdated" ></vue-form-generator>
+                          <vue-form-generator :schema="tabCB2Schema" :model="model" :options="formOptions" ref="selfHarmSectionB2"></vue-form-generator>
                         </div>
                       </div>
                     </div>
@@ -134,7 +134,7 @@
                     </span>
                     <div slot="body">
                       <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
-                      <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions" ref="selfHarmSectionC" @model-updated="onModelUpdated"></vue-form-generator>
+                      <vue-form-generator :schema="tabCCSchema" :model="model" :options="formOptions" ref="selfHarmSectionC"></vue-form-generator>
                     </div>
                   </va-collapse>
 
@@ -146,10 +146,10 @@
                     <div slot="body">
                       <div class="row mt-3">
                         <div class="col-lg-3 mt-2">
-                          <vue-form-generator :schema="tabCD1Schema" :model="model" :options="formOptions" ref="selfHarmSectionD1" @model-updated="onModelUpdated"></vue-form-generator>
+                          <vue-form-generator :schema="tabCD1Schema" :model="model" :options="formOptions" ref="selfHarmSectionD1"></vue-form-generator>
                         </div>
                         <div class="col-lg">
-                          <vue-form-generator :schema="tabCD2Schema" :model="model" :options="formOptions" ref="selfHarmSectionD2" @model-updated="onModelUpdated"></vue-form-generator>
+                          <vue-form-generator :schema="tabCD2Schema" :model="model" :options="formOptions" ref="selfHarmSectionD2"></vue-form-generator>
                         </div>
                       </div>
                     </div>
@@ -161,8 +161,8 @@
                       Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
                     </span>
                     <div slot="body">
-                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE1" @model-updated="onModelUpdated"></vue-form-generator>
-                      <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="selfHarmSectionE2" @model-updated="onModelUpdated" class="mt-5"></vue-form-generator>
+                      <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE1"></vue-form-generator>
+                      <vue-form-generator :schema="totalScoreSchema" :model="model" :options="formOptions" ref="selfHarmSectionE2" class="mt-5"></vue-form-generator>
                     </div>
                   </va-collapse>
                 </va-accordion>
@@ -176,7 +176,7 @@
                     <b>Level of Suicide Risk for Current Attempt</b>
                   </div>
                   <div class="col-md mt-3 mr-2 box">
-                    <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions" ref="suicideRisk" @model-updated="onModelUpdated"></vue-form-generator>
+                    <vue-form-generator :schema="tabDSchema" :model="model" :options="formOptions" ref="suicideRisk"></vue-form-generator>
                   </div>
                 </div>
               </b-tab>
@@ -184,14 +184,14 @@
               <!-- HOSPITAL MANAGEMENT -->
               <b-tab title="5. Hospital Management" class="p-3">
                 <br/>
-                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement" @model-updated="onModelUpdated">
+                <vue-form-generator :model="model" :schema="tabESchema" :options="formOptions" ref="hospitalManagement">
                 </vue-form-generator>
               </b-tab>
 
               <!-- SOURCE DATA PRODUCER -->
               <b-tab title="6. Source Data Producer" class="p-3">
                 <br/>
-                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer" @model-updated="onModelUpdated">
+                <vue-form-generator :model="model" :schema="tabFSchema" :options="formOptions" ref="sourceDataProducer">
                 </vue-form-generator>
               </b-tab>
             </b-tabs>
@@ -210,6 +210,10 @@
 
                 <button v-if="tabIndex==5" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
                   <div class="fa fa-play-circle" /> &nbsp;Preview
+                </button>
+
+                <button v-if="tabIndex==5" @click="saveAsDraft" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
+                  <div class="material-icons align-middle">system_update_alt</div> &nbsp; SAVE AS DRAFT
                 </button>
 
                 <button v-if="tabIndex==5" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
@@ -2041,29 +2045,48 @@ export default {
     //   })
   },
   methods: {
-    validateForm () {
+    saveAsDraft () {
+      var status = 'DRAFT'
       var getID = JSON.parse(localStorage.getItem('ID'))
       const data = new FormData()
 
       data.append('shData', JSON.stringify(this.model))
+      data.append('formStatus', status)
       this.$axios
         .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + getID.patientId, data)
         .then((response) => {
           return response.data
         })
-      // var tabA = this.validateTabA()
-      // var tabB = this.validateTabB()
-      // var tabC = this.validateTabC()
-      // var tabD = this.validateTabD()
-      // var tabE = this.validateTabE()
-      // var tabF = this.validateTabF()
 
-      // if (tabA && tabB && tabC && tabD && tabE && tabF) {
+      this.launchToast(' Saved As Draft Successfully!')
+      this.submitPath = true
+      this.$router.push({ path: 'shharp-list' })
+    },
+    validateForm () {
+      var status = 'COMPLETED'
+      var getID = JSON.parse(localStorage.getItem('ID'))
+      const data = new FormData()
 
-      //   this.launchToast()
-      //   this.submitPath = true
-      //   this.$router.push({ path: 'patient_consultation' })
-      // }
+      var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
+      var tabE = this.validateTabE()
+      var tabF = this.validateTabF()
+
+      if (tabA && tabB && tabC && tabD && tabE && tabF) {
+        data.append('shData', JSON.stringify(this.model))
+        data.append('formStatus', status)
+        this.$axios
+          .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + getID.patientId, data)
+          .then((response) => {
+            return response.data
+          })
+
+        this.launchToast('SHHARP Registry for ' + this.model.DM_NAME + ' Submitted Successfully!')
+        this.submitPath = true
+        this.$router.push({ path: 'shharp-list' })
+      }
     },
     validateTabA () {
       var errors = this.$refs.riskFactors.validate()
@@ -2199,9 +2222,9 @@ export default {
         return false
       }
     },
-    launchToast () {
+    launchToast (message) {
       this.showToast(
-        this.model.DM_NAME + ' Registration Successful !',
+        message,
         {
           icon: 'fa-check',
           position: 'top-center',
