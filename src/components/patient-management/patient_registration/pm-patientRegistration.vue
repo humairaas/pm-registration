@@ -1990,9 +1990,11 @@ export default {
               patientAllergy1: response.data.patientAllergy1,
               patientAllergy2: response.data.patientAllergy2,
               patientAllergy3: response.data.patientAllergy3,
+              patientVitalId: null,
+              patientShharpId: null,
             }
             localStorage.setItem('ID', JSON.stringify(ID))
-            this.$router.push({ path: 'patient_consultation' })
+            this.$router.push({ path: 'patient-consultation' })
           })
         this.launchToast('Registration Successful')
       }
@@ -2013,19 +2015,16 @@ export default {
         // }
         const data = new FormData()
         data.append('updateData', JSON.stringify(this.model))
-        console.log(this.model.ALLERGY)
         this.$axios
           .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&patientPassportId=' + getID.patientPassportId + '&allergy1=' + getID.patientAllergy1 + '&allergy2=' + getID.patientAllergy2 + '&allergy3=' + getID.patientAllergy3, data)
           .then((response) => {
-            var getID = JSON.parse(localStorage.getItem('ID'))
-
             getID.patientPassportId = response.data.patientPassportId
             getID.patientAllergy1 = response.data.patientAllergy1
             getID.patientAllergy2 = response.data.patientAllergy2
             getID.patientAllergy3 = response.data.patientAllergy3
             localStorage.setItem('ID', JSON.stringify(getID))
 
-            this.$router.push({ path: 'patient_consultation' })
+            this.$router.push({ path: 'patient-consultation' })
           })
         this.launchToast('Details Updated')
       }

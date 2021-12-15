@@ -480,10 +480,10 @@ export default new Router({
           import('../components/patient-management/patient_screening/patient_screening.vue'),
       },
       {
-        name: 'patient_consultation',
-        path: 'patient_consultation',
+        name: 'patient-consultation',
+        path: 'patient-consultation',
         component: () =>
-          import('../components/patient-management/patient_consultation/patient_consultation.vue'),
+          import('../components/patient-management/patient_consultation/pm-consultation.vue'),
       },
       {
         name: 'clinical-information',
@@ -492,16 +492,22 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-clinicalInformation.vue'),
       },
       {
-        name: 'clinical_history',
-        path: 'clinical_history',
+        name: 'clinical-history',
+        path: 'clinical-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/clinical_history.vue'),
+          import('../components/patient-management/patient_consultation/pm-clinicalHistory.vue'),
       },
       {
-        name: 'visit_history',
-        path: 'visit_history',
+        name: 'psychometric-test-history',
+        path: 'clinical-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/visit_history.vue'),
+          import('../components/patient-management/patient_consultation/pm-psychometricTestHistory.vue'),
+      },
+      {
+        name: 'patient-transaction-log',
+        path: 'patient-transaction-log',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-transactionLog.vue'),
       },
       {
         name: 'visit_note',
@@ -534,6 +540,12 @@ export default new Router({
         path: 'SHHARP-registry',
         component: () =>
           import('../components/SHHARP-management/sh-registry.vue'),
+      },
+      {
+        name: 'shharp-history',
+        path: 'SHHARP-history',
+        component: () =>
+          import('../components/SHHARP-management/sh-history.vue'),
       },
       {
         name: 'shharp-demographic',

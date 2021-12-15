@@ -19,54 +19,54 @@
             <div class="row mt-2">
               <div class="col-xl-9">
                 <div class="row mt-2">
-                  <div class="col-md-4"><b>MITS 2.0 Reference No</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">MT30399</div>
+                  <div class="col-sm-4"><b>MITS 2.0 Reference No</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">MT30399</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Hospital's MRN</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].hospital_mrn}}</div>
+                  <div class="col-sm-4"><b>Hospital's MRN</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Mentari's MRN</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].mentari_mrn}}</div>
+                  <div class="col-sm-4"><b>Mentari's MRN</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Gender</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].gender}}</div>
+                  <div class="col-sm-4"><b>Gender</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].gender}}</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Date of Birth</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-4"><b>Date of Birth</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Marital Status</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].marital}}</div>
+                  <div class="col-sm-4"><b>Marital Status</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].marital}}</div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4"><b>Nationality</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">Malaysian</div>
+                  <div class="col-sm-4"><b>Nationality</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">Malaysian</div>
                 </div>
 
                 <div class="row mb-3">
-                  <div class="col-md-4"><b>Contact No</b></div>
-                  <div class="col-md-auto"><b>:</b></div>
-                  <div class="col-md-5">{{pt_data[0].phone_no_1}}</div>
+                  <div class="col-sm-4"><b>Contact No</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm-5">{{pt_data[0].phone_no_1}}</div>
                 </div>
               </div>
-              <div class="col-xl-3">
+              <div class="col-xl-3 mb-3">
                 <b>Allergies :</b>
                 <i v-if="empty"> No allergies</i>
                 <div v-for="allergy in allergies" :key="allergy.allergy_desc">
@@ -80,6 +80,19 @@
         <!--Alert--->
         <div class="col-xl">
           <va-card :title="$t('Alert')">
+            <div class="float-right">
+              <router-link :to="{}">
+                <button type="button" class="btn sizebtn">
+                  <div class="fa fa-pencil-square-o"/>
+                </button>
+              </router-link>
+            </div>
+            <div class="row mt-2 mb-5">
+              Severe depression
+            </div>
+            <button type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+              Add Alert
+            </button>
           </va-card>
         </div>
       </div>
@@ -90,6 +103,16 @@
             <!--Visit History--->
             <div class="col-xl-12">
               <va-card :title="$t('Visit History')">
+                <va-data-table
+                  :fields="visitHistoryFields"
+                  :data="visitHistory"
+                  :per-page="5"
+                >
+                  <template slot="actions">
+                    <va-button flat small color="gray" icon="fa fa-eye" />
+                    <va-button flat small color="gray" icon="fa fa-pencil" />
+                  </template>
+                </va-data-table>
               </va-card>
             </div>
           </div>
@@ -98,6 +121,11 @@
           <div class="row mt-3">
             <div class="col-xl-12">
               <va-card :title="$t('Appointment')">
+                <div class="row mt-2 mb-2">
+                  <div class="col-sm-4"><b>Next Appointment</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].timestamp_create}}</div>
+                </div>
               </va-card>
             </div>
           </div>
@@ -106,6 +134,53 @@
           <div class="row mt-3">
             <div class="col-xl-12">
               <va-card :title="$t('Clinical Information')">
+                <div class="row mt-2">
+                  <div class="col-sm-4"><b>Date / Time</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].timestamp_create}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>Temperature</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].temperature}} &deg;C</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>Blood Pressure</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].blood_pressure}} mm/Hg</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>Pulse Rate</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].pulse_rate}} bpm</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>Weight</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].weight}} kg</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>Height</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].height}} cm</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4"><b>BMI</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].bmi}} kg/m&sup2;</div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-sm-4"><b>Waist Circumference</b></div>
+                  <div class="col-sm-auto"><b>:</b></div>
+                  <div class="col-sm">{{pt_data[0].waist_circumference}} cm</div>
+                </div>
               </va-card>
             </div>
           </div>
@@ -114,6 +189,16 @@
           <div class="row mt-3 mb-2">
             <div class="col-xl-12">
               <va-card :title="$t('Attachments')">
+                <va-data-table
+                  :fields="attachmentsFields"
+                  :data="attachments"
+                  :per-page="5"
+                >
+                  <template slot="actions">
+                    <va-button flat small color="gray" icon="fa fa-eye" />
+                    <va-button flat small color="gray" icon="fa fa-trash" />
+                  </template>
+                </va-data-table>
               </va-card>
             </div>
           </div>
@@ -125,14 +210,18 @@
             <va-tree-root>
               <!-- Clinical Information -->
               <va-tree-category label="Clinical Information" class="ga-one">
-                <va-tree-node class="ga-two">View History</va-tree-node>
+                <router-link :to="{ name: 'clinical-history'}">
+                  <va-tree-node class="ga-two">View History</va-tree-node>
+                </router-link>
                 <router-link :to="{ name: 'clinical-information'}">
                   <va-tree-node class="ga-two">Add New Reading</va-tree-node>
                 </router-link>
               </va-tree-category>
               <!-- Psychometric Test -->
               <va-tree-category label="Psychometric Test" class="ga-one">
-                <va-tree-node class="ga-two">View History</va-tree-node>
+                <router-link :to="{ name: 'psychometric-test-history'}">
+                  <va-tree-node class="ga-two">View History</va-tree-node>
+                </router-link>
                 <va-tree-category label="Take New Test" >
                   <va-tree-node class="ga-two">DASS</va-tree-node>
                   <va-tree-node class="ga-two">PHQ-9</va-tree-node>
@@ -216,7 +305,9 @@
               </va-tree-category>
               <!-- SHHARP -->
               <va-tree-category label="SHHARP" class="ga-one">
-                <va-tree-node class="ga-two">View History</va-tree-node>
+                <router-link :to="{ name: 'shharp-history'}">
+                  <va-tree-node class="ga-two">View History</va-tree-node>
+                </router-link>
                 <router-link :to="{ name: 'shharp-registry'}">
                   <va-tree-node class="ga-two">Add New Registry</va-tree-node>
                 </router-link>
@@ -226,7 +317,7 @@
         </div>
       </div>
       <div>
-        <router-link to="/patient-management/clinical_history">
+        <router-link to="/patient-management/patient-transaction-log">
           <button type="button" class="btn log-button">
             <b>View Transaction Log</b>
           </button>
@@ -236,6 +327,9 @@
   </div>
 </template>
 <script>
+import visitHistory from '../../../data/visitHistory.json'
+import attachments from '../../../data/attachments.json'
+
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg-core.css'
 import Vue from 'vue'
@@ -260,7 +354,80 @@ export default {
       allergies: [],
       age: '',
       empty: true,
+
+      visitHistory: visitHistory.slice(),
+      attachments: attachments.slice(),
     }
+  },
+  computed: {
+    visitHistoryFields () {
+      return [
+        {
+          name: 'no',
+          title: 'No',
+          width: '5%',
+        },
+        {
+          name: 'activity',
+          title: 'Clinical Activity',
+          width: '25%',
+        },
+        {
+          name: 'status',
+          title: 'Status',
+          width: '15%',
+        },
+        {
+          name: 'date',
+          title: 'Date',
+          width: '15%',
+        },
+        {
+          name: 'time',
+          title: 'Time',
+          width: '10%',
+        },
+        {
+          name: 'created_by',
+          title: 'Created By',
+          width: '15%',
+        },
+        {
+          name: '__slot:actions',
+          dataClass: 'text-right',
+          width: '15%',
+        },
+      ]
+    },
+    attachmentsFields () {
+      return [
+        {
+          name: 'no',
+          title: 'No',
+          width: '5%',
+        },
+        {
+          name: 'file',
+          title: 'File Name',
+          width: '30%',
+        },
+        {
+          name: 'date',
+          title: 'Date',
+          width: '20%',
+        },
+        {
+          name: 'time',
+          title: 'Time',
+          width: '20%',
+        },
+        {
+          name: '__slot:actions',
+          dataClass: 'text-right',
+          width: '15%',
+        },
+      ]
+    },
   },
   methods: {
   },
