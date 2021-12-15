@@ -5,21 +5,19 @@
       <div class="row">
         <div class="col-12">
 
-          <va-card>
-
-            <div class="text-center"><h4 class="mt-4 mb-5 text-dark">CLINICAL INFORMATION</h4></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment">
+          <va-card class="clinical-card">
+            <h4 class="mt-4 mb-5 text-dark">CLINICAL INFORMATION</h4>
+            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="vital">
             </vue-form-generator>
 
             <!-- Button footer-->
             <div class="mt-3">
               <div class="float-right">
-                <button @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
+                <button @click="validateVital" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-paper-plane" /> &nbsp; Save
                 </button>
               </div>
             </div>
-
           </va-card>
 
         </div>
@@ -32,10 +30,87 @@
 export default {
   data () {
     return {
+      submitPath: false,
+
       model: {
+        TEMPERATURE: '',
+        BLOOD_PRESSURE: '',
+        PULSE_RATE: '',
+        WEIGHT: '',
+        HEIGHT: '',
+        BMI: '',
+        WAIST: '',
       },
       schema: {
-
+        fields: [
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Temperature',
+            label: 'Temperature (in &degC unit)',
+            model: 'TEMPERATURE',
+            validator: 'number',
+            required: true,
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Blood Pressure',
+            label: 'Blood Pressure (in mm/Hg unit)',
+            model: 'BLOOD_PRESSURE',
+            validator: 'number',
+            required: true,
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Pulse Rate',
+            label: 'Pluse Rate (in bpm unit)',
+            model: 'PULSE_RATE',
+            validator: 'number',
+            required: true,
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Weight',
+            label: 'Weight (in kg unit)',
+            model: 'WEIGHT',
+            validator: 'number',
+            required: true,
+            onChanged: function (model) {
+              model.BMI = ((model.WEIGHT / model.HEIGHT / model.HEIGHT) * 10000).toFixed(2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Height',
+            label: 'Height (in cm unit)',
+            model: 'HEIGHT',
+            validator: 'number',
+            required: true,
+            onChanged: function (model) {
+              model.BMI = ((model.WEIGHT / model.HEIGHT / model.HEIGHT) * 10000).toFixed(2)
+            },
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            label: 'BMI (in kg/m&sup2 unit)',
+            model: 'BMI',
+            required: true,
+          },
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Enter Waist Circumference',
+            label: 'Waist Circumference (in cm unit)',
+            model: 'WAIST',
+            validator: 'number',
+            required: true,
+          },
+        ],
       },
       formOptions: {
         validateAfterLoad: false,
@@ -46,19 +121,29 @@ export default {
   mounted () {
   },
   methods: {
-    validateTabA () {
-      var errors = this.$refs.appointment.validate()
+    validateVital () {
+      var errors = this.$refs.vital.validate()
+
       if (errors) {
-        this.tabA = false
-        return true
-      } else {
-        this.tabA = true
-        return false
+        var getID = JSON.parse(localStorage.getItem('ID'))
+        this.submitPath = true
+
+        const data = new FormData()
+        data.append('vitalData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/addVital?patientId=' + getID.patientId, data)
+          .then((response) => {
+            getID.patientVitalId = response.data.patientVitalId
+            localStorage.setItem('ID', JSON.stringify(getID))
+
+            this.$router.push({ path: 'patient-consultation' })
+          })
+        this.launchToast('Vitals Added')
       }
     },
-    launchToast (message) {
+    launchToast (text) {
       this.showToast(
-        message,
+        text,
         {
           icon: 'fa-check',
           position: 'top-center',
@@ -100,4 +185,16 @@ ul.va-unordered > li::before,
   margin-top: 0.5rem;
   background-color: #2c82e000;
 }
+
+.clinical-card {
+  padding: 20px;
+  width: 60%;
+}
+
+@media screen and (max-width: 1000px) {
+  .clinical-card {
+    width: 100%;
+  }
+}
+
 </style>
