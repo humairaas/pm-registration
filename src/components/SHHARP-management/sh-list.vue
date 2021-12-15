@@ -134,7 +134,7 @@ export default {
         patientId: user.patient_id,
       }
       localStorage.setItem('ID', JSON.stringify(ID))
-      this.$router.push({ name: 'patient_consultation' })
+      this.$router.push({ name: 'patient-consultation' })
     },
     getTrendIcon (user) {
       if (user.trend === 'up') {
