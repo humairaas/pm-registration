@@ -147,7 +147,7 @@ export default {
       }
 
       return this.users.filter(item => {
-        return item.services === this.service &&
+        return item.services.startsWith(this.service) &&
                 item.branch.startsWith(this.branch) &&
                 (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
                 item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||

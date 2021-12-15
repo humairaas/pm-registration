@@ -148,7 +148,7 @@ export default {
         {
           name: 'time',
           title: this.$t('APPT. TIME'),
-          width: '10%',
+          width: '7%',
         },
         {
           name: 'doctor',
@@ -163,7 +163,7 @@ export default {
         {
           name: '__slot:actions',
           title: this.$t('ACTION'),
-          width: '12%',
+          width: '15%',
         },
       ]
     },
@@ -173,7 +173,7 @@ export default {
       }
 
       return this.users.filter(item => {
-        return item.services === this.service &&
+        return item.services.startsWith(this.service) &&
                     item.date.startsWith(this.formatDate) &&
                     (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
                     item.mrn.toLowerCase().startsWith(this.term.toLowerCase()) ||
