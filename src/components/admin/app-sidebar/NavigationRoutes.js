@@ -99,6 +99,10 @@ export const navigationRoutes = {
       displayName: 'Patient Registration',
     },
     {
+      name: 'patient-requestAppointmentList',
+      displayName: 'Request Appointment List',
+    },
+    {
       name: 'patient-appointmentList',
       displayName: 'Appointment List',
     },
