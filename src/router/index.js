@@ -495,19 +495,31 @@ export default new Router({
         name: 'clinical-history',
         path: 'clinical-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-clinicalHistory.vue'),
+          import('../components/patient-management/patient_consultation/pm-historyClinical.vue'),
+      },
+      {
+        name: 'appointment-history',
+        path: 'appointment-history',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-historyAppointment.vue'),
       },
       {
         name: 'psychometric-test-history',
-        path: 'clinical-history',
+        path: 'psychometric-test-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-psychometricTestHistory.vue'),
+          import('../components/patient-management/patient_consultation/pm-historyPsychometricTest.vue'),
       },
       {
         name: 'patient-transaction-log',
         path: 'patient-transaction-log',
         component: () =>
           import('../components/patient-management/patient_consultation/pm-transactionLog.vue'),
+      },
+      {
+        name: 'triage_form',
+        path: 'triage_form',
+        component: () =>
+          import('../components/patient-management/clinical_documentations/pm-triageForm.vue'),
       },
       {
         name: 'visit_note',

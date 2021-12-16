@@ -210,18 +210,12 @@
             <va-tree-root>
               <!-- Clinical Information -->
               <va-tree-category label="Clinical Information" class="ga-one">
-                <router-link :to="{ name: 'clinical-history'}">
-                  <va-tree-node class="ga-two">View History</va-tree-node>
-                </router-link>
-                <router-link :to="{ name: 'clinical-information'}">
-                  <va-tree-node class="ga-two">Add New Reading</va-tree-node>
-                </router-link>
+                <router-link :to="{ name: 'clinical-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
+                <router-link :to="{ name: 'clinical-information'}"><va-tree-node class="ga-two">Add New Reading</va-tree-node></router-link>
               </va-tree-category>
               <!-- Psychometric Test -->
               <va-tree-category label="Psychometric Test" class="ga-one">
-                <router-link :to="{ name: 'psychometric-test-history'}">
-                  <va-tree-node class="ga-two">View History</va-tree-node>
-                </router-link>
+                <router-link :to="{ name: 'psychometric-test-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
                 <va-tree-category label="Take New Test" >
                   <va-tree-node class="ga-two">DASS</va-tree-node>
                   <va-tree-node class="ga-two">PHQ-9</va-tree-node>
@@ -275,7 +269,7 @@
                     <va-tree-node class="ga-two">Job Cessation Report</va-tree-node>
                     <va-tree-node class="ga-two">Job Transition Report</va-tree-node>
                     <va-tree-node class="ga-two">L.A.S.E.R.Form (Motivation)</va-tree-node>
-                    <va-tree-node class="ga-two">Triage Form</va-tree-node>
+                    <router-link :to="{ name: 'triage_form'}"><va-tree-node class="ga-two">Triage Form</va-tree-node></router-link>
                   </va-tree-category>
                   <va-tree-category label="Checklist" >
                     <va-tree-node class="ga-two">Job Interest Checklist</va-tree-node>
@@ -297,7 +291,8 @@
               </va-tree-category>
               <!-- Appointment -->
               <va-tree-category label="Appointment" class="ga-one">
-                <va-tree-node class="ga-two">Navigation 1</va-tree-node>
+                <router-link :to="{ name: 'appointment-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
+                <router-link :to="{ name: 'patient-appointmentBooking'}"><va-tree-node class="ga-two">Book New Appointment</va-tree-node></router-link>
               </va-tree-category>
               <!-- Attachment -->
               <va-tree-category label="Attachment" class="ga-one">
@@ -305,12 +300,8 @@
               </va-tree-category>
               <!-- SHHARP -->
               <va-tree-category label="SHHARP" class="ga-one">
-                <router-link :to="{ name: 'shharp-history'}">
-                  <va-tree-node class="ga-two">View History</va-tree-node>
-                </router-link>
-                <router-link :to="{ name: 'shharp-registry'}">
-                  <va-tree-node class="ga-two">Add New Registry</va-tree-node>
-                </router-link>
+                <router-link :to="{ name: 'shharp-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
+                <router-link :to="{ name: 'shharp-registry'}"><va-tree-node class="ga-two">Add New Registry</va-tree-node></router-link>
               </va-tree-category>
             </va-tree-root>
           </va-card>
