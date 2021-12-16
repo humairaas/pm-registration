@@ -2,7 +2,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <router-link :to="{ name: 'patient-consultation'}">
+      <router-link :to="{ name: 'patient-profile'}">
         <h2 class="patient-name">{{pt_data[0].name}}</h2>
       </router-link>
 
@@ -104,25 +104,14 @@
           <div class="row mt-3">
             <!--Visit History--->
             <div class="col-xl-12">
-              <va-card :title="$t('Clinical Information')">
-                <div class="float-right">
-                  <router-link :to="{ name: 'clinical-information'}">
-                    <button type="button" class="btn sizebtn">
-                      <div class="fa fa-plus-circle"/>
-                    </button>
-                  </router-link>
-                </div>
+              <va-card :title="$t('Appointment Record History')">
                 <va-data-table
-                  :fields="clinicalInfoFields"
-                  :data="vitals"
+                  :fields="testFields"
+                  :data="tests"
                   :per-page="5"
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
-                  </template>
-                  <template slot="actions" slot-scope="props">
-                    <va-button flat small color="black" icon="fa fa-trash" @click="deleteRow(props.rowData.vital_id)" class="ma-0">
-                    </va-button>
                   </template>
                 </va-data-table>
               </va-card>
@@ -160,81 +149,35 @@ export default {
       age: '',
       empty: true,
 
-      vitals: [],
+      tests: [],
     }
   },
   computed: {
-    clinicalInfoFields () {
+    testFields () {
       return [
         {
           name: '__slot:no',
           title: this.$t('NO'),
-          width: '30px',
+          width: '5%',
           height: '45px',
           dataClass: 'text-center',
         },
         {
+          name: '',
+          title: 'Test Name',
+        },
+        {
           name: 'timestamp_create',
-          title: 'Date / Time',
-          width: '15%',
+          title: 'Date Taken',
         },
         {
-          name: 'temperature',
-          title: 'Temperature (&deg;C)',
-        },
-        {
-          name: 'blood_pressure',
-          title: 'Blood Pressure (mm/Hg)',
-        },
-        {
-          name: 'pulse_rate',
-          title: 'Pulse Rate (bpm)',
-        },
-        {
-          name: 'weight',
-          title: 'Weight (kg)',
-        },
-        {
-          name: 'height',
-          title: 'Height (cm)',
-        },
-        {
-          name: 'bmi',
-          title: 'BMI (kg/m&sup2;)',
-        },
-        {
-          name: 'waist_circumference',
-          title: 'Waist Circumference (cm)',
-        },
-        {
-          name: 'created_by',
-          title: 'Taken By',
-          width: '10%',
-        },
-        {
-          name: '__slot:actions',
-          dataClass: 'text-right',
-          width: '5%',
+          name: '',
+          title: 'Result',
         },
       ]
     },
   },
   methods: {
-    async deleteRow (vitalId) {
-      const data = new FormData()
-      data.append('vitalId', vitalId)
-      const url = 'http://127.0.0.1:8000/api/deleteVital'
-      await this.$axios.post(url, data)
-      this.refreshList()
-    },
-    refreshList () {
-      var getID = JSON.parse(localStorage.getItem('ID'))
-      this.$axios
-        .get('http://127.0.0.1:8000/api/getVital?patientId=' + getID.patientId)
-        .then((response) => {
-          this.vitals = (response.data.vitals).slice()
-        })
-    },
   },
   mounted () {
     var getID = JSON.parse(localStorage.getItem('ID'))
@@ -247,12 +190,6 @@ export default {
         if (this.allergies.length > 0) {
           this.empty = false
         }
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getVital?patientId=' + getID.patientId)
-      .then((response) => {
-        this.vitals = (response.data.vitals).slice()
       })
   },
 

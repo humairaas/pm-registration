@@ -486,34 +486,46 @@ export default new Router({
           import('../components/patient-management/patient_screening/patient_screening.vue'),
       },
       {
-        name: 'patient-consultation',
-        path: 'patient-consultation',
+        name: 'patient-profile',
+        path: 'patient-profile',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-consultation.vue'),
+          import('../components/patient-management/patient_consultation/pm-patientProfile.vue'),
       },
       {
         name: 'clinical-information',
         path: 'clinical-information',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-clinicalInformation.vue'),
+          import('../components/patient-management/patient_clinical_information/pm-addClinicalInformation.vue'),
       },
       {
         name: 'clinical-history',
         path: 'clinical-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-clinicalHistory.vue'),
+          import('../components/patient-management/patient_consultation/pm-historyClinical.vue'),
+      },
+      {
+        name: 'appointment-history',
+        path: 'appointment-history',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-historyAppointment.vue'),
       },
       {
         name: 'psychometric-test-history',
-        path: 'clinical-history',
+        path: 'psychometric-test-history',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-psychometricTestHistory.vue'),
+          import('../components/patient-management/patient_consultation/pm-historyPsychometricTest.vue'),
       },
       {
         name: 'patient-transaction-log',
         path: 'patient-transaction-log',
         component: () =>
           import('../components/patient-management/patient_consultation/pm-transactionLog.vue'),
+      },
+      {
+        name: 'triage_form',
+        path: 'triage_form',
+        component: () =>
+          import('../components/patient-management/clinical_documentations/pm-triageForm.vue'),
       },
       {
         name: 'visit_note',

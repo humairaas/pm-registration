@@ -2032,7 +2032,7 @@ export default {
               patientShharpId: null,
             }
             localStorage.setItem('ID', JSON.stringify(ID))
-            this.$router.push({ path: 'patient-consultation' })
+            this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Registration Successful')
       }
@@ -2062,7 +2062,7 @@ export default {
             getID.patientAllergy3 = response.data.patientAllergy3
             localStorage.setItem('ID', JSON.stringify(getID))
 
-            this.$router.push({ path: 'patient-consultation' })
+            this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Details Updated')
       }

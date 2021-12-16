@@ -212,7 +212,7 @@ export default {
         patientAllergy3: allergy.allergy3,
       }
       localStorage.setItem('ID', JSON.stringify(ID))
-      this.$router.push({ name: 'patient-consultation' })
+      this.$router.push({ path: 'patient-profile' })
     },
     search: debounce(function (term) {
       this.term = term
