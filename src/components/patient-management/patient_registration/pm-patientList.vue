@@ -205,7 +205,7 @@ export default {
         patientId: user.patient_id,
       }
       localStorage.setItem('ID', JSON.stringify(ID))
-      this.$router.push({ name: 'patient-consultation' })
+      this.$router.push({ name: 'patient-profile' })
     },
     search: debounce(function (term) {
       this.term = term

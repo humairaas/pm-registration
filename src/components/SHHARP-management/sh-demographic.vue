@@ -588,7 +588,7 @@ export default {
               shharpId: response.data.patientPassportId,
             }
             localStorage.setItem('ID', JSON.stringify(ID))
-            this.$router.push({ path: '/patient-management/patient-consultation' })
+            this.$router.push({ path: '/patient-management/patient-profile' })
           })
         this.launchToast('Registration Successful')
       }

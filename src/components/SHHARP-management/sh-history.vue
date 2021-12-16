@@ -2,7 +2,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <router-link :to="{ name: 'patient-consultation'}">
+      <router-link :to="{ name: 'patient-profile'}">
         <h2 class="patient-name">{{pt_data[0].name}}</h2>
       </router-link>
 

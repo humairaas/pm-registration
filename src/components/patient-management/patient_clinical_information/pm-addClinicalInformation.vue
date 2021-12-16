@@ -13,7 +13,7 @@
             <!-- Button footer-->
             <div class="mt-3">
               <div class="float-left">
-                <button @click="$router.push({ path: 'patient-consultation' })" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
+                <button @click="$router.push({ path: 'patient-profile' })" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-undo" /> &nbsp; Return
                 </button>
               </div>
@@ -144,7 +144,7 @@ export default {
             getID.patientVitalId = response.data.patientVitalId
             localStorage.setItem('ID', JSON.stringify(getID))
 
-            this.$router.push({ path: 'patient-consultation' })
+            this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Vitals Added')
       }
