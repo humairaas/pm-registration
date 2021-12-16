@@ -88,18 +88,7 @@ export default {
       radioCitizenship: [],
       selectNRICType: [],
       selectIssuingCountry: [],
-      selectEmpStatus: [
-        { id: 1, name: 'Disable permanently sick' },
-        { id: 2, name: 'Employee' },
-        { id: 3, name: 'Employer' },
-        { id: 4, name: 'Homemaker' },
-        { id: 5, name: 'Own account worker' },
-        { id: 6, name: 'Retired' },
-        { id: 7, name: 'Student' },
-        { id: 8, name: 'Unemployed' },
-        { id: 9, name: 'Unpaid family worker' },
-        { id: 10, name: 'Armed services' },
-      ],
+      selectEmpStatus: [],
       radioGender: [],
 
       // Socio Demographic Data
@@ -552,6 +541,7 @@ export default {
         this.radioGender = response.data.gender
         this.selectNRICType = response.data.NRICType
         this.selectIssuingCountry = response.data.issuingCountry
+        this.selectEmpStatus = response.data.employmentStatus
 
         const tempHousehold = []
         const n = response.data.householdIncome.length

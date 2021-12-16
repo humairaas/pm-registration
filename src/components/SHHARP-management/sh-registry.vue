@@ -380,6 +380,9 @@ export default {
 
       // The Self-harm Act and Suicidal Intent Data
       selectOccurance: [],
+      listMethod: [],
+      listIdea: [],
+      listIntent: [],
       selectOverdoseType: [],
 
       // Suicide Risk Data
@@ -451,7 +454,7 @@ export default {
         METHOD_OTHER_SPECIFY: '',
         IDEA: [],
         IDEA_SPECIFY: '',
-        INTENT: 2,
+        INTENT: 1,
         INTENT_YES: [],
         INTENT_OTHER_SPECIFY: '',
         INTENTS: [],
@@ -1087,16 +1090,9 @@ export default {
           {
             type: 'checklist',
             model: 'METHOD',
-            values: [
-              { value: 1, name: 'Overdose / Poisoning' },
-              { value: 2, name: 'Hanging / suffocation' },
-              { value: 3, name: 'Drowning' },
-              { value: 4, name: 'Firearms or explosives' },
-              { value: 5, name: 'Fire / flames' },
-              { value: 6, name: 'Cutting or Piercing' },
-              { value: 7, name: 'Jumping from height' },
-              { value: 99, name: 'Others, specify' },
-            ],
+            values: () => {
+              return this.listMethod
+            },
             listBox: true,
             required: true,
             validator: 'array',
@@ -1162,13 +1158,9 @@ export default {
           {
             type: 'checklist',
             model: 'IDEA',
-            values: [
-              { value: 1, name: 'Family, friend, peer group' },
-              { value: 2, name: 'Internet (website, social media platform, app, blog, forum, video/photosharing)' },
-              { value: 3, name: 'Printed media (newspaper, books, magazine, etc)' },
-              { value: 4, name: 'Broadcast media (television, radio)' },
-              { value: 99, name: 'Specify patient actual words' },
-            ],
+            values: () => {
+              return this.listIdea
+            },
             listBox: true,
             required: true,
             validator: 'array',
@@ -1196,9 +1188,9 @@ export default {
             label: 'Was there an intent?',
             model: 'INTENT',
             values: [
-              { value: 1, name: 'No' },
-              { value: 2, name: 'Yes' },
-              { value: 3, name: 'Undetermined' },
+              { value: 0, name: 'No' },
+              { value: 1, name: 'Yes' },
+              { value: 2, name: 'Undetermined' },
             ],
             required: true,
             validator: 'required',
@@ -1212,25 +1204,18 @@ export default {
             type: 'label',
             label: '<h6 class="mt-3 mb-4">Instruction: Please tick (/) in the box<br>If yes, mode of expression (can tick more than 1)</h6>',
             visible: function (model) {
-              return model && model.INTENT === 2
+              return model && model.INTENT === 1
             },
           },
           {
             type: 'checklist',
             model: 'INTENT_YES',
-            values: [
-              { value: 1, name: 'Verbal' },
-              { value: 2, name: 'Messaging' },
-              { value: 3, name: 'Rehearsing' },
-              { value: 4, name: 'Not expressed' },
-              { value: 5, name: 'Handwritten' },
-              { value: 6, name: 'Social Media' },
-              { value: 7, name: 'Efforts to learn more' },
-              { value: 99, name: 'Others, specify' },
-            ],
+            values: () => {
+              return this.listIntent
+            },
             listBox: true,
             visible: function (model) {
-              return model && model.INTENT === 2
+              return model && model.INTENT === 1
             },
             required: true,
             validator: 'array',
@@ -1242,7 +1227,7 @@ export default {
             model: 'INTENT_OTHER_SPECIFY',
             placeholder: 'Please specify',
             visible: function (model) {
-              if (model.INTENT === 2) {
+              if (model.INTENT === 1) {
                 return model && model.INTENT_YES.includes(99)
               }
             },
@@ -2014,7 +1999,10 @@ export default {
       .get('http://127.0.0.1:8000/api/getSHHARPData')
       .then((response) => {
         this.selectOccurance = response.data.occurance
+        this.listMethod = response.data.method
         this.selectOverdoseType = response.data.overdoseType
+        this.listIdea = response.data.idea
+        this.listIntent = response.data.intent
         this.selectReferral = response.data.referral
         this.selectArrivalMode = response.data.modeArrival
         this.selectPSYMX = response.data.psyMX
