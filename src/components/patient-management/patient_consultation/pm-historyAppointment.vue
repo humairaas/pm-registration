@@ -107,12 +107,19 @@
               <va-card :title="$t('Appointment Record History')">
                 <va-data-table
                   :fields="testFields"
-                  :data="tests"
+                  :data="appointment"
                   :per-page="5"
+                  :hoverable="true"
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
                   </template>
+
+                  <template slot="actions" slot-scope="props">
+                    <va-button flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
+                    </va-button>
+                  </template>
+
                 </va-data-table>
               </va-card>
             </div>
@@ -123,22 +130,8 @@
     </div>
   </div>
 </template>
+
 <script>
-import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg-core.css'
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-Vue.use(VueFormGenerator)
-// register globally
 export default {
   components: {
   },
@@ -148,8 +141,7 @@ export default {
       allergies: [],
       age: '',
       empty: true,
-
-      tests: [],
+      appointment: [],
     }
   },
   computed: {
@@ -159,30 +151,41 @@ export default {
           name: '__slot:no',
           title: this.$t('NO'),
           width: '5%',
-          height: '45px',
           dataClass: 'text-center',
         },
         {
-          name: '',
-          title: 'Test Name',
+          name: 'date',
+          title: 'DATE',
+          width: '30%',
         },
         {
-          name: 'timestamp_create',
-          title: 'Date Taken',
+          name: 'time',
+          title: 'TIME',
+          width: '30%',
         },
         {
-          name: '',
-          title: 'Result',
+          name: 'status',
+          title: 'STATUS',
+          width: '30%',
+        },
+        {
+          name: '__slot:actions',
+          title: 'ACTION',
+          width: '5%',
         },
       ]
     },
   },
   methods: {
+    edit (rowData) {
+      localStorage.setItem('ID', rowData.appointment_id)
+      this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'edit' } })
+    },
   },
   mounted () {
-    var getID = JSON.parse(localStorage.getItem('ID'))
+    var patientId = JSON.parse(localStorage.getItem('ID')).patientId
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
@@ -190,6 +193,12 @@ export default {
         if (this.allergies.length > 0) {
           this.empty = false
         }
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAppointmentHistory?patient_id=' + patientId)
+      .then((response) => {
+        this.appointment = response.data.data
       })
   },
 
