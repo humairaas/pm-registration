@@ -495,7 +495,7 @@ export default new Router({
         name: 'clinical-information',
         path: 'clinical-information',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-clinicalInformation.vue'),
+          import('../components/patient-management/patient_clinical_information/pm-addClinicalInformation.vue'),
       },
       {
         name: 'clinical-history',
