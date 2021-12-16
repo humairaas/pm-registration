@@ -120,8 +120,9 @@
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
                   </template>
-                  <template slot="actions">
-                    <va-button flat small color="black" icon="fa fa-trash" />
+                  <template slot="actions" slot-scope="props">
+                    <va-button flat small color="black" icon="fa fa-trash" @click="deleteRow(props.rowData.vital_id)" class="ma-0">
+                    </va-button>
                   </template>
                 </va-data-table>
               </va-card>
@@ -219,6 +220,21 @@ export default {
     },
   },
   methods: {
+    async deleteRow (vitalId) {
+      const data = new FormData()
+      data.append('vitalId', vitalId)
+      const url = 'http://127.0.0.1:8000/api/deleteVital'
+      await this.$axios.post(url, data)
+      this.refreshList()
+    },
+    refreshList () {
+      var getID = JSON.parse(localStorage.getItem('ID'))
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getVital?patientId=' + getID.patientId)
+        .then((response) => {
+          this.vitals = (response.data.vitals).slice()
+        })
+    },
   },
   mounted () {
     var getID = JSON.parse(localStorage.getItem('ID'))

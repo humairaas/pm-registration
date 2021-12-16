@@ -462,6 +462,12 @@ export default new Router({
           import('../components/patient-management/patient_registration/pm-patientRegistration.vue'),
       },
       {
+        name: 'patient-requestAppointmentList',
+        path: 'patient-request-appointment-list',
+        component: () =>
+          import('../components/patient-management/patient_appointment/pm-requestAppointmentList.vue'),
+      },
+      {
         name: 'patient-appointmentList',
         path: 'patient-appointment-list',
         component: () =>
