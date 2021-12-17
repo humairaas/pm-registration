@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-      <div class="flex xs12 md6 offset--md6">
+      <div class="flex xs12 md6">
         <va-input
           :value="term"
           :placeholder="$t('Search By Name/NRIC/Passport/MRN')"
@@ -21,7 +21,24 @@
           <va-icon name="fa fa-search" slot="prepend" />
         </va-input>
       </div>
+      <div class="flex xs12 md3">
+        <va-date-picker
+          v-model="startDate"
+          mode="single"
+          placeholder="Filter By Self-Harm Start Date"
+          label="Start Date"
+        />
+      </div>
+      <div class="flex xs12 md3">
+        <va-date-picker
+          v-model="endDate"
+          mode="single"
+          placeholder="Filter By Self-Harm End Date"
+          label="End Date"
+        />
+      </div>
     </div>
+    <h5>{{startDate}}</h5>
 
     <va-data-table
       :fields="fields"
@@ -70,6 +87,8 @@ export default {
       perPage: '5',
       perPageOptions: ['5', '10', '50', '100'],
       users: [],
+      startDate: '',
+      endDate: '',
     }
   },
   mounted () {
@@ -92,12 +111,12 @@ export default {
         {
           name: 'name',
           title: this.$t('NAME'),
-          width: '40%',
+          width: '25%',
         },
         {
           name: '__slot:age',
           title: this.$t('AGE'),
-          width: '15%',
+          width: '5%',
         },
         {
           name: 'nricPassport',
@@ -105,20 +124,31 @@ export default {
           width: '20%',
         },
         {
+          name: 'mentari',
+          title: this.$t('MENTARI'),
+          width: '20%',
+        },
+        {
           name: '__slot:date',
           title: this.$t('LAST SEEN'),
-          width: '20%',
+          width: '13%',
+        },
+        {
+          name: 'status',
+          title: this.$t('SHHARP FORM STATUS'),
+          width: '12%',
         },
       ]
     },
     filteredData () {
-      if (!this.term || this.term.length < 1) {
+      if ((!this.term || this.term.length < 1) && this.startDate === '' && this.endDate === '') {
         return this.users
       }
 
       return this.users.filter(item => {
-        return item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
-                item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase())
+        return (item.name.toLowerCase().startsWith(this.term.toLowerCase()) ||
+                item.nricPassport.toLowerCase().startsWith(this.term.toLowerCase())) &&
+                (item.selfHarmDate >= this.startDate && item.selfHarmDate <= this.endDate)
       })
     },
   },
@@ -135,28 +165,6 @@ export default {
       }
       localStorage.setItem('ID', JSON.stringify(ID))
       this.$router.push({ name: 'patient-profile' })
-    },
-    getTrendIcon (user) {
-      if (user.trend === 'up') {
-        return 'fa fa-caret-up'
-      }
-
-      if (user.trend === 'down') {
-        return 'fa fa-caret-down'
-      }
-
-      return 'fa fa-minus'
-    },
-    getTrendColor (user) {
-      if (user.trend === 'up') {
-        return 'primary'
-      }
-
-      if (user.trend === 'down') {
-        return 'danger'
-      }
-
-      return 'grey'
     },
     search: debounce(function (term) {
       this.term = term
