@@ -122,11 +122,11 @@
                   </template>
 
                   <template slot="date" slot-scope="props">
-                    {{ getDate(props.rowData.timestamp_create) }}
+                    {{ getDate(props.rowData.dateTime) }}
                   </template>
 
                   <template slot="time" slot-scope="props">
-                    {{ getTime(props.rowData.timestamp_create) }}
+                    {{ getTime(props.rowData.dateTime) }}
                   </template>
 
                   <template slot="actions">
@@ -145,21 +145,6 @@
 </template>
 
 <script>
-import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg-core.css'
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-Vue.use(VueFormGenerator)
-// register globally
 export default {
   components: {
   },
@@ -188,33 +173,34 @@ export default {
         },
         {
           name: '__slot:date',
-          title: 'Date',
-          width: '5%',
+          title: 'DATE',
+          width: '15%',
         },
         {
           name: '__slot:time',
-          title: 'Time',
+          title: 'TIME',
+          width: '15%',
+        },
+        {
+          name: 'status',
+          title: 'STATUS',
           width: '10%',
         },
         {
-          name: 'shharp_form_status',
-          title: 'Status',
+          name: 'hospital',
+          title: 'HOSPITAL',
           width: '20%',
         },
         {
-          name: 'sd_hospital_name',
-          title: 'Hospital',
-          width: '25%',
-        },
-        {
-          name: 'sd_psychiatrist_name',
-          title: 'Taken By',
-          width: '20%',
+          name: 'psychiatrist',
+          title: 'CREATED BY',
+          width: '15%',
         },
         {
           name: '__slot:actions',
-          dataClass: 'text-right',
-          width: '10%',
+          title: 'ACTION',
+          width: '15%',
+          dataClass: 'text-center',
         },
       ]
     },
@@ -226,9 +212,10 @@ export default {
       return newDate
     },
     getTime (datetime) {
+      // return datetime.substring(11, 19)
       const d = new Date(datetime)
-      const newTime = d.toLocaleTimeString('en-MY')
-      return newTime
+      const newDate = d.toLocaleTimeString('en-MY')
+      return newDate
     },
   },
   mounted () {
@@ -246,9 +233,9 @@ export default {
       })
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getSHHARPRecords?patientId=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getSHHARPHistory?patientId=' + getID.patientId)
       .then((response) => {
-        this.shharpRecords = (response.data.shharpRecords).slice()
+        this.shharpRecords = response.data.data
       })
   },
 

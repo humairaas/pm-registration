@@ -115,6 +115,10 @@
                     {{ row.rowIndex + 1 }}
                   </template>
 
+                  <template slot="date" slot-scope="props">
+                    {{ getDate(props.rowData.date) }}
+                  </template>
+
                   <template slot="actions" slot-scope="props">
                     <va-button flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
                     </va-button>
@@ -155,7 +159,7 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: 'date',
+          name: '__slot:date',
           title: 'DATE',
           width: '30%',
         },
