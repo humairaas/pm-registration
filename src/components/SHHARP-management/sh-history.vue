@@ -11,7 +11,7 @@
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link :to="{ name: 'patient-registration', query: { st: 'edit'}}">
+              <router-link :to="{ name: 'shharp-demographic', query: { st: 'edit'}}">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
@@ -130,8 +130,10 @@
                   </template>
 
                   <template slot="actions">
-                    <va-button flat small color="black" icon="fa fa-eye" />
-                    <va-button flat small color="black" icon="fa fa-trash" />
+                    <va-button flat small icon="fa fa-eye" @click="view(props.rowData.patient_id)" style="color: #51ad5e;">
+                    </va-button>
+                    <va-button flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.patient_id)">
+                    </va-button>
                   </template>
                 </va-data-table>
               </va-card>
@@ -194,13 +196,12 @@ export default {
         {
           name: 'psychiatrist',
           title: 'CREATED BY',
-          width: '15%',
+          width: '18%',
         },
         {
           name: '__slot:actions',
           title: 'ACTION',
-          width: '15%',
-          dataClass: 'text-center',
+          width: '12%',
         },
       ]
     },
@@ -216,6 +217,20 @@ export default {
       const d = new Date(datetime)
       const newDate = d.toLocaleTimeString('en-MY')
       return newDate
+    },
+    view (patientId) {
+      var ID = {
+        patientId: patientId,
+      }
+      localStorage.setItem('ID', JSON.stringify(ID))
+      this.$router.push({ path: 'shharp-registry', query: { st: 'view' } })
+    },
+    editDraft (patientId) {
+      var ID = {
+        patientId: patientId,
+      }
+      localStorage.setItem('ID', JSON.stringify(ID))
+      this.$router.push({ path: 'shharp-registry', query: { st: 'edit' } })
     },
   },
   mounted () {
