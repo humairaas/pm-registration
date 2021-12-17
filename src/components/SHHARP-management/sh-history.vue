@@ -47,7 +47,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Date of Birth</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-5">{{birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
@@ -120,6 +120,15 @@
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
                   </template>
+
+                  <template slot="date" slot-scope="props">
+                    {{ getDate(props.rowData.timestamp_create) }}
+                  </template>
+
+                  <template slot="time" slot-scope="props">
+                    {{ getTime(props.rowData.timestamp_create) }}
+                  </template>
+
                   <template slot="actions">
                     <va-button flat small color="black" icon="fa fa-eye" />
                     <va-button flat small color="black" icon="fa fa-trash" />
@@ -158,7 +167,10 @@ export default {
     return {
       pt_data: [],
       allergies: [],
+      birthdate: '',
       age: '',
+      date: '',
+      time: '',
       empty: true,
 
       shharpRecords: [],
@@ -175,27 +187,27 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: '',
+          name: '__slot:date',
           title: 'Date',
-          width: '10%',
+          width: '5%',
         },
         {
-          name: '',
+          name: '__slot:time',
           title: 'Time',
           width: '10%',
         },
         {
-          name: '',
+          name: 'shharp_form_status',
           title: 'Status',
           width: '20%',
         },
         {
-          name: '',
+          name: 'sd_hospital_name',
           title: 'Hospital',
           width: '25%',
         },
         {
-          name: '',
+          name: 'sd_psychiatrist_name',
           title: 'Taken By',
           width: '20%',
         },
@@ -208,6 +220,16 @@ export default {
     },
   },
   methods: {
+    getDate (datetime) {
+      const d = new Date(datetime)
+      const newDate = d.toLocaleDateString('en-MY')
+      return newDate
+    },
+    getTime (datetime) {
+      const d = new Date(datetime)
+      const newTime = d.toLocaleTimeString('en-MY')
+      return newTime
+    },
   },
   mounted () {
     var getID = JSON.parse(localStorage.getItem('ID'))
@@ -215,6 +237,7 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
@@ -222,11 +245,11 @@ export default {
         }
       })
 
-    // this.$axios
-    //   .get('http://127.0.0.1:8000/api/getSHHARPRecords?patientId=' + getID.patientId)
-    //   .then((response) => {
-    //     this.shharpRecord = (response.data.shharpRecord).slice()
-    //   })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getSHHARPRecords?patientId=' + getID.patientId)
+      .then((response) => {
+        this.shharpRecords = (response.data.shharpRecords).slice()
+      })
   },
 
 }

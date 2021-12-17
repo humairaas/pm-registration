@@ -47,7 +47,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Date of Birth</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-5">{{birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
@@ -120,6 +120,15 @@
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
                   </template>
+
+                  <template slot="date" slot-scope="props">
+                    {{ getDate(props.rowData.timestamp_create) }}
+                  </template>
+
+                  <template slot="time" slot-scope="props">
+                    {{ getTime(props.rowData.timestamp_create) }}
+                  </template>
+
                   <template slot="actions" slot-scope="props">
                     <va-button flat small color="black" icon="fa fa-trash" @click="deleteRow(props.rowData.vital_id)" class="ma-0">
                     </va-button>
@@ -157,6 +166,7 @@ export default {
     return {
       pt_data: [],
       allergies: [],
+      birthdate: '',
       age: '',
       empty: true,
 
@@ -174,9 +184,14 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: 'timestamp_create',
-          title: 'Date / Time',
-          width: '15%',
+          name: '__slot:date',
+          title: 'Date',
+          width: '5%',
+        },
+        {
+          name: '__slot:time',
+          title: 'Time',
+          width: '10%',
         },
         {
           name: 'temperature',
@@ -220,6 +235,16 @@ export default {
     },
   },
   methods: {
+    getDate (datetime) {
+      const d = new Date(datetime)
+      const newDate = d.toLocaleDateString('en-MY')
+      return newDate
+    },
+    getTime (datetime) {
+      const d = new Date(datetime)
+      const newTime = d.toLocaleTimeString('en-MY')
+      return newTime
+    },
     async deleteRow (vitalId) {
       const data = new FormData()
       data.append('vitalId', vitalId)
@@ -242,6 +267,7 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
