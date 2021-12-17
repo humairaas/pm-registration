@@ -6,6 +6,17 @@
         <div class="col-12">
 
           <!-- Notification Alert -->
+          <div class="mb-3" v-if="patientExist==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Patient with the specified NRIC/PASSPORT already registered in MITS2.</span>
+              <button type="button" class="btn close-button" @click="patientExist = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
           <div class="mb-3" v-if="tabA==true">
             <va-notification color="danger">
               <va-badge color="danger">
@@ -57,25 +68,25 @@
 
               <!-- 1st tab: Demographic-->
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
-                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic" @model-updated="onModelUpdated">
+                <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic">
                 </vue-form-generator>
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
               <tab-content icon="fa fa-vcard" title="2. Socio Demographic">
-                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="socioDemographic" @model-updated="onModelUpdated" >
+                <vue-form-generator :model="model" :schema="tabBSchema" :options="formOptions" ref="socioDemographic">
                 </vue-form-generator>
               </tab-content>
 
               <!-- 3rd tab: Next of Kin-->
               <tab-content icon="fa fa-group" title="3. Next of Kin">
-                <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="nextOfKin" @model-updated="onModelUpdated" >
+                <vue-form-generator :model="model" :schema="tabCSchema" :options="formOptions" ref="nextOfKin">
                 </vue-form-generator>
               </tab-content>
 
               <!-- 4th tab: Allergy-->
               <tab-content icon="fa fa-info" title="4. Allergy">
-                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy" @model-updated="onModelUpdated">
+                <vue-form-generator :model="model" :schema="tabDSchema" :options="formOptions" ref="allergy">
                 </vue-form-generator>
               </tab-content>
 
@@ -178,6 +189,7 @@ export default {
   },
   data () {
     return {
+      patientExist: false,
       id: '',
       tabA: false,
       tabB: false,
@@ -226,6 +238,8 @@ export default {
 
       // Form Model
       model: {
+
+        PATIENT_EXIST_ID: '',
         // Demographic
         SALUTATION: '',
         DM_NAME: '',
@@ -1962,19 +1976,43 @@ export default {
     }
   },
   methods: {
-    validateForm () {
+    async validatePatient () {
+      var nricPassport = ''
+      this.model.PATIENT_EXIST_ID = ''
+      if (this.model.NRIC_NO !== '') {
+        nricPassport = this.model.NRIC_NO.replace(/-/g, '')
+      } else {
+        nricPassport = this.model.PASSPORT_NO
+      }
+
+      const url = 'http://127.0.0.1:8000/api/verifyPatient?id=' + nricPassport
+      const response = await this.$axios.get(url)
+      if (response.data.data !== '') {
+        this.model.PATIENT_EXIST_ID = JSON.stringify(response.data.data[0].value)
+      }
+
+      if (this.model.PATIENT_EXIST_ID === '') {
+        this.patientExist = false
+        return true
+      } else {
+        this.patientExist = true
+        return false
+      }
+    },
+    async validateForm () {
       var tabA = this.validateTabA()
       var tabB = this.validateTabB()
       var tabC = this.validateTabC()
       var tabD = this.validateTabD()
+      var patientVerified = await this.validatePatient()
 
-      if (tabA && tabB && tabC && tabD) {
+      if (tabA && tabB && tabC && tabD && patientVerified) {
         this.submitPath = true
 
-        // if(this.model.DM_STATE == null){
-        //   this.model.DM_CITY = ''
-        //   this.model.DM_POSTCODE = ''
-        // }
+        if (this.model.DM_STATE == null) {
+          this.model.DM_CITY = ''
+          this.model.DM_POSTCODE = ''
+        }
         const data = new FormData()
         data.append('ptData', JSON.stringify(this.model))
         this.$axios
