@@ -47,7 +47,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Date of Birth</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-5">{{birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
@@ -146,6 +146,7 @@ export default {
     return {
       pt_data: [],
       allergies: [],
+      birthdate: '',
       age: '',
       empty: true,
 
@@ -185,6 +186,7 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {

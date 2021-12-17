@@ -45,7 +45,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Date of Birth</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-5">{{birthdate}} ({{age}} years old)</div>
                 </div>
 
                 <div class="row">
@@ -124,7 +124,7 @@
                 <div class="row mt-2 mb-2">
                   <div class="col-sm-4"><b>Next Appointment</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].timestamp_create}}</div>
+                  <div class="col-sm">{{appointmentDate}}</div>
                 </div>
               </va-card>
             </div>
@@ -137,7 +137,7 @@
                 <div class="row mt-2">
                   <div class="col-sm-4"><b>Date / Time</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].timestamp_create}}</div>
+                  <div class="col-sm">{{clinicalDate}}</div>
                 </div>
 
                 <div class="row">
@@ -343,7 +343,11 @@ export default {
     return {
       pt_data: [],
       allergies: [],
+      birthdate: '',
       age: '',
+
+      appointmentDate: '',
+      clinicalDate: '',
       empty: true,
 
       visitHistory: visitHistory.slice(),
@@ -421,6 +425,16 @@ export default {
     },
   },
   methods: {
+    getDate (datetime) {
+      const d = new Date(datetime)
+      const newDate = d.toLocaleDateString('en-MY')
+      return newDate
+    },
+    getDateTime (datetime) {
+      const d = new Date(datetime)
+      const newDateTime = d.toLocaleString('en-MY')
+      return newDateTime
+    },
   },
   mounted () {
     var getID = JSON.parse(localStorage.getItem('ID'))
@@ -428,11 +442,14 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
       .then((response) => {
         this.pt_data = response.data.data
+        this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
           this.empty = false
         }
+        this.appointmentDate = this.getDateTime(response.data.data[0].timestamp_create)
+        this.clinicalDate = this.getDateTime(response.data.data[0].timestamp_create)
       })
   },
 }

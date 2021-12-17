@@ -213,7 +213,7 @@
                 </button>
 
                 <button v-if="tabIndex==5" @click="saveAsDraft" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
-                  <div class="material-icons align-middle">system_update_alt</div> &nbsp; SAVE AS DRAFT
+                  <div class="material-icons align-middle">system_update_alt</div> &nbsp; Save as Draft
                 </button>
 
                 <button v-if="tabIndex==5" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
