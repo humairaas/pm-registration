@@ -184,15 +184,8 @@ export default {
   },
   methods: {
     async showPatientProfile (user) {
-      const url = 'http://127.0.0.1:8000/api/getPatientAllergy?id=' + user.patient_id
-      const response = await this.$axios.get(url)
-      var allergy = response.data
-
       var ID = {
         patientId: user.patient_id,
-        patientAllergy1: allergy.allergy1,
-        patientAllergy2: allergy.allergy2,
-        patientAllergy3: allergy.allergy3,
       }
       localStorage.setItem('ID', JSON.stringify(ID))
       this.$router.push({ path: 'patient-profile' })
