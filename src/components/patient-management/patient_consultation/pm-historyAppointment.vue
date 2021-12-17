@@ -188,7 +188,7 @@ export default {
       return newDate
     },
     edit (rowData) {
-      localStorage.setItem('ID', rowData.appointment_id)
+      localStorage.setItem('appointmentId', rowData.appointment_id)
       this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'edit' } })
     },
   },
