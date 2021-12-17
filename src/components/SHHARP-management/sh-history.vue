@@ -11,7 +11,7 @@
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link :to="{ name: 'patient-registration', query: { st: 'edit'}}">
+              <router-link :to="{ name: 'shharp-demographic', query: { st: 'edit'}}">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
@@ -125,16 +125,18 @@
                   </template>
 
                   <template slot="date" slot-scope="props">
-                    {{ getDate(props.rowData.timestamp_create) }}
+                    {{ getDate(props.rowData.dateTime) }}
                   </template>
 
                   <template slot="time" slot-scope="props">
-                    {{ getTime(props.rowData.timestamp_create) }}
+                    {{ getTime(props.rowData.dateTime) }}
                   </template>
 
                   <template slot="actions">
-                    <va-button flat small color="black" icon="fa fa-eye" />
-                    <va-button flat small color="black" icon="fa fa-trash" />
+                    <va-button flat small icon="fa fa-eye" @click="view(props.rowData.patient_id)" style="color: #51ad5e;">
+                    </va-button>
+                    <va-button flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.patient_id)">
+                    </va-button>
                   </template>
                 </va-data-table>
               </va-card>
@@ -148,21 +150,6 @@
 </template>
 
 <script>
-import VueFormGenerator from 'vue-form-generator'
-import 'vue-form-generator/dist/vfg-core.css'
-import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-// Import Bootstrap an BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Make BootstrapVue available throughout your project
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-Vue.use(VueFormGenerator)
-// register globally
 export default {
   components: {
   },
@@ -192,33 +179,33 @@ export default {
         },
         {
           name: '__slot:date',
-          title: 'Date',
-          width: '5%',
+          title: 'DATE',
+          width: '15%',
         },
         {
           name: '__slot:time',
-          title: 'Time',
+          title: 'TIME',
+          width: '15%',
+        },
+        {
+          name: 'status',
+          title: 'STATUS',
           width: '10%',
         },
         {
-          name: 'shharp_form_status',
-          title: 'Status',
+          name: 'hospital',
+          title: 'HOSPITAL',
           width: '20%',
         },
         {
-          name: 'sd_hospital_name',
-          title: 'Hospital',
-          width: '25%',
-        },
-        {
-          name: 'sd_psychiatrist_name',
-          title: 'Taken By',
-          width: '20%',
+          name: 'psychiatrist',
+          title: 'CREATED BY',
+          width: '18%',
         },
         {
           name: '__slot:actions',
-          dataClass: 'text-right',
-          width: '10%',
+          title: 'ACTION',
+          width: '12%',
         },
       ]
     },
@@ -230,9 +217,24 @@ export default {
       return newDate
     },
     getTime (datetime) {
+      // return datetime.substring(11, 19)
       const d = new Date(datetime)
-      const newTime = d.toLocaleTimeString('en-MY')
-      return newTime
+      const newDate = d.toLocaleTimeString('en-MY')
+      return newDate
+    },
+    view (patientId) {
+      var ID = {
+        patientId: patientId,
+      }
+      localStorage.setItem('ID', JSON.stringify(ID))
+      this.$router.push({ path: 'shharp-registry', query: { st: 'view' } })
+    },
+    editDraft (patientId) {
+      var ID = {
+        patientId: patientId,
+      }
+      localStorage.setItem('ID', JSON.stringify(ID))
+      this.$router.push({ path: 'shharp-registry', query: { st: 'edit' } })
     },
     async showSHHARPform (shharpRecords) {
       var SH_ID = {
@@ -257,9 +259,9 @@ export default {
       })
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getSHHARPRecords?patientId=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getSHHARPHistory?patientId=' + getID.patientId)
       .then((response) => {
-        this.shharpRecords = (response.data.shharpRecords).slice()
+        this.shharpRecords = response.data.data
       })
   },
 
