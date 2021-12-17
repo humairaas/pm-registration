@@ -116,6 +116,9 @@
                   :fields="shharpFields"
                   :data="shharpRecords"
                   :per-page="5"
+                  @row-clicked="showSHHARPform"
+                  :hoverable="true"
+                  clickable
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
@@ -172,6 +175,7 @@ export default {
       date: '',
       time: '',
       empty: true,
+      shharpId: [],
 
       shharpRecords: [],
     }
@@ -229,6 +233,13 @@ export default {
       const d = new Date(datetime)
       const newTime = d.toLocaleTimeString('en-MY')
       return newTime
+    },
+    async showSHHARPform (shharpRecords) {
+      var SH_ID = {
+        shharpId: shharpRecords.shharp_id,
+      }
+      localStorage.setItem('SH_ID', JSON.stringify(SH_ID))
+      this.$router.push({ name: 'shharp-registry', query: { st: 'edit' } })
     },
   },
   mounted () {

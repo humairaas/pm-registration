@@ -21,7 +21,7 @@
                 <div class="row mt-2">
                   <div class="col-sm-4"><b>MITS 2.0 Reference No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">MT30399</div>
+                  <div class="col-sm-5">{{pt_data[0].mits_mrn}}</div>
                 </div>
 
                 <div class="row">
