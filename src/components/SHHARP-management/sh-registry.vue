@@ -2031,6 +2031,35 @@ export default {
     //   .then((response) => {
     //     this.selectPSYMX = response.data.data
     //   })
+
+    // if (this.$route.query.st === 'edit') {
+    //   var getID = JSON.parse(localStorage.getItem('ID'))
+
+    //   this.$axios
+    //     .get('http://127.0.0.1:8000/api/getSHHARPFormData?shharpId=' + 49)
+    //     .then((response) => {
+    //       // 1. Risk Factors
+    //       this.model.Q1 = response.data.data[0].q1
+    //       this.model.Q1_SPECIFY = response.data.data[0].q1Specify
+    //       this.model.Q2 = response.data.data[0].Q1
+    //       this.model.Q3 = response.data.data[0].Q1
+    //       this.model.Q3_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q4 = response.data.data[0].Q1
+    //       this.model.Q4_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q5 = response.data.data[0].Q1
+    //       this.model.Q6 = response.data.data[0].Q1
+    //       this.model.Q6_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q7 = response.data.data[0].Q1
+    //       this.model.Q7_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q8 = response.data.data[0].Q1
+    //       this.model.Q8_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q9 = response.data.data[0].Q1
+    //       this.model.Q10 = response.data.data[0].Q1
+    //       this.model.Q10_SPECIFY = response.data.data[0].Q1
+    //       this.model.Q11 = response.data.data[0].Q1
+    //       this.model.Q12 = response.data.data[0].Q1
+    //     })
+    // }
   },
   methods: {
     saveAsDraft () {

@@ -203,6 +203,9 @@ export default {
       update: false,
 
       patient_data: '',
+      patientAllergy1: null,
+      patientAllergy2: null,
+      patientAllergy3: null,
 
       // Demographic  Data
       selectSalutation: [],
@@ -606,6 +609,9 @@ export default {
             styleClasses: 'col-md-4',
             values: () => {
               return this.selectReferralType
+            },
+            onChanged: function (model) {
+              model.SPECIFY_REFERRAL = ''
             },
           },
           {
@@ -1898,8 +1904,8 @@ export default {
           this.model.HOSPITAL_MRN = response.data.data[0].hospital_mrn
           this.model.MENTARI_MRN = response.data.data[0].mentari_mrn
           this.model.SERVICE_TYPE = { value: response.data.data[0].service_fk, name: response.data.data[0].service }
-          // this.model.REFERRAL_TYPE = response.data.referral_type[0]
-          // this.model.SPECIFY_REFERRAL = response.data.data[0].citizenship_fk,
+          this.model.REFERRAL_TYPE = { value: response.data.data[0].referral_fk, name: response.data.data[0].referral }
+          this.model.SPECIFY_REFERRAL = response.data.data[0].referral_desc
           // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
           this.model.DM_ADDRESS_LINE_1 = response.data.data[0].address1
           this.model.DM_ADDRESS_LINE_2 = response.data.data[0].address2
@@ -1962,12 +1968,15 @@ export default {
           var allergyType = response.data.allergy
           for (var i = 0; i < allergyType.length; i++) {
             if (allergyType[i].allergy_type_fk === 1) {
+              this.patientAllergy1 = allergyType[i].patient_allergy_id
               this.model.ALLERGY.splice(0, 1, 1)
               this.model.DRUG_ALL_SPECIFY = allergyType[i].allergy_desc
             } else if (allergyType[i].allergy_type_fk === 2) {
+              this.patientAllergy2 = allergyType[i].patient_allergy_id
               this.model.ALLERGY.splice(1, 1, 1)
               this.model.SUPP_ALL_SPECIFY = allergyType[i].allergy_desc
             } else if (allergyType[i].allergy_type_fk === 3) {
+              this.patientAllergy3 = allergyType[i].patient_allergy_id
               this.model.ALLERGY.splice(2, 1, 1)
               this.model.OTHERS_SPECIFY = allergyType[i].allergy_desc
             }
@@ -2020,16 +2029,6 @@ export default {
           .then((response) => {
             var ID = {
               patientId: response.data.patientId,
-              patientPassportId: response.data.patientPassportId,
-              patientServicesId: response.data.patientServicesId,
-              patientAddressId: response.data.patientAddressId,
-              patientRelationshipId: response.data.patientRelationshipId,
-              patientBranch: response.data.patientBranch,
-              patientAllergy1: response.data.patientAllergy1,
-              patientAllergy2: response.data.patientAllergy2,
-              patientAllergy3: response.data.patientAllergy3,
-              patientVitalId: null,
-              patientShharpId: null,
             }
             localStorage.setItem('ID', JSON.stringify(ID))
             this.$router.push({ path: 'patient-profile' })
@@ -2054,14 +2053,8 @@ export default {
         const data = new FormData()
         data.append('updateData', JSON.stringify(this.model))
         this.$axios
-          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&patientPassportId=' + getID.patientPassportId + '&allergy1=' + getID.patientAllergy1 + '&allergy2=' + getID.patientAllergy2 + '&allergy3=' + getID.patientAllergy3, data)
+          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&allergy1=' + this.patientAllergy1 + '&allergy2=' + this.patientAllergy2 + '&allergy3=' + this.patientAllergy3, data)
           .then((response) => {
-            getID.patientPassportId = response.data.patientPassportId
-            getID.patientAllergy1 = response.data.patientAllergy1
-            getID.patientAllergy2 = response.data.patientAllergy2
-            getID.patientAllergy3 = response.data.patientAllergy3
-            localStorage.setItem('ID', JSON.stringify(getID))
-
             this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Details Updated')
