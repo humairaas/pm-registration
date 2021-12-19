@@ -330,11 +330,6 @@ export default {
     async cancelAppointment () {
       if (this.$route.query.st === 'edit') {
         var appointmentId = localStorage.getItem('appointmentId')
-        // this.$axios
-        // .post('http://127.0.0.1:8000/api/deleteAppointment?appointmentId=' + appointmentId)
-        // .then((response) => {
-        //   return response.data
-        // })
         const data = new FormData()
         data.append('appointmentId', appointmentId)
         const url = 'http://127.0.0.1:8000/api/deleteAppointment'

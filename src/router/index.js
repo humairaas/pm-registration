@@ -534,6 +534,30 @@ export default new Router({
           import('../components/patient-management/patient_consultation/visit_note.vue'),
       },
       {
+        name: 'psychiatry_clerking_note',
+        path: 'psychiatry_clerking_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-psychiatryClerkingNote.vue'),
+      },
+      {
+        name: 'counselling_clerking_note',
+        path: 'counselling_clerking_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-counsellingClerkingNote.vue'),
+      },
+      {
+        name: 'progress_note',
+        path: 'progress_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-progressNote.vue'),
+      },
+      {
+        name: 'counselling_progress_note',
+        path: 'counselling_progress_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-counsellingProgressNote.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>

@@ -234,11 +234,12 @@
                 <va-tree-category label="Clinical and Intervention Notes" >
                   <va-tree-category label="Clerking Notes" >
                     <va-tree-node class="ga-two">Patient Index Form</va-tree-node>
-                    <va-tree-node class="ga-two">Counsellor Clerking Note</va-tree-node>
-                    <va-tree-node class="ga-two">Psychiatry Clerking Note</va-tree-node>
+                    <router-link :to="{ name: 'counselling_clerking_note'}"><va-tree-node class="ga-two">Counsellor Clerking Note</va-tree-node></router-link>
+                    <router-link :to="{ name: 'psychiatry_clerking_note'}"><va-tree-node class="ga-two">Psychiatry Clerking Note</va-tree-node></router-link>
                   </va-tree-category>
                   <va-tree-category label="Progress Notes" >
-                    <va-tree-node class="ga-two">Link 1</va-tree-node>
+                    <router-link :to="{ name: 'progress_note'}"><va-tree-node class="ga-two">Progress Note</va-tree-node></router-link>
+                    <router-link :to="{ name: 'counselling_progress_note'}"><va-tree-node class="ga-two">Counselling Progress Note</va-tree-node></router-link>
                   </va-tree-category>
                   <va-tree-category label="Discharge Notes" >
                     <va-tree-node class="ga-two">Consultation Discharge Note</va-tree-node>
