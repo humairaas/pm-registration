@@ -6,13 +6,37 @@
         <div class="col-12">
 
           <!-- Notification Alert -->
-          <div class="mb-3" v-if="tabA==true">
+          <div class="mb-3" v-if="tabA==true || tabD==true">
             <va-notification color="danger">
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all required fields.</span>
-              <button type="button" class="btn close-button" @click="tabA = false">
+              <span>Please fill all <b> Clinical Note </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabA = false; tabD = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+
+          <div class="mb-3" v-if="tabB==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Consultation Details </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabB = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+
+          <div class="mb-3" v-if="tabC==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Treatment Plan </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabC = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -99,6 +123,9 @@ export default {
   data () {
     return {
       tabA: false,
+      tabB: false,
+      tabC: false,
+      tabD: false,
       submitPath: false,
 
       selectServiceLocation: [],
@@ -356,6 +383,8 @@ export default {
                 inputType: 'text',
                 label: 'Issues/Current Status',
                 model: 'ISSUE',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-3',
               },
               {
@@ -363,6 +392,8 @@ export default {
                 inputType: 'text',
                 label: 'Goal(s)',
                 model: 'GOAL',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-3',
               },
               {
@@ -370,6 +401,8 @@ export default {
                 inputType: 'text',
                 label: 'Management Strategies',
                 model: 'MANAGEMENT_STRATEGY',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-3',
               },
               {
@@ -377,6 +410,8 @@ export default {
                 inputType: 'text',
                 label: 'Who, by When',
                 model: 'WHO_WHEN',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-3',
               },
               {
@@ -433,6 +468,8 @@ export default {
                 inputType: 'text',
                 label: 'Name',
                 model: 'CASE_MANAGER_NAME',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-6',
               },
               {
@@ -440,6 +477,8 @@ export default {
                 inputType: 'text',
                 label: 'Name',
                 model: 'SPECIALIST_NAME',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-6',
               },
               {
@@ -447,6 +486,8 @@ export default {
                 inputType: 'text',
                 label: 'Designation',
                 model: 'CASE_MANAGER_DESIGNATION',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-6',
               },
               {
@@ -454,6 +495,8 @@ export default {
                 inputType: 'text',
                 label: 'Designation',
                 model: 'SPECIALIST_DESIGNATION',
+                required: true,
+                validator: 'string',
                 styleClasses: 'col-md-6',
               },
               {
@@ -740,8 +783,11 @@ export default {
     },
     validateForm () {
       var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
+      var tabD = this.validateTabD()
 
-      if (tabA) {
+      if (tabA && tabB && tabC && tabD) {
         const data = new FormData()
         data.append('psychiatryClerkingNote', JSON.stringify(this.model))
         this.$axios
@@ -755,12 +801,42 @@ export default {
       }
     },
     validateTabA () {
-      var errors = this.$refs.clinicalNote.validate()
+      var errors = this.$refs.clinicalNote1.validate()
       if (errors) {
         this.tabA = false
         return true
       } else {
         this.tabA = true
+        return false
+      }
+    },
+    validateTabB () {
+      var errors = this.$refs.consultationDetails.validate()
+      if (errors) {
+        this.tabB = false
+        return true
+      } else {
+        this.tabB = true
+        return false
+      }
+    },
+    validateTabC () {
+      var errors = this.$refs.treatmentPlan.validate()
+      if (errors) {
+        this.tabC = false
+        return true
+      } else {
+        this.tabC = true
+        return false
+      }
+    },
+    validateTabD () {
+      var errors = this.$refs.clinicalNote2.validate()
+      if (errors) {
+        this.tabD = false
+        return true
+      } else {
+        this.tabD = true
         return false
       }
     },

@@ -11,7 +11,7 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all required fields.</span>
+              <span>Please fill all <b> Clinical Note </b> required fields.</span>
               <button type="button" class="btn close-button" @click="tabA = false">
                 <span class="fa fa-close"/>
               </button>
@@ -586,8 +586,9 @@ export default {
     },
     validateForm () {
       var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
 
-      if (tabA) {
+      if (tabA && tabB) {
         const data = new FormData()
         data.append('psychiatryClerkingNote', JSON.stringify(this.model))
         this.$axios
@@ -601,7 +602,17 @@ export default {
       }
     },
     validateTabA () {
-      var errors = this.$refs.clinicalNote.validate()
+      var errors = this.$refs.clinicalNote1.validate()
+      if (errors) {
+        this.tabA = false
+        return true
+      } else {
+        this.tabA = true
+        return false
+      }
+    },
+    validateTabB () {
+      var errors = this.$refs.clinicalNote2.validate()
       if (errors) {
         this.tabA = false
         return true

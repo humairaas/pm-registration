@@ -11,8 +11,20 @@
               <va-badge color="danger">
                 {{ $t('Incomplete') }}
               </va-badge>
-              <span>Please fill all required fields.</span>
+              <span>Please fill all <b> Clinical Note </b> required fields.</span>
               <button type="button" class="btn close-button" @click="tabA = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+
+          <div class="mb-3" v-if="tabB==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Consultation Details </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabB = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -89,6 +101,7 @@ export default {
   data () {
     return {
       tabA: false,
+      tabB: false,
       submitPath: false,
 
       selectServiceLocation: [],
@@ -304,8 +317,6 @@ export default {
                 inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
-                required: true,
-                validator: 'string',
                 readonly: true,
                 styleClasses: 'col-md-6',
               },
@@ -612,8 +623,10 @@ export default {
     },
     validateForm () {
       var tabA = this.validateTabA()
+      var tabB = this.validateTabB()
+      var tabC = this.validateTabC()
 
-      if (tabA) {
+      if (tabA && tabB && tabC) {
         const data = new FormData()
         data.append('psychiatryClerkingNote', JSON.stringify(this.model))
         this.$axios
@@ -627,7 +640,27 @@ export default {
       }
     },
     validateTabA () {
-      var errors = this.$refs.clinicalNote.validate()
+      var errors = this.$refs.clinicalNote1.validate()
+      if (errors) {
+        this.tabA = false
+        return true
+      } else {
+        this.tabA = true
+        return false
+      }
+    },
+    validateTabB () {
+      var errors = this.$refs.consultationDetails.validate()
+      if (errors) {
+        this.tabB = false
+        return true
+      } else {
+        this.tabB = true
+        return false
+      }
+    },
+    validateTabC () {
+      var errors = this.$refs.clinicalNote2.validate()
       if (errors) {
         this.tabA = false
         return true
