@@ -21,7 +21,44 @@
           <va-card>
 
             <div class="text-center"><h3 class="mt-4 mb-5 text-dark">CLINICAL NOTE</h3></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="clinicalNote">
+            <vue-form-generator :model="model" :schema="clinicalNote1Schema" :options="formOptions" ref="clinicalNote1">
+            </vue-form-generator>
+
+            <va-accordion class="my-4">
+
+              <!-- Staff Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>STAFF DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="staffSchema" :model="model" :options="formOptions" ref="staffDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Patient Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>PATIENT DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="patientSchema" :model="model" :options="formOptions" ref="patientDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Consultation Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>CONSULTATION DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="consultationSchema" :model="model" :options="formOptions" ref="consultationDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+            </va-accordion>
+
+            <vue-form-generator :model="model" :schema="clinicalNote2Schema" :options="formOptions" ref="clinicalNote2">
             </vue-form-generator>
             <h6>{{model}}</h6>
 
@@ -115,7 +152,7 @@ export default {
         DISCUSSED_TIME: '',
 
       },
-      schema: {
+      clinicalNote1Schema: {
         groups: [
           {
             styleClasses: 'row',
@@ -150,24 +187,23 @@ export default {
                 inputType: 'text',
                 label: 'Title',
                 model: 'TITLE',
-                disabled: true,
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
-
             ],
           },
+        ],
+      },
+      staffSchema: {
+        groups: [
           {
             fields: [
-              {
-                type: 'label',
-                label: 'STAFF DETAILS',
-                styleClasses: 'subtitle',
-              },
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'Staff Name/Seen By',
                 model: 'STAFF_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -175,6 +211,7 @@ export default {
                 inputType: 'text',
                 label: 'Designation',
                 model: 'DESIGNATION',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -182,32 +219,40 @@ export default {
                 inputType: 'text',
                 label: 'Room',
                 model: 'ROOM',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'Date',
                 model: 'DATE',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'time',
                 label: 'Time',
                 model: 'TIME',
-                styleClasses: 'col-md-6',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
-              {
-                type: 'label',
-                label: 'PATIENT DETAILS',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      patientSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'MRN',
                 model: 'MRN',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -215,6 +260,7 @@ export default {
                 inputType: 'text',
                 label: 'Patient Name',
                 model: 'PATIENT_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -222,6 +268,7 @@ export default {
                 inputType: 'text',
                 label: 'NRIC No',
                 model: 'NRIC_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -229,6 +276,7 @@ export default {
                 inputType: 'text',
                 label: 'Age',
                 model: 'AGE',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -236,6 +284,7 @@ export default {
                 inputType: 'text',
                 label: 'Contact No',
                 model: 'CONTACT_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -243,13 +292,17 @@ export default {
                 inputType: 'text',
                 label: 'Gender',
                 model: 'GENDER',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
-              {
-                type: 'label',
-                label: 'CONSULTATION DETAILS',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      consultationSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'textArea',
                 label: 'Chief Complaint',
@@ -283,7 +336,7 @@ export default {
               {
                 type: 'textArea',
                 label: 'General Examination',
-                model: 'GENERAL_ACTION',
+                model: 'GENERAL_EXAMINATION',
                 placeholder: 'Enter Description',
                 rows: 3,
                 required: true,
@@ -305,9 +358,8 @@ export default {
                 inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-12',
+                readonly: true,
+                styleClasses: 'col-md-6',
               },
               {
                 type: 'textArea',
@@ -323,7 +375,7 @@ export default {
                 type: 'input',
                 inputType: 'text',
                 label: 'Discussed With',
-                model: 'DISCUSSED WITH',
+                model: 'DISCUSSED_WITH',
                 required: true,
                 validator: 'string',
                 styleClasses: 'col-md-6',
@@ -349,6 +401,10 @@ export default {
               },
             ],
           },
+        ],
+      },
+      clinicalNote2Schema: {
+        groups: [
           {
             styleClasses: 'row',
             fields: [
@@ -370,6 +426,9 @@ export default {
                 styleClasses: 'col-md-6',
                 values: () => {
                   return this.selectDiagnosisType
+                },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.DIAGNOSIS = newVal.name
                 },
               },
             ],
