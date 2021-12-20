@@ -562,13 +562,23 @@ export default {
     }
   },
   mounted () {
+    var patientId = localStorage.getItem('patientId')
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPsychiatryClerkingNoteData')
+      .get('http://127.0.0.1:8000/api/getProgressNoteMountedData?patient_id=' + patientId)
       .then((response) => {
         this.selectServiceLocation = response.data.serviceLocation
         this.selectServiceComplexity = response.data.serviceComplexity
         this.selectOutcome = response.data.serviceOutcome
         this.radioServiceCategory = response.data.serviceCategory
+        this.model.MRN = response.data.patientData[0].mrn
+        this.model.PATIENT_NAME = response.data.patientData[0].name
+        this.model.NRIC_NO = response.data.patientData[0].nric
+        this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
+        this.model.CONTACT_NO = response.data.patientData[0].contact
+        this.model.GENDER = response.data.patientData[0].gender
+        this.model.DOB = response.data.patientData[0].birthdate
+        // this.model.DATE = new Date().getYear() + '/' + new Date().getMonth() + '/' + new Date().getDate()
+        // this.model.TIME = new Date().getTime()
       })
   },
   methods: {
