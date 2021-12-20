@@ -21,7 +21,44 @@
           <va-card>
 
             <div class="text-center"><h3 class="mt-4 mb-5 text-dark">CLINICAL NOTE</h3></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="clinicalNote">
+            <vue-form-generator :model="model" :schema="clinicalNote1Schema" :options="formOptions" ref="clinicalNote1">
+            </vue-form-generator>
+
+            <va-accordion class="my-4">
+
+              <!-- Patient Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>PATIENT DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="patientSchema" :model="model" :options="formOptions" ref="patientDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Psychotherapy Progress Note -->
+              <va-collapse>
+                <span slot="header">
+                  <b>PSYCHOTHERAPY PROGRESS NOTE</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="psychotherapySchema" :model="model" :options="formOptions" ref="psychotherapyProgress"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Session Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>SESSION DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="sessionSchema" :model="model" :options="formOptions" ref="sessionDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+            </va-accordion>
+
+            <vue-form-generator :model="model" :schema="clinicalNote2Schema" :options="formOptions" ref="clinicalNote2">
             </vue-form-generator>
             <h6>{{model}}</h6>
 
@@ -157,7 +194,7 @@ export default {
         DATE: '',
 
       },
-      schema: {
+      clinicalNote1Schema: {
         groups: [
           {
             styleClasses: 'row',
@@ -192,23 +229,23 @@ export default {
                 inputType: 'text',
                 label: 'Title',
                 model: 'TITLE',
-                disabled: true,
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
             ],
           },
+        ],
+      },
+      patientSchema: {
+        groups: [
           {
             fields: [
-              {
-                type: 'label',
-                label: 'PATIENT DETAILS',
-                styleClasses: 'subtitle',
-              },
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'MRN',
                 model: 'MRN',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -216,6 +253,7 @@ export default {
                 inputType: 'text',
                 label: 'Patient Name',
                 model: 'PATIENT_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -223,6 +261,7 @@ export default {
                 inputType: 'text',
                 label: 'NRIC No',
                 model: 'NRIC_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -230,6 +269,7 @@ export default {
                 inputType: 'text',
                 label: 'Age',
                 model: 'AGE',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -237,6 +277,7 @@ export default {
                 inputType: 'text',
                 label: 'Contact No',
                 model: 'CONTACT_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -244,53 +285,68 @@ export default {
                 inputType: 'text',
                 label: 'Gender',
                 model: 'GENDER',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'DOB',
                 model: 'DOB',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
-              {
-                type: 'label',
-                label: 'PSYCHOTHERAPY PROGRESS NOTE',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      psychotherapySchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'Date Performed',
                 model: 'DATE_PERFORMED',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'time',
                 label: 'Time Performed',
                 model: 'TIME_PERFORMED',
-                styleClasses: 'col-md-6',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
                 type: 'label',
                 label: 'Therapy Session',
-                styleClasses: 'row',
+                styleClasses: 'subtitle',
               },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'radios',
                 label: 'Frequency of Session',
                 model: 'SESSION_FREQUENCY',
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-6', 'display-inline'],
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.radioSessionFrequency
                 },
@@ -299,6 +355,7 @@ export default {
                 type: 'input',
                 inputType: 'text',
                 model: 'SPECIFY_SESSION_FREQUENCY',
+                placeholder: 'Specify Frequency of Session',
                 required: true,
                 validator: 'string',
                 styleClasses: 'col-md-6',
@@ -306,13 +363,18 @@ export default {
                   return model && model.SESSION_FREQUENCY === 5
                 },
               },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'radios',
                 label: 'Model of Therapy',
                 model: 'THERAPY_MODEL',
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-6', 'display-inline'],
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.radioTherapyModel
                 },
@@ -321,6 +383,7 @@ export default {
                 type: 'input',
                 inputType: 'text',
                 model: 'SPECIFY_THERAPY_MODEL',
+                placeholder: 'Specify Model of Therapy',
                 required: true,
                 validator: 'string',
                 styleClasses: 'col-md-6',
@@ -328,13 +391,18 @@ export default {
                   return model && model.THERAPY_MODEL === 7
                 },
               },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'radios',
                 label: 'Mode of Therapy',
                 model: 'THERAPY_MODE',
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-6', 'display-inline'],
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.radioTherapyMode
                 },
@@ -343,6 +411,7 @@ export default {
                 type: 'input',
                 inputType: 'text',
                 model: 'SPECIFY_THERAPY_MODE',
+                placeholder: 'Specify Mode of Therapy',
                 required: true,
                 validator: 'string',
                 styleClasses: 'col-md-6',
@@ -350,28 +419,33 @@ export default {
                   return model && model.THERAPY_MODE === 5
                 },
               },
+            ],
+          },
+          {
+            fields: [
               {
                 type: 'textArea',
                 label: 'Comments on Therapy Sessions',
                 model: 'THERAPY_SESSION_COMMENT',
                 placeholder: 'Enter Comments',
                 rows: 2,
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-md-12',
               },
               {
                 type: 'label',
                 label: 'Patient\'s Condition',
-                styleClasses: 'row',
+                styleClasses: 'subtitle',
               },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'radios',
                 label: 'Condition (Since Last Session)',
                 model: 'PATIENT_CONDITION',
-                required: true,
-                validator: 'required',
-                styleClasses: ['col-md-6', 'display-inline'],
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.radioPatientCondition
                 },
@@ -387,6 +461,10 @@ export default {
                   return model && model.PATIENT_CONDITION === 4
                 },
               },
+            ],
+          },
+          {
+            fields: [
               {
                 type: 'textArea',
                 label: "Comments on Patient's Condition",
@@ -395,13 +473,17 @@ export default {
                 rows: 2,
                 required: true,
                 validator: 'string',
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-md-12',
               },
-              {
-                type: 'label',
-                label: 'SESSION DETAILS',
-                styleClasses: 'subtitle',
-              },
+
+            ],
+          },
+        ],
+      },
+      sessionSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'textArea',
                 label: 'Issues/Problems Dealt with Today',
@@ -462,6 +544,14 @@ export default {
                 validator: 'string',
                 styleClasses: 'col-md-12',
               },
+            ],
+          },
+        ],
+      },
+      clinicalNote2Schema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'text',
@@ -482,12 +572,13 @@ export default {
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'Date',
                 model: 'DATE',
                 required: true,
-                validator: 'string',
-                styleClasses: 'col-md-6',
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-6'],
               },
             ],
           },
@@ -513,6 +604,9 @@ export default {
                 values: () => {
                   return this.selectDiagnosisType
                 },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.DIAGNOSIS = newVal.name
+                },
               },
             ],
           },
@@ -525,7 +619,7 @@ export default {
                 model: 'SERVICE_CATEGORY',
                 required: true,
                 validator: 'required',
-                styleClasses: ['col-md-6', 'display-inline'],
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.radioServiceCategory
                 },
@@ -816,11 +910,14 @@ ul.va-unordered > li::before,
 }
 
 .subtitle {
-  font-size: medium;
-  background-color: #f0f0f0;
-}
-
-.subtitle span {
-  margin-top: 3px;
+  margin-top: 8px;
+  background: #f0f0f0;
+  color: #404040;
+  font-size: larger;
+  padding-top: 4px;
+  padding-bottom: 1px;
+  border-radius: 5px;
+  font-family: serif, Helvetica, Arial, sans-serif;
+  text-align: center;
 }
 </style>

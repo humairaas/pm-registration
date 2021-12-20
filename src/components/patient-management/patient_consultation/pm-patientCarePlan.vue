@@ -809,14 +809,4 @@ ul.va-unordered > li::before,
   background-color: #2c82e000;
 }
 
-.subtitle {
-  margin-top: 4px;
-  background: #d3d3d3;
-  color: #404040;
-  font-size: medium;
-  padding: 6px 10px 1px 10px;
-  border-radius: 5px;
-  font-family: serif, Helvetica, Arial, sans-serif;
-}
-
 </style>

@@ -681,12 +681,4 @@ ul.va-unordered > li::before,
   background-color: #2c82e000;
 }
 
-.subtitle {
-  font-size: medium;
-  background-color: #f0f0f0;
-}
-
-.subtitle span {
-  margin-top: 3px;
-}
 </style>
