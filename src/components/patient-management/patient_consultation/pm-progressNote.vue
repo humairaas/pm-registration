@@ -21,8 +21,36 @@
           <va-card>
 
             <div class="text-center"><h3 class="mt-4 mb-5 text-dark">CLINICAL NOTE</h3></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="clinicalNote">
+            <vue-form-generator :model="model" :schema="clinicalNote1Schema" :options="formOptions" ref="clinicalNote1">
             </vue-form-generator>
+
+            <va-accordion class="my-4">
+
+              <!-- Patient Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>PATIENT DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="patientSchema" :model="model" :options="formOptions" ref="patientDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Staff Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>STAFF DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="staffSchema" :model="model" :options="formOptions" ref="staffDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+            </va-accordion>
+
+            <vue-form-generator :model="model" :schema="clinicalNote2Schema" :options="formOptions" ref="clinicalNote2">
+            </vue-form-generator>
+
             <h6>{{model}}</h6>
 
             <!-- Button footer-->
@@ -60,8 +88,6 @@ export default {
         { name: 'Two', value: 2 },
         { name: 'Three', value: 3 },
       ],
-      selectServiceCategory1: [],
-      selectServiceCategory2: [],
       selectICD9Code: [
         { name: 'One', value: 1 },
         { name: 'Two', value: 2 },
@@ -75,13 +101,12 @@ export default {
       selectServiceComplexity: [],
       selectOutcome: [],
 
-      radioServiceCategory: [
-        { name: 'Assistance/Supervision', value: 1 },
-        { name: 'Clinical Work/Procedure', value: 2 },
-        { name: 'External', value: 3 },
-      ],
+      radioServiceCategory: [],
 
       model: {
+        selectServiceCategory1: '',
+        selectServiceCategory3: '',
+
         SERVICE_LOCATION: '',
         TITLE: 'PROGRESS NOTE',
         DIAGNOSIS_TYPE: '',
@@ -112,7 +137,7 @@ export default {
         MANAGEMENT: '',
 
       },
-      schema: {
+      clinicalNote1Schema: {
         groups: [
           {
             styleClasses: 'row',
@@ -147,24 +172,24 @@ export default {
                 inputType: 'text',
                 label: 'Title',
                 model: 'TITLE',
-                disabled: true,
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
 
             ],
           },
+        ],
+      },
+      patientSchema: {
+        groups: [
           {
             fields: [
-              {
-                type: 'label',
-                label: 'PATIENT DETAILS',
-                styleClasses: 'subtitle',
-              },
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'MRN',
                 model: 'MRN',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -172,6 +197,7 @@ export default {
                 inputType: 'text',
                 label: 'Patient Name',
                 model: 'PATIENT_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -179,6 +205,7 @@ export default {
                 inputType: 'text',
                 label: 'NRIC No',
                 model: 'NRIC_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -186,6 +213,7 @@ export default {
                 inputType: 'text',
                 label: 'Age',
                 model: 'AGE',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -193,6 +221,7 @@ export default {
                 inputType: 'text',
                 label: 'Contact No',
                 model: 'CONTACT_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -200,39 +229,49 @@ export default {
                 inputType: 'text',
                 label: 'Gender',
                 model: 'GENDER',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'DOB',
                 model: 'DOB',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'Date',
                 model: 'DATE',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'time',
                 label: 'Time',
                 model: 'TIME',
-                styleClasses: 'col-md-6',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
-              {
-                type: 'label',
-                label: 'STAFF DETAILS',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      staffSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'Staff Name/Seen By',
                 model: 'STAFF_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -240,6 +279,7 @@ export default {
                 inputType: 'text',
                 label: 'Designation',
                 model: 'DESIGNATION',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -247,17 +287,24 @@ export default {
                 inputType: 'text',
                 label: 'Room No.',
                 model: 'ROOM',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
+            ],
+          },
+        ],
+      },
+      clinicalNote2Schema: {
+        groups: [
+          {
+            fields: [
               {
-                type: 'textArea',
+                type: 'input',
+                inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
-                placeholder: 'Enter Diagnosis',
-                rows: 3,
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-12',
+                readonly: true,
+                styleClasses: 'col-md-6',
               },
               {
                 type: 'textArea',
@@ -303,6 +350,9 @@ export default {
                 values: () => {
                   return this.selectDiagnosisType
                 },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.DIAGNOSIS = newVal.name
+                },
               },
             ],
           },
@@ -321,12 +371,22 @@ export default {
                 },
                 onChanged: function (model, newVal, oldVal, field) {
                   if (newVal === 1) {
+                    this.$axios
+                      .get('http://127.0.0.1:8000/api/getServiceBasedOnCategory?id=' + model.SERVICE_CATEGORY)
+                      .then((response) => {
+                        this.model.selectServiceCategory1 = response.data.data
+                      })
                     model.ICD9_CODE = ''
                     model.ICD9_SUBCODE = ''
                     model.SERVICES = ''
                   } else if (newVal === 2) {
                     model.SERVICES = ''
                   } else if (newVal === 3) {
+                    this.$axios
+                      .get('http://127.0.0.1:8000/api/getServiceBasedOnCategory?id=' + model.SERVICE_CATEGORY)
+                      .then((response) => {
+                        model.selectServiceCategory3 = response.data.data
+                      })
                     model.ICD9_CODE = ''
                     model.ICD9_SUBCODE = ''
                     model.SERVICES = ''
@@ -356,7 +416,7 @@ export default {
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectServiceCategory1
+                  return this.model.selectServiceCategory1
                 },
                 visible: function (model) {
                   return model && model.SERVICE_CATEGORY === 1
@@ -425,7 +485,7 @@ export default {
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectServiceCategory2
+                  return this.model.selectServiceCategory3
                 },
                 visible: function (model) {
                   return model && model.SERVICE_CATEGORY === 3
@@ -508,8 +568,7 @@ export default {
         this.selectServiceLocation = response.data.serviceLocation
         this.selectServiceComplexity = response.data.serviceComplexity
         this.selectOutcome = response.data.serviceOutcome
-        this.selectServiceCategory1 = response.data.serviceCategory1
-        this.selectServiceCategory2 = response.data.serviceCategory2
+        this.radioServiceCategory = response.data.serviceCategory
       })
   },
   methods: {

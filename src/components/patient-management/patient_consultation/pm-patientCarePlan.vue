@@ -80,7 +80,7 @@ export default {
         selectServiceCategory3: '',
 
         SERVICE_LOCATION: '',
-        TITLE: 'COUNSELLING CLERKING NOTE',
+        TITLE: 'PATIENT CARE PLAN',
         DIAGNOSIS_TYPE: '',
         SERVICE_CATEGORY: '',
         SERVICE_COMPLEXITY: '',
@@ -90,24 +90,37 @@ export default {
         OUTCOME: '',
         MEDICATION: '',
 
-        STAFF_NAME: '',
-        DESIGNATION: '',
-        ROOM: '',
-        DATE: '',
-        TIME: '',
-
         MRN: '',
         PATIENT_NAME: '',
         NRIC_NO: '',
         AGE: '',
         CONTACT_NO: '',
         GENDER: '',
+        DOB: '',
+
+        STAFF_DATE: '',
+        PSYCHIATRY_NAME: '',
+        INTERVIEW_REVIEW: '',
 
         DIAGNOSIS: '',
-        CLINICAL_SUMMARY: '',
+        CONSULTATION_MEDICATION: '',
         BACKGROUND_HISTORY: '',
-        CLINICAL_NOTES: '',
-        MANAGEMENT: '',
+
+        ISSUE: '',
+        GOAL: '',
+        MANAGEMENT_STRATEGY: '',
+        WHO_WHEN: '',
+        DATE1: '',
+        DATE2: '',
+        DATE3: '',
+
+        CASE_MANAGER_NAME: '',
+        CASE_MANAGER_DESIGNATION: '',
+        CASE_MANAGER_DATE: '',
+
+        SPECIALIST_NAME: '',
+        SPECIALIST_DESIGNATION: '',
+        SPECIALIST_DATE: '',
 
       },
       schema: {
@@ -153,46 +166,6 @@ export default {
           },
           {
             fields: [
-              {
-                type: 'label',
-                label: 'STAFF DETAILS',
-                styleClasses: 'subtitle',
-              },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'Staff Name/Seen By',
-                model: 'STAFF_NAME',
-                styleClasses: 'col-md-6',
-              },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'Designation',
-                model: 'DESIGNATION',
-                styleClasses: 'col-md-6',
-              },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'Room',
-                model: 'ROOM',
-                styleClasses: 'col-md-6',
-              },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'Date',
-                model: 'DATE',
-                styleClasses: 'col-md-6',
-              },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'Time',
-                model: 'TIME',
-                styleClasses: 'col-md-6',
-              },
               {
                 type: 'label',
                 label: 'PATIENT DETAILS',
@@ -241,6 +214,40 @@ export default {
                 styleClasses: 'col-md-6',
               },
               {
+                type: 'input',
+                inputType: 'text',
+                label: 'DOB',
+                model: 'DOB',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'label',
+                label: 'STAFF DETAILS',
+                styleClasses: 'subtitle',
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'STAFF_DATE',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-6'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Psychiatrist in Charge',
+                model: 'PSYCHIATRIST',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Reason for Review',
+                model: 'INTERVIEW_REVIEW',
+                styleClasses: 'col-md-6',
+              },
+              {
                 type: 'label',
                 label: 'CONSULTATION DETAILS',
                 styleClasses: 'subtitle',
@@ -250,15 +257,13 @@ export default {
                 inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-12',
+                styleClasses: 'col-md-6',
               },
               {
                 type: 'textArea',
-                label: 'Clinical Summary',
-                model: 'CLINICAL_SUMMARY',
-                placeholder: 'Enter Description',
+                label: 'Medication',
+                model: 'CONSULTATION_MEDICATION',
+                placeholder: 'Insert Medication',
                 rows: 3,
                 required: true,
                 validator: 'string',
@@ -266,33 +271,138 @@ export default {
               },
               {
                 type: 'textArea',
-                label: 'Background History',
+                label: 'Backgorund History',
                 model: 'BACKGROUND_HISTORY',
-                placeholder: 'Enter Description',
+                placeholder: 'Insert Background History',
                 rows: 3,
                 required: true,
                 validator: 'string',
                 styleClasses: 'col-md-12',
               },
               {
-                type: 'textArea',
-                label: 'Clinical Notes',
-                model: 'CLINICAL_NOTES',
-                placeholder: 'Enter Description',
-                rows: 3,
-                required: true,
-                validator: 'string',
-                styleClasses: 'col-md-12',
+                type: 'label',
+                label: 'TREATMENT PLAN',
+                styleClasses: 'subtitle',
               },
               {
-                type: 'textArea',
-                label: 'Management',
-                model: 'MANAGEMENT',
-                placeholder: 'Enter Description',
-                rows: 3,
+                type: 'input',
+                inputType: 'text',
+                label: 'Issues/Current Status',
+                model: 'ISSUE',
+                styleClasses: 'col-md-3',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Goal(s)',
+                model: 'GOAL',
+                styleClasses: 'col-md-3',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Management Strategies',
+                model: 'MANAGEMENT_STRATEGY',
+                styleClasses: 'col-md-3',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Who, by When',
+                model: 'WHO_WHEN',
+                styleClasses: 'col-md-3',
+              },
+              {
+                type: 'label',
+                label: 'Date of Next Review:',
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DATE1',
                 required: true,
-                validator: 'string',
-                styleClasses: 'col-md-12',
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-4'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DATE2',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-4'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DATE3',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-4'],
+              },
+              {
+                type: 'label',
+                label: '<u>Case Manager</u>',
+                styleClasses: ['col-md-6', 'text-center'],
+              },
+              {
+                type: 'label',
+                label: '<u>Specialist Incharge</u>',
+                styleClasses: ['col-md-6', 'text-center'],
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name',
+                model: 'CASE_MANAGER_NAME',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name',
+                model: 'SPECIALIST_NAME',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Designation',
+                model: 'CASE_MANAGER_DESIGNATION',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Designation',
+                model: 'SPECIALIST_DESIGNATION',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'CASE_MANAGER_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-6'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'SPECIALIST_DATE',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-6'],
               },
             ],
           },
@@ -357,6 +467,7 @@ export default {
                     model.SERVICES = ''
                   }
                 },
+
               },
             ],
           },
@@ -620,11 +731,13 @@ ul.va-unordered > li::before,
 }
 
 .subtitle {
+  margin-top: 4px;
+  background: #d3d3d3;
+  color: #404040;
   font-size: medium;
-  background-color: #f0f0f0;
+  padding: 6px 10px 1px 10px;
+  border-radius: 5px;
+  font-family: serif, Helvetica, Arial, sans-serif;
 }
 
-.subtitle span {
-  margin-top: 3px;
-}
 </style>

@@ -60,8 +60,6 @@ export default {
         { name: 'Two', value: 2 },
         { name: 'Three', value: 3 },
       ],
-      selectServiceCategory1: [],
-      selectServiceCategory2: [],
       selectICD9Code: [
         { name: 'One', value: 1 },
         { name: 'Two', value: 2 },
@@ -75,11 +73,7 @@ export default {
       selectServiceComplexity: [],
       selectOutcome: [],
 
-      radioServiceCategory: [
-        { name: 'Assistance/Supervision', value: 1 },
-        { name: 'Clinical Work/Procedure', value: 2 },
-        { name: 'External', value: 3 },
-      ],
+      radioServiceCategory: [],
 
       radioSessionFrequency: [
         { name: 'Twice a week', value: 1 },
@@ -115,6 +109,9 @@ export default {
       ],
 
       model: {
+        selectServiceCategory1: '',
+        selectServiceCategory3: '',
+
         SERVICE_LOCATION: '',
         TITLE: 'COUNSELLING PROGRESS NOTE',
         DIAGNOSIS_TYPE: '',
@@ -534,12 +531,22 @@ export default {
                 },
                 onChanged: function (model, newVal, oldVal, field) {
                   if (newVal === 1) {
+                    this.$axios
+                      .get('http://127.0.0.1:8000/api/getServiceBasedOnCategory?id=' + model.SERVICE_CATEGORY)
+                      .then((response) => {
+                        this.model.selectServiceCategory1 = response.data.data
+                      })
                     model.ICD9_CODE = ''
                     model.ICD9_SUBCODE = ''
                     model.SERVICES = ''
                   } else if (newVal === 2) {
                     model.SERVICES = ''
                   } else if (newVal === 3) {
+                    this.$axios
+                      .get('http://127.0.0.1:8000/api/getServiceBasedOnCategory?id=' + model.SERVICE_CATEGORY)
+                      .then((response) => {
+                        model.selectServiceCategory3 = response.data.data
+                      })
                     model.ICD9_CODE = ''
                     model.ICD9_SUBCODE = ''
                     model.SERVICES = ''
@@ -569,7 +576,7 @@ export default {
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectServiceCategory1
+                  return this.model.selectServiceCategory1
                 },
                 visible: function (model) {
                   return model && model.SERVICE_CATEGORY === 1
@@ -638,7 +645,7 @@ export default {
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectServiceCategory2
+                  return this.model.selectServiceCategory3
                 },
                 visible: function (model) {
                   return model && model.SERVICE_CATEGORY === 3
@@ -721,8 +728,7 @@ export default {
         this.selectServiceLocation = response.data.serviceLocation
         this.selectServiceComplexity = response.data.serviceComplexity
         this.selectOutcome = response.data.serviceOutcome
-        this.selectServiceCategory1 = response.data.serviceCategory1
-        this.selectServiceCategory2 = response.data.serviceCategory2
+        this.radioServiceCategory = response.data.serviceCategory
       })
   },
   methods: {

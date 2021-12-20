@@ -558,6 +558,12 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-counsellingProgressNote.vue'),
       },
       {
+        name: 'patient_care_plan',
+        path: 'patient_care_plan',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-patientCarePlan.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>
