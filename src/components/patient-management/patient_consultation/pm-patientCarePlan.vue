@@ -21,7 +21,54 @@
           <va-card>
 
             <div class="text-center"><h3 class="mt-4 mb-5 text-dark">CLINICAL NOTE</h3></div>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="clinicalNote">
+            <vue-form-generator :model="model" :schema="clinicalNote1Schema" :options="formOptions" ref="clinicalNote1">
+            </vue-form-generator>
+
+            <va-accordion class="my-4">
+
+              <!-- Patient Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>PATIENT DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="patientSchema" :model="model" :options="formOptions" ref="patientDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Staff Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>STAFF DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="staffSchema" :model="model" :options="formOptions" ref="staffDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Consultation Details -->
+              <va-collapse>
+                <span slot="header">
+                  <b>CONSULTATION DETAILS</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="consultationSchema" :model="model" :options="formOptions" ref="consultationDetails"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+              <!-- Treatment Plan -->
+              <va-collapse>
+                <span slot="header">
+                  <b>TREATMENT PLAN</b>
+                </span>
+                <div slot="body">
+                  <vue-form-generator :schema="treatmentSchema" :model="model" :options="formOptions" ref="treatmentPlan"></vue-form-generator>
+                </div>
+              </va-collapse>
+
+            </va-accordion>
+
+            <vue-form-generator :model="model" :schema="clinicalNote2Schema" :options="formOptions" ref="clinicalNote2">
             </vue-form-generator>
             <h6>{{model}}</h6>
 
@@ -123,7 +170,7 @@ export default {
         SPECIALIST_DATE: '',
 
       },
-      schema: {
+      clinicalNote1Schema: {
         groups: [
           {
             styleClasses: 'row',
@@ -158,24 +205,24 @@ export default {
                 inputType: 'text',
                 label: 'Title',
                 model: 'TITLE',
-                disabled: true,
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
 
             ],
           },
+        ],
+      },
+      patientSchema: {
+        groups: [
           {
             fields: [
-              {
-                type: 'label',
-                label: 'PATIENT DETAILS',
-                styleClasses: 'subtitle',
-              },
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'MRN',
                 model: 'MRN',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -183,6 +230,7 @@ export default {
                 inputType: 'text',
                 label: 'Patient Name',
                 model: 'PATIENT_NAME',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -190,6 +238,7 @@ export default {
                 inputType: 'text',
                 label: 'NRIC No',
                 model: 'NRIC_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -197,6 +246,7 @@ export default {
                 inputType: 'text',
                 label: 'Age',
                 model: 'AGE',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -204,6 +254,7 @@ export default {
                 inputType: 'text',
                 label: 'Contact No',
                 model: 'CONTACT_NO',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -211,26 +262,33 @@ export default {
                 inputType: 'text',
                 label: 'Gender',
                 model: 'GENDER',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
                 type: 'input',
-                inputType: 'text',
+                inputType: 'date',
                 label: 'DOB',
                 model: 'DOB',
-                styleClasses: 'col-md-6',
+                format: 'YYYY/MM/DD',
+                readonly: true,
+                styleClasses: ['col-md-6'],
               },
-              {
-                type: 'label',
-                label: 'STAFF DETAILS',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      staffSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'date',
                 label: 'Date',
                 model: 'STAFF_DATE',
                 format: 'YYYY/MM/DD',
+                readonly: true,
                 styleClasses: ['col-md-6'],
               },
               {
@@ -238,6 +296,7 @@ export default {
                 inputType: 'text',
                 label: 'Psychiatrist in Charge',
                 model: 'PSYCHIATRIST',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -245,18 +304,23 @@ export default {
                 inputType: 'text',
                 label: 'Reason for Review',
                 model: 'INTERVIEW_REVIEW',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
-              {
-                type: 'label',
-                label: 'CONSULTATION DETAILS',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      consultationSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'Diagnosis',
                 model: 'DIAGNOSIS',
+                readonly: true,
                 styleClasses: 'col-md-6',
               },
               {
@@ -279,11 +343,14 @@ export default {
                 validator: 'string',
                 styleClasses: 'col-md-12',
               },
-              {
-                type: 'label',
-                label: 'TREATMENT PLAN',
-                styleClasses: 'subtitle',
-              },
+            ],
+          },
+        ],
+      },
+      treatmentSchema: {
+        groups: [
+          {
+            fields: [
               {
                 type: 'input',
                 inputType: 'text',
@@ -315,6 +382,7 @@ export default {
               {
                 type: 'label',
                 label: 'Date of Next Review:',
+                styleClasses: 'col-md-3',
               },
               {
                 type: 'input',
@@ -324,7 +392,7 @@ export default {
                 required: true,
                 validator: 'date',
                 format: 'YYYY/MM/DD',
-                styleClasses: ['col-md-4'],
+                styleClasses: ['col-md-3'],
               },
               {
                 type: 'input',
@@ -334,7 +402,7 @@ export default {
                 required: true,
                 validator: 'date',
                 format: 'YYYY/MM/DD',
-                styleClasses: ['col-md-4'],
+                styleClasses: ['col-md-3'],
               },
               {
                 type: 'input',
@@ -344,8 +412,12 @@ export default {
                 required: true,
                 validator: 'date',
                 format: 'YYYY/MM/DD',
-                styleClasses: ['col-md-4'],
+                styleClasses: ['col-md-3'],
               },
+            ],
+          },
+          {
+            fields: [
               {
                 type: 'label',
                 label: '<u>Case Manager</u>',
@@ -406,6 +478,10 @@ export default {
               },
             ],
           },
+        ],
+      },
+      clinicalNote2Schema: {
+        groups: [
           {
             styleClasses: 'row',
             fields: [
@@ -427,6 +503,9 @@ export default {
                 styleClasses: 'col-md-6',
                 values: () => {
                   return this.selectDiagnosisType
+                },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.DIAGNOSIS = newVal.name
                 },
               },
             ],
