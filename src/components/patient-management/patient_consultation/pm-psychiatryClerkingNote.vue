@@ -194,12 +194,12 @@ export default {
                 type: 'label',
                 label: 'Title: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'TITLE',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -696,6 +696,8 @@ export default {
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
+        this.model.DATE = new Date().toLocaleDateString('en-MY')
+        this.model.TIME = new Date().toLocaleTimeString('en-MY')
       })
   },
   methods: {

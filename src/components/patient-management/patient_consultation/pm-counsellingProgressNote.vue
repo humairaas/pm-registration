@@ -872,7 +872,7 @@ export default {
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
-        this.model.DOB = response.data.patientData[0].birthdate
+        this.model.DOB = new Date(response.data.patientData[0].birthdate).toLocaleDateString('en-MY')
         this.model.DATE_PERFORMED = new Date().toLocaleDateString('en-MY')
         this.model.TIME_PERFORMED = new Date().toLocaleTimeString('en-MY')
       })

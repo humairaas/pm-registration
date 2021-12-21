@@ -179,9 +179,7 @@ export default {
         GOAL: '',
         MANAGEMENT_STRATEGY: '',
         WHO_WHEN: '',
-        DATE1: '',
-        DATE2: '',
-        DATE3: '',
+        DATE: '',
 
         CASE_MANAGER_NAME: '',
         CASE_MANAGER_DESIGNATION: '',
@@ -445,27 +443,7 @@ export default {
                 type: 'input',
                 inputType: 'date',
                 label: 'Date',
-                model: 'DATE1',
-                required: true,
-                validator: 'date',
-                format: 'YYYY/MM/DD',
-                styleClasses: ['col-md-3'],
-              },
-              {
-                type: 'input',
-                inputType: 'date',
-                label: 'Date',
-                model: 'DATE2',
-                required: true,
-                validator: 'date',
-                format: 'YYYY/MM/DD',
-                styleClasses: ['col-md-3'],
-              },
-              {
-                type: 'input',
-                inputType: 'date',
-                label: 'Date',
-                model: 'DATE3',
+                model: 'DATE',
                 required: true,
                 validator: 'date',
                 format: 'YYYY/MM/DD',
@@ -795,7 +773,8 @@ export default {
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
-        this.model.DOB = response.data.patientData[0].birthdate
+        this.model.DOB = new Date(response.data.patientData[0].birthdate).toLocaleDateString('en-MY')
+        this.model.STAFF_DATE = new Date().toLocaleDateString('en-MY')
       })
   },
   methods: {

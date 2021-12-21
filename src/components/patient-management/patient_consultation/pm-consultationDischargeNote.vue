@@ -96,6 +96,7 @@ export default {
       tabB: false,
       submitPath: false,
 
+      selectDischargeCategory: [],
       selectDiagnosisType: [
         { name: 'One', value: 1 },
         { name: 'Two', value: 2 },
@@ -113,6 +114,7 @@ export default {
 
         DIAGNOSIS: '',
         DISCHARGE_CATEGORY: '',
+        SPECIFY_DISCHARGE_CATEGORY: '',
         COMMENT: '',
 
         SPECIALIST_NAME: '',
@@ -196,6 +198,7 @@ export default {
       dischargeSchema: {
         groups: [
           {
+            styleClasses: 'row',
             fields: [
               {
                 type: 'vueMultiSelect',
@@ -217,6 +220,11 @@ export default {
                   return this.selectDiagnosisType
                 },
               },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'vueMultiSelect',
                 label: 'Category of Discharge',
@@ -227,16 +235,34 @@ export default {
                 selectOptions: {
                   multiple: false,
                   closeOnSelect: true,
-                  maxHeight: 200,
+                  maxHeight: 180,
                   showLabels: false,
                   key: 'value',
                   label: 'name',
                 },
                 styleClasses: 'col-md-6',
                 values: () => {
-                  return this.selectDiagnosisType
+                  return this.selectDischargeCategory
                 },
               },
+              {
+                type: 'input',
+                inputType: 'text',
+                model: 'SPECIFY_DISCHARGE_CATEGORY',
+                label: '',
+                placeholder: 'to specify',
+                required: true,
+                validator: 'string',
+                styleClasses: 'col-md-6',
+                visible: function (model) {
+                  return model && (model.DISCHARGE_CATEGORY.value === 4 || model.DISCHARGE_CATEGORY.value === 5)
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
               {
                 type: 'textArea',
                 label: 'COMMENT',
@@ -294,6 +320,7 @@ export default {
     this.$axios
       .get('http://127.0.0.1:8000/api/getConsultationDischargeNoteMountedData?patient_id=' + patientId)
       .then((response) => {
+        this.selectDischargeCategory = response.data.dischargeCategory
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
         this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
