@@ -124,7 +124,7 @@ export default {
 
         MRN: '',
         PATIENT_NAME: '',
-        NRIC_NO: '',
+        NRIC_PASSPORT: '',
         AGE: '',
         CONTACT_NO: '',
         GENDER: '',
@@ -168,14 +168,16 @@ export default {
             styleClasses: 'row',
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Title',
-                model: 'TITLE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'Title: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
-
+              {
+                type: 'label',
+                model: 'TITLE',
+                styleClasses: 'col-lg-4',
+              },
             ],
           },
         ],
@@ -185,78 +187,103 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'MRN',
+                type: 'label',
+                label: 'MRN: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'MRN',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Patient Name',
+                type: 'label',
+                label: 'Patient Name: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'PATIENT_NAME',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'NRIC No',
-                model: 'NRIC_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'NRIC/Passport No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Age',
+                type: 'label',
+                model: 'NRIC_PASSPORT',
+                styleClasses: 'col-lg-4',
+              },
+              {
+                type: 'label',
+                label: 'Age: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'AGE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Contact No',
+                type: 'label',
+                label: 'Contact No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'CONTACT_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Gender',
+                type: 'label',
+                label: 'Gender: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'GENDER',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'date',
-                label: 'DOB',
+                type: 'label',
+                label: 'DOB: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DOB',
-                format: 'YYYY/MM/DD',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'date',
-                label: 'Date',
+                type: 'label',
+                label: 'Date: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DATE',
-                format: 'YYYY/MM/DD',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'time',
-                label: 'Time',
+                type: 'label',
+                label: 'Time: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'TIME',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -267,28 +294,37 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Staff Name/Seen By',
+                type: 'label',
+                label: 'Staff Name/Seen By: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'STAFF_NAME',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Designation',
+                type: 'label',
+                label: 'Designation: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DESIGNATION',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Room No.',
+                type: 'label',
+                label: 'Room No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'ROOM',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -572,15 +608,13 @@ export default {
         this.radioServiceCategory = response.data.serviceCategory
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
-        this.model.NRIC_NO = response.data.patientData[0].nric
+        this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
         this.model.DOB = response.data.patientData[0].birthdate
-        // this.model.DATE = new Date().getFullYear() + '/' + new Date().getMonth() + '/' + new Date().getDate()
-        // new Date().toLocaleDateString();
-        // toLocaleTimeString();
-        // this.model.TIME = new Date().getTime()
+        this.model.DATE = new Date().toLocaleDateString('en-MY')
+        this.model.TIME = new Date().toLocaleTimeString('en-MY')
       })
   },
   methods: {
