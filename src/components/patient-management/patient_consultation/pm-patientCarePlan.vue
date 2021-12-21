@@ -166,7 +166,7 @@ export default {
 
         MRN: '',
         PATIENT_NAME: '',
-        NRIC_NO: '',
+        NRIC_PASSPORT: '',
         AGE: '',
         CONTACT_NO: '',
         GENDER: '',
@@ -228,14 +228,16 @@ export default {
             styleClasses: 'row',
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Title',
-                model: 'TITLE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'Title: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
-
+              {
+                type: 'label',
+                model: 'TITLE',
+                styleClasses: 'col-lg-4',
+              },
             ],
           },
         ],
@@ -245,60 +247,81 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'MRN',
+                type: 'label',
+                label: 'MRN: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'MRN',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Patient Name',
+                type: 'label',
+                label: 'Patient Name: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'PATIENT_NAME',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'NRIC No',
-                model: 'NRIC_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'NRIC/Passport No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Age',
+                type: 'label',
+                model: 'NRIC_PASSPORT',
+                styleClasses: 'col-lg-4',
+              },
+              {
+                type: 'label',
+                label: 'Age: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'AGE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Contact No',
+                type: 'label',
+                label: 'Contact No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'CONTACT_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
+                type: 'label',
                 label: 'Gender',
-                model: 'GENDER',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
               {
-                type: 'input',
-                inputType: 'date',
-                label: 'DOB',
+                type: 'label',
+                model: 'GENDER',
+                styleClasses: 'col-lg-4',
+              },
+              {
+                type: 'label',
+                label: 'DOB: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DOB',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -309,28 +332,33 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'date',
-                label: 'Date',
-                model: 'STAFF_DATE',
-                format: 'YYYY/MM/DD',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                type: 'label',
+                label: 'Date: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Psychiatrist in Charge',
-                model: 'PSYCHIATRIST',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                model: 'STAFF_DATE',
+                styleClasses: 'col-lg-4',
               },
+              {
+                type: 'label',
+                label: 'Psychiatrist in Charge: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
+                model: 'PSYCHIATRIST',
+                styleClasses: 'col-lg-4',
+              },
+
               {
                 type: 'input',
                 inputType: 'text',
                 label: 'Reason for Review',
                 model: 'INTERVIEW_REVIEW',
-                readonly: true,
                 styleClasses: 'col-md-6',
               },
             ],
@@ -768,7 +796,7 @@ export default {
         this.radioServiceCategory = response.data.serviceCategory
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
-        this.model.NRIC_NO = response.data.patientData[0].nric
+        this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
