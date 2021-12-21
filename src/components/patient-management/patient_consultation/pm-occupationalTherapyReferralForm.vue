@@ -130,7 +130,7 @@ export default {
 
         MRN: '',
         PATIENT_NAME: '',
-        NRIC_NO: '',
+        NRIC_PASSPORT: '',
         AGE: '',
         CONTACT_NO: '',
         GENDER: '',
@@ -157,78 +157,78 @@ export default {
                 type: 'label',
                 label: 'MRN: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'MRN',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Patient Name: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'PATIENT_NAME',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
-                label: 'NRIC No: ',
+                label: 'NRIC/Passport No: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
-                model: 'NRIC_NO',
-                styleClasses: 'col-md-4',
+                model: 'NRIC_PASSPORT',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Age: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'AGE',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Contact No: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'CONTACT_NO',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Gender: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'GENDER',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'DOB: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'DOB',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -394,7 +394,7 @@ export default {
       .then((response) => {
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
-        this.model.NRIC_NO = response.data.patientData[0].nricPassport
+        this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
