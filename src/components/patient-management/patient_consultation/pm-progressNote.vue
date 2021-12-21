@@ -577,7 +577,9 @@ export default {
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
         this.model.DOB = response.data.patientData[0].birthdate
-        // this.model.DATE = new Date().getYear() + '/' + new Date().getMonth() + '/' + new Date().getDate()
+        // this.model.DATE = new Date().getFullYear() + '/' + new Date().getMonth() + '/' + new Date().getDate()
+        // new Date().toLocaleDateString();
+        // toLocaleTimeString();
         // this.model.TIME = new Date().getTime()
       })
   },

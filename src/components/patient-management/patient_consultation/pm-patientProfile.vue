@@ -282,7 +282,7 @@
                   </va-tree-category>
                 </va-tree-category>
                 <va-tree-category label="Referral letters" >
-                  <va-tree-node class="ga-two">Internal Referral (To Hospital/Mentari)</va-tree-node>
+                  <router-link :to="{ name: 'internal_referral_letter'}"><va-tree-node class="ga-two">Internal Referral (To Hospital/Mentari)</va-tree-node></router-link>
                   <va-tree-node class="ga-two">External Referral Form</va-tree-node>
                   <va-tree-node class="ga-two">CPS Referral Form</va-tree-node>
                   <va-tree-node class="ga-two">OCCT Referral Form</va-tree-node>

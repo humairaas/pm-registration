@@ -564,6 +564,12 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-patientCarePlan.vue'),
       },
       {
+        name: 'internal_referral_letter',
+        path: 'internal_referral_letter',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-internalReferralLetter.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>
