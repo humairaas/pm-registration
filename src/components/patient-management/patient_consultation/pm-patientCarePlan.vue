@@ -149,6 +149,7 @@ export default {
         selectServiceCategory3: '',
 
         SERVICE_LOCATION: '',
+        SPECIFY_SERVICE_LOCATION: '',
         TITLE: 'PATIENT CARE PLAN',
         DIAGNOSIS_TYPE: '',
         SERVICE_CATEGORY: '',
@@ -213,6 +214,19 @@ export default {
                 styleClasses: 'col-md-6',
                 values: () => {
                   return this.selectServiceLocation
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                required: true,
+                validator: 'string',
+                model: 'SPECIFY_SERVICE_LOCATION',
+                placeholder: 'Please Specify Location of Services',
+                styleClasses: 'col-md-6',
+                visible: (model) => {
+                  return model && model.SERVICE_LOCATION.value === 7
                 },
               },
             ],
