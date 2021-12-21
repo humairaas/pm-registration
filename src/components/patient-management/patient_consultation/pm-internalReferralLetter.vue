@@ -78,7 +78,7 @@ export default {
       model: {
 
         PATIENT_NAME: '',
-        NRIC_NO: '',
+        NRIC_PASSPORT: '',
         AGE: '',
         CONTACT_NO: '',
         ADDRESS: '',
@@ -103,56 +103,56 @@ export default {
                 type: 'label',
                 label: 'Patient Name: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'PATIENT_NAME',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
-                label: 'NRIC No: ',
+                label: 'NRIC/Passport No: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
-                model: 'NRIC_NO',
-                styleClasses: 'col-md-4',
+                model: 'NRIC_PASSPORT',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Age: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'AGE',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Contact No: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'CONTACT_NO',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
               {
                 type: 'label',
                 label: 'Address: ',
                 featured: true,
-                styleClasses: 'col-md-2',
+                styleClasses: 'col-lg-2',
               },
               {
                 type: 'label',
                 model: 'ADDRESS',
-                styleClasses: 'col-md-4',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -281,13 +281,10 @@ export default {
       .get('http://127.0.0.1:8000/api/getInternalReferralLetterMountedData?patient_id=' + patientId)
       .then((response) => {
         this.model.PATIENT_NAME = response.data.patientData[0].name
-        this.model.NRIC_NO = response.data.patientData[0].nricPassport
+        this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.ADDRESS = response.data.patientData[0].address
-        // + response.data.patientData[0].address2 +
-        //                       response.data.patientData[0].address3 + response.data.patientData[0].postcode +
-        //                       response.data.patientData[0].city + + response.data.patientData[0].state
       })
   },
   methods: {
