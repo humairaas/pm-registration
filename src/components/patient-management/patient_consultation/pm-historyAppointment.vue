@@ -120,7 +120,7 @@
                   </template>
 
                   <template slot="actions" slot-scope="props">
-                    <va-button flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
+                    <va-button v-if="props.rowData.status!=='Completed'" flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
                     </va-button>
                   </template>
 
@@ -188,12 +188,12 @@ export default {
       return newDate
     },
     edit (rowData) {
-      localStorage.setItem('ID', rowData.appointment_id)
+      localStorage.setItem('appointmentId', rowData.appointment_id)
       this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'edit' } })
     },
   },
   mounted () {
-    var patientId = JSON.parse(localStorage.getItem('ID')).patientId
+    var patientId = localStorage.getItem('patientId')
     this.$axios
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
       .then((response) => {

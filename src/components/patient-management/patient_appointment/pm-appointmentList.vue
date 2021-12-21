@@ -184,10 +184,7 @@ export default {
   },
   methods: {
     async showPatientProfile (user) {
-      var ID = {
-        patientId: user.patient_id,
-      }
-      localStorage.setItem('ID', JSON.stringify(ID))
+      localStorage.setItem('patientId', user.patient_id)
       this.$router.push({ path: 'patient-profile' })
     },
     async tick (rowData) {
@@ -199,7 +196,7 @@ export default {
       this.refreshList()
     },
     edit (rowData) {
-      localStorage.setItem('ID', rowData.appointment_id)
+      localStorage.setItem('appointmentId', rowData.appointment_id)
       this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'edit' } })
     },
     async noShow (rowData) {
