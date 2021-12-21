@@ -55,11 +55,6 @@
 
             <!-- Button footer-->
             <div class="mt-3">
-              <div class="float-left">
-                <button @click="cancelAppointment" type="button" class="ml-2 btn btn-fill btn-md btn-red">
-                  CANCEL
-                </button>
-              </div>
               <div class="float-right">
                 <button @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-paper-plane" /> &nbsp; SUBMIT
@@ -618,18 +613,6 @@ export default {
       })
   },
   methods: {
-    async cancelAppointment () {
-      if (this.$route.query.st === 'edit') {
-        var appointmentId = localStorage.getItem('appointmentId')
-        const data = new FormData()
-        data.append('appointmentId', appointmentId)
-        const url = 'http://127.0.0.1:8000/api/deleteAppointment'
-        await this.$axios.post(url, data)
-        this.submitPath = true
-        this.launchToast(' Appointment has been deleted!')
-      }
-      this.$router.push({ name: 'patient-appointmentList' })
-    },
     validateForm () {
       var tabA = this.validateTabA()
       var tabB = this.validateTabB()
