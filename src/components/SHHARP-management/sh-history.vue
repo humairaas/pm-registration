@@ -116,26 +116,23 @@
                   :fields="shharpFields"
                   :data="shharpRecords"
                   :per-page="5"
-                  @row-clicked="showSHHARPform"
-                  :hoverable="true"
-                  clickable
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
                   </template>
 
                   <template slot="date" slot-scope="props">
-                    {{ getDate(props.rowData.dateTime) }}
+                    {{ getDate(props.rowData.timestamp_create) }}
                   </template>
 
                   <template slot="time" slot-scope="props">
-                    {{ getTime(props.rowData.dateTime) }}
+                    {{ getTime(props.rowData.timestamp_create) }}
                   </template>
 
-                  <template slot="actions">
-                    <va-button flat small icon="fa fa-eye" @click="view(props.rowData.patient_id)" style="color: #51ad5e;">
+                  <template slot="actions" slot-scope="props">
+                    <va-button flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
                     </va-button>
-                    <va-button flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.patient_id)">
+                    <va-button flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.shharp_id)">
                     </va-button>
                   </template>
                 </va-data-table>
@@ -188,17 +185,17 @@ export default {
           width: '15%',
         },
         {
-          name: 'status',
+          name: 'shharp_form_status',
           title: 'STATUS',
           width: '10%',
         },
         {
-          name: 'hospital',
+          name: 'sd_hospital_name',
           title: 'HOSPITAL',
           width: '20%',
         },
         {
-          name: 'psychiatrist',
+          name: 'sd_psychiatrist_name',
           title: 'CREATED BY',
           width: '18%',
         },
@@ -217,31 +214,23 @@ export default {
       return newDate
     },
     getTime (datetime) {
-      // return datetime.substring(11, 19)
       const d = new Date(datetime)
       const newDate = d.toLocaleTimeString('en-MY')
       return newDate
     },
-    view (patientId) {
-      var ID = {
-        patientId: patientId,
+    view (id) {
+      var SH = {
+        shharpId: id,
       }
-      localStorage.setItem('ID', JSON.stringify(ID))
+      localStorage.setItem('SH', JSON.stringify(SH))
       this.$router.push({ path: 'shharp-registry', query: { st: 'view' } })
     },
-    editDraft (patientId) {
-      var ID = {
-        patientId: patientId,
+    editDraft (id) {
+      var SH = {
+        shharpId: id,
       }
-      localStorage.setItem('ID', JSON.stringify(ID))
+      localStorage.setItem('SH', JSON.stringify(SH))
       this.$router.push({ path: 'shharp-registry', query: { st: 'edit' } })
-    },
-    async showSHHARPform (shharpRecords) {
-      var SH_ID = {
-        shharpId: shharpRecords.shharp_id,
-      }
-      localStorage.setItem('SH_ID', JSON.stringify(SH_ID))
-      this.$router.push({ name: 'shharp-registry', query: { st: 'edit' } })
     },
   },
   mounted () {
@@ -261,7 +250,7 @@ export default {
     this.$axios
       .get('http://127.0.0.1:8000/api/getSHHARPHistory?patientId=' + getID.patientId)
       .then((response) => {
-        this.shharpRecords = response.data.data
+        this.shharpRecords = (response.data.shharpRecords).slice()
       })
   },
 
