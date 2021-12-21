@@ -2032,34 +2032,90 @@ export default {
     //     this.selectPSYMX = response.data.data
     //   })
 
-    // if (this.$route.query.st === 'edit') {
-    //   var getID = JSON.parse(localStorage.getItem('ID'))
+    if (this.$route.query.st === 'edit' || this.$route.query.st === 'view') {
+      var getID = JSON.parse(localStorage.getItem('SH'))
 
-    //   this.$axios
-    //     .get('http://127.0.0.1:8000/api/getSHHARPFormData?shharpId=' + 49)
-    //     .then((response) => {
-    //       // 1. Risk Factors
-    //       this.model.Q1 = response.data.data[0].q1
-    //       this.model.Q1_SPECIFY = response.data.data[0].q1Specify
-    //       this.model.Q2 = response.data.data[0].Q1
-    //       this.model.Q3 = response.data.data[0].Q1
-    //       this.model.Q3_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q4 = response.data.data[0].Q1
-    //       this.model.Q4_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q5 = response.data.data[0].Q1
-    //       this.model.Q6 = response.data.data[0].Q1
-    //       this.model.Q6_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q7 = response.data.data[0].Q1
-    //       this.model.Q7_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q8 = response.data.data[0].Q1
-    //       this.model.Q8_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q9 = response.data.data[0].Q1
-    //       this.model.Q10 = response.data.data[0].Q1
-    //       this.model.Q10_SPECIFY = response.data.data[0].Q1
-    //       this.model.Q11 = response.data.data[0].Q1
-    //       this.model.Q12 = response.data.data[0].Q1
-    //     })
-    // }
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getSHHARPFormData?shharpId=' + getID.shharpId)
+        .then((response) => {
+          // Risk Factors
+          this.model.Q1 = response.data.data[0].rf1
+          this.model.Q1_SPECIFY = response.data.data[0].rf1_desc
+          this.model.Q2 = response.data.data[0].rf2
+          this.model.Q3 = response.data.data[0].rf3
+          this.model.Q3_SPECIFY = response.data.data[0].rf3_desc
+          this.model.Q4 = response.data.data[0].rf4
+          this.model.Q4_SPECIFY = response.data.data[0].rf4_desc
+          this.model.Q5 = response.data.data[0].rf5
+          this.model.Q6 = response.data.data[0].rf6
+          this.model.Q6_SPECIFY = response.data.data[0].rf6_desc
+          this.model.Q7 = response.data.data[0].rf7
+          this.model.Q7_SPECIFY = response.data.data[0].rf7_desc
+          this.model.Q8 = response.data.data[0].rf8
+          this.model.Q8_SPECIFY = response.data.data[0].rf8_desc
+          this.model.Q9 = response.data.data[0].rf9
+          this.model.Q10 = response.data.data[0].rf10
+          this.model.Q10_SPECIFY = response.data.data[0].rf10_desc
+          this.model.Q11 = response.data.data[0].rf11
+          this.model.Q12 = response.data.data[0].rf12
+
+          // Protective Factors
+          this.model.PQ1 = response.data.data[0].pf1
+          this.model.PQ2 = response.data.data[0].pf2
+          this.model.PQ3 = response.data.data[0].pf3
+          this.model.PQ4 = response.data.data[0].pf4
+          this.model.PQ5 = response.data.data[0].pf5
+          this.model.PQ6 = response.data.data[0].pf6
+
+          // The Self-harm Act and Suicidal Intent
+          this.model.SH_DATE = response.data.data[0].sh_act_date
+          this.model.SH_TIME = response.data.data[0].sh_act_time
+          this.model.OCCUR = { value: response.data.data[0].place_occurance_fk, name: response.data.data[0].occurance }
+          this.model.OCCUR_OTHER_SPECIFY = response.data.data[0].place_occurance_desc
+          // this.model.METHOD: [],
+          this.model.OVERDOSE_TYPE = { value: response.data.data[0].overdose_fk, name: response.data.data[0].overdose }
+          this.model.OVERDOSE_TYPE_SPECIFY = response.data.data[0]
+            .this.model.METHOD_OTHER_SPECIFY = response.data.data[0]
+            // this.model.IDEA: [],
+              .this.model.IDEA_SPECIFY = response.data.data[0]
+              // this.model.INTENT: 1,
+              // this.model.INTENT_YES: [],
+                .this.model.INTENT_OTHER_SPECIFY = response.data.data[0]
+                // this.model.INTENTS: [],
+                  .this.model.INTENT_SCORE = response.data.data[0]
+                    .this.model.INTENT_LEVEL = response.data.data[0]
+
+                    // Suicide Risk
+                      .this.model.RISK_LEVEL = response.data.data[0].sr_level
+
+          // Hospital Management
+          this.model.REFERRAL = { value: response.data.data[0].referral_fk, name: response.data.data[0].referral }
+          this.model.REFERRAL_SPECIFY = response.data.data[0].referral_desc
+          this.model.ARRIVAL_MODE = { value: response.data.data[0].mode_arrival_fk, name: response.data.data[0].arrival }
+          this.model.ARRIVAL_SPECIFY = response.data.data[0].mode_arrival_desc
+          this.model.FIRST_ASSESSMENT_DATE = response.data.data[0].hm_date_first_psychiatry
+          this.model.FIRST_ASSESSMENT_TIME = response.data.data[0].hm_time_first_psychiatry
+          this.model.PHYSICAL_CONSEQ = response.data.data[0].hm_physical_consequence
+          this.model.PHYSICAL_CONSEQ_SPECIFY = response.data.data[0].hm_physical_consequence_desc
+          this.model.ADMISSION = response.data.data[0].hm_admitted
+          this.model.ADMISSION_SPECIFY = response.data.data[0].hm_admitted_desc
+          this.model.DISCHARGE_STATUS = response.data.data[0].hm_discharge_status
+          this.model.DISCHARGE_DATE = response.data.data[0].hm_discharge_date
+          this.model.NO_OF_DAYS = response.data.data[0].hm_days_warded
+          this.model.MAIN_DIAGNOSIS = response.data.data[0].hm_discharge_diagnosis_main
+          this.model.EXTERNAL_DIAGNOSIS = response.data.data[0].hm_discharge_diagnosis_external
+          // this.model.PSYMX = response.data.data[0].hm_psymx
+          // this.model.PSYMX_SPECIFY = response.data.data[0].hm_psymx_desc
+
+          // Source Data Producer
+          this.model.REG_OFF_NAME = response.data.data[0].sd_officer_name
+          this.model.DESIGNATION = response.data.data[0].sd_officer_designation
+          this.model.REPORT_DATE = response.data.data[0].sd_date_reporting
+          this.model.HOSPITAL_NAME = response.data.data[0].sd_hospital_name
+          this.model.PSYCHIATRIST_NAME = response.data.data[0].sd_psychiatrist_name
+          this.model.VERIFICATION_DATE = response.data.data[0].sd_date_verification
+        })
+    }
   },
   methods: {
     saveAsDraft () {
@@ -2082,6 +2138,7 @@ export default {
     validateForm () {
       var status = 'COMPLETED'
       var getID = JSON.parse(localStorage.getItem('ID'))
+      var getSH = JSON.parse(localStorage.getItem('SH'))
       const data = new FormData()
 
       var tabA = this.validateTabA()
@@ -2095,12 +2152,12 @@ export default {
         data.append('shData', JSON.stringify(this.model))
         data.append('formStatus', status)
         this.$axios
-          .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + getID.patientId, data)
+          .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + getID.patientId + '&shharpId=' + getSH.shharpId, data)
           .then((response) => {
             return response.data
           })
 
-        this.launchToast('SHHARP Registry for ' + this.model.DM_NAME + ' Submitted Successfully!')
+        this.launchToast('SHHARP Registry Successfull')
         this.submitPath = true
         this.$router.push({ path: 'shharp-list' })
       }
