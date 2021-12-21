@@ -409,7 +409,7 @@ export default {
         { name: 'Alive', value: 1 },
       ],
 
-      selectPSYMX: [],
+      listPSYMX: [],
 
       // Source Data Producer Data
 
@@ -1852,34 +1852,13 @@ export default {
           {
             styleClasses: ['row', 'align-items-end'],
             fields: [
-              // {
-              //   type: 'checklist',
-              //   label: 'PSY Mx on Discharge',
-              //   model: 'PSYMX',
-              //   required: true,
-              //   validator: 'array',
-              //   styleClasses: ['col-md-6'],
-              //   values: () => {
-              //     return this.selectPSYMX
-              //   },
-              // },
               {
-                type: 'vueMultiSelect',
-                placeholder: 'Please select (can select more than 1)',
+                type: 'checklist',
                 label: 'PSY Mx on Discharge',
                 model: 'PSYMX',
+                listBox: true,
                 required: true,
-                validator: 'required',
-                selectOptions: {
-                  multiple: true,
-                  closeOnSelect: false,
-                  searchable: true,
-                  showLabels: false,
-                  clearOnSelect: true,
-                  maxHeight: 200,
-                  key: 'value',
-                  label: 'name',
-                },
+                validator: 'array',
                 styleClasses: ['col-md-6'],
                 values: () => {
                   return this.selectPSYMX
@@ -1895,11 +1874,46 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  if (model.PSYMX.some(e => e.value === 6)) {
-                    return true
-                  }
+                  return model && model.PSYMX.includes(6)
                 },
               },
+              // {
+              //   type: 'vueMultiSelect',
+              //   placeholder: 'Please select (can select more than 1)',
+              //   label: 'PSY Mx on Discharge',
+              //   model: 'PSYMX',
+              //   required: true,
+              //   validator: 'required',
+              //   selectOptions: {
+              //     multiple: true,
+              //     closeOnSelect: false,
+              //     searchable: true,
+              //     showLabels: false,
+              //     clearOnSelect: true,
+              //     maxHeight: 200,
+              //     key: 'value',
+              //     label: 'name',
+              //   },
+              //   styleClasses: ['col-md-6'],
+              //   values: () => {
+              //     return this.selectPSYMX
+              //   },
+              // },
+              // {
+              //   type: 'input',
+              //   inputType: 'text',
+              //   placeholder: 'Please specify',
+              //   model: 'PSYMX_SPECIFY',
+              //   label: '',
+              //   validator: 'string',
+              //   required: true,
+              //   styleClasses: ['col-md-6'],
+              //   visible: function (model) {
+              //     if (model.PSYMX.some(e => e.value === 6)) {
+              //       return true
+              //     }
+              //   },
+              // },
             ],
           },
         ],
@@ -2005,7 +2019,7 @@ export default {
         this.listIntent = response.data.intent
         this.selectReferral = response.data.referral
         this.selectArrivalMode = response.data.modeArrival
-        this.selectPSYMX = response.data.psyMX
+        this.listPSYMX = response.data.psyMX
       })
 
     // this.$axios

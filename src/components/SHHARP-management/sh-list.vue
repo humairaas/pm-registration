@@ -38,7 +38,6 @@
         />
       </div>
     </div>
-    <h5>{{startDate}}</h5>
 
     <va-data-table
       :fields="fields"
