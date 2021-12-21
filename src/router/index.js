@@ -570,6 +570,12 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-internalReferralLetter.vue'),
       },
       {
+        name: 'occupational_therapy_referral_form',
+        path: 'occupational_therapy_referral_form',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-occupationalTherapyReferralForm.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>

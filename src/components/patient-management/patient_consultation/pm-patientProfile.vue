@@ -285,7 +285,7 @@
                   <router-link :to="{ name: 'internal_referral_letter'}"><va-tree-node class="ga-two">Internal Referral (To Hospital/Mentari)</va-tree-node></router-link>
                   <va-tree-node class="ga-two">External Referral Form</va-tree-node>
                   <va-tree-node class="ga-two">CPS Referral Form</va-tree-node>
-                  <va-tree-node class="ga-two">OCCT Referral Form</va-tree-node>
+                  <router-link :to="{ name: 'occupational_therapy_referral_form'}"><va-tree-node class="ga-two">OCCT Referral Form</va-tree-node></router-link>
                   <va-tree-node class="ga-two">Psychology Referral Form</va-tree-node>
                   <va-tree-node class="ga-two">Rehab Referral Form and Clinical Summary</va-tree-node>
                 </va-tree-category>
