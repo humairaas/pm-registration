@@ -576,6 +576,12 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-occupationalTherapyReferralForm.vue'),
       },
       {
+        name: 'consultation_discharge_note',
+        path: 'consultation_discharge_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-consultationDischargeNote.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>

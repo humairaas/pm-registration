@@ -243,7 +243,7 @@
                     <router-link :to="{ name: 'patient_care_plan'}"><va-tree-node class="ga-two">Patient Care Plan and Case Review Form</va-tree-node></router-link>
                   </va-tree-category>
                   <va-tree-category label="Discharge Notes" >
-                    <va-tree-node class="ga-two">Consultation Discharge Note</va-tree-node>
+                    <router-link :to="{ name: 'consultation_discharge_note'}"><va-tree-node class="ga-two">Consultation Discharge Note</va-tree-node></router-link>
                     <va-tree-node class="ga-two">Rehab Discharge Note</va-tree-node>
                     <va-tree-node class="ga-two">CPI Discharge Note</va-tree-node>
                   </va-tree-category>
