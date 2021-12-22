@@ -564,6 +564,24 @@ export default new Router({
           import('../components/patient-management/patient_consultation/pm-patientCarePlan.vue'),
       },
       {
+        name: 'internal_referral_letter',
+        path: 'internal_referral_letter',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-internalReferralLetter.vue'),
+      },
+      {
+        name: 'occupational_therapy_referral_form',
+        path: 'occupational_therapy_referral_form',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-occupationalTherapyReferralForm.vue'),
+      },
+      {
+        name: 'consultation_discharge_note',
+        path: 'consultation_discharge_note',
+        component: () =>
+          import('../components/patient-management/patient_consultation/pm-consultationDischargeNote.vue'),
+      },
+      {
         name: 'calendar_management',
         path: 'calendar_management',
         component: () =>

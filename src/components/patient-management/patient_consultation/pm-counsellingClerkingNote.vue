@@ -76,11 +76,6 @@
 
             <!-- Button footer-->
             <div class="mt-3">
-              <div class="float-left">
-                <button @click="cancelAppointment" type="button" class="ml-2 btn btn-fill btn-md btn-red">
-                  CANCEL
-                </button>
-              </div>
               <div class="float-right">
                 <button @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-paper-plane" /> &nbsp; SUBMIT
@@ -130,6 +125,7 @@ export default {
         selectServiceCategory3: '',
 
         SERVICE_LOCATION: '',
+        SPECIFY_SERVICE_LOCATION: '',
         TITLE: 'COUNSELLING CLERKING NOTE',
         DIAGNOSIS_TYPE: '',
         SERVICE_CATEGORY: '',
@@ -148,7 +144,7 @@ export default {
 
         MRN: '',
         PATIENT_NAME: '',
-        NRIC_NO: '',
+        NRIC_PASSPORT: '',
         AGE: '',
         CONTACT_NO: '',
         GENDER: '',
@@ -185,20 +181,35 @@ export default {
                   return this.selectServiceLocation
                 },
               },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                required: true,
+                validator: 'string',
+                model: 'SPECIFY_SERVICE_LOCATION',
+                placeholder: 'Please Specify Location of Services',
+                styleClasses: 'col-md-6',
+                visible: (model) => {
+                  return model && model.SERVICE_LOCATION.value === 7
+                },
+              },
             ],
           },
           {
             styleClasses: 'row',
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Title',
-                model: 'TITLE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'Title: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
-
+              {
+                type: 'label',
+                model: 'TITLE',
+                styleClasses: 'col-lg-4',
+              },
             ],
           },
         ],
@@ -208,45 +219,59 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Staff Name/Seen By',
+                type: 'label',
+                label: 'Staff Name/Seen By: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'STAFF_NAME',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Designation',
+                type: 'label',
+                label: 'Designation: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DESIGNATION',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Room',
+                type: 'label',
+                label: 'Room: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'ROOM',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'date',
-                label: 'Date',
+                type: 'label',
+                label: 'Date: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'DATE',
-                format: 'YYYY/MM/DD',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'time',
-                label: 'Time',
+                type: 'label',
+                label: 'Time: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'TIME',
-                readonly: true,
-                styleClasses: ['col-md-6'],
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -257,52 +282,70 @@ export default {
           {
             fields: [
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'MRN',
+                type: 'label',
+                label: 'MRN: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'MRN',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Patient Name',
+                type: 'label',
+                label: 'Patient Name: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'PATIENT_NAME',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'NRIC No',
-                model: 'NRIC_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                type: 'label',
+                label: 'NRIC/Passport No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Age',
+                type: 'label',
+                model: 'NRIC_PASSPORT',
+                styleClasses: 'col-lg-4',
+              },
+              {
+                type: 'label',
+                label: 'Age: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'AGE',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Contact No',
+                type: 'label',
+                label: 'Contact No: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'CONTACT_NO',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
               {
-                type: 'input',
-                inputType: 'text',
-                label: 'Gender',
+                type: 'label',
+                label: 'Gender: ',
+                featured: true,
+                styleClasses: 'col-lg-2',
+              },
+              {
+                type: 'label',
                 model: 'GENDER',
-                readonly: true,
-                styleClasses: 'col-md-6',
+                styleClasses: 'col-lg-4',
               },
             ],
           },
@@ -609,25 +652,15 @@ export default {
         this.radioServiceCategory = response.data.serviceCategory
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
-        this.model.NRIC_NO = response.data.patientData[0].nric
+        this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
         this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
+        this.model.DATE = new Date().toLocaleDateString('en-MY')
+        this.model.TIME = new Date().toLocaleTimeString('en-MY')
       })
   },
   methods: {
-    async cancelAppointment () {
-      if (this.$route.query.st === 'edit') {
-        var appointmentId = localStorage.getItem('appointmentId')
-        const data = new FormData()
-        data.append('appointmentId', appointmentId)
-        const url = 'http://127.0.0.1:8000/api/deleteAppointment'
-        await this.$axios.post(url, data)
-        this.submitPath = true
-        this.launchToast(' Appointment has been deleted!')
-      }
-      this.$router.push({ name: 'patient-appointmentList' })
-    },
     validateForm () {
       var tabA = this.validateTabA()
       var tabB = this.validateTabB()
