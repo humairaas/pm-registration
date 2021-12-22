@@ -56,6 +56,6 @@ module.exports = {
     },
   },
   devServer: {
-    proxy: 'https://example.com',
+    proxy: 'https://example.com/',
   },
 }

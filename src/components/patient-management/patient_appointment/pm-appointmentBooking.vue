@@ -72,24 +72,6 @@ export default {
       selectAppointmentType: [],
       selectVisitType: [],
       selectPatientCategory: [],
-      // selectAppointmentTime: [
-      //   { name: '08:00', value: 1 },
-      //   { name: '08:30', value: 1 },
-      //   { name: '09:00', value: 1 },
-      //   { name: '09:30', value: 1 },
-      //   { name: '10:00', value: 1 },
-      //   { name: '10:30', value: 1 },
-      //   { name: '11:00', value: 1 },
-      //   { name: '11:30', value: 1 },
-      //   { name: '12:00', value: 1 },
-      //   { name: '12:30', value: 1 },
-      //   { name: '14:00', value: 1 },
-      //   { name: '14:30', value: 1 },
-      //   { name: '15:00', value: 1 },
-      //   { name: '15:30', value: 1 },
-      //   { name: '16:00', value: 1 },
-      //   { name: '16:30', value: 1 },
-      // ],
       selectAppointmentDuration: [],
 
       model: {
@@ -145,26 +127,6 @@ export default {
                 validator: 'required',
                 styleClasses: ['col-md-4'],
               },
-              // {
-              //   type: 'vueMultiSelect',
-              //   label: 'Time',
-              //   placeholder: 'Please select',
-              //   model: 'TIME',
-              //   required: true,
-              //   validator: 'required',
-              //   selectOptions: {
-              //     multiple: false,
-              //     closeOnSelect: true,
-              //     maxHeight: 200,
-              //     showLabels: false,
-              //     key: 'value',
-              //     label: 'name',
-              //   },
-              //   styleClasses: 'col-md-4',
-              //   values: () => {
-              //     return this.selectAppointmentTime
-              //   },
-              // },
               {
                 type: 'vueMultiSelect',
                 label: 'Duration',
