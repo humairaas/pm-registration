@@ -166,13 +166,13 @@ export default {
       var errors = this.$refs.triageOutcome.validate()
 
       if (errors) {
-        var getID = JSON.parse(localStorage.getItem('ID'))
+        var patientId = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
         const data = new FormData()
         data.append('triageData', JSON.stringify(this.model))
         this.$axios
-          .post('http://127.0.0.1:8000/api/addTriage?patientId=' + getID.patientId, data)
+          .post('http://127.0.0.1:8000/api/addTriage?patientId=' + patientId, data)
           .then((response) => {
             this.$router.push({ path: 'patient-profile' })
           })

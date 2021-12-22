@@ -19,11 +19,11 @@
             </div>
 
             <div class="row mt-2">
-              <div class="col-xl-9">
+              <div class="col-xl-8">
                 <div class="row mt-2">
-                  <div class="col-sm-4"><b>MITS 2.0 Reference No</b></div>
+                  <div class="col-sm-4"><b>MITS 2.0 Ref No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">MT30399</div>
+                  <div class="col-sm-5">{{pt_data[0].mits_mrn}}</div>
                 </div>
 
                 <div class="row">
@@ -68,12 +68,12 @@
                   <div class="col-sm-5">{{pt_data[0].phone_no_1}}</div>
                 </div>
               </div>
-              <div class="col-xl-3 mb-3">
-                <b>Allergies :</b>
-                <i v-if="empty"> No allergies</i>
-                <div v-for="allergy in allergies" :key="allergy.allergy_desc">
-                  {{allergy.allergy_desc}}
-                </div>
+              <div class="col-xl-4 mb-3">
+                <b>Employment Status :</b>
+                <div>{{pt_data[0].employment_status}}</div>
+                <br>
+                <b>Household Income Status :</b>
+                <div>RM {{pt_data[0].min}} - RM {{pt_data[0].max}}</div>
               </div>
             </div>
           </va-card>
@@ -130,9 +130,9 @@
                   </template>
 
                   <template slot="actions" slot-scope="props">
-                    <va-button flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
+                    <va-button v-if="props.rowData.shharp_form_status=='COMPLETED'" flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
                     </va-button>
-                    <va-button flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.shharp_id)">
+                    <va-button v-if="props.rowData.shharp_form_status=='DRAFT'" flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.shharp_id)">
                     </va-button>
                   </template>
                 </va-data-table>
@@ -153,7 +153,6 @@ export default {
   data () {
     return {
       pt_data: [],
-      allergies: [],
       birthdate: '',
       age: '',
       date: '',
@@ -219,38 +218,28 @@ export default {
       return newDate
     },
     view (id) {
-      var SH = {
-        shharpId: id,
-      }
-      localStorage.setItem('SH', JSON.stringify(SH))
+      localStorage.setItem('SH', id)
       this.$router.push({ path: 'shharp-registry', query: { st: 'view' } })
     },
     editDraft (id) {
-      var SH = {
-        shharpId: id,
-      }
-      localStorage.setItem('SH', JSON.stringify(SH))
+      localStorage.setItem('SH', id)
       this.$router.push({ path: 'shharp-registry', query: { st: 'edit' } })
     },
   },
   mounted () {
-    var getID = JSON.parse(localStorage.getItem('ID'))
+    var patientId = JSON.parse(localStorage.getItem('ID'))
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getSHHARPProfile?patientId=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
         this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-        this.allergies = response.data.allergy
-        if (this.allergies.length > 0) {
-          this.empty = false
-        }
       })
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getSHHARPHistory?patientId=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getSHHARPHistory?patientId=' + patientId)
       .then((response) => {
-        this.shharpRecords = (response.data.shharpRecords).slice()
+        this.shharpRecords = (response.data.data).slice()
       })
   },
 

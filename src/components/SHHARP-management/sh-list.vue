@@ -160,8 +160,8 @@ export default {
       return datetime.substring(0, 10)
     },
     showPatientProfile (user) {
-      localStorage.setItem('patientId', user.patient_id)
-      this.$router.push({ name: 'patient-profile' })
+      localStorage.setItem('ID', user.patient_id)
+      this.$router.push({ name: 'shharp-profile' })
     },
     search: debounce(function (term) {
       this.term = term

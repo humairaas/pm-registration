@@ -133,17 +133,14 @@ export default {
       var errors = this.$refs.vital.validate()
 
       if (errors) {
-        var getID = JSON.parse(localStorage.getItem('ID'))
+        var patientId = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
         const data = new FormData()
         data.append('vitalData', JSON.stringify(this.model))
         this.$axios
-          .post('http://127.0.0.1:8000/api/addVital?patientId=' + getID.patientId, data)
+          .post('http://127.0.0.1:8000/api/addVital?patientId=' + patientId, data)
           .then((response) => {
-            getID.patientVitalId = response.data.patientVitalId
-            localStorage.setItem('ID', JSON.stringify(getID))
-
             this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Vitals Added')

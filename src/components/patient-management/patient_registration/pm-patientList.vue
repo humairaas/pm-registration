@@ -201,7 +201,7 @@ export default {
       return 'grey'
     },
     async showPatientProfile (user) {
-      localStorage.setItem('patientId', user.patient_id)
+      localStorage.setItem('ID', user.patient_id)
       this.$router.push({ path: 'patient-profile' })
     },
     search: debounce(function (term) {

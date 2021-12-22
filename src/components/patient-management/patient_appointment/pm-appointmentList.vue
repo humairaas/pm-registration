@@ -184,7 +184,7 @@ export default {
   },
   methods: {
     async showPatientProfile (user) {
-      localStorage.setItem('patientId', user.patient_id)
+      localStorage.setItem('ID', user.patient_id)
       this.$router.push({ path: 'patient-profile' })
     },
     async tick (rowData) {

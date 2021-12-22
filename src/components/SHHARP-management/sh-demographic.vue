@@ -33,8 +33,11 @@
               <template slot="footer" slot-scope="{
               }">
                 <div class="float-right">
-                  <button @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                  <button v-if="update==false" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
                     <div class="fa fa-paper-plane" /> &nbsp;SUBMIT
+                  </button>
+                  <button v-if="update==true" @click="validateUpdateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
+                    <div class="fa fa-paper-plane" /> &nbsp;UPDATE
                   </button>
                 </div>
               </template>
@@ -83,6 +86,7 @@ export default {
     return {
       tabA: false,
       submitPath: false,
+      update: false,
 
       // Demographic  Data
       radioCitizenship: [],
@@ -542,26 +546,56 @@ export default {
         this.selectNRICType = response.data.NRICType
         this.selectIssuingCountry = response.data.issuingCountry
         this.selectEmpStatus = response.data.employmentStatus
-
-        const tempHousehold = []
-        const n = response.data.householdIncome.length
-        for (var i = 0; i < n; i++) {
-          if (response.data.householdIncome[i].min === 0) {
-            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'Less than RM ' + (response.data.householdIncome[i].max + 1) }
-          } else if (i === n - 1) {
-            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'RM ' + (response.data.householdIncome[i].min) + ' and above' }
-          } else {
-            tempHousehold[i] = { value: response.data.householdIncome[i].value, name: 'RM ' + response.data.householdIncome[i].min + ' - ' + 'RM ' + response.data.householdIncome[i].max }
-          }
-        }
-        this.selectIncomeStatus = tempHousehold
+        this.selectIncomeStatus = this.getHouseholdIncome(response.data.householdIncome)
         this.selectRace = response.data.race
         this.selectReligion = response.data.religion
         this.selectMaritalStatus = response.data.marital
         this.selectEducationLevel = response.data.education
       })
+
+    if (this.$route.query.st === 'edit') {
+      var patientId = JSON.parse(localStorage.getItem('ID'))
+      this.update = true
+
+      this.$axios
+        .get('http://127.0.0.1:8000/api/getSHHARPDemographic?patientId=' + patientId)
+        .then((response) => {
+          this.model.SH_NAME = response.data.data[0].name
+          this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
+          this.model.NRIC_TYPE = { value: response.data.data[0].nric_type_fk, name: response.data.data[0].nric_type }
+          this.model.NRIC_NO = response.data.data[0].nric_no
+          this.model.PASSPORT_NO = response.data.data[0].passport_no
+          this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
+          this.model.ISSUING_COUNTRY = { value: response.data.data[0].issuing_country_fk, name: response.data.data[0].issuing_country }
+          this.model.GENDER = response.data.data[0].gender_fk
+          this.model.BIRTH_DATE = response.data.data[0].birthdate
+          this.model.AGE = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
+          this.model.HOSPITAL_MRN = response.data.data[0].hospital_mrn
+          this.model.MENTARI_MRN = response.data.data[0].mentari_mrn
+          this.model.EMPLOYMENT_STATUS = { value: response.data.data[0].employment_status_fk, name: response.data.data[0].employment_status }
+          this.model.INCOME_STATUS = this.selectIncomeStatus[response.data.data[0].household_income_fk]
+          this.model.RACE = { value: response.data.data[0].ethnic_fk, name: response.data.data[0].ethnic }
+          this.model.RELIGION = { value: response.data.data[0].religion_fk, name: response.data.data[0].religion }
+          this.model.MARITAL_STATUS = { value: response.data.data[0].marital_fk, name: response.data.data[0].marital }
+          this.model.EDUCATION_LEVEL = { value: response.data.data[0].education_fk, name: response.data.data[0].education }
+        })
+    }
   },
   methods: {
+    getHouseholdIncome (response) {
+      const tempHousehold = []
+      const n = response.length
+      for (var i = 0; i < n; i++) {
+        if (response[i].min === 0) {
+          tempHousehold[i] = { value: response[i].value, name: 'Less than RM ' + (response[i].max + 1) }
+        } else if (i === n - 1) {
+          tempHousehold[i] = { value: response[i].value, name: 'RM ' + (response[i].min) + ' and above' }
+        } else {
+          tempHousehold[i] = { value: response[i].value, name: 'RM ' + response[i].min + ' - ' + 'RM ' + response[i].max }
+        }
+      }
+      return tempHousehold
+    },
     validateForm () {
       var tabA = this.validateTabA()
 
@@ -573,14 +607,36 @@ export default {
         this.$axios
           .post('http://127.0.0.1:8000/api/registerDemoSHHARP', data)
           .then((response) => {
-            var ID = {
-              patientId: response.data.patientId,
-              shharpId: response.data.patientPassportId,
-            }
-            localStorage.setItem('ID', JSON.stringify(ID))
-            this.$router.push({ path: '/patient-management/patient-profile' })
+            // var ID = {
+            //   patientId: response.data.patientId,
+            //   shharpId: response.data.patientPassportId,
+            // }
+            localStorage.setItem('ID', response.data.patientId)
+            this.$router.push({ path: 'SHHARP-profile' })
           })
         this.launchToast('Registration Successful')
+      }
+    },
+    validateUpdateForm () {
+      var tabA = this.validateTabA()
+
+      if (tabA) {
+        this.submitPath = true
+        var patientId = JSON.parse(localStorage.getItem('ID'))
+
+        const data = new FormData()
+        data.append('ptData', JSON.stringify(this.model))
+        this.$axios
+          .post('http://127.0.0.1:8000/api/updateSHHARPDemographic?patientId=' + patientId, data)
+          .then((response) => {
+            // var ID = {
+            //   patientId: response.data.patientId,
+            //   shharpId: response.data.patientPassportId,
+            // }
+            localStorage.setItem('ID', response.data.patientId)
+            this.$router.push({ path: 'SHHARP-profile' })
+          })
+        this.launchToast('Details Updated')
       }
     },
     validateTabA () {

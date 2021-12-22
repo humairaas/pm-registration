@@ -590,6 +590,12 @@ export default new Router({
           import('../components/SHHARP-management/sh-registry.vue'),
       },
       {
+        name: 'shharp-profile',
+        path: 'SHHARP-profile',
+        component: () =>
+          import('../components/SHHARP-management/sh-profile.vue'),
+      },
+      {
         name: 'shharp-history',
         path: 'SHHARP-history',
         component: () =>

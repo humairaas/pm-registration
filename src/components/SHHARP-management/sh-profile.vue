@@ -1,15 +1,14 @@
-<!-- Patient Record (Nurse View) -->
 <template>
   <div class="content">
     <div class="container-fluid">
-      <h2 class="patient-name">{{pt_data[0].name}}</h2>
+      <h2 class="patient-name">{{sh_data[0].name}}</h2>
 
       <div class="row">
         <!--Demographic--->
         <div class="col-xl-9 mb-3">
           <va-card :title="$t('Demographic')">
             <div class="float-right">
-              <router-link :to="{ name: 'patient-registration', query: { st: 'edit'}}">
+              <router-link :to="{ name: 'shharp-demographic', query: { st: 'edit'}}">
                 <button type="button" class="btn sizebtn">
                   <div class="fa fa-pencil-square-o"/>
                 </button>
@@ -17,29 +16,29 @@
             </div>
 
             <div class="row mt-2">
-              <div class="col-xl-9">
+              <div class="col-xl-8">
                 <div class="row mt-2">
                   <div class="col-sm-4"><b>MITS 2.0 Ref No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].mits_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data[0].mits_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Hospital's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].hospital_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data[0].hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Mentari's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].mentari_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data[0].mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Gender</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].gender}}</div>
+                  <div class="col-sm-5">{{sh_data[0].gender}}</div>
                 </div>
 
                 <div class="row">
@@ -51,27 +50,22 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Marital Status</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].marital}}</div>
+                  <div class="col-sm-5">{{sh_data[0].marital}}</div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                   <div class="col-sm-4"><b>Nationality</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
                   <div class="col-sm-5">Malaysian</div>
                 </div>
 
-                <div class="row mb-3">
-                  <div class="col-sm-4"><b>Contact No</b></div>
-                  <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].phone_no_1}}</div>
-                </div>
               </div>
-              <div class="col-xl-3 mb-3">
-                <b>Allergies :</b>
-                <i v-if="empty"> No allergies</i>
-                <div v-for="allergy in allergies" :key="allergy.allergy_desc">
-                  {{allergy.allergy_desc}}
-                </div>
+              <div class="col-xl-4 mb-3">
+                <b>Employment Status :</b>
+                <div>{{sh_data[0].employment_status}}</div>
+                <br>
+                <b>Household Income Status :</b>
+                <div>RM {{sh_data[0].min}} - RM {{sh_data[0].max}}</div>
               </div>
             </div>
           </va-card>
@@ -99,8 +93,8 @@
 
       <div class="row">
         <div class="col-xl-9">
-          <!--Visit History--->
           <div class="row mt-3">
+            <!--Visit History--->
             <div class="col-xl-12">
               <va-card :title="$t('Visit History')">
                 <va-data-table
@@ -143,43 +137,43 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Temperature</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].temperature}} &deg;C</div>
+                  <div class="col-sm">{{cl_data[0].temperature}} &deg;C</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Blood Pressure</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].blood_pressure}} mm/Hg</div>
+                  <div class="col-sm">{{cl_data[0].blood_pressure}} mm/Hg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Pulse Rate</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].pulse_rate}} bpm</div>
+                  <div class="col-sm">{{cl_data[0].pulse_rate}} bpm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Weight</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].weight}} kg</div>
+                  <div class="col-sm">{{cl_data[0].weight}} kg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Height</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].height}} cm</div>
+                  <div class="col-sm">{{cl_data[0].height}} cm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>BMI</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].bmi}} kg/m&sup2;</div>
+                  <div class="col-sm">{{cl_data[0].bmi}} kg/m&sup2;</div>
                 </div>
 
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Waist Circumference</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{pt_data[0].waist_circumference}} cm</div>
+                  <div class="col-sm">{{cl_data[0].waist_circumference}} cm</div>
                 </div>
               </va-card>
             </div>
@@ -208,97 +202,6 @@
         <div class="col-xl mt-3">
           <va-card :title="$t('General Actions')">
             <va-tree-root>
-              <!-- Clinical Information -->
-              <va-tree-category label="Clinical Information" class="ga-one">
-                <router-link :to="{ name: 'clinical-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
-                <router-link :to="{ name: 'clinical-information'}"><va-tree-node class="ga-two">Add New Reading</va-tree-node></router-link>
-              </va-tree-category>
-              <!-- Psychometric Test -->
-              <va-tree-category label="Psychometric Test" class="ga-one">
-                <router-link :to="{ name: 'psychometric-test-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
-                <va-tree-category label="Take New Test" >
-                  <va-tree-node class="ga-two">DASS</va-tree-node>
-                  <va-tree-node class="ga-two">PHQ-9</va-tree-node>
-                  <va-tree-node class="ga-two">CBI</va-tree-node>
-                  <va-tree-node class="ga-two">WHO DAS</va-tree-node>
-                  <va-tree-node class="ga-two">BDI</va-tree-node>
-                  <va-tree-node class="ga-two">BAI</va-tree-node>
-                  <va-tree-node class="ga-two">ATQ</va-tree-node>
-                  <va-tree-node class="ga-two">PSP</va-tree-node>
-                  <va-tree-node class="ga-two">Self-Harm Act & Suicidal Intent Scale</va-tree-node>
-                  <va-tree-node class="ga-two">Suicidal Risk</va-tree-node>
-                </va-tree-category>
-              </va-tree-category>
-              <!-- Clinical Documentation -->
-              <va-tree-category label="Clinical Documentation" class="ga-one">
-                <va-tree-category label="Clinical and Intervention Notes" >
-                  <va-tree-category label="Clerking Notes" >
-                    <va-tree-node class="ga-two">Patient Index Form</va-tree-node>
-                    <router-link :to="{ name: 'counselling_clerking_note'}"><va-tree-node class="ga-two">Counsellor Clerking Note</va-tree-node></router-link>
-                    <router-link :to="{ name: 'psychiatry_clerking_note'}"><va-tree-node class="ga-two">Psychiatry Clerking Note</va-tree-node></router-link>
-                  </va-tree-category>
-                  <va-tree-category label="Progress Notes" >
-                    <router-link :to="{ name: 'progress_note'}"><va-tree-node class="ga-two">Progress Note</va-tree-node></router-link>
-                    <router-link :to="{ name: 'counselling_progress_note'}"><va-tree-node class="ga-two">Counselling Progress Note</va-tree-node></router-link>
-                    <router-link :to="{ name: 'patient_care_plan'}"><va-tree-node class="ga-two">Patient Care Plan and Case Review Form</va-tree-node></router-link>
-                  </va-tree-category>
-                  <va-tree-category label="Discharge Notes" >
-                    <va-tree-node class="ga-two">Consultation Discharge Note</va-tree-node>
-                    <va-tree-node class="ga-two">Rehab Discharge Note</va-tree-node>
-                    <va-tree-node class="ga-two">CPI Discharge Note</va-tree-node>
-                  </va-tree-category>
-                </va-tree-category>
-                <va-tree-category label="Consent Forms and Information Sheets" >
-                  <va-tree-category label="Consent Form">
-                    <va-tree-node class="ga-two">CPS Homevisit Consent Form</va-tree-node>
-                    <va-tree-node class="ga-two">CPS Homevisit Withdrawal Form</va-tree-node>
-                    <va-tree-node class="ga-two">CPS Police Referral Form</va-tree-node>
-                    <va-tree-node class="ga-two">Photography Consent Form</va-tree-node>
-                    <va-tree-node class="ga-two">SE Consent Form</va-tree-node>
-                    <va-tree-node class="ga-two">ETP Consent Form</va-tree-node>
-                    <va-tree-node class="ga-two">Job Club Consent Form</va-tree-node>
-                  </va-tree-category>
-                  <va-tree-category label="Information Sheet">
-                    <va-tree-node class="ga-two">Information on CPS</va-tree-node>
-                    <va-tree-node class="ga-two">Information on SE</va-tree-node>
-                    <va-tree-node class="ga-two">Information on ETP/JOB CLUB</va-tree-node>
-                  </va-tree-category>
-                </va-tree-category>
-                <va-tree-category label="Assessment Forms and Checklist" >
-                  <va-tree-category label="Assessment Forms" >
-                    <va-tree-node class="ga-two">Job Commencement Report</va-tree-node>
-                    <va-tree-node class="ga-two">Job Cessation Report</va-tree-node>
-                    <va-tree-node class="ga-two">Job Transition Report</va-tree-node>
-                    <va-tree-node class="ga-two">L.A.S.E.R.Form (Motivation)</va-tree-node>
-                    <router-link :to="{ name: 'triage_form'}"><va-tree-node class="ga-two">Triage Form</va-tree-node></router-link>
-                  </va-tree-category>
-                  <va-tree-category label="Checklist" >
-                    <va-tree-node class="ga-two">Job Interest Checklist</va-tree-node>
-                    <va-tree-node class="ga-two">Work Analysis Form</va-tree-node>
-                    <va-tree-node class="ga-two">List of Job Search</va-tree-node>
-                    <va-tree-node class="ga-two">List of Employment Transition Program</va-tree-node>
-                    <va-tree-node class="ga-two">Log Meeting with Employer</va-tree-node>
-                    <va-tree-node class="ga-two">List of Previous or Current Job</va-tree-node>
-                  </va-tree-category>
-                </va-tree-category>
-                <va-tree-category label="Referral letters" >
-                  <va-tree-node class="ga-two">Internal Referral (To Hospital/Mentari)</va-tree-node>
-                  <va-tree-node class="ga-two">External Referral Form</va-tree-node>
-                  <va-tree-node class="ga-two">CPS Referral Form</va-tree-node>
-                  <va-tree-node class="ga-two">OCCT Referral Form</va-tree-node>
-                  <va-tree-node class="ga-two">Psychology Referral Form</va-tree-node>
-                  <va-tree-node class="ga-two">Rehab Referral Form and Clinical Summary</va-tree-node>
-                </va-tree-category>
-              </va-tree-category>
-              <!-- Appointment -->
-              <va-tree-category label="Appointment" class="ga-one">
-                <router-link :to="{ name: 'appointment-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
-                <router-link :to="{ name: 'patient-appointmentBooking'}"><va-tree-node class="ga-two">Book New Appointment</va-tree-node></router-link>
-              </va-tree-category>
-              <!-- Attachment -->
-              <va-tree-category label="Attachment" class="ga-one">
-                <va-tree-node class="ga-two">Add Attachment</va-tree-node>
-              </va-tree-category>
               <!-- SHHARP -->
               <va-tree-category label="SHHARP" class="ga-one">
                 <router-link :to="{ name: 'shharp-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
@@ -319,8 +222,8 @@
   </div>
 </template>
 <script>
-import visitHistory from '../../../data/visitHistory.json'
-import attachments from '../../../data/attachments.json'
+import visitHistory from '../../data/visitHistory.json'
+import attachments from '../../data/attachments.json'
 
 import VueFormGenerator from 'vue-form-generator'
 import 'vue-form-generator/dist/vfg-core.css'
@@ -342,8 +245,8 @@ export default {
   },
   data () {
     return {
-      pt_data: [],
-      allergies: [],
+      sh_data: [],
+      cl_data: [],
       birthdate: '',
       age: '',
 
@@ -440,17 +343,18 @@ export default {
   mounted () {
     var patientId = JSON.parse(localStorage.getItem('ID'))
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
+      .get('http://127.0.0.1:8000/api/getSHHARPProfile?patientId=' + patientId)
       .then((response) => {
-        this.pt_data = response.data.data
+        this.sh_data = response.data.data
         this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-        this.allergies = response.data.allergy
-        if (this.allergies.length > 0) {
-          this.empty = false
-        }
-        this.appointmentDate = this.getDateTime(response.data.data[0].timestamp_create)
-        this.clinicalDate = this.getDateTime(response.data.data[0].timestamp_create)
+      })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getVital?patientId=' + patientId)
+      .then((response) => {
+        this.cl_data = response.data.vitals
+        this.appointmentDate = this.getDateTime(response.data.vitals[0].timestamp_create)
+        this.clinicalDate = this.getDateTime(response.data.vitals[0].timestamp_create)
       })
   },
 }

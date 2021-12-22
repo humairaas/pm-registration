@@ -21,7 +21,7 @@
             <div class="row mt-2">
               <div class="col-xl-9">
                 <div class="row mt-2">
-                  <div class="col-sm-4"><b>MITS 2.0 Reference No</b></div>
+                  <div class="col-sm-4"><b>MITS 2.0 Ref No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
                   <div class="col-sm-5">MT30399</div>
                 </div>
@@ -253,18 +253,18 @@ export default {
       this.refreshList()
     },
     refreshList () {
-      var getID = JSON.parse(localStorage.getItem('ID'))
+      var patientId = JSON.parse(localStorage.getItem('ID'))
       this.$axios
-        .get('http://127.0.0.1:8000/api/getVital?patientId=' + getID.patientId)
+        .get('http://127.0.0.1:8000/api/getVital?patientId=' + patientId)
         .then((response) => {
           this.vitals = (response.data.vitals).slice()
         })
     },
   },
   mounted () {
-    var getID = JSON.parse(localStorage.getItem('ID'))
+    var patientId = JSON.parse(localStorage.getItem('ID'))
     this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
         this.birthdate = this.getDate(response.data.data[0].birthdate)
@@ -276,7 +276,7 @@ export default {
       })
 
     this.$axios
-      .get('http://127.0.0.1:8000/api/getVital?patientId=' + getID.patientId)
+      .get('http://127.0.0.1:8000/api/getVital?patientId=' + patientId)
       .then((response) => {
         this.vitals = (response.data.vitals).slice()
       })

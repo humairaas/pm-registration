@@ -1881,11 +1881,11 @@ export default {
 
     // Update patient profile
     if (this.$route.query.st === 'edit') {
-      var getID = JSON.parse(localStorage.getItem('ID'))
+      var patientId = JSON.parse(localStorage.getItem('ID'))
       this.update = true
 
       this.$axios
-        .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + getID.patientId)
+        .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + patientId)
         .then((response) => {
           // Demographic
           this.model.SALUTATION = { value: response.data.data[0].salutation_fk, name: response.data.data[0].salutation }
@@ -2043,7 +2043,7 @@ export default {
       var tabD = this.validateTabD()
 
       if (tabA && tabB && tabC && tabD) {
-        var getID = JSON.parse(localStorage.getItem('ID'))
+        var patientId = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
         // if(this.model.DM_STATE == null){
@@ -2053,7 +2053,7 @@ export default {
         const data = new FormData()
         data.append('updateData', JSON.stringify(this.model))
         this.$axios
-          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + getID.patientId + '&allergy1=' + this.patientAllergy1 + '&allergy2=' + this.patientAllergy2 + '&allergy3=' + this.patientAllergy3, data)
+          .post('http://127.0.0.1:8000/api/updatePatientData?patientId=' + patientId + '&allergy1=' + this.patientAllergy1 + '&allergy2=' + this.patientAllergy2 + '&allergy3=' + this.patientAllergy3, data)
           .then((response) => {
             this.$router.push({ path: 'patient-profile' })
           })
