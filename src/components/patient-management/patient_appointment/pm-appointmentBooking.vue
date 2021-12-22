@@ -32,6 +32,8 @@
 
           <va-card>
 
+            <h6>{{this.model}}</h6>
+
             <div class="text-center"><h4 class="mt-4 mb-5 text-dark">BOOK APPOINTMENT</h4></div>
             <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment">
             </vue-form-generator>
@@ -65,38 +67,31 @@ export default {
       tabA: false,
       submitPath: false,
       patientNotExist: false,
+      requestAppointmentId: '',
 
       selectAppointmentType: [],
       selectVisitType: [],
       selectPatientCategory: [],
-      selectAppointmentTime: [
-        { name: '08:00', value: 1 },
-        { name: '08:30', value: 1 },
-        { name: '09:00', value: 1 },
-        { name: '09:30', value: 1 },
-        { name: '10:00', value: 1 },
-        { name: '10:30', value: 1 },
-        { name: '11:00', value: 1 },
-        { name: '11:30', value: 1 },
-        { name: '12:00', value: 1 },
-        { name: '12:30', value: 1 },
-        { name: '14:00', value: 1 },
-        { name: '14:30', value: 1 },
-        { name: '15:00', value: 1 },
-        { name: '15:30', value: 1 },
-        { name: '16:00', value: 1 },
-        { name: '16:30', value: 1 },
-      ],
-      selectAppointmentDuration: [
-        { name: '30 min', value: 1 },
-        { name: '1 hour', value: 1 },
-        { name: '1 hour 30 min', value: 1 },
-        { name: '2 hours', value: 1 },
-        { name: '2 hour 30 min', value: 1 },
-        { name: '3 hours', value: 1 },
-        { name: '3 hour 30 min', value: 1 },
-        { name: '4 hours', value: 1 },
-      ],
+      // selectAppointmentTime: [
+      //   { name: '08:00', value: 1 },
+      //   { name: '08:30', value: 1 },
+      //   { name: '09:00', value: 1 },
+      //   { name: '09:30', value: 1 },
+      //   { name: '10:00', value: 1 },
+      //   { name: '10:30', value: 1 },
+      //   { name: '11:00', value: 1 },
+      //   { name: '11:30', value: 1 },
+      //   { name: '12:00', value: 1 },
+      //   { name: '12:30', value: 1 },
+      //   { name: '14:00', value: 1 },
+      //   { name: '14:30', value: 1 },
+      //   { name: '15:00', value: 1 },
+      //   { name: '15:30', value: 1 },
+      //   { name: '16:00', value: 1 },
+      //   { name: '16:30', value: 1 },
+      // ],
+      selectAppointmentDuration: [],
+
       model: {
         NRIC_PASSPORT_NO: '',
         DATE: '',
@@ -142,25 +137,34 @@ export default {
                 styleClasses: 'col-md-4',
               },
               {
-                type: 'vueMultiSelect',
+                type: 'input',
+                inputType: 'time',
                 label: 'Time',
-                placeholder: 'Please select',
                 model: 'TIME',
                 required: true,
                 validator: 'required',
-                selectOptions: {
-                  multiple: false,
-                  closeOnSelect: true,
-                  maxHeight: 200,
-                  showLabels: false,
-                  key: 'value',
-                  label: 'name',
-                },
-                styleClasses: 'col-md-4',
-                values: () => {
-                  return this.selectAppointmentTime
-                },
+                styleClasses: ['col-md-4'],
               },
+              // {
+              //   type: 'vueMultiSelect',
+              //   label: 'Time',
+              //   placeholder: 'Please select',
+              //   model: 'TIME',
+              //   required: true,
+              //   validator: 'required',
+              //   selectOptions: {
+              //     multiple: false,
+              //     closeOnSelect: true,
+              //     maxHeight: 200,
+              //     showLabels: false,
+              //     key: 'value',
+              //     label: 'name',
+              //   },
+              //   styleClasses: 'col-md-4',
+              //   values: () => {
+              //     return this.selectAppointmentTime
+              //   },
+              // },
               {
                 type: 'vueMultiSelect',
                 label: 'Duration',
@@ -290,21 +294,12 @@ export default {
   },
   mounted () {
     this.$axios
-      .get('http://127.0.0.1:8000/api/getVisitType')
+      .get('http://127.0.0.1:8000/api/getAppointmentMountedData')
       .then((response) => {
-        this.selectVisitType = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getPatientCategory')
-      .then((response) => {
-        this.selectPatientCategory = response.data.data
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getAppointmentType')
-      .then((response) => {
-        this.selectAppointmentType = response.data.data
+        this.selectVisitType = response.data.visitType
+        this.selectPatientCategory = response.data.patientCategory
+        this.selectAppointmentType = response.data.appointmentType
+        this.selectAppointmentDuration = response.data.appointmentDuration
       })
 
     if (this.$route.query.st === 'edit') {
@@ -316,14 +311,20 @@ export default {
           console.log(response.data.data)
           this.model.NRIC_PASSPORT_NO = response.data.data[0].nricPassport
           this.model.DATE = response.data.data[0].date
-          this.model.TIME = { value: 1, name: response.data.data[0].time }
-          this.model.DURATION = { name: response.data.data[0].duration, value: 1 }
+          this.model.TIME = response.data.data[0].time
+          this.model.DURATION = { name: response.data.data[0].durationName, value: response.data.data[0].durationValue }
           this.model.APPOINTMENT_TYPE = { value: response.data.data[0].appointmentTypeValue, name: response.data.data[0].appointmentTypeName }
           this.model.VISIT_TYPE = { value: response.data.data[0].visitTypeValue, name: response.data.data[0].visitTypeName }
           this.model.PATIENT_CATEGORY = { value: response.data.data[0].patientCategoryValue, name: response.data.data[0].patientCategoryName }
           this.model.ASSIGNED_TEAM = { value: response.data.data[0].assignedTeamValue, name: response.data.data[0].assignedTeamName }
           this.model.APPOINTMENT_ID = response.data.data[0].appointment_id
         })
+    }
+
+    if (this.$route.query.st === 'reqAppt') {
+      this.requestAppointmentId = localStorage.getItem('requestAppointmentId')
+      this.model.NRIC_PASSPORT_NO = localStorage.getItem('nricPassport')
+      this.model.PATIENT_FK = localStorage.getItem('patientId')
     }
   },
   methods: {
@@ -341,19 +342,17 @@ export default {
     },
     async validateForm () {
       var tabA = this.validateTabA()
-      var patientVerified = await this.validatePatient()
 
-      if (tabA && patientVerified) {
-        if (this.$route.query.st === 'edit') {
-          const data = new FormData()
-          data.append('apptData', JSON.stringify(this.model))
+      if (this.$route.query.st === 'reqAppt') {
+        if (tabA) {
+          const reqAppt = new FormData()
+          reqAppt.append('requestAppointmentId', this.requestAppointmentId)
           this.$axios
-            .post('http://127.0.0.1:8000/api/updateAppointment', data)
+            .post('http://127.0.0.1:8000/api/deleteRequestAppointment', reqAppt)
             .then((response) => {
               return response.data
             })
-          this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Updated Successful !')
-        } else {
+
           const data = new FormData()
           data.append('apptData', JSON.stringify(this.model))
           this.$axios
@@ -361,10 +360,37 @@ export default {
             .then((response) => {
               return response.data
             })
+
           this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !')
+          this.submitPath = true
+          this.$router.push({ name: 'patient-appointmentList' })
         }
-        this.submitPath = true
-        this.$router.push({ name: 'patient-appointmentList' })
+      } else {
+        var patientVerified = await this.validatePatient()
+        if (tabA && patientVerified) {
+          if (this.$route.query.st === 'edit') {
+            const data = new FormData()
+            data.append('apptData', JSON.stringify(this.model))
+            this.$axios
+              .post('http://127.0.0.1:8000/api/updateAppointment', data)
+              .then((response) => {
+                return response.data
+              })
+            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Updated Successful !')
+          } else {
+            const data = new FormData()
+            data.append('apptData', JSON.stringify(this.model))
+            this.$axios
+              .post('http://127.0.0.1:8000/api/bookAppointment', data)
+              .then((response) => {
+                return response.data
+              })
+
+            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !')
+          }
+          this.submitPath = true
+          this.$router.push({ name: 'patient-appointmentList' })
+        }
       }
     },
     async validatePatient () {

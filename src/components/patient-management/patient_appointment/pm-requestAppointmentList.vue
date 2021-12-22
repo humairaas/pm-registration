@@ -33,8 +33,8 @@
         {{ getDate(props.rowData.date) }}
       </template>
 
-      <template slot="actions">
-        <va-button flat small color="black" icon="fa fa-calendar-o" @click="redirectToBookAppointment()" class="ma-0">
+      <template slot="actions" slot-scope="props">
+        <va-button flat small color="black" icon="fa fa-calendar-o" @click="redirectToBookAppointment(props.rowData)" class="ma-0">
         </va-button>
       </template>
 
@@ -132,8 +132,16 @@ export default {
     getDate (datetime) {
       return datetime.substring(0, 10)
     },
-    redirectToBookAppointment () {
-      this.$router.push({ name: 'patient-appointmentBooking' })
+    async redirectToBookAppointment (rowData) {
+      const data = new FormData()
+      data.append('requestAppointmentData', JSON.stringify(rowData))
+      const url = 'http://127.0.0.1:8000/api/requestAppointmentPartialRegistration'
+      const response = await this.$axios.post(url, data)
+      localStorage.setItem('patientId', JSON.stringify(response.data.patientId))
+
+      localStorage.setItem('requestAppointmentId', rowData.request_appointment_id)
+      localStorage.setItem('nricPassport', rowData.nricPassport)
+      this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'reqAppt' } })
     },
     launchToast () {
       this.showToast(
