@@ -176,7 +176,11 @@ export default {
   },
   methods: {
     getAge (birthdate) {
-      return new Date().getFullYear() - birthdate.toString().substring(0, 4)
+      var age = ''
+      if (birthdate !== null) {
+        age = new Date().getFullYear() - birthdate.toString().substring(0, 4)
+      }
+      return age
     },
     getTrendIcon (user) {
       if (user.trend === 'up') {

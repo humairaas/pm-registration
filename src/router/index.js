@@ -587,6 +587,18 @@ export default new Router({
         component: () =>
           import('../components/patient-management/calendar_management.vue'),
       },
+      {
+        name: 'cbi',
+        path: 'cbi',
+        component: () =>
+          import('../components/patient-management/patient_psychometric_test/Cbi/pm-CBI.vue'),
+      },
+      {
+        name: 'cbi-result',
+        path: 'cbi-result',
+        component: () =>
+          import('../components/patient-management/patient_psychometric_test/Cbi/pm-CBIResult.vue'),
+      },
 
       ],
     },

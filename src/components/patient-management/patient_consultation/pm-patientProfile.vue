@@ -219,7 +219,7 @@
                 <va-tree-category label="Take New Test" >
                   <va-tree-node class="ga-two">DASS</va-tree-node>
                   <va-tree-node class="ga-two">PHQ-9</va-tree-node>
-                  <va-tree-node class="ga-two">CBI</va-tree-node>
+                  <router-link :to="{ name: 'cbi'}"><va-tree-node class="ga-two">CBI</va-tree-node></router-link>
                   <va-tree-node class="ga-two">WHO DAS</va-tree-node>
                   <va-tree-node class="ga-two">BDI</va-tree-node>
                   <va-tree-node class="ga-two">BAI</va-tree-node>
