@@ -495,7 +495,7 @@ export default {
   },
   created () {
     this.$axios.get('https://10.22.120.108:8000/api/getTestRange?type=2')
-      .then((response) => { this.rangeInfo = response.data.data })
+      .then((response) => { this.rangeInfo = response.data.data }) // edited
       .catch(error => {
         console.error('There was an error!', error)
       })
