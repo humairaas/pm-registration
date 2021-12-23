@@ -634,7 +634,7 @@ export default {
             model: 'REFERRAL_LETTER',
             type: 'vfg-custom-file',
             styleClasses: 'col-md-6',
-            hint: '*Please upload excel only (max file size 2MB)',
+            hint: '*Please upload pdf only (max file size 2MB)',
           },
           {
             type: 'input',
