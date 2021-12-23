@@ -137,43 +137,43 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Temperature</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].temperature}} &deg;C</div>
+                  <div class="col-sm">{{sh_data[0].temperature}} &deg;C</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Blood Pressure</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].blood_pressure}} mm/Hg</div>
+                  <div class="col-sm">{{sh_data[0].blood_pressure}} mm/Hg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Pulse Rate</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].pulse_rate}} bpm</div>
+                  <div class="col-sm">{{sh_data[0].pulse_rate}} bpm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Weight</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].weight}} kg</div>
+                  <div class="col-sm">{{sh_data[0].weight}} kg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Height</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].height}} cm</div>
+                  <div class="col-sm">{{sh_data[0].height}} cm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>BMI</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].bmi}} kg/m&sup2;</div>
+                  <div class="col-sm">{{sh_data[0].bmi}} kg/m&sup2;</div>
                 </div>
 
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Waist Circumference</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{cl_data[0].waist_circumference}} cm</div>
+                  <div class="col-sm">{{sh_data[0].waist_circumference}} cm</div>
                 </div>
               </va-card>
             </div>
@@ -246,7 +246,6 @@ export default {
   data () {
     return {
       sh_data: [],
-      cl_data: [],
       birthdate: '',
       age: '',
 
@@ -348,13 +347,8 @@ export default {
         this.sh_data = response.data.data
         this.birthdate = this.getDate(response.data.data[0].birthdate)
         this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-      })
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getVital?patientId=' + patientId)
-      .then((response) => {
-        this.cl_data = response.data.vitals
-        this.appointmentDate = this.getDateTime(response.data.vitals[0].timestamp_create)
-        this.clinicalDate = this.getDateTime(response.data.vitals[0].timestamp_create)
+        this.appointmentDate = this.getDateTime(response.data.data[0].timestamp_create)
+        this.clinicalDate = this.getDateTime(response.data.data[0].timestamp_create)
       })
   },
 }

@@ -607,10 +607,6 @@ export default {
         this.$axios
           .post('http://127.0.0.1:8000/api/registerDemoSHHARP', data)
           .then((response) => {
-            // var ID = {
-            //   patientId: response.data.patientId,
-            //   shharpId: response.data.patientPassportId,
-            // }
             localStorage.setItem('ID', response.data.patientId)
             this.$router.push({ path: 'SHHARP-profile' })
           })
@@ -629,10 +625,6 @@ export default {
         this.$axios
           .post('http://127.0.0.1:8000/api/updateSHHARPDemographic?patientId=' + patientId, data)
           .then((response) => {
-            // var ID = {
-            //   patientId: response.data.patientId,
-            //   shharpId: response.data.patientPassportId,
-            // }
             localStorage.setItem('ID', response.data.patientId)
             this.$router.push({ path: 'SHHARP-profile' })
           })
