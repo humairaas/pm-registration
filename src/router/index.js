@@ -589,15 +589,27 @@ export default new Router({
       },
       {
         name: 'cbi',
-        path: 'cbi',
+        path: 'CBI',
         component: () =>
-          import('../components/patient-management/patient_psychometric_test/Cbi/pm-CBI.vue'),
+          import('../components/patient-management/patient_psychometric_test/CBI/pm-CBI.vue'),
       },
       {
         name: 'cbi-result',
-        path: 'cbi-result',
+        path: 'CBI-result',
         component: () =>
-          import('../components/patient-management/patient_psychometric_test/Cbi/pm-CBIResult.vue'),
+          import('../components/patient-management/patient_psychometric_test/CBI/pm-CBIResult.vue'),
+      },
+      {
+        name: 'dass',
+        path: 'DASS',
+        component: () =>
+          import('../components/patient-management/patient_psychometric_test/DASS/pm-DASS.vue'),
+      },
+      {
+        name: 'dass-result',
+        path: 'DASS-result',
+        component: () =>
+          import('../components/patient-management/patient_psychometric_test/DASS/pm-DASSResult.vue'),
       },
 
       ],

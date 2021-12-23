@@ -689,4 +689,23 @@ export default {
     width: 500px;
   }
 }
+
+.groupBtn {
+  margin-top: 10px;
+  display: inline-flex;
+  float: right;
+}
+
+.odd-row {
+  background-color: rgb(240, 240, 240) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+}
+
+.even-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+}
 </style>
