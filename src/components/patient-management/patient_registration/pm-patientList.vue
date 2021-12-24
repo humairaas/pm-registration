@@ -157,21 +157,11 @@ export default {
   },
   mounted () {
     this.$axios
-      .get('http://127.0.0.1:8000/api/getService')
-      .then((response) => {
-        this.selectService = response.data.data.map(function (obj) { return obj.name })
-      })
-
-    this.$axios
-      .get('http://127.0.0.1:8000/api/getBranch')
-      .then((response) => {
-        this.selectBranch = response.data.data.map(function (obj) { return obj.name })
-      })
-
-    this.$axios
       .get('http://127.0.0.1:8000/api/getPatientList')
       .then((response) => {
         this.users = response.data.data
+        this.selectService = response.data.service
+        this.selectBranch = response.data.branch
       })
   },
   methods: {
