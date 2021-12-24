@@ -359,24 +359,24 @@ export default {
       ],
 
       selectSubstance: [
-        { name: 'Alcohol', value: 0 },
-        { name: 'Opioids', value: 1 },
-        { name: 'Cannabinoids', value: 2 },
-        { name: 'Sedatives or hypnotics', value: 3 },
-        { name: 'Cocaine', value: 4 },
-        { name: 'Other stimulants (including amphetamine-type)', value: 5 },
-        { name: 'Hallucinogens', value: 6 },
-        { name: 'Volatile solvents', value: 7 },
+        { name: 'Alcohol', value: 1 },
+        { name: 'Opioids', value: 2 },
+        { name: 'Cannabinoids', value: 3 },
+        { name: 'Sedatives or hypnotics', value: 4 },
+        { name: 'Cocaine', value: 5 },
+        { name: 'Other stimulants (including amphetamine-type)', value: 6 },
+        { name: 'Hallucinogens', value: 7 },
+        { name: 'Volatile solvents', value: 8 },
       ],
 
       selectStressfulLifeEvents: [
-        { name: 'Intimate relationship problems', value: 0 },
-        { name: 'Other relationship problems', value: 1 },
-        { name: 'Death of loved one', value: 2 },
-        { name: 'Job-related problems', value: 3 },
-        { name: 'Financial problems', value: 4 },
-        { name: 'Academic-related problems', value: 5 },
-        { name: 'Criminals/Legal problems', value: 6 },
+        { name: 'Intimate relationship problems', value: 1 },
+        { name: 'Other relationship problems', value: 2 },
+        { name: 'Death of loved one', value: 3 },
+        { name: 'Job-related problems', value: 4 },
+        { name: 'Financial problems', value: 5 },
+        { name: 'Academic-related problems', value: 6 },
+        { name: 'Criminals/Legal problems', value: 7 },
       ],
 
       // Protective Factors Data
@@ -395,21 +395,21 @@ export default {
       selectArrivalMode: [],
 
       radioPhysicalConseq: [
-        { name: 'No significant physical harm, no medical treatment required', value: 0 },
-        { name: 'Medical attention/surgery required, but no danger to life', value: 1 },
-        { name: 'Medical attention/surgery required, had/has danger to life', value: 2 },
-        { name: 'Lethal', value: 3 },
+        { name: 'No significant physical harm, no medical treatment required', value: 1 },
+        { name: 'Medical attention/surgery required, but no danger to life', value: 2 },
+        { name: 'Medical attention/surgery required, had/has danger to life', value: 3 },
+        { name: 'Lethal', value: 4 },
         { name: 'Aborted (specify)', value: 99 },
       ],
 
       radioAdmission: [
-        { name: 'No', value: 0 },
-        { name: 'Yes', value: 1 },
+        { name: 'No', value: 1 },
+        { name: 'Yes', value: 2 },
       ],
 
       radioDischargeStatus: [
-        { name: 'Dead', value: 0 },
-        { name: 'Alive', value: 1 },
+        { name: 'Dead', value: 1 },
+        { name: 'Alive', value: 2 },
       ],
 
       listPSYMX: [],
@@ -457,10 +457,25 @@ export default {
         METHOD_OTHER_SPECIFY: '',
         IDEA: [],
         IDEA_SPECIFY: '',
-        INTENT: 1,
+        INTENT: 2,
         INTENT_YES: [],
         INTENT_OTHER_SPECIFY: '',
-        INTENTS: [],
+        SH1: '',
+        SH2: '',
+        SH3: '',
+        SH4: '',
+        SH5: '',
+        SH6: '',
+        SH7: '',
+        SH8: '',
+        SH9: '',
+        SH10: '',
+        SH11: '',
+        SH12: '',
+        SH13: '',
+        SH14: '',
+        SH15: '',
+        // INTENTS: [],
         INTENT_SCORE: '',
         INTENT_LEVEL: '',
 
@@ -509,12 +524,15 @@ export default {
                 type: 'radios',
                 model: 'Q1',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q1_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -536,7 +554,7 @@ export default {
                   return this.selectDiagnosis
                 },
                 visible: function (model) {
-                  return model && model.Q1 === 1
+                  return model && model.Q1 === 2
                 },
               },
             ],
@@ -553,8 +571,8 @@ export default {
                 type: 'radios',
                 model: 'Q2',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -574,13 +592,17 @@ export default {
                 type: 'radios',
                 model: 'Q3',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q3_SPECIFY = ''
+                },
               },
+
               {
                 type: 'input',
                 inputType: 'number',
@@ -591,7 +613,7 @@ export default {
                 validator: 'number',
                 styleClasses: 'col-md',
                 visible: function (model) {
-                  return model && model.Q3 === 1
+                  return model && model.Q3 === 2
                 },
               },
             ],
@@ -608,12 +630,15 @@ export default {
                 type: 'radios',
                 model: 'Q4',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q4_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -634,7 +659,7 @@ export default {
                   return this.selectSubstance
                 },
                 visible: function (model) {
-                  return model && model.Q4 === 1
+                  return model && model.Q4 === 2
                 },
               },
             ],
@@ -651,8 +676,8 @@ export default {
                 type: 'radios',
                 model: 'Q5',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -672,12 +697,15 @@ export default {
                 type: 'radios',
                 model: 'Q6',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q6_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -699,7 +727,7 @@ export default {
                   return this.selectDiagnosis
                 },
                 visible: function (model) {
-                  return model && model.Q6 === 1
+                  return model && model.Q6 === 2
                 },
               },
             ],
@@ -716,12 +744,15 @@ export default {
                 type: 'radios',
                 model: 'Q7',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q7_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -742,7 +773,7 @@ export default {
                   return this.selectSubstance
                 },
                 visible: function (model) {
-                  return model && model.Q7 === 1
+                  return model && model.Q7 === 2
                 },
               },
             ],
@@ -759,12 +790,15 @@ export default {
                 type: 'radios',
                 model: 'Q8',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q8_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -785,7 +819,7 @@ export default {
                   return this.selectStressfulLifeEvents
                 },
                 visible: function (model) {
-                  return model && model.Q8 === 1
+                  return model && model.Q8 === 2
                 },
               },
             ],
@@ -802,8 +836,8 @@ export default {
                 type: 'radios',
                 model: 'Q9',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -823,12 +857,15 @@ export default {
                 type: 'radios',
                 model: 'Q10',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q10_SPECIFY = ''
+                },
               },
               {
                 type: 'vueMultiSelect',
@@ -849,7 +886,7 @@ export default {
                   return this.selectDiagnosis
                 },
                 visible: function (model) {
-                  return model && model.Q10 === 1
+                  return model && model.Q10 === 2
                 },
               },
             ],
@@ -866,8 +903,8 @@ export default {
                 type: 'radios',
                 model: 'Q11',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -887,8 +924,8 @@ export default {
                 type: 'radios',
                 model: 'Q12',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -913,8 +950,8 @@ export default {
                 type: 'radios',
                 model: 'PQ1',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -934,8 +971,8 @@ export default {
                 type: 'radios',
                 model: 'PQ2',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -955,8 +992,8 @@ export default {
                 type: 'radios',
                 model: 'PQ3',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -976,8 +1013,8 @@ export default {
                 type: 'radios',
                 model: 'PQ4',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -997,8 +1034,8 @@ export default {
                 type: 'radios',
                 model: 'PQ5',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -1018,8 +1055,8 @@ export default {
                 type: 'radios',
                 model: 'PQ6',
                 values: [
-                  { name: 'No', value: 0 },
-                  { name: 'Yes', value: 1 },
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
                 ],
                 required: true,
                 validator: 'required',
@@ -1191,9 +1228,9 @@ export default {
             label: 'Was there an intent?',
             model: 'INTENT',
             values: [
-              { value: 0, name: 'No' },
-              { value: 1, name: 'Yes' },
-              { value: 2, name: 'Undetermined' },
+              { value: 1, name: 'No' },
+              { value: 2, name: 'Yes' },
+              { value: 3, name: 'Undetermined' },
             ],
             required: true,
             validator: 'required',
@@ -1207,7 +1244,7 @@ export default {
             type: 'label',
             label: '<h6 class="mt-3 mb-4">Instruction: Please tick (/) in the box<br>If yes, mode of expression (can tick more than 1)</h6>',
             visible: function (model) {
-              return model && model.INTENT === 1
+              return model && model.INTENT === 2
             },
           },
           {
@@ -1218,7 +1255,7 @@ export default {
             },
             listBox: true,
             visible: function (model) {
-              return model && model.INTENT === 1
+              return model && model.INTENT === 2
             },
             required: true,
             validator: 'array',
@@ -1230,7 +1267,7 @@ export default {
             model: 'INTENT_OTHER_SPECIFY',
             placeholder: 'Please specify',
             visible: function (model) {
-              if (model.INTENT === 1) {
+              if (model.INTENT === 2) {
                 return model && model.INTENT_YES.includes(99)
               }
             },
@@ -1246,7 +1283,7 @@ export default {
           {
             type: 'radios',
             label: '<b>1. Isolation</b>',
-            model: 'INTENTS[0]',
+            model: 'SH1',
             values: [
               { value: 0, name: 'Somebody present' },
               { value: 1, name: 'Somebody nearby, or in visual or vocal contact' },
@@ -1263,7 +1300,7 @@ export default {
           {
             type: 'radios',
             label: '<b>2. Timing</b>',
-            model: 'INTENTS[1]',
+            model: 'SH2',
             values: [
               { value: 0, name: 'Intervention is probable' },
               { value: 1, name: 'Intervention is not likely' },
@@ -1280,7 +1317,7 @@ export default {
           {
             type: 'radios',
             label: '<b>3. Precautions against discovery / intervention</b>',
-            model: 'INTENTS[2]',
+            model: 'SH3',
             values: [
               { value: 0, name: 'No precautions' },
               { value: 1, name: 'Passive precautions (eg; alone in room with unlocked door)' },
@@ -1297,7 +1334,7 @@ export default {
           {
             type: 'radios',
             label: '<b>4. Acting to get help during / after attempt</b>',
-            model: 'INTENTS[3]',
+            model: 'SH4',
             values: [
               { value: 0, name: 'Notified potential helper regarding attempt' },
               { value: 1, name: 'Contacted but did not specifically notify regarding attempt' },
@@ -1314,7 +1351,7 @@ export default {
           {
             type: 'radios',
             label: '<b>5. Final acts in anticipating of death (will, gifts, insurance)</b>',
-            model: 'INTENTS[4]',
+            model: 'SH5',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Thought about or made some arrangements' },
@@ -1331,7 +1368,7 @@ export default {
           {
             type: 'radios',
             label: '<b>6. Active preparation for attempt</b>',
-            model: 'INTENTS[5]',
+            model: 'SH6',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Minimal to moderate' },
@@ -1348,7 +1385,7 @@ export default {
           {
             type: 'radios',
             label: '<b>7. Suicide note</b>',
-            model: 'INTENTS[6]',
+            model: 'SH7',
             values: [
               { value: 0, name: 'Absence of note' },
               { value: 1, name: 'Note written, but torn up; note thought about' },
@@ -1365,7 +1402,7 @@ export default {
           {
             type: 'radios',
             label: '<b>8. Overt communication of intent before the attempt</b>',
-            model: 'INTENTS[7]',
+            model: 'SH8',
             values: [
               { value: 0, name: 'None' },
               { value: 1, name: 'Equivocal communication' },
@@ -1382,7 +1419,7 @@ export default {
           {
             type: 'radios',
             label: '<b>9. Allged purpose of attempt</b>',
-            model: 'INTENTS[8]',
+            model: 'SH9',
             values: [
               { value: 0, name: 'To manipulate environment, get attention, get revenge' },
               { value: 1, name: 'Components of above and below' },
@@ -1399,7 +1436,7 @@ export default {
           {
             type: 'radios',
             label: '<b>10. Expectations of fatality</b>',
-            model: 'INTENTS[9]',
+            model: 'SH10',
             values: [
               { value: 0, name: 'Thought that death was unlikely' },
               { value: 1, name: 'Thought that death was possible but not probable' },
@@ -1416,7 +1453,7 @@ export default {
           {
             type: 'radios',
             label: "<b>11. Conception of method's lethality</b>",
-            model: 'INTENTS[10]',
+            model: 'SH11',
             values: [
               { value: 0, name: 'Did less to self that s/he thought would be lethal' },
               { value: 1, name: "Wasn't sure if what s/he did would be lethal" },
@@ -1433,7 +1470,7 @@ export default {
           {
             type: 'radios',
             label: '<b>12. Seriousness of attempt</b>',
-            model: 'INTENTS[11]',
+            model: 'SH12',
             values: [
               { value: 0, name: 'Did not seriously attempt to end life' },
               { value: 1, name: 'Uncertain about seriousness to end life' },
@@ -1450,7 +1487,7 @@ export default {
           {
             type: 'radios',
             label: '<b>13. Attitude towards living/dying</b>',
-            model: 'INTENTS[12]',
+            model: 'SH13',
             values: [
               { value: 0, name: 'Did not want to die' },
               { value: 1, name: 'Components of above and below' },
@@ -1467,7 +1504,7 @@ export default {
           {
             type: 'radios',
             label: '<b>14. Conception of medical rescuability</b>',
-            model: 'INTENTS[13]',
+            model: 'SH14',
             values: [
               { value: 0, name: 'Thought death would be unlikely if received medical attention' },
               { value: 1, name: 'Was uncertain if death could be averted by medical attention' },
@@ -1484,7 +1521,7 @@ export default {
           {
             type: 'radios',
             label: '<b>15. Degree of premeditation</b>',
-            model: 'INTENTS[14]',
+            model: 'SH15',
             values: [
               { value: 0, name: 'None; impulsive' },
               { value: 1, name: 'Suicide contemplated for 3 hours or less prior to attempt' },
@@ -1528,15 +1565,13 @@ export default {
             onSubmit: (model) => {
               var errors = this.validateTabCE1()
               if (errors) {
-                var score = 0
-                for (let i = 0; i < model.INTENTS.length; i++) {
-                  score += model.INTENTS[i]
-                }
+                var score = model.SH1 + model.SH2 + model.SH3 + model.SH4 + model.SH5 + model.SH6 + model.SH7 + model.SH8 + model.SH9 + model.SH10 + model.SH11 + model.SH12 + model.SH13 + model.SH14 + model.SH15
+
                 model.INTENT_SCORE = score
 
-                if (model.INTENT_SCORE <= 10) {
+                if (score <= 10) {
                   model.INTENT_LEVEL = 'Low Intent'
-                } else if (model.INTENT_SCORE > 10 && model.INTENT_SCORE <= 20) {
+                } else if (score > 10 && score <= 20) {
                   model.INTENT_LEVEL = 'Medium Intent'
                 } else {
                   model.INTENT_LEVEL = 'High Intent'
@@ -1770,7 +1805,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.ADMISSION === 1
+                  return model && model.ADMISSION === 2
                 },
               },
             ],
@@ -1864,7 +1899,7 @@ export default {
                 validator: 'array',
                 styleClasses: ['col-md-6'],
                 values: () => {
-                  return this.selectPSYMX
+                  return this.listPSYMX
                 },
               },
               {
@@ -1877,7 +1912,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.PSYMX.includes(6)
+                  return model && model.PSYMX.includes(99)
                 },
               },
               // {
@@ -2008,8 +2043,10 @@ export default {
     }
   },
   mounted () {
-    window.onbeforeunload = function () {
-      return 'Data will be lost if you leave the page, are you sure?'
+    if (!this.view) {
+      window.onbeforeunload = function () {
+        return 'Data will be lost if you leave the page, are you sure?'
+      }
     }
 
     this.$axios
@@ -2066,28 +2103,26 @@ export default {
 
           // Risk Factors
           this.model.Q1 = data.rf1
-          if (data.rf1 === 1) {
+          if (data.rf1 === 2) {
             this.model.Q1_SPECIFY = data.rf1_desc.split(',')
           }
           this.model.Q2 = data.rf2
           this.model.Q3 = data.rf3
-          if (data.rf3 === 1) {
-            this.model.Q3_SPECIFY = data.rf3_desc.split(',')
-          }
+          this.model.Q3_SPECIFY = data.rf3_desc
           this.model.Q4 = data.rf4
-          this.model.Q4_SPECIFY = this.selectSubstance[data.rf4_desc]
+          this.model.Q4_SPECIFY = this.selectSubstance[data.rf4_desc - 1]
           this.model.Q5 = data.rf5
           this.model.Q6 = data.rf6
-          if (data.rf6 === 1) {
+          if (data.rf6 === 2) {
             this.model.Q6_SPECIFY = data.rf6_desc.split(',')
           }
           this.model.Q7 = data.rf7
-          this.model.Q7_SPECIFY = this.selectSubstance[data.rf7_desc]
+          this.model.Q7_SPECIFY = this.selectSubstance[data.rf7_desc - 1]
           this.model.Q8 = data.rf8
-          this.model.Q8_SPECIFY = this.selectStressfulLifeEvents[data.rf8_desc]
+          this.model.Q8_SPECIFY = this.selectStressfulLifeEvents[data.rf8_desc - 1]
           this.model.Q9 = data.rf9
           this.model.Q10 = data.rf10
-          if (data.rf10 === 1) {
+          if (data.rf10 === 2) {
             this.model.Q10_SPECIFY = data.rf10_desc.split(',')
           }
           this.model.Q11 = data.rf11
@@ -2151,7 +2186,21 @@ export default {
           }
           this.model.INTENT_YES = arrIntent
 
-          this.model.INTENTS = [data.sh_level_1, data.sh_level_2, data.sh_level_3, data.sh_level_4, data.sh_level_5, data.sh_level_6, data.sh_level_7, data.sh_level_8, data.sh_level_9, data.sh_level_10, data.sh_level_11, data.sh_level_12, data.sh_level_13, data.sh_level_14, data.sh_level_15]
+          this.model.SH1 = data.sh_level_1
+          this.model.SH2 = data.sh_level_2
+          this.model.SH3 = data.sh_level_3
+          this.model.SH4 = data.sh_level_4
+          this.model.SH5 = data.sh_level_5
+          this.model.SH6 = data.sh_level_6
+          this.model.SH7 = data.sh_level_7
+          this.model.SH8 = data.sh_level_8
+          this.model.SH9 = data.sh_level_9
+          this.model.SH10 = data.sh_level_10
+          this.model.SH11 = data.sh_level_11
+          this.model.SH12 = data.sh_level_12
+          this.model.SH13 = data.sh_level_13
+          this.model.SH14 = data.sh_level_14
+          this.model.SH15 = data.sh_level_15
           this.model.INTENT_SCORE = data.sh_level_score
 
           if (data.sh_level_score <= 10) {
@@ -2182,13 +2231,18 @@ export default {
           this.model.MAIN_DIAGNOSIS = data.hm_discharge_diagnosis_main
           this.model.EXTERNAL_DIAGNOSIS = data.hm_discharge_diagnosis_external
 
-          // let psymx_arr = data.hm_psymx.split(',')
+          // psy_mx
+          var tempPSYMX = response.data.psy_mx
+          var arrPSYMX = []
 
-          // for(var i=0; i < psymx_arr.length; i++){
+          for (let i = 0; i < tempPSYMX.length; i++) {
+            arrPSYMX[i] = tempPSYMX[i].hm_psy_mx_fk
 
-          // }
-          // this.model.PSYMX = this.selectPSYMX[data.hm_psymx]
-          // this.model.PSYMX_SPECIFY = data.hm_psymx_desc
+            if (arrPSYMX[i] === 99) {
+              this.model.PSYMX_SPECIFY = tempPSYMX[i].hm_psy_mx_desc
+            }
+          }
+          this.model.PSYMX = arrPSYMX
 
           // Source Data Producer
           this.model.REG_OFF_NAME = data.sd_officer_name
@@ -2217,14 +2271,14 @@ export default {
           })
       } else {
         this.$axios
-          .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + patientId + '&shharpId=' + shharpId, data)
+          .post('http://127.0.0.1:8000/api/registerSHHARP?patientId=' + patientId, data)
           .then((response) => {
             return response.data
           })
       }
       this.launchToast(' Saved As Draft Successfully!')
       this.submitPath = true
-      this.$router.push({ path: 'shharp-list' })
+      this.$router.push({ path: 'shharp-history' })
     },
     validateForm () {
       var status = 'COMPLETED'
@@ -2257,7 +2311,7 @@ export default {
         }
         this.launchToast('SHHARP Registry Successfull')
         this.submitPath = true
-        this.$router.push({ path: 'shharp-list' })
+        this.$router.push({ path: 'shharp-history' })
       }
     },
     validateTabA () {
@@ -2407,7 +2461,7 @@ export default {
     },
   },
   beforeRouteLeave (to, from, next) {
-    if (this.submitPath === true) {
+    if (this.view || this.submitPath) {
       next(true)
     } else {
       const answer = window.confirm('Changes you made may not be saved.')

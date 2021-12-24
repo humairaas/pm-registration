@@ -2027,9 +2027,7 @@ export default {
         this.$axios
           .post('http://127.0.0.1:8000/api/registerPatient', data)
           .then((response) => {
-            var ID = {
-              patientId: response.data.patientId,
-            }
+            var ID = response.data.patientId
             localStorage.setItem('ID', JSON.stringify(ID))
             this.$router.push({ path: 'patient-profile' })
           })

@@ -132,10 +132,6 @@ export const navigationRoutes = {
       name: 'shharp-list',
       displayName: 'SHHARP List',
     },
-    {
-      name: 'shharp-registry',
-      displayName: 'SHHARP Registry',
-    },
     ],
   },
   {
