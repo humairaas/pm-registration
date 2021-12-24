@@ -55,7 +55,4 @@ module.exports = {
       importWorkboxFrom: 'local',
     },
   },
-  devServer: {
-    proxy: 'https://example.com/',
-  },
 }

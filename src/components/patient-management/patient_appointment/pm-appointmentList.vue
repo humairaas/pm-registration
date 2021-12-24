@@ -51,6 +51,20 @@
         {{ row.rowIndex + 1 }}
       </template>
 
+      <template slot="status" slot-scope="props">
+        <span style="background-color: #c2b013 !important;" v-if="props.rowData.status === 'Completed'">
+          {{ props.rowData.status }}
+        </span>
+        <div v-else>
+          {{ props.rowData.status }}
+        </div>
+      </template>
+
+      <template #colgroup>
+        <col span="2">
+        <col class="table-example--slots">
+      </template>
+
       <template slot="actions" slot-scope="props">
         <va-button flat small color="#61CE70" icon="fa fa-check" @click="tick(props.rowData)" class="ma-0">
         </va-button>
@@ -137,7 +151,7 @@ export default {
           width: '15%',
         },
         {
-          name: 'status',
+          name: '__slot:status',
           title: this.$t('STATUS'),
           width: '5%',
         },
@@ -248,5 +262,9 @@ thead {
 .va-card__header-title {
   color: #000000 !important;
   font-size: 1rem !important;
+}
+
+.table-example--slots {
+  background-color: #bb3636;
 }
 </style>
