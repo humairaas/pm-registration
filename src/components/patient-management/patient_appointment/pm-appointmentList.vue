@@ -69,6 +69,10 @@
         </span>
       </template>
 
+      <template slot="date" slot-scope="props">
+        {{ getDate(props.rowData.date) }}
+      </template>
+
       <template slot="actions" slot-scope="props">
         <va-button flat small color="#61CE70" icon="fa fa-check" @click="tick(props.rowData)" class="ma-0">
         </va-button>
@@ -160,7 +164,7 @@ export default {
           width: '5%',
         },
         {
-          name: 'date',
+          name: '__slot:date',
           title: this.$t('APPT. DATE'),
           width: '10%',
         },
@@ -201,6 +205,11 @@ export default {
     },
   },
   methods: {
+    getDate (datetime) {
+      const d = new Date(datetime)
+      const newDate = d.toLocaleDateString('en-MY')
+      return newDate
+    },
     async showPatientProfile (user) {
       localStorage.setItem('ID', user.patient_id)
       this.$router.push({ path: 'patient-profile' })
