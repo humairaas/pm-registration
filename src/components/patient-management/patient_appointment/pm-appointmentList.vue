@@ -117,15 +117,10 @@ export default {
   },
   mounted () {
     this.$axios
-      .get('http://127.0.0.1:8000/api/getService')
-      .then((response) => {
-        this.selectService = response.data.data.map(function (obj) { return obj.name })
-      })
-
-    this.$axios
       .get('http://127.0.0.1:8000/api/getAppointmentList')
       .then((response) => {
         this.users = response.data.data
+        this.selectService = response.data.service
       })
   },
   computed: {
