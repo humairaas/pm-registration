@@ -1,3 +1,8 @@
+<!--
+This page is not fully completed [last updated by Humaira': 27/12/2021]
+  1. No validation
+  2. Add Screening on button click is functioning(new row is added) but only the first data inserted is stored (using vue-form-generator)
+-->
 <template>
   <div class="content">
     <div class="container-fluid">
