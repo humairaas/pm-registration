@@ -6,6 +6,17 @@
         <div class="col-12">
 
           <!-- Notification Alert -->
+          <div class="mb-3" v-if="patientExist==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Patient with the specified NRIC/PASSPORT already registered in MITS2.</span>
+              <button type="button" class="btn close-button" @click="patientExist = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
           <div class="mb-3" v-if="tabA==true">
             <va-notification color="danger">
               <va-badge color="danger">
@@ -85,6 +96,7 @@ export default {
   data () {
     return {
       tabA: false,
+      patientExist: false,
       submitPath: false,
       update: false,
 
@@ -104,6 +116,8 @@ export default {
 
       // Form Model
       model: {
+        PATIENT_EXIST_ID: '',
+
         SH_NAME: '',
         CITIZENSHIP: '',
         NRIC_TYPE: '',
@@ -152,9 +166,28 @@ export default {
                 model: 'CITIZENSHIP',
                 required: true,
                 validator: 'required',
-                styleClasses: 'col-lg-12',
+                styleClasses: 'col-md-12',
                 values: () => {
                   return this.radioCitizenship
+                },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.MD_CITIZENSHIP = model.CITIZENSHIP
+                  if (newVal === 1) {
+                    model.PASSPORT_NO = ''
+                    model.PASSPORT_EXPIRY_DATE = ''
+                    model.ISSUING_COUNTRY = ''
+                    model.NRIC_TYPE = ''
+                    model.NRIC_NO = ''
+                  } else if (newVal === 2) {
+                    model.PASSPORT_NO = ''
+                    model.PASSPORT_EXPIRY_DATE = ''
+                    model.ISSUING_COUNTRY = ''
+                    model.NRIC_TYPE = ''
+                    model.NRIC_NO = ''
+                  } else if (newVal === 3) {
+                    model.NRIC_TYPE = ''
+                    model.NRIC_NO = ''
+                  }
                 },
               },
               {
@@ -173,12 +206,15 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-6',
                 values: () => {
                   return this.selectNRICType
                 },
                 visible: function (model) {
                   return model && model.CITIZENSHIP === 1
+                },
+                onChanged: function (model, newVal, oldVal, field) {
+                  model.NRIC_NO = ''
                 },
               },
               {
@@ -192,9 +228,9 @@ export default {
                   numericOnly: true,
                 },
                 placeholder: 'XXXXXX-XX-XXXX',
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-6',
                 visible: function (model) {
-                  return model && model.NRIC_TYPE.value === 2 && model.CITIZENSHIP === 1
+                  return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 2) || model.CITIZENSHIP === 2)
                 },
               },
               {
@@ -204,9 +240,18 @@ export default {
                 model: 'NRIC_NO',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-6',
                 visible: function (model) {
-                  return model && (model.CITIZENSHIP === 1 || model.CITIZENSHIP === 2) && (model.NRIC_TYPE.value !== 2)
+                  return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 1) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 3) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 4) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 5) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 6) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 7) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 8) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 9) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 10) ||
+                                    (model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 11))
                 },
               },
               {
@@ -216,7 +261,7 @@ export default {
                 model: 'PASSPORT_NO',
                 validator: 'string',
                 required: true,
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-4',
                 visible: function (model) {
                   return model && model.CITIZENSHIP === 3
                 },
@@ -229,8 +274,7 @@ export default {
                 placeholder: 'Enter Date',
                 required: true,
                 format: 'YYYY/MM/DD',
-                min: 1,
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-4',
                 visible: function (model) {
                   return model && model.CITIZENSHIP === 3
                 },
@@ -250,7 +294,7 @@ export default {
                   key: 'value',
                   label: 'name',
                 },
-                styleClasses: 'col-lg-4',
+                styleClasses: 'col-md-4',
                 values: () => {
                   return this.selectIssuingCountry
                 },
@@ -560,24 +604,32 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/getSHHARPDemographic?patientId=' + patientId)
         .then((response) => {
-          this.model.SH_NAME = response.data.data[0].name
-          this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
-          this.model.NRIC_TYPE = { value: response.data.data[0].nric_type_fk, name: response.data.data[0].nric_type }
-          this.model.NRIC_NO = response.data.data[0].nric_no
-          this.model.PASSPORT_NO = response.data.data[0].passport_no
-          this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
-          this.model.ISSUING_COUNTRY = { value: response.data.data[0].issuing_country_fk, name: response.data.data[0].issuing_country }
-          this.model.GENDER = response.data.data[0].gender_fk
-          this.model.BIRTH_DATE = response.data.data[0].birthdate
-          this.model.AGE = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-          this.model.HOSPITAL_MRN = response.data.data[0].hospital_mrn
-          this.model.MENTARI_MRN = response.data.data[0].mentari_mrn
-          this.model.EMPLOYMENT_STATUS = { value: response.data.data[0].employment_status_fk, name: response.data.data[0].employment_status }
-          this.model.INCOME_STATUS = this.selectIncomeStatus[response.data.data[0].household_income_fk]
-          this.model.RACE = { value: response.data.data[0].ethnic_fk, name: response.data.data[0].ethnic }
-          this.model.RELIGION = { value: response.data.data[0].religion_fk, name: response.data.data[0].religion }
-          this.model.MARITAL_STATUS = { value: response.data.data[0].marital_fk, name: response.data.data[0].marital }
-          this.model.EDUCATION_LEVEL = { value: response.data.data[0].education_fk, name: response.data.data[0].education }
+          const DATA = response.data.data[0]
+
+          this.model.SH_NAME = DATA.name
+          this.model.CITIZENSHIP = DATA.citizenship_fk
+          if (DATA.nric_type_fk != null) {
+            this.model.NRIC_TYPE = { value: DATA.nric_type_fk, name: DATA.nric_type }
+          }
+          this.model.NRIC_NO = DATA.nric_no
+          this.model.PASSPORT_NO = DATA.passport_no
+          this.model.PASSPORT_EXPIRY_DATE = DATA.date_expiry
+          if (DATA.issuing_country_fk != null) {
+            this.model.ISSUING_COUNTRY = { value: DATA.issuing_country_fk, name: DATA.issuing_country }
+          }
+          this.model.GENDER = DATA.gender_fk
+          this.model.BIRTH_DATE = DATA.birthdate
+          this.model.AGE = new Date().getFullYear() - DATA.birthdate.toString().substring(0, 4)
+          this.model.HOSPITAL_MRN = DATA.hospital_mrn
+          this.model.MENTARI_MRN = DATA.mentari_mrn
+          if (DATA.employment_status_fk != null) {
+            this.model.EMPLOYMENT_STATUS = { value: DATA.employment_status_fk, name: DATA.employment_status }
+          }
+          this.model.INCOME_STATUS = this.selectIncomeStatus[DATA.household_income_fk]
+          this.model.RACE = { value: DATA.ethnic_fk, name: DATA.ethnic }
+          this.model.RELIGION = { value: DATA.religion_fk, name: DATA.religion }
+          this.model.MARITAL_STATUS = { value: DATA.marital_fk, name: DATA.marital }
+          this.model.EDUCATION_LEVEL = { value: DATA.education_fk, name: DATA.education }
         })
     }
   },
@@ -596,10 +648,34 @@ export default {
       }
       return tempHousehold
     },
-    validateForm () {
-      var tabA = this.validateTabA()
+    async validatePatient () {
+      var nricPassport = ''
+      this.model.PATIENT_EXIST_ID = ''
+      if (this.model.NRIC_NO !== '') {
+        nricPassport = this.model.NRIC_NO.replace(/-/g, '')
+      } else {
+        nricPassport = this.model.PASSPORT_NO
+      }
 
-      if (tabA) {
+      const url = 'http://127.0.0.1:8000/api/verifyPatient?id=' + nricPassport
+      const response = await this.$axios.get(url)
+      if (response.data.data !== '') {
+        this.model.PATIENT_EXIST_ID = JSON.stringify(response.data.data[0].value)
+      }
+
+      if (this.model.PATIENT_EXIST_ID === '') {
+        this.patientExist = false
+        return true
+      } else {
+        this.patientExist = true
+        return false
+      }
+    },
+    async validateForm () {
+      var tabA = this.validateTabA()
+      var patientVerified = await this.validatePatient()
+
+      if (tabA && patientVerified) {
         this.submitPath = true
 
         const data = new FormData()

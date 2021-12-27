@@ -122,11 +122,21 @@
                   </template>
 
                   <template slot="date" slot-scope="props">
-                    {{ getDate(props.rowData.timestamp_create) }}
+                    <div v-if="props.rowData.timestamp_update == null">
+                      {{ getDate(props.rowData.timestamp_create) }}
+                    </div>
+                    <div v-else>
+                      {{ getDate(props.rowData.timestamp_update) }}
+                    </div>
                   </template>
 
                   <template slot="time" slot-scope="props">
-                    {{ getTime(props.rowData.timestamp_create) }}
+                    <div v-if="props.rowData.timestamp_update == null">
+                      {{ getTime(props.rowData.timestamp_create) }}
+                    </div>
+                    <div v-else>
+                      {{ getTime(props.rowData.timestamp_update) }}
+                    </div>
                   </template>
 
                   <template slot="actions" slot-scope="props">

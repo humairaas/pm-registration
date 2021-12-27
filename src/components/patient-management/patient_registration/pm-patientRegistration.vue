@@ -747,7 +747,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 0, name: 'No' },
+                  { value: 2, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6',
@@ -1887,82 +1887,66 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + patientId)
         .then((response) => {
+          const DATA = response.data.data[0]
           // Demographic
-          this.model.SALUTATION = { value: response.data.data[0].salutation_fk, name: response.data.data[0].salutation }
-          this.model.DM_NAME = response.data.data[0].name
-          this.model.CITIZENSHIP = response.data.data[0].citizenship_fk
-          this.model.NRIC_TYPE = { value: response.data.data[0].nric_type_fk, name: response.data.data[0].nric_type }
-          this.model.NRIC_NO = response.data.data[0].nric_no
-          this.model.PASSPORT_NO = response.data.data[0].passport_no
-          this.model.PASSPORT_EXPIRY_DATE = response.data.data[0].date_expiry
-          this.model.ISSUING_COUNTRY = { value: response.data.data[0].issuing_country_fk, name: response.data.data[0].issuing_country }
-          this.model.GENDER = response.data.data[0].gender_fk
-          this.model.BIRTH_DATE = response.data.data[0].birthdate
-          this.model.AGE = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-          this.model.DM_MOBILE_NO = response.data.data[0].phone_no_1
-          this.model.DM_HOUSE_NO = response.data.data[0].phone_no_2
-          this.model.HOSPITAL_MRN = response.data.data[0].hospital_mrn
-          this.model.MENTARI_MRN = response.data.data[0].mentari_mrn
-          this.model.SERVICE_TYPE = { value: response.data.data[0].service_fk, name: response.data.data[0].service }
-          this.model.REFERRAL_TYPE = { value: response.data.data[0].referral_fk, name: response.data.data[0].referral }
-          this.model.SPECIFY_REFERRAL = response.data.data[0].referral_desc
+          if (DATA.salutation_fk != null) { this.model.SALUTATION = { value: DATA.salutation_fk, name: DATA.salutation } }
+          this.model.DM_NAME = DATA.name
+          this.model.CITIZENSHIP = DATA.citizenship_fk
+          if (DATA.nric_type_fk != null) { this.model.NRIC_TYPE = { value: DATA.nric_type_fk, name: DATA.nric_type } }
+          this.model.NRIC_NO = DATA.nric_no
+          this.model.PASSPORT_NO = DATA.passport_no
+          this.model.PASSPORT_EXPIRY_DATE = DATA.date_expiry
+          if (DATA.issuing_country_fk != null) { this.model.ISSUING_COUNTRY = { value: DATA.issuing_country_fk, name: DATA.issuing_country } }
+          this.model.GENDER = DATA.gender_fk
+          this.model.BIRTH_DATE = DATA.birthdate
+          this.model.AGE = new Date().getFullYear() - DATA.birthdate.toString().substring(0, 4)
+          this.model.DM_MOBILE_NO = DATA.phone_no_1
+          this.model.DM_HOUSE_NO = DATA.phone_no_2
+          this.model.HOSPITAL_MRN = DATA.hospital_mrn
+          this.model.MENTARI_MRN = DATA.mentari_mrn
+          if (DATA.service_fk != null) { this.model.SERVICE_TYPE = { value: DATA.service_fk, name: DATA.service } }
+          if (DATA.referral_fk != null) { this.model.REFERRAL_TYPE = { value: DATA.referral_fk, name: DATA.referral } }
+          this.model.SPECIFY_REFERRAL = DATA.referral_desc
           // this.model.REFERRAL_LETTER = response.data.data[0].citizenship_fk,
-          this.model.DM_ADDRESS_LINE_1 = response.data.data[0].address1
-          this.model.DM_ADDRESS_LINE_2 = response.data.data[0].address2
-          this.model.DM_ADDRESS_LINE_3 = response.data.data[0].address3
+          this.model.DM_ADDRESS_LINE_1 = DATA.address1
+          this.model.DM_ADDRESS_LINE_2 = DATA.address2
+          this.model.DM_ADDRESS_LINE_3 = DATA.address3
 
-          if (response.data.data[0].dm_state_fk != null) {
-            this.model.DM_STATE = { value: response.data.data[0].dm_state_fk, name: response.data.data[0].dm_state }
-          }
-          if (response.data.data[0].dm_city_fk != null) {
-            this.model.DM_CITY = { value: response.data.data[0].dm_city_fk, name: response.data.data[0].dm_city }
-          }
-          if (response.data.data[0].dm_postcode != null) {
-            this.model.DM_POSTCODE = { value: response.data.data[0].dm_postcode_fk, name: response.data.data[0].dm_postcode }
-          }
-
-          if (response.data.data[0].status_fk === null) {
-            this.model.EXISTING_PATIENT = 0
-          } else {
-            this.model.EXISTING_PATIENT = response.data.data[0].status_fk
-          }
-          this.model.BRANCH = { value: response.data.data[0].branch_fk, name: response.data.data[0].branch }
+          if (DATA.dm_state_fk != null) { this.model.DM_STATE = { value: DATA.dm_state_fk, name: DATA.dm_state } }
+          if (DATA.dm_city_fk != null) { this.model.DM_CITY = { value: DATA.dm_city_fk, name: DATA.dm_city } }
+          if (DATA.dm_postcode != null) { this.model.DM_POSTCODE = { value: DATA.dm_postcode_fk, name: DATA.dm_postcode } }
+          this.model.EXISTING_PATIENT = DATA.status_fk
+          if (DATA.branch_fk != null) { this.model.BRANCH = { value: DATA.branch_fk, name: DATA.branch } }
 
           // Sosio Demographic
-          this.model.RACE = { value: response.data.data[0].ethnic_fk, name: response.data.data[0].ethnic }
+          if (DATA.ethnic_fk != null) { this.model.RACE = { value: DATA.ethnic_fk, name: DATA.ethnic } }
           // this.model.SPECIFY_RACE = response.data.data[0].ethnic_fk
-          this.model.RELIGION = { value: response.data.data[0].religion_fk, name: response.data.data[0].religion }
+          if (DATA.religion_fk != null) { this.model.RELIGION = { value: DATA.religion_fk, name: DATA.religion } }
           // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
-          this.model.MARITAL_STATUS = { value: response.data.data[0].marital_fk, name: response.data.data[0].marital }
+          if (DATA.marital_fk != null) { this.model.MARITAL_STATUS = { value: DATA.marital_fk, name: DATA.marital } }
           // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
-          this.model.ACCOMMODATION = { value: response.data.data[0].accomodation_fk, name: response.data.data[0].accomodation }
+          if (DATA.accomodation_fk != null) { this.model.ACCOMMODATION = { value: DATA.accomodation_fk, name: DATA.accomodation } }
           // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
-          this.model.EDUCATION_LEVEL = { value: response.data.data[0].education_fk, name: response.data.data[0].education }
-          this.model.OCCUPATION_STATUS = { value: response.data.data[0].occupation_status_fk, name: response.data.data[0].occupation_status }
+          if (DATA.education_fk != null) { this.model.EDUCATION_LEVEL = { value: DATA.education_fk, name: DATA.education } }
+          if (DATA.occupation_status_fk != null) { this.model.OCCUPATION_STATUS = { value: DATA.occupation_status_fk, name: DATA.occupation_status } }
           // this.model.SPECIFY_OCCUPATION_STATUS = response.data.data[0].occupation_status_fk
-          this.model.FEE_EXEMPTION_STATUS = { value: response.data.data[0].fee_exemption_fk, name: response.data.data[0].fee_exemption }
+          if (DATA.fee_exemption_fk) { this.model.FEE_EXEMPTION_STATUS = { value: DATA.fee_exemption_fk, name: DATA.fee_exemption } }
           // this.model.SPECIFY_FEE_EXEMPTION_STATUS = response.data.data[0].fee_exemption_fk
-          this.model.OCCUPATION_SECTOR = { value: response.data.data[0].occupation_sector_fk, name: response.data.data[0].occupation_sector }
+          if (DATA.occupation_sector_fk) { this.model.OCCUPATION_SECTOR = { value: DATA.occupation_sector_fk, name: DATA.occupation_sector } }
           // this.model.SPECIFY_OCCUPATION_SECTOR = response.data.data[0].occupation_sector_fk
 
           // Next Of Kin
-          this.model.NOK_NAME = response.data.data[0].nok_name
-          this.model.NOK_RELATIONSHIP = { value: response.data.data[0].relation_fk, name: response.data.data[0].relation }
-          this.model.NOK_MOBILE_NO = response.data.data[0].nok_phone_no_1
-          this.model.NOK_HOUSE_NO = response.data.data[0].nok_phone_no_2
-          this.model.NOK_ADDRESS_L1 = response.data.data[0].nok_address1
-          this.model.NOK_ADDRESS_L2 = response.data.data[0].nok_address2
-          this.model.NOK_ADDRESS_L3 = response.data.data[0].nok_address3
+          this.model.NOK_NAME = DATA.nok_name
+          if (DATA.relation_fk) { this.model.NOK_RELATIONSHIP = { value: DATA.relation_fk, name: DATA.relation } }
+          this.model.NOK_MOBILE_NO = DATA.nok_phone_no_1
+          this.model.NOK_HOUSE_NO = DATA.nok_phone_no_2
+          this.model.NOK_ADDRESS_L1 = DATA.nok_address1
+          this.model.NOK_ADDRESS_L2 = DATA.nok_address2
+          this.model.NOK_ADDRESS_L3 = DATA.nok_address3
 
-          if (response.data.data[0].nok_state_fk != null) {
-            this.model.NOK_STATE = { value: response.data.data[0].nok_state_fk, name: response.data.nokAddress[0].nok_state }
-          }
-          if (response.data.data[0].nok_city_fk != null) {
-            this.model.NOK_CITY = { value: response.data.data[0].nok_city_fk, name: response.data.nokAddress[0].nok_city }
-          }
-          if (response.data.data[0].nok_postcode_fk != null) {
-            this.model.NOK_POSTCODE = { value: response.data.data[0].nok_postcode_fk, name: response.data.nokAddress[0].nok_postcode }
-          }
+          if (DATA.nok_state_fk != null) { this.model.NOK_STATE = { value: DATA.nok_state_fk, name: DATA.nok_state } }
+          if (DATA.nok_city_fk != null) { this.model.NOK_CITY = { value: DATA.nok_city_fk, name: DATA.nok_city } }
+          if (DATA.nok_postcode_fk != null) { this.model.NOK_POSTCODE = { value: DATA.nok_postcode_fk, name: DATA.nok_postcode } }
 
           // Allergy
           var allergyType = response.data.allergy

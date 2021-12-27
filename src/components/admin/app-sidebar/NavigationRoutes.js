@@ -107,6 +107,10 @@ export const navigationRoutes = {
       displayName: 'Appointment List',
     },
     {
+      name: 'patient-screeningList',
+      displayName: 'Screening List',
+    },
+    {
       name: 'patient-appointmentBooking',
       displayName: 'Book New Appointment',
     },

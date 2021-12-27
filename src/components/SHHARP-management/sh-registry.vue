@@ -100,8 +100,8 @@
 
                   <!-- Section A -->
                   <va-collapse id="secA">
-                    <span slot="header">
-                      <div class="fa fa-exclamation-circle"/> Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
+                    <span slot="header" v-bind:class="{ red: tabCsecA }">
+                      <div class="fa fa-exclamation-circle" v-if="tabCsecA"/> Section A:<br><b>CURRENT SELF-HARM ACT</b> (within past 2 weeks from time of presentation)
                     </span>
                     <div slot="body">
                       <vue-form-generator :model="model" :schema="tabCASchema" :options="formOptions" ref="selfHarmSectionA" v-bind:class="{ readonly: view }">
@@ -111,8 +111,8 @@
 
                   <!-- Section B -->
                   <va-collapse>
-                    <span slot="header">
-                      Section B:<br><b>METHOD OF SELF-HARM</b> (please document the recent method only)
+                    <span slot="header" v-bind:class="{ red: tabCsecB }">
+                      <div class="fa fa-exclamation-circle" v-if="tabCsecB"/> Section B:<br><b>METHOD OF SELF-HARM</b> (please document the recent method only)
                     </span>
                     <div slot="body">
                       <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
@@ -129,8 +129,8 @@
 
                   <!-- Section C -->
                   <va-collapse>
-                    <span slot="header">
-                      Section C:<br><b>HOW DID PATIENT GET IDEA ABOUT METHOD</b>
+                    <span slot="header" v-bind:class="{ red: tabCsecC }" >
+                      <div class="fa fa-exclamation-circle" v-if="tabCsecC"/> Section C:<br><b>HOW DID PATIENT GET IDEA ABOUT METHOD</b>
                     </span>
                     <div slot="body">
                       <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
@@ -140,8 +140,8 @@
 
                   <!-- Section D -->
                   <va-collapse>
-                    <span slot="header">
-                      Section D:<br><b>SUICIDAL INTENT</b>
+                    <span slot="header" v-bind:class="{ red: tabCsecD }" >
+                      <div class="fa fa-exclamation-circle" v-if="tabCsecD"/> Section D:<br><b>SUICIDAL INTENT</b>
                     </span>
                     <div slot="body">
                       <div class="row mt-3">
@@ -157,8 +157,8 @@
 
                   <!-- Section E -->
                   <va-collapse>
-                    <span slot="header">
-                      Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
+                    <span slot="header" v-bind:class="{ red: tabCsecE }" >
+                      <div class="fa fa-exclamation-circle" v-if="tabCsecE"/> Section E:<br><b>LEVEL OF SUICIDAL INTENT</b> (Beck's Suicide Intent Scale)
                     </span>
                     <div slot="body">
                       <vue-form-generator :schema="tabCESchema" :model="model" :options="formOptions" ref="selfHarmSectionE1" v-bind:class="{ readonly: view }"></vue-form-generator>
@@ -336,6 +336,11 @@ export default {
       tabA: false,
       tabB: false,
       tabC: false,
+      tabCsecA: false,
+      tabCsecB: false,
+      tabCsecC: false,
+      tabCsecD: false,
+      tabCsecE: false,
       tabD: false,
       tabE: false,
       tabF: false,
@@ -2099,51 +2104,45 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/getSHHARPFormData?shharpId=' + shharpId)
         .then((response) => {
-          const data = response.data.data[0]
+          const DATA = response.data.data[0]
 
           // Risk Factors
-          this.model.Q1 = data.rf1
-          if (data.rf1 === 2) {
-            this.model.Q1_SPECIFY = data.rf1_desc.split(',')
-          }
-          this.model.Q2 = data.rf2
-          this.model.Q3 = data.rf3
-          this.model.Q3_SPECIFY = data.rf3_desc
-          this.model.Q4 = data.rf4
-          this.model.Q4_SPECIFY = this.selectSubstance[data.rf4_desc - 1]
-          this.model.Q5 = data.rf5
-          this.model.Q6 = data.rf6
-          if (data.rf6 === 2) {
-            this.model.Q6_SPECIFY = data.rf6_desc.split(',')
-          }
-          this.model.Q7 = data.rf7
-          this.model.Q7_SPECIFY = this.selectSubstance[data.rf7_desc - 1]
-          this.model.Q8 = data.rf8
-          this.model.Q8_SPECIFY = this.selectStressfulLifeEvents[data.rf8_desc - 1]
-          this.model.Q9 = data.rf9
-          this.model.Q10 = data.rf10
-          if (data.rf10 === 2) {
-            this.model.Q10_SPECIFY = data.rf10_desc.split(',')
-          }
-          this.model.Q11 = data.rf11
-          this.model.Q12 = data.rf12
+          this.model.Q1 = DATA.rf1
+          if (DATA.rf1 === 2) { this.model.Q1_SPECIFY = DATA.rf1_desc.split(',') }
+          this.model.Q2 = DATA.rf2
+          this.model.Q3 = DATA.rf3
+          this.model.Q3_SPECIFY = DATA.rf3_desc
+          this.model.Q4 = DATA.rf4
+          this.model.Q4_SPECIFY = this.selectSubstance[DATA.rf4_desc - 1]
+          this.model.Q5 = DATA.rf5
+          this.model.Q6 = DATA.rf6
+          if (DATA.rf6 === 2) { this.model.Q6_SPECIFY = DATA.rf6_desc.split(',') }
+          this.model.Q7 = DATA.rf7
+          this.model.Q7_SPECIFY = this.selectSubstance[DATA.rf7_desc - 1]
+          this.model.Q8 = DATA.rf8
+          this.model.Q8_SPECIFY = this.selectStressfulLifeEvents[DATA.rf8_desc - 1]
+          this.model.Q9 = DATA.rf9
+          this.model.Q10 = DATA.rf10
+          if (DATA.rf10 === 2) { this.model.Q10_SPECIFY = DATA.rf10_desc.split(',') }
+          this.model.Q11 = DATA.rf11
+          this.model.Q12 = DATA.rf12
 
           // Protective Factors
-          this.model.PQ1 = data.pf1
-          this.model.PQ2 = data.pf2
-          this.model.PQ3 = data.pf3
-          this.model.PQ4 = data.pf4
-          this.model.PQ5 = data.pf5
-          this.model.PQ6 = data.pf6
+          this.model.PQ1 = DATA.pf1
+          this.model.PQ2 = DATA.pf2
+          this.model.PQ3 = DATA.pf3
+          this.model.PQ4 = DATA.pf4
+          this.model.PQ5 = DATA.pf5
+          this.model.PQ6 = DATA.pf6
 
           // The Self-harm Act and Suicidal Intent
-          this.model.SH_DATE = data.sh_act_date
-          this.model.SH_TIME = data.sh_act_time
-          this.model.OCCUR = { value: data.place_occurance_fk, name: data.occurance }
-          this.model.OCCUR_OTHER_SPECIFY = data.place_occurance_desc
+          this.model.SH_DATE = DATA.sh_act_date
+          this.model.SH_TIME = DATA.sh_act_time
+          if (DATA.place_occurance_fk != null) { this.model.OCCUR = { value: DATA.place_occurance_fk, name: DATA.occurance } }
+          this.model.OCCUR_OTHER_SPECIFY = DATA.place_occurance_desc
 
           // Method
-          var tempMethod = response.data.method
+          var tempMethod = response.DATA.method
           var arrMethod = []
 
           for (let i = 0; i < tempMethod.length; i++) {
@@ -2171,7 +2170,7 @@ export default {
           }
           this.model.IDEA = arrIdea
 
-          this.model.INTENT = data.sh_intent_exist
+          this.model.INTENT = DATA.sh_intent_exist
 
           // Intent
           var tempIntent = response.data.intent
@@ -2186,50 +2185,50 @@ export default {
           }
           this.model.INTENT_YES = arrIntent
 
-          this.model.SH1 = data.sh_level_1
-          this.model.SH2 = data.sh_level_2
-          this.model.SH3 = data.sh_level_3
-          this.model.SH4 = data.sh_level_4
-          this.model.SH5 = data.sh_level_5
-          this.model.SH6 = data.sh_level_6
-          this.model.SH7 = data.sh_level_7
-          this.model.SH8 = data.sh_level_8
-          this.model.SH9 = data.sh_level_9
-          this.model.SH10 = data.sh_level_10
-          this.model.SH11 = data.sh_level_11
-          this.model.SH12 = data.sh_level_12
-          this.model.SH13 = data.sh_level_13
-          this.model.SH14 = data.sh_level_14
-          this.model.SH15 = data.sh_level_15
-          this.model.INTENT_SCORE = data.sh_level_score
+          this.model.SH1 = DATA.sh_level_1
+          this.model.SH2 = DATA.sh_level_2
+          this.model.SH3 = DATA.sh_level_3
+          this.model.SH4 = DATA.sh_level_4
+          this.model.SH5 = DATA.sh_level_5
+          this.model.SH6 = DATA.sh_level_6
+          this.model.SH7 = DATA.sh_level_7
+          this.model.SH8 = DATA.sh_level_8
+          this.model.SH9 = DATA.sh_level_9
+          this.model.SH10 = DATA.sh_level_10
+          this.model.SH11 = DATA.sh_level_11
+          this.model.SH12 = DATA.sh_level_12
+          this.model.SH13 = DATA.sh_level_13
+          this.model.SH14 = DATA.sh_level_14
+          this.model.SH15 = DATA.sh_level_15
+          this.model.INTENT_SCORE = DATA.sh_level_score
 
-          if (data.sh_level_score <= 10) {
+          if (DATA.sh_level_score <= 10) {
             this.model.INTENT_LEVEL = 'Low Intent'
-          } else if (data.sh_level_score > 10 && data.sh_level_score <= 20) {
+          } else if (DATA.sh_level_score > 10 && DATA.sh_level_score <= 20) {
             this.model.INTENT_LEVEL = 'Medium Intent'
           } else {
             this.model.INTENT_LEVEL = 'High Intent'
           }
 
           // Suicide Risk
-          this.model.RISK_LEVEL = data.sr_level
+          this.model.RISK_LEVEL = DATA.sr_level
 
           // Hospital Management
-          this.model.REFERRAL = { value: data.referral_fk, name: data.referral }
-          this.model.REFERRAL_SPECIFY = data.referral_desc
-          this.model.ARRIVAL_MODE = { value: data.mode_arrival_fk, name: data.arrival }
-          this.model.ARRIVAL_SPECIFY = data.mode_arrival_desc
-          this.model.FIRST_ASSESSMENT_DATE = data.hm_date_first_psychiatry
-          this.model.FIRST_ASSESSMENT_TIME = data.hm_time_first_psychiatry
-          this.model.PHYSICAL_CONSEQ = data.hm_physical_consequence
-          this.model.PHYSICAL_CONSEQ_SPECIFY = data.hm_physical_consequence_desc
-          this.model.ADMISSION = data.hm_admitted
-          this.model.ADMISSION_SPECIFY = data.hm_admitted_desc
-          this.model.DISCHARGE_STATUS = data.hm_discharge_status
-          this.model.DISCHARGE_DATE = data.hm_discharge_date
-          this.model.NO_OF_DAYS = data.hm_days_warded
-          this.model.MAIN_DIAGNOSIS = data.hm_discharge_diagnosis_main
-          this.model.EXTERNAL_DIAGNOSIS = data.hm_discharge_diagnosis_external
+          if (DATA.referral_fk != null) { this.model.REFERRAL = { value: DATA.referral_fk, name: DATA.referral } }
+          this.model.REFERRAL_SPECIFY = DATA.referral_desc
+          if (DATA.mode_arrival_fk != null) { this.model.ARRIVAL_MODE = { value: DATA.mode_arrival_fk, name: DATA.arrival } }
+          this.model.ARRIVAL_SPECIFY = DATA.mode_arrival_desc
+          this.model.FIRST_ASSESSMENT_DATE = DATA.hm_date_first_psychiatry
+          this.model.FIRST_ASSESSMENT_TIME = DATA.hm_time_first_psychiatry
+          this.model.PHYSICAL_CONSEQ = DATA.hm_physical_consequence
+          this.model.PHYSICAL_CONSEQ_SPECIFY = DATA.hm_physical_consequence_desc
+          this.model.ADMISSION = DATA.hm_admitted
+          this.model.ADMISSION_SPECIFY = DATA.hm_admitted_desc
+          this.model.DISCHARGE_STATUS = DATA.hm_discharge_status
+          this.model.DISCHARGE_DATE = DATA.hm_discharge_date
+          this.model.NO_OF_DAYS = DATA.hm_days_warded
+          this.model.MAIN_DIAGNOSIS = DATA.hm_discharge_diagnosis_main
+          this.model.EXTERNAL_DIAGNOSIS = DATA.hm_discharge_diagnosis_external
 
           // psy_mx
           var tempPSYMX = response.data.psy_mx
@@ -2245,12 +2244,12 @@ export default {
           this.model.PSYMX = arrPSYMX
 
           // Source Data Producer
-          this.model.REG_OFF_NAME = data.sd_officer_name
-          this.model.DESIGNATION = data.sd_officer_designation
-          this.model.REPORT_DATE = data.sd_date_reporting
-          this.model.HOSPITAL_NAME = data.sd_hospital_name
-          this.model.PSYCHIATRIST_NAME = data.sd_psychiatrist_name
-          this.model.VERIFICATION_DATE = data.sd_date_verification
+          this.model.REG_OFF_NAME = DATA.sd_officer_name
+          this.model.DESIGNATION = DATA.sd_officer_designation
+          this.model.REPORT_DATE = DATA.sd_date_reporting
+          this.model.HOSPITAL_NAME = DATA.sd_hospital_name
+          this.model.PSYCHIATRIST_NAME = DATA.sd_psychiatrist_name
+          this.model.VERIFICATION_DATE = DATA.sd_date_verification
         })
     }
   },
@@ -2355,16 +2354,20 @@ export default {
     validateTabCA () {
       var errors = this.$refs.selfHarmSectionA.validate()
       if (errors) {
+        this.tabCsecA = false
         return true
       } else {
+        this.tabCsecA = true
         return false
       }
     },
     validateTabCB1 () {
       var errors = this.$refs.selfHarmSectionB1.validate()
       if (errors) {
+        this.tabCsecB = false
         return true
       } else {
+        this.tabCsecB = true
         return false
       }
     },
@@ -2373,46 +2376,57 @@ export default {
       if (errors) {
         return true
       } else {
+        this.tabCsecB = true
         return false
       }
     },
     validateTabCC () {
       var errors = this.$refs.selfHarmSectionC.validate()
       if (errors) {
+        this.tabCsecC = false
         return true
       } else {
+        this.tabCsecC = true
         return false
       }
     },
     validateTabCD1 () {
       var errors = this.$refs.selfHarmSectionD1.validate()
       if (errors) {
+        this.tabCsecD = false
         return true
       } else {
+        this.tabCsecD = true
         return false
       }
     },
     validateTabCD2 () {
       var errors = this.$refs.selfHarmSectionD2.validate()
       if (errors) {
+        this.tabCsecD = false
         return true
       } else {
+        this.tabCsecD = true
         return false
       }
     },
     validateTabCE1 () {
       var errors = this.$refs.selfHarmSectionE1.validate()
       if (errors) {
+        this.tabCsecE = false
         return true
       } else {
+        this.tabCsecE = true
         return false
       }
     },
     validateTabCE2 () {
       var errors = this.$refs.selfHarmSectionE2.validate()
       if (errors) {
+        this.tabCsecE = false
         return true
       } else {
+        this.tabCsecE = true
         return false
       }
     },
@@ -2489,14 +2503,6 @@ export default {
     margin-right: 10px;
   }
 
-  .jarakkan-citizenship label {
-    margin-right: 230px;
-  }
-
-  .jarakkan-gender label {
-    margin-right: 270px;
-  }
-
   ul.va-unordered > li::before,
   .content ul > li::before {
     content: "";
@@ -2531,6 +2537,10 @@ export default {
 
   .modal-preview {
     padding: 10px;
+  }
+
+  .red {
+    color: red;
   }
 
   .sh-tab-title {

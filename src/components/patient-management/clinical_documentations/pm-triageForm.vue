@@ -6,10 +6,12 @@
         <div class="col-12">
 
           <va-card>
+            <p>{{model}} {{screenings}}</p>
             <br>
             <b-tabs content-class="mt-3 px-5 pb-5" v-model="tabIndex" fill>
 
               <b-tab title="1. Triage Form" active>
+                <div class="text-center"><h4 class="mt-5 mb-5 text-dark">TRIAGE FORM</h4></div>
                 <h5>Part A: Risk Evaluation</h5>
                 <table class="triage-table mb-3">
                   <tr>
@@ -83,10 +85,17 @@
                     <th>Screening Test</th>
                     <th>Score</th>
                   </tr>
-                  <tr>
+                  <tr v-for="(screening, s) in screenings" :key="s">
                     <td><vue-form-generator :model="model" :schema="testSchema" :options="formOptions" ref="test"></vue-form-generator></td>
                     <td><vue-form-generator :model="model" :schema="scoreSchema" :options="formOptions" ref="score"></vue-form-generator></td>
+                    <td scope="row" class="trashIconContainer"><div class="fa fa-trash" @click="deleteRow(s, screening)" style="cursor: pointer;"></div> </td>
                   </tr>
+                  <!-- <tr v-for="(screening, s) in screenings" :key="s">
+                    <td><select class="test-options" v-model="screenings.test">
+                      <option v-for="test  in selectScreening" :key="test.id" v-bind:value="key" >{{test.name}}</option>
+                    </select></td>
+                    <td><input type="text" v-model="screening.score" class="form-control"></td>
+                  </tr> -->
                 </table>
 
               </b-tab>
@@ -98,6 +107,9 @@
               </b-tab>
 
               <b-tab title="3. Book Appointment">
+                <div class="text-center"><h4 class="mt-5 mb-5 text-dark">BOOK APPOINTMENT</h4></div>
+                <vue-form-generator :model="model" :schema="apptSchema" :options="formOptions" ref="appointment">
+                </vue-form-generator>
               </b-tab>
             </b-tabs>
 
@@ -119,92 +131,6 @@
               </div>
             </div>
           </va-card>
-
-          <!-- <va-card class="p-5">
-            <div class="text-center"><h4 class="mt-4 mb-5 text-dark">TRIAGE FORM</h4></div>
-
-            <h5>Part A: Risk Evaluation</h5>
-            <table class="triage-table mt-3 mb-3">
-              <tr>
-                <th>Risk Assessment Descriptions</th>
-                <th></th>
-              </tr>
-              <tr>
-                <td>History of aggressive and impulsive behaviour</td>
-                <td><input type="checkbox" true-value=1 false-value=0 v-model="model.HISTORY"></td>
-              </tr>
-              <tr>
-                <td>History of criminal case</td>
-                <td><input type="checkbox" true-value=1 false-value=0 v-model="model.CRIMINAL"></td>
-              </tr>
-              <tr>
-                <td>Detereoration of clinical condition</td>
-                <td><input type="checkbox" true-value=1 false-value=0 v-model="model.CLINICAL"></td>
-              </tr>
-              <tr>
-                <td>Neglect of self-care</td>
-                <td><input type="checkbox" true-value=1 false-value=0 v-model="model.SELFCARE"></td>
-              </tr>
-            </table>
-
-            <table class="triage-table mt-3" >
-              <tr>
-                <th>Criteria</th>
-                <th class="center">Idea (Yes)</th>
-                <th class="center">Attempt (Yes)</th>
-              </tr>
-              <tr>
-                <td>Suicidal behaviour</td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.IDEA_SUICIDAL"></td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.ATTEMPT_SUICIDAL"></td>
-              </tr>
-              <tr>
-                <td>Homicidal</td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.IDEA_HOMICIDAL"></td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.ATTEMPT_HOMICIDAL"></td>
-              </tr>
-              <tr>
-                <td>Aggressive</td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.IDEA_AGGRESIVE"></td>
-                <td class="center"><input type="checkbox" true-value=1 false-value=0 v-model="model.ATTEMPT_AGGRESIVE"></td>
-              </tr>
-            </table>
-
-            <h5>Part B: Social Support</h5>
-            <input type="checkbox" id="no-family" true-value=1 false-value=0 v-model="model.NO_FAMILY" class="ml-3">
-            <label for="no-family" class="ml-4">Has no family, friends or guardian</label>
-            <br>
-            <input type="checkbox" id="homeless" true-value=1 false-value=0 v-model="model.HOMELESS" class="ml-3">
-            <label for="homeless" class="ml-4">Homeless</label>
-
-            <h5>Part C: Capacity to Work Together</h5>
-            <input type="checkbox" id="no-family" true-value=1 false-value=0 v-model="model.TOGETHER" class="ml-3">
-            <label for="no-family" class="ml-4">Cannot give commitment to work together</label>
-            <br>
-            <input type="checkbox" id="homeless" true-value=1 false-value=0 v-model="model.INTEREST" class="ml-3">
-            <label for="homeless" class="ml-4">Showed no interest in treatment</label>
-
-            <h5>Part D: Outcome</h5>
-            <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="triageOutcome">
-            </vue-form-generator>
-
-            <div class="mt-3">
-              <div class="float-left">
-                <button @click="$router.push({ path: 'patient-profile' })" type="button" class="ml-2 btn btn-fill btn-md btn-blue">
-                  <div class="fa fa-undo" /> &nbsp; Return
-                </button>
-              </div>
-            </div>
-
-            <div class="mt-3">
-              <div class="float-right">
-                <button @click="validateTriage" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
-                  <div class="fa fa-paper-plane" /> &nbsp; Submit
-                </button>
-              </div>
-            </div>
-          </va-card> -->
-
         </div>
       </div>
     </div>
@@ -217,8 +143,24 @@ export default {
     return {
       tabIndex: 1,
       submitPath: false,
+      patientNotExist: false,
+      requestAppointmentId: '',
+
+      selectScreening: [],
+      selectAppointmentType: [],
+      selectVisitType: [],
+      selectPatientCategory: [],
+      selectAppointmentDuration: [],
+
+      screenings: [
+        {
+          test: '',
+          score: '',
+        },
+      ],
 
       model: {
+        // Triage
         HISTORY: 0,
         CRIMINAL: 0,
         CLINICAL: 0,
@@ -236,12 +178,28 @@ export default {
         TOGETHER: 0,
         INTEREST: 0,
 
+        // Screening
         TEST: '',
         SCORE: '',
 
+        // Outcome
         TREATMENT: '',
         PLACEMENT: '',
+
+        // Book Appointment
+        NRIC_PASSPORT_NO: '',
+        DATE: '',
+        TIME: '',
+        DURATION: '',
+        APPOINTMENT_TYPE: '',
+        VISIT_TYPE: '',
+        PATIENT_CATEGORY: '',
+        ASSIGNED_TEAM: '',
+        PATIENT_FK: '',
+        APPOINTMENT_ID: '',
+        selectAssignedTeam: [],
       },
+
       schema: {
         fields: [
           {
@@ -275,12 +233,13 @@ export default {
         fields: [
           {
             type: 'select',
-            model: 'SCREENING.TEST',
-            values: [
-              { id: 0, name: 'PHQ' },
-              { id: 1, name: 'DASS' },
-              { id: 2, name: 'WHODAS' },
-            ],
+            model: 'TEST',
+            values: () => {
+              return this.selectScreening
+            },
+            selectOptions: {
+              noneSelectedText: 'Please Select',
+            },
             required: true,
             validator: 'required',
             styleClasses: 'mr-5',
@@ -292,9 +251,172 @@ export default {
           {
             type: 'input',
             inputType: 'number',
-            model: 'SCREENING.SCORE',
+            placeholder: 'Enter score',
+            min: 0,
+            model: 'SCORE',
             required: true,
             validator: 'number',
+          },
+        ],
+      },
+      apptSchema: {
+        groups: [
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'NRIC/Passport Number',
+                model: 'NRIC_PASSPORT_NO',
+                required: true,
+                validator: 'string',
+                hint: "Without ''-''",
+                styleClasses: 'col-md-6',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DATE',
+                placeholder: 'Enter Date',
+                required: true,
+                validator: 'date',
+                format: 'YYYY/MM/DD',
+                styleClasses: 'col-md-4',
+              },
+              {
+                type: 'input',
+                inputType: 'time',
+                label: 'Time',
+                model: 'TIME',
+                required: true,
+                validator: 'required',
+                styleClasses: ['col-md-4'],
+              },
+              {
+                type: 'vueMultiSelect',
+                label: 'Duration',
+                placeholder: 'Please select',
+                model: 'DURATION',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectAppointmentDuration
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                label: 'Appointment Type',
+                placeholder: 'Please select',
+                model: 'APPOINTMENT_TYPE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectAppointmentType
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                label: 'Type of Visit',
+                placeholder: 'Please select',
+                model: 'VISIT_TYPE',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectVisitType
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                label: 'Category of Patient',
+                placeholder: 'Please select',
+                model: 'PATIENT_CATEGORY',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.selectPatientCategory
+                },
+                onChanged: function (model) {
+                  this.$axios
+                    .get('http://127.0.0.1:8000/api/getAssignedTeam?id=' + model.PATIENT_CATEGORY.value)
+                    .then((response) => {
+                      this.model.selectAssignedTeam = response.data.data
+                    })
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                label: 'Assigned Team',
+                placeholder: 'Please select',
+                model: 'ASSIGNED_TEAM',
+                required: true,
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md-6',
+                values: () => {
+                  return this.model.selectAssignedTeam
+                },
+              },
+            ],
           },
         ],
       },
@@ -305,15 +427,41 @@ export default {
     }
   },
   mounted () {
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getPsychometricTest')
+      .then((response) => {
+        this.selectScreening = response.data.data
+      })
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getAppointmentMountedData')
+      .then((response) => {
+        this.selectVisitType = response.data.visitType
+        this.selectPatientCategory = response.data.patientCategory
+        this.selectAppointmentType = response.data.appointmentType
+        this.selectAppointmentDuration = response.data.appointmentDuration
+      })
   },
   methods: {
     addNewScreening () {
-
+      this.screenings.push({
+        test: '',
+        score: '',
+      })
+    },
+    deleteRow (index, screening) {
+      var idx = this.screenings.indexOf(screening)
+      console.log(idx, index)
+      if (idx > -1) {
+        this.screenings.splice(idx, 1)
+      }
     },
     validateTriage () {
-      var errors = this.$refs.triageOutcome.validate()
+      var outcome = this.validateOutcome()
+      // var test = this.validateTest()
+      // var score = this.validateScore()
+      var appt = this.validateAppointment()
 
-      if (errors) {
+      if (outcome /* && test && score */ && appt) {
         var patientId = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
@@ -325,6 +473,38 @@ export default {
             this.$router.push({ path: 'patient-profile' })
           })
         this.launchToast('Triage Form Added')
+      }
+    },
+    validateOutcome () {
+      var errors = this.$refs.triageOutcome.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateTest () {
+      var errors = this.$refs.test.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateScore () {
+      var errors = this.$refs.score.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateAppointment () {
+      var errors = this.$refs.appointment.validate()
+      if (errors) {
+        return true
+      } else {
+        return false
       }
     },
     launchToast (text) {
@@ -372,6 +552,11 @@ ul.va-unordered > li::before,
   background-color: #2c82e000;
 }
 
+ul.va-unordered > li,
+.content ul > li {
+  padding-left: 0;
+}
+
 .triage-table {
   margin-left: auto;
   margin-right: auto;
@@ -382,10 +567,34 @@ ul.va-unordered > li::before,
   text-align: center;
 }
 
-@media screen and (max-width: 1000px) {
-  .clinical-card {
-    width: 100%;
-  }
+.nav-tabs .nav-link {
+  border: 1px solid #918f8d;
+  color: #918f8d;
 }
 
+.nav-tabs .nav-link:hover {
+  border: 1px solid #f2a444;
+  color: #f2a444;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #f2a444;
+  color: #ffffff;
+  border: 1px solid #f2a444;
+}
+
+.test-options {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
 </style>
