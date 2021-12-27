@@ -95,10 +95,6 @@ export const navigationRoutes = {
       displayName: 'Patient List',
     },
     {
-      name: 'patient-registration',
-      displayName: 'Patient Registration',
-    },
-    {
       name: 'patient-requestAppointmentList',
       displayName: 'Request Appointment List',
     },
@@ -117,10 +113,6 @@ export const navigationRoutes = {
     {
       name: 'calendar_management',
       displayName: 'Appointment Calendar',
-    },
-    {
-      name: 'patient_screening',
-      displayName: 'Patient Screening',
     },
     ],
   },

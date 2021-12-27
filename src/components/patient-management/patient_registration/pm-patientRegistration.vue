@@ -303,7 +303,7 @@ export default {
         NOK_POSTCODE: '',
 
         // Allergy
-        ALLERGY: [0, 0, 0],
+        ALLERGY: [null, null, null],
         DRUG_ALL_SPECIFY: '',
         SUPP_ALL_SPECIFY: '',
         OTHERS_SPECIFY: '',
@@ -312,7 +312,7 @@ export default {
         MD_CITIZENSHIP: '',
         MD_EXISTING_PATIENT: '',
         MD_GENDER: '',
-        MD_ALLERGY: [],
+        MD_ALLERGY: [null, null, null],
 
         selectDMCity: [],
         selectDMPostcode: [],
@@ -1705,7 +1705,7 @@ export default {
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
-                  { value: 0, name: 'No' },
+                  { value: 2, name: 'No' },
                 ],
                 validator: 'required',
                 styleClasses: 'col-md-6 display-inline',
@@ -1888,7 +1888,7 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/getPatientData?patient_id=' + patientId)
         .then((response) => {
-          const DATA = response.data.data[0]
+          const DATA = response.data.data
           // Demographic
           if (DATA.salutation_fk != null) { this.model.SALUTATION = { value: DATA.salutation_fk, name: DATA.salutation } }
           this.model.DM_NAME = DATA.name
@@ -1950,6 +1950,7 @@ export default {
           if (DATA.nok_postcode_fk != null) { this.model.NOK_POSTCODE = { value: DATA.nok_postcode_fk, name: DATA.nok_postcode } }
 
           // Allergy
+          this.model.ALLERGY = [0, 0, 0]
           var allergyType = response.data.allergy
           for (var i = 0; i < allergyType.length; i++) {
             if (allergyType[i].allergy_type_fk === 1) {

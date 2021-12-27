@@ -31,9 +31,6 @@
           </div>
 
           <va-card>
-
-            <h6>{{this.model}}</h6>
-
             <div class="text-center"><h4 class="mt-4 mb-5 text-dark">BOOK APPOINTMENT</h4></div>
             <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="appointment">
             </vue-form-generator>
