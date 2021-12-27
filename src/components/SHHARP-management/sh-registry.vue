@@ -1723,7 +1723,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.ARRIVAL_MODE.value === 5
+                  return model && model.ARRIVAL_MODE.value === 7
                 },
               },
             ],

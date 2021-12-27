@@ -3,7 +3,7 @@
   <div class="content">
     <div class="container-fluid">
       <router-link :to="{ name: 'patient-profile'}">
-        <h2 class="patient-name">{{pt_data[0].name}}</h2>
+        <h2 class="patient-name">{{pt_data.name}}</h2>
       </router-link>
 
       <div class="row">
@@ -29,19 +29,19 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Hospital's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].hospital_mrn}}</div>
+                  <div class="col-sm-5">{{pt_data.hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Mentari's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].mentari_mrn}}</div>
+                  <div class="col-sm-5">{{pt_data.mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Gender</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].gender}}</div>
+                  <div class="col-sm-5">{{pt_data.gender}}</div>
                 </div>
 
                 <div class="row">
@@ -53,7 +53,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Marital Status</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].marital}}</div>
+                  <div class="col-sm-5">{{pt_data.marital}}</div>
                 </div>
 
                 <div class="row">
@@ -65,7 +65,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Contact No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].phone_no_1}}</div>
+                  <div class="col-sm-5">{{pt_data.phone_no_1}}</div>
                 </div>
               </div>
               <div class="col-xl-3 mb-3">
@@ -267,8 +267,8 @@ export default {
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
-        this.birthdate = this.getDate(response.data.data[0].birthdate)
-        this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
+        this.birthdate = this.getDate(response.data.data.birthdate)
+        this.age = new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
           this.empty = false

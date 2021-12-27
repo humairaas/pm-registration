@@ -3,7 +3,7 @@
   <div class="content">
     <div class="container-fluid">
       <router-link :to="{ name: 'patient-profile'}">
-        <h2 class="patient-name">{{pt_data[0].name}}</h2>
+        <h2 class="patient-name">{{pt_data.name}}</h2>
       </router-link>
 
       <div class="row">
@@ -23,25 +23,25 @@
                 <div class="row mt-2">
                   <div class="col-sm-4"><b>MITS 2.0 Ref No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].mits_mrn}}</div>
+                  <div class="col-sm-5">{{pt_data.mits_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Hospital's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].hospital_mrn}}</div>
+                  <div class="col-sm-5">{{pt_data.hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Mentari's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].mentari_mrn}}</div>
+                  <div class="col-sm-5">{{pt_data.mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Gender</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].gender}}</div>
+                  <div class="col-sm-5">{{pt_data.gender}}</div>
                 </div>
 
                 <div class="row">
@@ -53,7 +53,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Marital Status</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].marital}}</div>
+                  <div class="col-sm-5">{{pt_data.marital}}</div>
                 </div>
 
                 <div class="row">
@@ -65,15 +65,15 @@
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Contact No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data[0].phone_no_1}}</div>
+                  <div class="col-sm-5">{{pt_data.phone_no_1}}</div>
                 </div>
               </div>
               <div class="col-xl-4 mb-3">
                 <b>Employment Status :</b>
-                <div>{{pt_data[0].employment_status}}</div>
+                <div>{{pt_data.employment_status}}</div>
                 <br>
                 <b>Household Income Status :</b>
-                <div>RM {{pt_data[0].min}} - RM {{pt_data[0].max}}</div>
+                <div>RM {{pt_data.min}} - RM {{pt_data.max}}</div>
               </div>
             </div>
           </va-card>
@@ -242,8 +242,8 @@ export default {
       .get('http://127.0.0.1:8000/api/getSHHARPProfile?patientId=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
-        this.birthdate = this.getDate(response.data.data[0].birthdate)
-        this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
+        this.birthdate = this.getDate(response.data.data.birthdate)
+        this.age = new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)
       })
 
     this.$axios

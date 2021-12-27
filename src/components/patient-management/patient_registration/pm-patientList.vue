@@ -80,8 +80,8 @@ export default {
     return {
       term: '',
       no: 1,
-      perPage: '5',
-      perPageOptions: ['5', '10', '50', '100'],
+      perPage: '25',
+      perPageOptions: ['25', '50', '100', '150', '200'],
       users: [],
       branch: '',
       selectBranch: [],

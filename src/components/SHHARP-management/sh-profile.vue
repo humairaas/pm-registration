@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <h2 class="patient-name">{{sh_data[0].name}}</h2>
+      <h2 class="patient-name">{{sh_data.name}}</h2>
 
       <div class="row">
         <!--Demographic--->
@@ -20,25 +20,25 @@
                 <div class="row mt-2">
                   <div class="col-sm-4"><b>MITS 2.0 Ref No</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{sh_data[0].mits_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data.mits_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Hospital's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{sh_data[0].hospital_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data.hospital_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Mentari's MRN</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{sh_data[0].mentari_mrn}}</div>
+                  <div class="col-sm-5">{{sh_data.mentari_mrn}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Gender</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{sh_data[0].gender}}</div>
+                  <div class="col-sm-5">{{sh_data.gender}}</div>
                 </div>
 
                 <div class="row">
@@ -50,7 +50,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Marital Status</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{sh_data[0].marital}}</div>
+                  <div class="col-sm-5">{{sh_data.marital}}</div>
                 </div>
 
                 <div class="row mb-3">
@@ -62,10 +62,10 @@
               </div>
               <div class="col-xl-4 mb-3">
                 <b>Employment Status :</b>
-                <div>{{sh_data[0].employment_status}}</div>
+                <div>{{sh_data.employment_status}}</div>
                 <br>
                 <b>Household Income Status :</b>
-                <div>RM {{sh_data[0].min}} - RM {{sh_data[0].max}}</div>
+                <div>RM {{sh_data.min}} - RM {{sh_data.max}}</div>
               </div>
             </div>
           </va-card>
@@ -102,6 +102,10 @@
                   :data="visitHistory"
                   :per-page="5"
                 >
+                  <template slot="no" slot-scope="row">
+                    {{ row.rowIndex + 1 }}
+                  </template>
+
                   <template slot="actions">
                     <va-button flat small color="gray" icon="fa fa-eye" />
                     <va-button flat small color="gray" icon="fa fa-pencil" />
@@ -137,43 +141,43 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Temperature</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].temperature}} &deg;C</div>
+                  <div class="col-sm">{{sh_data.temperature}} &deg;C</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Blood Pressure</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].blood_pressure}} mm/Hg</div>
+                  <div class="col-sm">{{sh_data.blood_pressure}} mm/Hg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Pulse Rate</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].pulse_rate}} bpm</div>
+                  <div class="col-sm">{{sh_data.pulse_rate}} bpm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Weight</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].weight}} kg</div>
+                  <div class="col-sm">{{sh_data.weight}} kg</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>Height</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].height}} cm</div>
+                  <div class="col-sm">{{sh_data.height}} cm</div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-4"><b>BMI</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].bmi}} kg/m&sup2;</div>
+                  <div class="col-sm">{{sh_data.bmi}} kg/m&sup2;</div>
                 </div>
 
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Waist Circumference</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm">{{sh_data[0].waist_circumference}} cm</div>
+                  <div class="col-sm">{{sh_data.waist_circumference}} cm</div>
                 </div>
               </va-card>
             </div>
@@ -188,6 +192,10 @@
                   :data="attachments"
                   :per-page="5"
                 >
+                  <template slot="no" slot-scope="row">
+                    {{ row.rowIndex + 1 }}
+                  </template>
+
                   <template slot="actions">
                     <va-button flat small color="gray" icon="fa fa-eye" />
                     <va-button flat small color="gray" icon="fa fa-trash" />
@@ -261,9 +269,10 @@ export default {
     visitHistoryFields () {
       return [
         {
-          name: 'no',
-          title: 'No',
+          name: '__slot:no',
+          title: this.$t('No'),
           width: '5%',
+          dataClass: 'text-center',
         },
         {
           name: 'activity',
@@ -300,9 +309,10 @@ export default {
     attachmentsFields () {
       return [
         {
-          name: 'no',
-          title: 'No',
+          name: '__slot:no',
+          title: this.$t('No'),
           width: '5%',
+          dataClass: 'text-center',
         },
         {
           name: 'file',
@@ -345,10 +355,18 @@ export default {
       .get('http://127.0.0.1:8000/api/getSHHARPProfile?patientId=' + patientId)
       .then((response) => {
         this.sh_data = response.data.data
-        this.birthdate = this.getDate(response.data.data[0].birthdate)
-        this.age = new Date().getFullYear() - response.data.data[0].birthdate.toString().substring(0, 4)
-        this.appointmentDate = this.getDateTime(response.data.data[0].timestamp_create)
-        this.clinicalDate = this.getDateTime(response.data.data[0].timestamp_create)
+        this.birthdate = this.getDate(response.data.data.birthdate)
+        this.age = new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)
+        if (response.data.data.date == null) {
+          this.appointmentDate = '--/--/-- --:--'
+        } else {
+          this.appointmentDate = response.data.data.date + ' ' + response.data.data.time
+        }
+        if (response.data.data.timestamp_create == null) {
+          this.clinicalDate = '--/--/---- --:--:--'
+        } else {
+          this.clinicalDate = this.getDateTime(response.data.data.timestamp_create)
+        }
       })
   },
 }

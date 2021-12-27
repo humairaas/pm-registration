@@ -604,7 +604,7 @@ export default {
       this.$axios
         .get('http://127.0.0.1:8000/api/getSHHARPDemographic?patientId=' + patientId)
         .then((response) => {
-          const DATA = response.data.data[0]
+          const DATA = response.data.data
 
           this.model.SH_NAME = DATA.name
           this.model.CITIZENSHIP = DATA.citizenship_fk
@@ -686,7 +686,7 @@ export default {
             localStorage.setItem('ID', response.data.patientId)
             this.$router.push({ path: 'SHHARP-profile' })
           })
-        this.launchToast('Registration Successful')
+        this.launchToast(' Registration Successful')
       }
     },
     validateUpdateForm () {
@@ -704,7 +704,7 @@ export default {
             localStorage.setItem('ID', response.data.patientId)
             this.$router.push({ path: 'SHHARP-profile' })
           })
-        this.launchToast('Details Updated')
+        this.launchToast(' Details Updated')
       }
     },
     validateTabA () {
@@ -717,9 +717,9 @@ export default {
         return false
       }
     },
-    launchToast () {
+    launchToast (text) {
       this.showToast(
-        this.model.SH_NAME + ' Registration Successful !',
+        this.model.SH_NAME + text,
         {
           icon: 'fa-check',
           position: 'top-center',
