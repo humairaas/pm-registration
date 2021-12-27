@@ -153,18 +153,36 @@ export default {
   },
   methods: {
     getAge (birthdate) {
-      return new Date().getFullYear() - birthdate.toString().substring(0, 4)
+      if (birthdate !== null) {
+        return new Date().getFullYear() - birthdate.toString().substring(0, 4)
+      }
     },
     getDate (datetime) {
-      return datetime.substring(0, 10)
+      if (datetime !== null) {
+        const d = new Date(datetime)
+        const newDate = d.toLocaleDateString('en-MY')
+        return newDate
+      }
     },
     showPatientProfile (user) {
       localStorage.setItem('ID', user.patient_id)
-      this.$router.push({ name: 'shharp-profile' })
+      if (user.shharp_id === null) {
+        this.$router.push({ name: 'patient-profile' })
+      } else {
+        this.$router.push({ name: 'shharp-profile' })
+      }
     },
     search: debounce(function (term) {
       this.term = term
     }, 400),
+  },
+  watch: {
+    startDate: function () {
+      if (this.startDate !== '') {
+        const d = new Date(this.startDate)
+        this.endDate = d.setDate(d.getDate() + 30)
+      }
+    },
   },
 }
 </script>

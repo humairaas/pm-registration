@@ -52,17 +52,25 @@
       </template>
 
       <template slot="status" slot-scope="props">
-        <span style="background-color: #c2b013 !important;" v-if="props.rowData.status === 'Completed'">
+        <span class="cell-red" v-if="props.rowData.status === 'No Show'">
           {{ props.rowData.status }}
         </span>
-        <div v-else>
+        <span class="cell-yellow" v-else-if="props.rowData.status === 'Processing'">
           {{ props.rowData.status }}
-        </div>
+        </span>
+        <span class="cell-green" v-else-if="props.rowData.status === 'Ready'">
+          {{ props.rowData.status }}
+        </span>
+        <span class="cell-blue" v-else-if="props.rowData.status === 'Completed'">
+          {{ props.rowData.status }}
+        </span>
+        <span v-else>
+          {{ props.rowData.status }}
+        </span>
       </template>
 
-      <template #colgroup>
-        <col span="2">
-        <col class="table-example--slots">
+      <template slot="date" slot-scope="props">
+        {{ getDate(props.rowData.date) }}
       </template>
 
       <template slot="actions" slot-scope="props">
@@ -109,15 +117,10 @@ export default {
   },
   mounted () {
     this.$axios
-      .get('http://127.0.0.1:8000/api/getService')
-      .then((response) => {
-        this.selectService = response.data.data.map(function (obj) { return obj.name })
-      })
-
-    this.$axios
       .get('http://127.0.0.1:8000/api/getAppointmentList')
       .then((response) => {
         this.users = response.data.data
+        this.selectService = response.data.service
       })
   },
   computed: {
@@ -156,7 +159,7 @@ export default {
           width: '5%',
         },
         {
-          name: 'date',
+          name: '__slot:date',
           title: this.$t('APPT. DATE'),
           width: '10%',
         },
@@ -197,6 +200,11 @@ export default {
     },
   },
   methods: {
+    getDate (datetime) {
+      const d = new Date(datetime)
+      const newDate = d.toLocaleDateString('en-MY')
+      return newDate
+    },
     async showPatientProfile (user) {
       localStorage.setItem('ID', user.patient_id)
       this.$router.push({ path: 'patient-profile' })
@@ -264,7 +272,40 @@ thead {
   font-size: 1rem !important;
 }
 
-.table-example--slots {
-  background-color: #bb3636;
+.cell-red {
+  background-color: #ff4433;
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px;
 }
+
+.cell-yellow {
+  background-color: #ffff00;
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px;
+}
+
+.cell-green {
+  background-color: #66cd00;
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px;
+}
+
+.cell-blue {
+  background-color: #40e0d0;
+  float: left;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px;
+}
+
 </style>

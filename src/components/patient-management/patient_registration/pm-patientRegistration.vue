@@ -626,16 +626,16 @@ export default {
               return model && model.REFERRAL_TYPE.value === 7
             },
           },
-          {
-            labels: 'Upload Referral Letter',
-            accept: '.pdf',
-            multiple: true,
-            text: 'Choose a File',
-            model: 'REFERRAL_LETTER',
-            type: 'vfg-custom-file',
-            styleClasses: 'col-md-6',
-            hint: '*Please upload pdf only (max file size 2MB)',
-          },
+          // {
+          //   labels: 'Upload Referral Letter',
+          //   accept: '.pdf',
+          //   multiple: true,
+          //   text: 'Choose a File',
+          //   model: 'REFERRAL_LETTER',
+          //   type: 'vfg-custom-file',
+          //   styleClasses: 'col-md-6',
+          //   hint: '*Please upload pdf only (max file size 2MB)',
+          // },
           {
             type: 'input',
             inputType: 'text',
