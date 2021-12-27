@@ -70,6 +70,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic">
                 </vue-form-generator>
+                {{this.model}}
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -515,7 +516,7 @@ export default {
             model: 'BIRTH_DATE',
             placeholder: 'Enter Date',
             required: true,
-            format: 'YYYY/MM/DD',
+            validator: 'date',
             styleClasses: 'col-md-6',
             onChanged: function (model, newVal, oldVal, field) {
               model.AGE = new Date().getFullYear() - model.BIRTH_DATE.toString().substring(0, 4)
@@ -1450,7 +1451,7 @@ export default {
             model: 'PASSPORT_EXPIRY_DATE',
             placeholder: 'Enter Date',
             required: true,
-            format: 'YYYY/MM/DD',
+            validator: 'date',
             min: 1,
             styleClasses: 'col-md-4',
             visible: function (model) {
