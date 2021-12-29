@@ -826,7 +826,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.RACE.value === 4
+                  return model && model.RACE.value === 7
                 },
               },
               {
@@ -859,7 +859,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.RELIGION.value === 4
+                  return model && model.RELIGION.value === 12
                 },
               },
             ],
@@ -897,7 +897,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.MARITAL_STATUS.value === 4
+                  return model && model.MARITAL_STATUS.value === 6
                 },
               },
               {
@@ -989,7 +989,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.OCCUPATION_STATUS.value === 4
+                  return model && model.OCCUPATION_STATUS.value === 10
                 },
               },
             ],
@@ -1027,7 +1027,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.FEE_EXEMPTION_STATUS.value === 4
+                  return model && model.FEE_EXEMPTION_STATUS.value === 5
                 },
               },
               {
@@ -1060,7 +1060,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.OCCUPATION_SECTOR.value === 4
+                  return model && model.OCCUPATION_SECTOR.value === 14
                 },
               },
             ],
