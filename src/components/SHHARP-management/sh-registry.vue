@@ -1917,7 +1917,7 @@ export default {
                 required: true,
                 styleClasses: ['col-md-6'],
                 visible: function (model) {
-                  return model && model.PSYMX.includes(99)
+                  return model && model.PSYMX.includes(6)
                 },
               },
               // {
@@ -2142,7 +2142,7 @@ export default {
           this.model.OCCUR_OTHER_SPECIFY = DATA.place_occurance_desc
 
           // Method
-          var tempMethod = response.DATA.method
+          var tempMethod = response.data.method
           var arrMethod = []
 
           for (let i = 0; i < tempMethod.length; i++) {
@@ -2237,7 +2237,7 @@ export default {
           for (let i = 0; i < tempPSYMX.length; i++) {
             arrPSYMX[i] = tempPSYMX[i].hm_psy_mx_fk
 
-            if (arrPSYMX[i] === 99) {
+            if (arrPSYMX[i] === 6) {
               this.model.PSYMX_SPECIFY = tempPSYMX[i].hm_psy_mx_desc
             }
           }
@@ -2275,7 +2275,7 @@ export default {
             return response.data
           })
       }
-      this.launchToast(' Saved As Draft Successfully!')
+      this.launchToast(' Saved As Draft Successful')
       this.submitPath = true
       this.$router.push({ path: 'shharp-history' })
     },

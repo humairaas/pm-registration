@@ -465,6 +465,7 @@ export default {
             model: 'PASSPORT_EXPIRY_DATE',
             placeholder: 'Enter Date',
             required: true,
+            validator: 'required',
             format: 'YYYY/MM/DD',
             styleClasses: 'col-md-4',
             visible: function (model) {
@@ -515,6 +516,7 @@ export default {
             model: 'BIRTH_DATE',
             placeholder: 'Enter Date',
             required: true,
+            validator: 'required',
             format: 'YYYY/MM/DD',
             styleClasses: 'col-md-6',
             onChanged: function (model, newVal, oldVal, field) {
@@ -1450,6 +1452,7 @@ export default {
             model: 'PASSPORT_EXPIRY_DATE',
             placeholder: 'Enter Date',
             required: true,
+            validator: 'required',
             format: 'YYYY/MM/DD',
             min: 1,
             styleClasses: 'col-md-4',
@@ -1498,6 +1501,7 @@ export default {
             model: 'BIRTH_DATE',
             placeholder: 'Enter Date',
             required: true,
+            validator: 'required',
             format: 'YYYY/MM/DD',
             styleClasses: 'col-md-6',
           },
@@ -1925,7 +1929,7 @@ export default {
           // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
           if (DATA.marital_fk != null) { this.model.MARITAL_STATUS = { value: DATA.marital_fk, name: DATA.marital } }
           // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
-          if (DATA.accomodation_fk != null) { this.model.ACCOMMODATION = { value: DATA.accomodation_fk, name: DATA.accomodation } }
+          if (DATA.accomodation_fk != null) { this.model.ACCOMMODATION = { value: DATA.accommodation_fk, name: DATA.accommodation } }
           // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
           if (DATA.education_fk != null) { this.model.EDUCATION_LEVEL = { value: DATA.education_fk, name: DATA.education } }
           if (DATA.occupation_status_fk != null) { this.model.OCCUPATION_STATUS = { value: DATA.occupation_status_fk, name: DATA.occupation_status } }
