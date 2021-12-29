@@ -228,6 +228,7 @@ export default {
                   numericOnly: true,
                 },
                 placeholder: 'XXXXXX-XX-XXXX',
+                validator: 'string',
                 styleClasses: 'col-md-6',
                 visible: function (model) {
                   return model && ((model.CITIZENSHIP === 1 && model.NRIC_TYPE.value === 2) || model.CITIZENSHIP === 2)

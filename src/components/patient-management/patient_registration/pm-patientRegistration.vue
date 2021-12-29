@@ -70,7 +70,6 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic">
                 </vue-form-generator>
-                {{this.model}}
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -418,6 +417,7 @@ export default {
             label: 'NRIC NO',
             model: 'NRIC_NO',
             required: true,
+            validator: 'string',
             cleaveOptions: {
               blocks: [6, 2, 4],
               delimiter: '-',
