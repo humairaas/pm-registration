@@ -562,19 +562,17 @@ export default {
           {
             type: 'input',
             inputType: 'text',
-            label: "Hospital's MRN Number",
+            label: "Hospital's MRN",
             model: 'HOSPITAL_MRN',
             validator: 'string',
-            required: true,
             styleClasses: 'col-md-6',
           },
           {
             type: 'input',
             inputType: 'text',
-            label: "Mentari's MRN Number",
+            label: "Mentari's MRN",
             model: 'MENTARI_MRN',
             validator: 'string',
-            required: true,
             styleClasses: 'col-md-6',
           },
           {
