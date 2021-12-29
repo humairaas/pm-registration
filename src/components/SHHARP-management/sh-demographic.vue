@@ -448,7 +448,7 @@ export default {
                 required: true,
                 styleClasses: 'col-lg-4',
                 visible: function (model) {
-                  return model && model.RACE.value === 99
+                  return model && model.RACE.value === 4
                 },
               },
             ],
@@ -524,7 +524,7 @@ export default {
                 required: true,
                 styleClasses: 'col-lg-4',
                 visible: function (model) {
-                  return model && model.MARITAL_STATUS.value === 99
+                  return model && model.MARITAL_STATUS.value === 4
                 },
               },
 
@@ -625,7 +625,7 @@ export default {
           if (DATA.employment_status_fk != null) {
             this.model.EMPLOYMENT_STATUS = { value: DATA.employment_status_fk, name: DATA.employment_status }
           }
-          this.model.INCOME_STATUS = this.selectIncomeStatus[DATA.household_income_fk]
+          this.model.INCOME_STATUS = this.selectIncomeStatus[DATA.household_income_fk - 1]
           this.model.RACE = { value: DATA.ethnic_fk, name: DATA.ethnic }
           this.model.RELIGION = { value: DATA.religion_fk, name: DATA.religion }
           this.model.MARITAL_STATUS = { value: DATA.marital_fk, name: DATA.marital }

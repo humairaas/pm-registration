@@ -47,7 +47,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Date of Birth</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{birthdate}} ({{age}} years old)</div>
+                  <div class="col-sm-5">{{birthdate}} {{age}}</div>
                 </div>
 
                 <div class="row">
@@ -56,18 +56,13 @@
                   <div class="col-sm-5">{{pt_data.marital}}</div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                   <div class="col-sm-4"><b>Nationality</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
                   <div class="col-sm-5">Malaysian</div>
                 </div>
-
-                <div class="row mb-3">
-                  <div class="col-sm-4"><b>Contact No</b></div>
-                  <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">{{pt_data.phone_no_1}}</div>
-                </div>
               </div>
+
               <div class="col-xl-4 mb-3">
                 <b>Employment Status :</b>
                 <div>{{pt_data.employment_status}}</div>
@@ -242,8 +237,12 @@ export default {
       .get('http://127.0.0.1:8000/api/getSHHARPProfile?patientId=' + patientId)
       .then((response) => {
         this.pt_data = response.data.data
-        this.birthdate = this.getDate(response.data.data.birthdate)
-        this.age = new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)
+        if (response.data.data.birthdate != null) {
+          this.birthdate = this.getDate(response.data.data.birthdate)
+          this.age = '(' + (new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)) + ' years old)'
+        } else {
+          this.birthdate = ''
+        }
       })
 
     this.$axios

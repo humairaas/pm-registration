@@ -9,9 +9,42 @@ This page is not fully completed [last updated by Humaira': 27/12/2021]
 
       <div class="row">
         <div class="col-12">
+          <!--Notification-->
+          <div class="mb-3" v-if="tabA==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Triage Form </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabA = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabB==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Outcome </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabA = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
+          <div class="mb-3" v-if="tabC==true">
+            <va-notification color="danger">
+              <va-badge color="danger">
+                {{ $t('Incomplete') }}
+              </va-badge>
+              <span>Please fill all <b> Book Appointment </b> required fields.</span>
+              <button type="button" class="btn close-button" @click="tabA = false">
+                <span class="fa fa-close"/>
+              </button>
+            </va-notification>
+          </div>
 
           <va-card>
-            <p>{{model}} {{screenings}}</p>
             <br>
             <b-tabs content-class="mt-3 px-5 pb-5" v-model="tabIndex" fill>
 
@@ -149,6 +182,9 @@ export default {
       tabIndex: 1,
       submitPath: false,
       patientNotExist: false,
+      tabA: false,
+      tabB: false,
+      tabC: false,
       requestAppointmentId: '',
 
       selectScreening: [],
@@ -483,8 +519,10 @@ export default {
     validateOutcome () {
       var errors = this.$refs.triageOutcome.validate()
       if (errors) {
+        this.tabB = false
         return true
       } else {
+        this.tabB = true
         return false
       }
     },
@@ -507,8 +545,10 @@ export default {
     validateAppointment () {
       var errors = this.$refs.appointment.validate()
       if (errors) {
+        this.tabC = false
         return true
       } else {
+        this.tabC = true
         return false
       }
     },
@@ -602,4 +642,20 @@ ul.va-unordered > li,
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 }
+
+.close-button {
+  color: rgb(227, 75, 74);
+  position: absolute;
+  right: 0;
+  width: 70px;
+}
+
+.close-button:hover {
+  color: black;
+}
+
+.close-button:focus {
+  box-shadow: none !important;
+}
+
 </style>
