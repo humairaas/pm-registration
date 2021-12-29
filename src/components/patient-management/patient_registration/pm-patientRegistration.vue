@@ -70,6 +70,7 @@
               <tab-content icon="fa fa-user-circle-o" title="1. Demographic">
                 <vue-form-generator :model="model" :schema="tabASchema" :options="formOptions" ref="demographic">
                 </vue-form-generator>
+                {{this.model}}
               </tab-content>
 
               <!-- 2nd tab: Socio Demographic-->
@@ -377,6 +378,9 @@ export default {
                 model.NRIC_TYPE = ''
                 model.NRIC_NO = ''
               } else if (newVal === 3) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
                 model.NRIC_TYPE = ''
                 model.NRIC_NO = ''
               }
