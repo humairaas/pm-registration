@@ -773,7 +773,7 @@ export default {
     }
   },
   mounted () {
-    var patientId = localStorage.getItem('patientId')
+    var patientId = JSON.parse(localStorage.getItem('ID'))
     this.$axios
       .get('http://127.0.0.1:8000/api/getPatientCarePlanMountedData?patient_id=' + patientId)
       .then((response) => {
@@ -784,10 +784,12 @@ export default {
         this.model.MRN = response.data.patientData[0].mrn
         this.model.PATIENT_NAME = response.data.patientData[0].name
         this.model.NRIC_PASSPORT = response.data.patientData[0].nricPassport
-        this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
+        if (response.data.patientData[0].birthdate !== null) {
+          this.model.AGE = new Date().getFullYear() - response.data.patientData[0].birthdate.toString().substring(0, 4)
+          this.model.DOB = new Date(response.data.patientData[0].birthdate).toLocaleDateString('en-MY')
+        }
         this.model.CONTACT_NO = response.data.patientData[0].contact
         this.model.GENDER = response.data.patientData[0].gender
-        this.model.DOB = new Date(response.data.patientData[0].birthdate).toLocaleDateString('en-MY')
         this.model.STAFF_DATE = new Date().toLocaleDateString('en-MY')
       })
   },
