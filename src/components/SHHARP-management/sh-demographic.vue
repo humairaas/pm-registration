@@ -324,6 +324,7 @@ export default {
                 model: 'BIRTH_DATE',
                 placeholder: 'Enter Date',
                 required: true,
+                validator: 'required',
                 format: 'YYYY/MM/DD',
                 styleClasses: 'col-lg-4',
                 onChanged: function (model, newVal, oldVal, field) {
@@ -348,8 +349,6 @@ export default {
                 inputType: 'text',
                 label: "Hospital's MRN Number",
                 model: 'HOSPITAL_MRN',
-                validator: 'string',
-                required: true,
                 styleClasses: 'col-lg-4',
               },
               {
@@ -357,8 +356,6 @@ export default {
                 inputType: 'text',
                 label: "Mentari's MRN Number",
                 model: 'MENTARI_MRN',
-                validator: 'string',
-                required: true,
                 styleClasses: 'col-lg-4',
               },
             ],
@@ -555,19 +552,6 @@ export default {
                   return this.selectEducationLevel
                 },
               },
-              {
-                type: 'input',
-                inputType: 'text',
-                label: 'To Specify',
-                model: 'EDUCATION_LEVEL_SPECIFY',
-                validator: 'string',
-                required: true,
-                styleClasses: 'col-lg-4',
-                visible: function (model) {
-                  return model && model.EDUCATION_LEVEL.value === 99
-                },
-              },
-
             ],
           },
         ],

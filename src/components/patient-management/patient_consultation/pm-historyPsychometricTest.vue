@@ -59,7 +59,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Nationality</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">Malaysian</div>
+                  <div class="col-sm-5">{{nationality}}</div>
                 </div>
 
                 <div class="row mb-3">
@@ -148,6 +148,7 @@ export default {
       allergies: [],
       birthdate: '',
       age: '',
+      nationality: '',
       empty: true,
 
       tests: [],
@@ -201,6 +202,11 @@ export default {
           this.age = '(' + (new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)) + ' years old)'
         } else {
           this.birthdate = ''
+        }
+        if (response.data.data.citizenship_fk === 3) {
+          this.nationality = 'Non-Malaysian ' + '(' + response.data.data.issuing_country + ')'
+        } else {
+          this.nationality = 'Malaysia'
         }
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {

@@ -1110,7 +1110,7 @@ export default {
               key: 'value',
               label: 'name',
             },
-            styleClasses: 'col-sm-6',
+            styleClasses: 'col-sm-6 on-top',
             required: true,
             validator: 'required',
           },
@@ -2226,7 +2226,7 @@ export default {
           this.model.ADMISSION_SPECIFY = DATA.hm_admitted_desc
           this.model.DISCHARGE_STATUS = DATA.hm_discharge_status
           this.model.DISCHARGE_DATE = DATA.hm_discharge_date
-          this.model.NO_OF_DAYS = DATA.hm_days_warded
+          this.model.NO_OF_DAYS = parseInt(DATA.hm_days_warded)
           this.model.MAIN_DIAGNOSIS = DATA.hm_discharge_diagnosis_main
           this.model.EXTERNAL_DIAGNOSIS = DATA.hm_discharge_diagnosis_external
 
@@ -2619,6 +2619,13 @@ export default {
 
   .margin-top {
     margin-top: 31px;
+  }
+
+  .on-top {
+    .multiselect__content-wrapper {
+      position: fixed;
+      width: 37%;
+    }
   }
 
 </style>

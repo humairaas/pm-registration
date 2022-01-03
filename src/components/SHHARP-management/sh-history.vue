@@ -59,7 +59,7 @@
                 <div class="row mb-3">
                   <div class="col-sm-4"><b>Nationality</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">Malaysian</div>
+                  <div class="col-sm-5">{{nationality}}</div>
                 </div>
               </div>
 
@@ -137,7 +137,7 @@
                   <template slot="actions" slot-scope="props">
                     <va-button v-if="props.rowData.shharp_form_status=='COMPLETED'" flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
                     </va-button>
-                    <va-button v-if="props.rowData.shharp_form_status=='DRAFT'" flat small color="black" icon="fa fa-pencil-square-o" @click="editDraft(props.rowData.shharp_id)">
+                    <va-button v-if="props.rowData.shharp_form_status=='DRAFT'" flat small color="#75757" icon="fa fa-pencil" @click="editDraft(props.rowData.shharp_id)" class="edit-button">
                     </va-button>
                   </template>
                 </va-data-table>
@@ -162,6 +162,7 @@ export default {
       age: '',
       date: '',
       time: '',
+      nationality: '',
       empty: true,
       shharpId: [],
 
@@ -243,6 +244,11 @@ export default {
         } else {
           this.birthdate = ''
         }
+        if (response.data.data.citizenship_fk === 3) {
+          this.nationality = 'Non-Malaysian ' + '(' + response.data.data.issuing_country + ')'
+        } else {
+          this.nationality = 'Malaysia'
+        }
       })
 
     this.$axios
@@ -267,47 +273,12 @@ export default {
     font-size: 0.9rem;
   }
 
-  .spacing {
-    margin-right: 500px;
-    width: 300px;
-  }
-
   .sizebtn {
     font-size: 2rem;
   }
 
-  .line {
-    border-top: 1px solid rgb(189, 184, 184);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  .edit-button:hover {
+    background-color: rgb(209, 209, 209);
   }
 
-  .log-button:hover {
-    text-decoration: underline;
-    color: blue;
-  }
-
-  .no-padding {
-    padding: none;
-    margin: none;
-  }
-
-  .ga-one {
-    border-radius: 0.375rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    box-shadow: 0 2px 3px 0 rgba(168, 168, 168, 0.795);
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: #f5f8f9;
-  }
-
-  .ga-two {
-    color: #212529;
-  }
-
-  .ga-two:hover {
-    text-decoration: underline;
-  }
 </style>

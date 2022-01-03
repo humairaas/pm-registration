@@ -1413,6 +1413,7 @@ export default {
               numericOnly: true,
             },
             placeholder: 'XXXXXX-XX-XXXX',
+            validator: 'required',
             styleClasses: 'col-md-6',
             visible: function (model) {
               return model && (model.NRIC_TYPE.value === 2 || model.CITIZENSHIP === 2)
@@ -1929,7 +1930,7 @@ export default {
           // this.model.SPECIFY_RELIGION = response.data.data[0].status_fk
           if (DATA.marital_fk != null) { this.model.MARITAL_STATUS = { value: DATA.marital_fk, name: DATA.marital } }
           // this.model.SPECIFY_MARITAL_STATUS = response.data.data[0].marital_fk
-          if (DATA.accomodation_fk != null) { this.model.ACCOMMODATION = { value: DATA.accommodation_fk, name: DATA.accommodation } }
+          if (DATA.accommodation_fk != null) { this.model.ACCOMMODATION = { value: DATA.accommodation_fk, name: DATA.accommodation } }
           // this.model.SPECIFY_ACCOMMODATION = response.data.data[0].accomodation_fk
           if (DATA.education_fk != null) { this.model.EDUCATION_LEVEL = { value: DATA.education_fk, name: DATA.education } }
           if (DATA.occupation_status_fk != null) { this.model.OCCUPATION_STATUS = { value: DATA.occupation_status_fk, name: DATA.occupation_status } }

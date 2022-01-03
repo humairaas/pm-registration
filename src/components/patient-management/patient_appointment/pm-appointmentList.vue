@@ -76,7 +76,7 @@
       <template slot="actions" slot-scope="props">
         <va-button flat small color="#61CE70" icon="fa fa-check" @click="tick(props.rowData)" class="ma-0">
         </va-button>
-        <va-button flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
+        <va-button flat small color="#75757" icon="fa fa-pencil" @click="edit(props.rowData)" class="ma-0 edit-button">
         </va-button>
         <va-button flat small color="#DC3545" icon="fa fa-close" @click="noShow(props.rowData)" class="ma-0">
         </va-button>
@@ -129,14 +129,14 @@ export default {
         {
           name: '__slot:no',
           title: this.$t('NO'),
-          width: '30px',
+          width: '2%',
           height: '45px',
           dataClass: 'text-center',
         },
         {
           name: 'mrn',
           title: this.$t('MRN'),
-          width: '10%',
+          width: '8%',
         },
         {
           name: 'salutation',
@@ -146,17 +146,17 @@ export default {
         {
           name: 'name',
           title: this.$t('NAME'),
-          width: '18%',
+          width: '20%',
         },
         {
           name: 'nricPassport',
           title: this.$t('NRIC/PASSPORT'),
-          width: '15%',
+          width: '10%',
         },
         {
           name: '__slot:status',
           title: this.$t('STATUS'),
-          width: '5%',
+          width: '10%',
         },
         {
           name: '__slot:date',
@@ -176,12 +176,12 @@ export default {
         {
           name: 'services',
           title: this.$t('SERVICES'),
-          width: '5%',
+          width: '10%',
         },
         {
           name: '__slot:actions',
           title: this.$t('ACTION'),
-          width: '15%',
+          width: '8%',
         },
       ]
     },
@@ -306,6 +306,10 @@ thead {
   text-align: center;
   font-weight: 600;
   padding: 5px;
+}
+
+.edit-button:hover {
+  background-color: rgb(201, 201, 201);
 }
 
 </style>

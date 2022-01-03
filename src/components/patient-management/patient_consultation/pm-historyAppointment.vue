@@ -59,7 +59,7 @@
                 <div class="row">
                   <div class="col-sm-4"><b>Nationality</b></div>
                   <div class="col-sm-auto"><b>:</b></div>
-                  <div class="col-sm-5">Malaysian</div>
+                  <div class="col-sm-5">{{nationality}}</div>
                 </div>
 
                 <div class="row mb-3">
@@ -120,7 +120,7 @@
                   </template>
 
                   <template slot="actions" slot-scope="props">
-                    <va-button v-if="props.rowData.status!=='Completed'" flat small color="#75757" icon="fa fa-edit" @click="edit(props.rowData)" class="ma-0">
+                    <va-button v-if="props.rowData.status!=='Completed'" flat small color="#75757" icon="fa fa-pencil" @click="edit(props.rowData)" class="ma-0 edit-button">
                     </va-button>
                   </template>
 
@@ -145,6 +145,7 @@ export default {
       allergies: [],
       birthdate: '',
       age: '',
+      nationality: '',
       empty: true,
       appointment: [],
     }
@@ -193,7 +194,7 @@ export default {
     },
   },
   mounted () {
-    var patientId = localStorage.getItem('patientId')
+    var patientId = localStorage.getItem('ID')
     this.$axios
       .get('http://127.0.0.1:8000/api/getPatientProfile?patient_id=' + patientId)
       .then((response) => {
@@ -203,6 +204,11 @@ export default {
           this.age = '(' + (new Date().getFullYear() - response.data.data.birthdate.toString().substring(0, 4)) + ' years old)'
         } else {
           this.birthdate = ''
+        }
+        if (response.data.data.citizenship_fk === 3) {
+          this.nationality = 'Non-Malaysian ' + '(' + response.data.data.issuing_country + ')'
+        } else {
+          this.nationality = 'Malaysia'
         }
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
@@ -241,38 +247,8 @@ export default {
     font-size: 2rem;
   }
 
-  .line {
-    border-top: 1px solid rgb(189, 184, 184);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  .edit-button:hover {
+    background-color: rgb(209, 209, 209);
   }
 
-  .log-button:hover {
-    text-decoration: underline;
-    color: blue;
-  }
-
-  .no-padding {
-    padding: none;
-    margin: none;
-  }
-
-  .ga-one {
-    border-radius: 0.375rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    box-shadow: 0 2px 3px 0 rgba(168, 168, 168, 0.795);
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: #f5f8f9;
-  }
-
-  .ga-two {
-    color: #212529;
-  }
-
-  .ga-two:hover {
-    text-decoration: underline;
-  }
 </style>

@@ -62,11 +62,11 @@ export default {
           },
           {
             type: 'input',
-            inputType: 'number',
+            inputType: 'text',
             placeholder: 'Enter Blood Pressure',
             label: 'Blood Pressure (in mm/Hg unit)',
             model: 'BLOOD_PRESSURE',
-            validator: 'number',
+            validator: 'string',
             required: true,
           },
           {
