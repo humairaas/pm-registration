@@ -377,6 +377,9 @@ export default {
                 model.NRIC_TYPE = ''
                 model.NRIC_NO = ''
               } else if (newVal === 3) {
+                model.PASSPORT_NO = ''
+                model.PASSPORT_EXPIRY_DATE = ''
+                model.ISSUING_COUNTRY = ''
                 model.NRIC_TYPE = ''
                 model.NRIC_NO = ''
               }
@@ -414,6 +417,7 @@ export default {
             label: 'NRIC NO',
             model: 'NRIC_NO',
             required: true,
+            validator: 'string',
             cleaveOptions: {
               blocks: [6, 2, 4],
               delimiter: '-',
@@ -558,19 +562,17 @@ export default {
           {
             type: 'input',
             inputType: 'text',
-            label: "Hospital's MRN Number",
+            label: "Hospital's MRN",
             model: 'HOSPITAL_MRN',
             validator: 'string',
-            required: true,
             styleClasses: 'col-md-6',
           },
           {
             type: 'input',
             inputType: 'text',
-            label: "Mentari's MRN Number",
+            label: "Mentari's MRN",
             model: 'MENTARI_MRN',
             validator: 'string',
-            required: true,
             styleClasses: 'col-md-6',
           },
           {
@@ -824,7 +826,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.RACE.value === 4
+                  return model && model.RACE.value === 7
                 },
               },
               {
@@ -857,7 +859,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.RELIGION.value === 4
+                  return model && model.RELIGION.value === 12
                 },
               },
             ],
@@ -895,7 +897,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.MARITAL_STATUS.value === 4
+                  return model && model.MARITAL_STATUS.value === 6
                 },
               },
               {
@@ -987,7 +989,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.OCCUPATION_STATUS.value === 4
+                  return model && model.OCCUPATION_STATUS.value === 10
                 },
               },
             ],
@@ -1025,7 +1027,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.FEE_EXEMPTION_STATUS.value === 4
+                  return model && model.FEE_EXEMPTION_STATUS.value === 5
                 },
               },
               {
@@ -1058,7 +1060,7 @@ export default {
                 required: true,
                 styleClasses: 'col-md-2',
                 visible: function (model) {
-                  return model && model.OCCUPATION_SECTOR.value === 4
+                  return model && model.OCCUPATION_SECTOR.value === 14
                 },
               },
             ],

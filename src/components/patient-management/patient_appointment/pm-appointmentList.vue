@@ -43,12 +43,16 @@
       :data="filteredData"
       :per-page="parseInt(perPage)"
       :hoverable="true"
-      @row-clicked="showPatientProfile"
-      clickable
     >
 
       <template slot="no" slot-scope="row">
         {{ row.rowIndex + 1 }}
+      </template>
+
+      <template slot="name" slot-scope="props">
+        <div @click="showPatientProfile(props.rowData)" style="cursor: pointer;">
+          {{ props.rowData.name }}
+        </div>
       </template>
 
       <template slot="status" slot-scope="props">
@@ -144,7 +148,7 @@ export default {
           width: '5%',
         },
         {
-          name: 'name',
+          name: '__slot:name',
           title: this.$t('NAME'),
           width: '20%',
         },
@@ -210,12 +214,14 @@ export default {
       this.$router.push({ path: 'patient-profile' })
     },
     async tick (rowData) {
-      const data = new FormData()
-      data.append('appointmentId', rowData.appointment_id)
-      data.append('serviceType', rowData.services)
-      const url = 'http://127.0.0.1:8000/api/tickAttendance'
-      await this.$axios.post(url, data)
-      this.refreshList()
+      if (rowData.services !== '') {
+        const data = new FormData()
+        data.append('appointmentId', rowData.appointment_id)
+        data.append('serviceType', rowData.services)
+        const url = 'http://127.0.0.1:8000/api/tickAttendance'
+        await this.$axios.post(url, data)
+        this.refreshList()
+      }
     },
     edit (rowData) {
       localStorage.setItem('appointmentId', rowData.appointment_id)

@@ -168,10 +168,6 @@ export default {
       localStorage.setItem('ID', user.patient_id)
       this.$router.push({ name: 'shharp-profile' })
       // if (user.shharp_id === null) {
-      //   this.$router.push({ name: 'patient-profile' })
-      // } else {
-      //   this.$router.push({ name: 'shharp-profile' })
-      // }
     },
     search: debounce(function (term) {
       this.term = term

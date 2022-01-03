@@ -1870,24 +1870,42 @@ export default {
                 styleClasses: ['col-md-2'],
               },
               {
-                type: 'input',
-                inputType: 'text',
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
                 label: 'Main diagnosis',
-                placeholder: 'Please specify',
                 model: 'MAIN_DIAGNOSIS',
-                validator: 'string',
                 required: true,
-                styleClasses: ['col-md-5'],
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  allowEmpty: false,
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectDiagnosis
+                },
               },
               {
-                type: 'input',
-                inputType: 'text',
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
                 label: 'External causes',
-                placeholder: 'Please specify',
                 model: 'EXTERNAL_DIAGNOSIS',
-                validator: 'string',
                 required: true,
-                styleClasses: ['col-md-5'],
+                validator: 'required',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  allowEmpty: false,
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectDiagnosis
+                },
               },
 
             ],
