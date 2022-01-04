@@ -150,7 +150,7 @@ export default {
         {
           name: '__slot:name',
           title: this.$t('NAME'),
-          width: '20%',
+          width: '18%',
         },
         {
           name: 'nricPassport',
@@ -185,7 +185,7 @@ export default {
         {
           name: '__slot:actions',
           title: this.$t('ACTION'),
-          width: '8%',
+          width: '10%',
         },
       ]
     },
