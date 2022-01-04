@@ -200,7 +200,7 @@ export default {
           width: '20%',
         },
         {
-          name: 'sd_psychiatrist_name',
+          name: 'sd_officer_name',
           title: 'CREATED BY',
           width: '18%',
         },
