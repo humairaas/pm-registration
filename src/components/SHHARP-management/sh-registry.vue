@@ -1105,12 +1105,12 @@ export default {
               hideNoneSelectedText: true,
               multiple: false,
               closeOnSelect: true,
-              maxHeight: 200,
+              maxHeight: 100,
               showLabels: false,
               key: 'value',
               label: 'name',
             },
-            styleClasses: 'col-sm-6 on-top',
+            styleClasses: 'col-sm-6 pb-7',
             required: true,
             validator: 'required',
           },
@@ -2639,11 +2639,12 @@ export default {
     margin-top: 31px;
   }
 
-  .on-top {
-    .multiselect__content-wrapper {
-      position: fixed;
-      width: 37%;
-    }
+  .pb-7 {
+    padding-bottom: 70px;
+    // .multiselect__content-wrapper {
+    //   position: fixed;
+    //   width: 37%;
+    // }
   }
 
 </style>
