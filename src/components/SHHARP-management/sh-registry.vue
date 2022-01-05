@@ -742,7 +742,7 @@ export default {
             fields: [
               {
                 type: 'label',
-                label: '7. Family histroy of substance abuse',
+                label: '7. Family history of substance abuse',
                 styleClasses: 'col-md-6',
               },
               {
@@ -1096,7 +1096,7 @@ export default {
           },
           {
             type: 'vueMultiSelect',
-            label: 'Place of Occurance',
+            label: 'Place of Occurrence',
             model: 'OCCUR',
             values: () => {
               return this.selectOccurance
