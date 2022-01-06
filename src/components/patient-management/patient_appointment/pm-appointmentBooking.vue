@@ -280,10 +280,10 @@ export default {
         })
     }
 
-    if (this.$route.query.st === 'reqAppt') {
+    if (this.$route.query.st === 'reqApp') {
       this.requestAppointmentId = localStorage.getItem('requestAppointmentId')
       this.model.NRIC_PASSPORT_NO = localStorage.getItem('nricPassport')
-      this.model.PATIENT_FK = localStorage.getItem('patientId')
+      this.model.PATIENT_FK = localStorage.getItem('ID')
     }
   },
   methods: {
@@ -302,7 +302,7 @@ export default {
     async validateForm () {
       var tabA = this.validateTabA()
 
-      if (this.$route.query.st === 'reqAppt') {
+      if (this.$route.query.st === 'reqApp') {
         if (tabA) {
           const reqAppt = new FormData()
           reqAppt.append('requestAppointmentId', this.requestAppointmentId)

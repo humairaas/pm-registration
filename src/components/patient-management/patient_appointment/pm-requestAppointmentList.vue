@@ -137,11 +137,11 @@ export default {
       data.append('requestAppointmentData', JSON.stringify(rowData))
       const url = 'http://127.0.0.1:8000/api/requestAppointmentPartialRegistration'
       const response = await this.$axios.post(url, data)
-      localStorage.setItem('patientId', JSON.stringify(response.data.patientId))
+      localStorage.setItem('ID', JSON.stringify(response.data.patientId))
 
       localStorage.setItem('requestAppointmentId', rowData.request_appointment_id)
       localStorage.setItem('nricPassport', rowData.nricPassport)
-      this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'reqAppt' } })
+      this.$router.push({ name: 'patient-appointmentBooking', query: { st: 'reqApp' } })
     },
     launchToast () {
       this.showToast(

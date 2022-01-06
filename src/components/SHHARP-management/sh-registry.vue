@@ -200,24 +200,24 @@
             <div class="my-3">
               <div class="float-left">
                 <button v-if="!tabIndex==0" @click="tabIndex--" type="button" class="btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-step-backward" /> &nbsp; Previous
+                  <div class="fa fa-angle-double-left" /> &nbsp; PREVIOUS
                 </button>
               </div>
               <div class="float-right">
                 <button v-if="tabIndex < 5" @click="tabIndex++" type="button" class="btn btn-info btn-fill btn-md">
-                  Next <div class="fa fa-step-forward" />
+                  NEXT <div class="fa fa-angle-double-right" />
                 </button>
 
-                <button v-if="tabIndex==5" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
-                  <div class="fa fa-play-circle" /> &nbsp;Preview
+                <button v-if="tabIndex==5" @click="showPreviewModal" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
+                  <div class="fa fa-play-circle" /> &nbsp;PREVIEW
                 </button>
 
                 <button v-if="tabIndex==5 && view==false" @click="saveAsDraft" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
-                  <div class="material-icons align-middle">system_update_alt</div> &nbsp; Save as Draft
+                  <div class="material-icons align-middle">system_update_alt</div> &nbsp; SAVE AS DRAFT
                 </button>
 
                 <button v-if="tabIndex==5 && view==false" @click="validateForm" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  <div class="fa fa-paper-plane" /> &nbsp;SUBMIT
                 </button>
               </div>
             </div>
@@ -234,57 +234,57 @@
             <div class="modal-preview">
               <!-- RISK FACTORS -->
               <h5 class="sh-tab-title">1. Risk Factors</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabASchema"></vue-form-generator>
+              <vue-form-generator class="readonly" :model="model" :schema="tabAModalSchema"></vue-form-generator>
 
               <!-- PROTECTIVE FACTORS -->
               <h5 class="sh-tab-title">2. Protective Factors</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabBSchema"></vue-form-generator>
+              <vue-form-generator class="readonly" :model="model" :schema="tabBModalSchema"></vue-form-generator>
 
               <!-- THE SELF-HARM ACT AND SUICIDAL INTENT -->
               <h5 class="sh-tab-title">3. The Self-Harm Act and Suicidal Intent</h5>
               <h6 class="sh-sub-title">Section A : CURRENT SELF-HARM ACT (within past 2 weeks from time of presentation)</h6>
-              <vue-form-generator class="read-only" :model="model" :schema="tabCASchema"></vue-form-generator>
+              <vue-form-generator class="readonly" :model="model" :schema="tabCASchema"></vue-form-generator>
               <h6 class="sh-sub-title">Section B: METHOD OF SELF-HARM (please document the recent method only)</h6>
               <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
               <div class="row">
                 <div class="col-lg-auto">
-                  <vue-form-generator class="read-only" :schema="tabCB1Schema" :model="model"></vue-form-generator>
+                  <vue-form-generator class="readonly" :schema="tabCB1Schema" :model="model"></vue-form-generator>
                 </div>
                 <div class="col-lg">
-                  <vue-form-generator class="read-only" :schema="tabCB2Schema" :model="model"></vue-form-generator>
+                  <vue-form-generator class="readonly" :schema="tabCB2Schema" :model="model"></vue-form-generator>
                 </div>
               </div>
               <h6 class="sh-sub-title">Section C: HOW DID PATIENT GET IDEA ABOUT METHOD</h6>
               <h6 class="mt-3 mb-4 ml-3">Instruction: Please tick (/) in the box provided</h6>
-              <vue-form-generator class="read-only" :schema="tabCCSchema" :model="model"></vue-form-generator>
+              <vue-form-generator class="readonly" :schema="tabCCSchema" :model="model"></vue-form-generator>
               <h6 class="sh-sub-title">Section D: SUICIDAL INTENT</h6>
               <div class="row mt-3">
                 <div class="col-lg-3 mt-2">
-                  <vue-form-generator class="read-only" :schema="tabCD1Schema" :model="model"></vue-form-generator>
+                  <vue-form-generator class="readonly" :schema="tabCD1Schema" :model="model"></vue-form-generator>
                 </div>
                 <div class="col-lg">
-                  <vue-form-generator class="read-only" :schema="tabCD2Schema" :model="model"></vue-form-generator>
+                  <vue-form-generator class="readonly" :schema="tabCD2Schema" :model="model"></vue-form-generator>
                 </div>
               </div>
               <h6 class="sh-sub-title">Section E: LEVEL OF SUICIDAL INTENT (Beck's Suicide Intent Scale)</h6>
-              <vue-form-generator class="read-only" :schema="tabCESchema" :model="model"></vue-form-generator>
-              <vue-form-generator class="read-only mt-3" :schema="totalScoreSchema" :model="model"></vue-form-generator>
+              <vue-form-generator class="readonly" :schema="tabCEModalSchema" :model="model"></vue-form-generator>
+              <vue-form-generator class="readonly mt-3" :schema="totalScoreSchema" :model="model"></vue-form-generator>
 
               <!-- SUICIDE RISK -->
               <h5 class="sh-tab-title">4. Suicide Risk</h5>
               <b class="p-3">Level of Suicide Risk for Current Attempt</b>
-              <vue-form-generator class="read-only m-4 box" :model="model" :schema="tabDSchema"></vue-form-generator>
+              <vue-form-generator class="readonly m-4 box" :model="model" :schema="tabDModalSchema"></vue-form-generator>
 
               <!-- HOSPITAL MANAGEMENT -->
               <h5 class="sh-tab-title">5. Hospital Management</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabESchema"></vue-form-generator>
+              <vue-form-generator class="readonly" :model="model" :schema="tabEModalSchema"></vue-form-generator>
 
               <!-- SOURCE DATA PRODUCER -->
               <h5 class="sh-tab-title">6. Source Data Producer</h5>
-              <vue-form-generator class="read-only" :model="model" :schema="tabFSchema"></vue-form-generator>
+              <vue-form-generator class="readonly" :model="model" :schema="tabFSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
-                  Close
+                  CLOSE
                 </button>
               </div>
             </div>
@@ -480,12 +480,11 @@ export default {
         SH13: '',
         SH14: '',
         SH15: '',
-        // INTENTS: [],
         INTENT_SCORE: '',
         INTENT_LEVEL: '',
 
         // Suicide Risk
-        RISK_LEVEL: '',
+        SR_LEVEL: '',
 
         // Hospital Management
         REFERRAL: '',
@@ -513,7 +512,53 @@ export default {
         HOSPITAL_NAME: '',
         PSYCHIATRIST_NAME: '',
         VERIFICATION_DATE: '',
+
+        // Modal Preview Risk Factors
+        MD_Q1: '',
+        MD_Q2: '',
+        MD_Q3: '',
+        MD_Q4: '',
+        MD_Q5: '',
+        MD_Q6: '',
+        MD_Q7: '',
+        MD_Q8: '',
+        MD_Q9: '',
+        MD_Q10: '',
+        MD_Q11: '',
+        MD_Q12: '',
+
+        // Modal Preview Protective Factors
+        MD_PQ1: '',
+        MD_PQ2: '',
+        MD_PQ3: '',
+        MD_PQ4: '',
+        MD_PQ5: '',
+        MD_PQ6: '',
+
+        // Modal Preview Self-Harm Section E
+        MD_SH1: '',
+        MD_SH2: '',
+        MD_SH3: '',
+        MD_SH4: '',
+        MD_SH5: '',
+        MD_SH6: '',
+        MD_SH7: '',
+        MD_SH8: '',
+        MD_SH9: '',
+        MD_SH10: '',
+        MD_SH11: '',
+        MD_SH12: '',
+        MD_SH13: '',
+        MD_SH14: '',
+        MD_SH15: '',
+
+        MD_SR_LEVEL: '',
+
+        MD_PHYSICAL_CONSEQ: '',
+        MD_ADMISSION: '',
+        MD_DISCHARGE_STATUS: '',
       },
+
       // RISK FACTORS
       tabASchema: {
         groups: [
@@ -1551,8 +1596,8 @@ export default {
             placeholder: 'Click Calculate',
             model: 'INTENT_SCORE',
             required: true,
-            validator: 'integer',
-            styleClasses: 'col-md-3 read-only',
+            validator: 'number',
+            styleClasses: 'col-md-3 readonly',
           },
           {
             type: 'input',
@@ -1562,7 +1607,7 @@ export default {
             model: 'INTENT_LEVEL',
             required: true,
             validator: 'string',
-            styleClasses: 'col-md-3 read-only',
+            styleClasses: 'col-md-3 readonly',
           },
           {
             type: 'submit',
@@ -1599,7 +1644,7 @@ export default {
                 values: [
                   { value: 1, name: 'High' },
                 ],
-                model: 'RISK_LEVEL',
+                model: 'SR_LEVEL',
                 required: true,
                 styleClasses: 'col-3',
               },
@@ -1617,7 +1662,7 @@ export default {
                 values: [
                   { value: 2, name: 'Moderate' },
                 ],
-                model: 'RISK_LEVEL',
+                model: 'SR_LEVEL',
                 required: true,
                 styleClasses: 'col-3',
               },
@@ -1635,7 +1680,7 @@ export default {
                 values: [
                   { value: 3, name: 'Low' },
                 ],
-                model: 'RISK_LEVEL',
+                model: 'SR_LEVEL',
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-3',
@@ -2059,6 +2104,992 @@ export default {
         ],
       },
 
+      // -----Modal Preview------
+      tabAModalSchema: {
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '1. Presence of psychiatric disorder',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q1',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q1_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q1_SPECIFY',
+                selectOptions: {
+                  multiple: true,
+                  closeOnSelect: false,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: 'col-md',
+                values: () => {
+                  return this.selectDiagnosis
+                },
+                visible: function (model) {
+                  return model && model.Q1 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '2. Hopelessness or despair',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q2',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '3. Previous suicide attempt',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q3',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q3_SPECIFY = ''
+                },
+              },
+
+              {
+                type: 'input',
+                inputType: 'number',
+                placeholder: 'Please specify (times)',
+                model: 'Q3_SPECIFY',
+                min: 0,
+                styleClasses: 'col-md',
+                visible: function (model) {
+                  return model && model.Q3 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '4. Presence of substance use/abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q4',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q4_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q4_SPECIFY',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: 'col-md mb-0',
+                values: () => {
+                  return this.selectSubstance
+                },
+                visible: function (model) {
+                  return model && model.Q4 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '5. Family history of suicidal behaviour',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q5',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '6. Family history of psychiatric disorder',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q6',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q6_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Select diagnosis (can select more than 1)',
+                model: 'Q6_SPECIFY',
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  clearOnSelect: true,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: 'col-md',
+                values: () => {
+                  return this.selectDiagnosis
+                },
+                visible: function (model) {
+                  return model && model.Q6 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '7. Family histroy of substance abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q7',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q7_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q7_SPECIFY',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: 'col-md',
+                values: () => {
+                  return this.selectSubstance
+                },
+                visible: function (model) {
+                  return model && model.Q7 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '8. Stressful life events',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q8',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q8_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify',
+                model: 'Q8_SPECIFY',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  label: 'name',
+                  key: 'value',
+                },
+                styleClasses: 'col-md',
+                values: () => {
+                  return this.selectStressfulLifeEvents
+                },
+                visible: function (model) {
+                  return model && model.Q8 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '9. Isolation, rejection, or feelings of shame',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q9',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '10. Chronic physical illness or condition',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q10',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+                onChanged: function (model) {
+                  model.Q10_SPECIFY = ''
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please specify (can choose more than 1)',
+                model: 'Q10_SPECIFY',
+                selectOptions: {
+                  multiple: true,
+                  searchable: true,
+                  showLabels: false,
+                  closeOnSelect: false,
+                  limit: 3,
+                  maxHeight: 200,
+                },
+                styleClasses: 'col-md',
+                visible: function (model) {
+                  return model && model.Q10 === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '11. History of physical, sexual or emotional abuse',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q11',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '12. Access to lethal methods/weapons',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_Q12',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+        ],
+      },
+      tabBModalSchema: {
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'label',
+                label: '1. Ability to cope with stress/tolerate frustrations',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ1',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '2. Strongly held religious/cultural beliefs',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ2',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '3. Realistic life goals or future plans',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ3',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '4. Responsibility to children/beloved pets',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ4',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '5. Social support',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ5',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+          {
+            styleClasses: 'row',
+            fields: [
+              {
+                type: 'label',
+                label: '6. Positive therapeutic relationship',
+                styleClasses: 'col-md-6',
+              },
+              {
+                type: 'radios',
+                model: 'MD_PQ6',
+                values: [
+                  { name: 'No', value: 1 },
+                  { name: 'Yes', value: 2 },
+                ],
+                styleClasses: 'col-md-auto display-inline',
+              },
+            ],
+          },
+        ],
+      },
+      tabCEModalSchema: {
+        fields: [
+          {
+            type: 'radios',
+            label: '<b>1. Isolation</b>',
+            model: 'MD_SH1',
+            values: [
+              { value: 0, name: 'Somebody present' },
+              { value: 1, name: 'Somebody nearby, or in visual or vocal contact' },
+              { value: 2, name: 'No one nearby or in visual or vocal contact' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>2. Timing</b>',
+            model: 'MD_SH2',
+            values: [
+              { value: 0, name: 'Intervention is probable' },
+              { value: 1, name: 'Intervention is not likely' },
+              { value: 2, name: 'Intervention is highly unlikely' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>3. Precautions against discovery / intervention</b>',
+            model: 'MD_SH3',
+            values: [
+              { value: 0, name: 'No precautions' },
+              { value: 1, name: 'Passive precautions (eg; alone in room with unlocked door)' },
+              { value: 2, name: 'Active precautions (as locked door)' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>4. Acting to get help during / after attempt</b>',
+            model: 'MD_SH4',
+            values: [
+              { value: 0, name: 'Notified potential helper regarding attempt' },
+              { value: 1, name: 'Contacted but did not specifically notify regarding attempt' },
+              { value: 2, name: 'Did not contact or notify potential helper' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>5. Final acts in anticipating of death (will, gifts, insurance)</b>',
+            model: 'MD_SH5',
+            values: [
+              { value: 0, name: 'None' },
+              { value: 1, name: 'Thought about or made some arrangements' },
+              { value: 2, name: 'Made definite plans or completed arrangements' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>6. Active preparation for attempt</b>',
+            model: 'MD_SH6',
+            values: [
+              { value: 0, name: 'None' },
+              { value: 1, name: 'Minimal to moderate' },
+              { value: 2, name: 'Extensive' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>7. Suicide note</b>',
+            model: 'MD_SH7',
+            values: [
+              { value: 0, name: 'Absence of note' },
+              { value: 1, name: 'Note written, but torn up; note thought about' },
+              { value: 2, name: 'Presence of note' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>8. Overt communication of intent before the attempt</b>',
+            model: 'MD_SH8',
+            values: [
+              { value: 0, name: 'None' },
+              { value: 1, name: 'Equivocal communication' },
+              { value: 2, name: 'Unequivocal communication' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>9. Allged purpose of attempt</b>',
+            model: 'MD_SH9',
+            values: [
+              { value: 0, name: 'To manipulate environment, get attention, get revenge' },
+              { value: 1, name: 'Components of above and below' },
+              { value: 2, name: 'To escape, surcease, solve problems' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>10. Expectations of fatality</b>',
+            model: 'MD_SH10',
+            values: [
+              { value: 0, name: 'Thought that death was unlikely' },
+              { value: 1, name: 'Thought that death was possible but not probable' },
+              { value: 2, name: 'Thought that death was probable or certain' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: "<b>11. Conception of method's lethality</b>",
+            model: 'MD_SH11',
+            values: [
+              { value: 0, name: 'Did less to self that s/he thought would be lethal' },
+              { value: 1, name: "Wasn't sure if what s/he did would be lethal" },
+              { value: 2, name: 'Equaled or exceed what s/he thought would be lethal' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>12. Seriousness of attempt</b>',
+            model: 'MD_SH12',
+            values: [
+              { value: 0, name: 'Did not seriously attempt to end life' },
+              { value: 1, name: 'Uncertain about seriousness to end life' },
+              { value: 2, name: 'Seriously attempted to end life' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>13. Attitude towards living/dying</b>',
+            model: 'MD_SH13',
+            values: [
+              { value: 0, name: 'Did not want to die' },
+              { value: 1, name: 'Components of above and below' },
+              { value: 2, name: 'Wanted to die' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>14. Conception of medical rescuability</b>',
+            model: 'MD_SH14',
+            values: [
+              { value: 0, name: 'Thought death would be unlikely if received medical attention' },
+              { value: 1, name: 'Was uncertain if death could be averted by medical attention' },
+              { value: 2, name: 'Was certain of death even if received medical attention' },
+            ],
+            styleClasses: ['my-3', 'col-xl-6'],
+          },
+          {
+            type: 'radios',
+            label: '<b>15. Degree of premeditation</b>',
+            model: 'MD_SH15',
+            values: [
+              { value: 0, name: 'None; impulsive' },
+              { value: 1, name: 'Suicide contemplated for 3 hours or less prior to attempt' },
+              { value: 2, name: 'Suicide contemplated for more than 3 hours prior to attempt' },
+            ],
+            styleClasses: ['my-3', 'col-xl-12'],
+          },
+        ],
+      },
+      tabDModalSchema: {
+        groups: [
+          {
+            fields: [
+              {
+                type: 'radios',
+                values: [
+                  { value: 1, name: 'High' },
+                ],
+                model: 'MD_SR_LEVEL',
+                styleClasses: 'col-3',
+              },
+              {
+                type: 'label',
+                label: 'Psychiatric diagnoses with severe symptoms or acute precipitating events; protective factors not relevant; high suicidal intent',
+                styleClasses: 'col-9',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                type: 'radios',
+                values: [
+                  { value: 2, name: 'Moderate' },
+                ],
+                model: 'MD_SR_LEVEL',
+                styleClasses: 'col-3',
+              },
+              {
+                type: 'label',
+                label: 'Multiple risk factors, few protective factors, moderate suicidal intent',
+                styleClasses: 'col-9',
+              },
+            ],
+          },
+          {
+            fields: [
+              {
+                type: 'radios',
+                values: [
+                  { value: 3, name: 'Low' },
+                ],
+                model: 'MD_SR_LEVEL',
+                styleClasses: 'col-3',
+              },
+              {
+                type: 'label',
+                label: 'Modifiable risk factors, strong protective factors, no or low suicidal intent',
+                styleClasses: 'col-9',
+              },
+            ],
+          },
+        ],
+      },
+      tabEModalSchema: {
+        groups: [
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Referral or Contact point',
+                model: 'REFERRAL',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectReferral
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'REFERRAL_SPECIFY',
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.REFERRAL.value === 5
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Mode of Arrival',
+                model: 'ARRIVAL_MODE',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  key: 'value',
+                  label: 'name',
+                },
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.selectArrivalMode
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'ARRIVAL_SPECIFY',
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ARRIVAL_MODE.value === 7
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'First psychiatry assessment after current attempt',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'FIRST_ASSESSMENT_DATE',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'time',
+                label: 'Time',
+                model: 'FIRST_ASSESSMENT_TIME',
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Physical consequences of current attempt',
+                model: 'MD_PHYSICAL_CONSEQ',
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.radioPhysicalConseq
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify',
+                model: 'PHYSICAL_CONSEQ_SPECIFY',
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PHYSICAL_CONSEQ === 99
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Is patient admitted for current attempt?',
+                model: 'MD_ADMISSION',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioAdmission
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: '',
+                placeholder: 'Please specify the first admitting ward',
+                model: 'ADMISSION_SPECIFY',
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.ADMISSION === 2
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row'],
+            fields: [
+              {
+                type: 'radios',
+                label: 'Status on discharge',
+                model: 'MD_DISCHARGE_STATUS',
+                styleClasses: ['col-md-6', 'display-inline'],
+                values: () => {
+                  return this.radioDischargeStatus
+                },
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge details',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'input',
+                inputType: 'date',
+                label: 'Date',
+                model: 'DISCHARGE_DATE',
+                format: 'YYYY/MM/DD',
+                styleClasses: ['col-md-5'],
+              },
+              {
+                type: 'input',
+                inputType: 'number',
+                label: 'Number of days in ward',
+                model: 'NO_OF_DAYS',
+                min: 0,
+                styleClasses: ['col-md-5'],
+              },
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-center'],
+            fields: [
+              {
+                type: 'label',
+                label: 'Discharge Diagnosis (ICD)',
+                styleClasses: ['col-md-2'],
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'Main diagnosis',
+                model: 'MAIN_DIAGNOSIS',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  allowEmpty: false,
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectDiagnosis
+                },
+              },
+              {
+                type: 'vueMultiSelect',
+                placeholder: 'Please select',
+                label: 'External causes',
+                model: 'EXTERNAL_DIAGNOSIS',
+                selectOptions: {
+                  multiple: false,
+                  closeOnSelect: true,
+                  maxHeight: 200,
+                  showLabels: false,
+                  allowEmpty: false,
+                },
+                styleClasses: 'col-md-4',
+                values: () => {
+                  return this.selectDiagnosis
+                },
+              },
+
+            ],
+          },
+          {
+            styleClasses: ['row', 'align-items-end'],
+            fields: [
+              {
+                type: 'checklist',
+                label: 'PSY Mx on Discharge',
+                model: 'PSYMX',
+                listBox: true,
+                styleClasses: ['col-md-6'],
+                values: () => {
+                  return this.listPSYMX
+                },
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Please specify',
+                model: 'PSYMX_SPECIFY',
+                label: '',
+                styleClasses: ['col-md-6'],
+                visible: function (model) {
+                  return model && model.PSYMX.includes(6)
+                },
+              },
+            ],
+          },
+        ],
+      },
+
       formOptions: {
         validateAfterLoad: false,
         validateAfterChanged: true,
@@ -2084,30 +3115,6 @@ export default {
         this.selectArrivalMode = response.data.modeArrival
         this.listPSYMX = response.data.psyMX
       })
-
-    // this.$axios
-    //   .get('http://127.0.0.1:8000/api/getOccurance')
-    //   .then((response) => {
-    //     this.selectOccurance = response.data.data
-    //   })
-
-    // this.$axios
-    //   .get('http://127.0.0.1:8000/api/getReferral')
-    //   .then((response) => {
-    //     this.selectReferral = response.data.data
-    //   })
-
-    // this.$axios
-    //   .get('http://127.0.0.1:8000/api/getArrivalMode')
-    //   .then((response) => {
-    //     this.selectArrivalMode = response.data.data
-    //   })
-
-    // this.$axios
-    //   .get('http://127.0.0.1:8000/api/getPSYMX')
-    //   .then((response) => {
-    //     this.selectPSYMX = response.data.data
-    //   })
 
     if (this.$route.query.st === 'edit') {
       this.edit = true
@@ -2229,7 +3236,7 @@ export default {
           }
 
           // Suicide Risk
-          this.model.RISK_LEVEL = DATA.sr_level
+          this.model.SR_LEVEL = DATA.sr_level
 
           // Hospital Management
           if (DATA.referral_fk != null) { this.model.REFERRAL = { value: DATA.referral_fk, name: DATA.referral } }
@@ -2297,6 +3304,7 @@ export default {
       this.submitPath = true
       this.$router.push({ path: 'shharp-history' })
     },
+
     validateForm () {
       var status = 'COMPLETED'
       var patientId = JSON.parse(localStorage.getItem('ID'))
@@ -2326,7 +3334,7 @@ export default {
               return response.data
             })
         }
-        this.launchToast('SHHARP Registry Successfull')
+        this.launchToast('SHHARP Registry Successful')
         this.submitPath = true
         this.$router.push({ path: 'shharp-history' })
       }
@@ -2479,6 +3487,51 @@ export default {
         this.tabF = true
         return false
       }
+    },
+    showPreviewModal () {
+      this.model.MD_Q1 = this.model.Q1
+      this.model.MD_Q2 = this.model.Q2
+      this.model.MD_Q3 = this.model.Q3
+      this.model.MD_Q4 = this.model.Q4
+      this.model.MD_Q5 = this.model.Q5
+      this.model.MD_Q6 = this.model.Q6
+      this.model.MD_Q7 = this.model.Q7
+      this.model.MD_Q8 = this.model.Q8
+      this.model.MD_Q9 = this.model.Q9
+      this.model.MD_Q10 = this.model.Q10
+      this.model.MD_Q11 = this.model.Q11
+      this.model.MD_Q12 = this.model.Q12
+
+      this.model.MD_PQ1 = this.model.PQ1
+      this.model.MD_PQ2 = this.model.PQ2
+      this.model.MD_PQ3 = this.model.PQ3
+      this.model.MD_PQ4 = this.model.PQ4
+      this.model.MD_PQ5 = this.model.PQ5
+      this.model.MD_PQ6 = this.model.PQ6
+
+      this.model.MD_SH1 = this.model.SH1
+      this.model.MD_SH2 = this.model.SH2
+      this.model.MD_SH3 = this.model.SH3
+      this.model.MD_SH4 = this.model.SH4
+      this.model.MD_SH5 = this.model.SH5
+      this.model.MD_SH6 = this.model.SH6
+      this.model.MD_SH7 = this.model.SH7
+      this.model.MD_SH8 = this.model.SH8
+      this.model.MD_SH9 = this.model.SH9
+      this.model.MD_SH10 = this.model.SH10
+      this.model.MD_SH11 = this.model.SH11
+      this.model.MD_SH12 = this.model.SH12
+      this.model.MD_SH13 = this.model.SH13
+      this.model.MD_SH14 = this.model.SH14
+      this.model.MD_SH15 = this.model.SH15
+
+      this.model.MD_SR_LEVEL = this.model.SR_LEVEL
+
+      this.model.MD_PHYSICAL_CONSEQ = this.model.PHYSICAL_CONSEQ
+      this.model.MD_ADMISSION = this.model.ADMISSION
+      this.model.MD_DISCHARGE_STATUS = this.model.DISCHARGE_STATUS
+
+      this.showLargeModal = true
     },
     launchToast (message) {
       this.showToast(

@@ -108,7 +108,7 @@
                     NEXT &nbsp; <div class="fa fa-angle-double-right" />
                   </button>
 
-                  <button v-if="isLastStep" @click="showLargeModal = true" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
+                  <button v-if="isLastStep" @click="showPreviewModal" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
                     <div class="fa fa-play" /> &nbsp; PREVIEW
                   </button>
 
@@ -143,7 +143,7 @@
               <vue-form-generator class="read-only" :model="model" :schema="tabDModalSchema"></vue-form-generator>
               <div style="float: right;">
                 <button @click="showLargeModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
-                  Close
+                  CLOSE
                 </button>
               </div>
             </div>
@@ -363,7 +363,6 @@ export default {
               return this.radioCitizenship
             },
             onChanged: function (model, newVal, oldVal, field) {
-              model.MD_CITIZENSHIP = model.CITIZENSHIP
               if (newVal === 1) {
                 model.PASSPORT_NO = ''
                 model.PASSPORT_EXPIRY_DATE = ''
@@ -508,9 +507,6 @@ export default {
             styleClasses: 'col-12',
             values: () => {
               return this.radioGender
-            },
-            onChanged: function (model) {
-              model.MD_GENDER = model.GENDER
             },
           },
           {
@@ -781,9 +777,6 @@ export default {
                   } else {
                     model.BRANCH = ''
                   }
-                },
-                onChanged: function (model) {
-                  model.MD_EXISTING_PATIENT = model.EXISTING_PATIENT
                 },
               },
             ],
@@ -1244,9 +1237,6 @@ export default {
                 values: () => {
                   return this.radioAllergy
                 },
-                onChanged: function (model) {
-                  model.MD_ALLERGY = model.ALLERGY
-                },
                 required: true,
                 validator: 'required',
                 styleClasses: 'col-xs1',
@@ -1372,7 +1362,7 @@ export default {
           {
             type: 'radios',
             label: 'Citizenship',
-            model: 'CITIZENSHIP',
+            model: 'MD_CITIZENSHIP',
             required: true,
             validator: 'required',
             styleClasses: 'col-md-12',
@@ -1489,7 +1479,7 @@ export default {
           {
             type: 'radios',
             label: 'Gender',
-            model: 'GENDER',
+            model: 'MD_GENDER',
             required: true,
             validator: 'required',
             styleClasses: 'col-12 display-inline',
@@ -1707,7 +1697,7 @@ export default {
               {
                 type: 'radios',
                 label: 'Is this person an existing patient?',
-                model: 'EXISTING_PATIENT',
+                model: 'MD_EXISTING_PATIENT',
                 required: true,
                 values: [
                   { value: 1, name: 'Yes' },
@@ -1906,7 +1896,7 @@ export default {
           if (DATA.issuing_country_fk != null) { this.model.ISSUING_COUNTRY = { value: DATA.issuing_country_fk, name: DATA.issuing_country } }
           this.model.GENDER = DATA.gender_fk
           this.model.BIRTH_DATE = DATA.birthdate
-          this.model.AGE = new Date().getFullYear() - DATA.birthdate.toString().substring(0, 4)
+          if (DATA.birthdate != null) { this.model.AGE = new Date().getFullYear() - DATA.birthdate.toString().substring(0, 4) }
           this.model.DM_MOBILE_NO = DATA.phone_no_1
           this.model.DM_HOUSE_NO = DATA.phone_no_2
           this.model.HOSPITAL_MRN = DATA.hospital_mrn
@@ -2089,6 +2079,14 @@ export default {
         this.tabD = true
         return false
       }
+    },
+    showPreviewModal () {
+      this.model.MD_CITIZENSHIP = this.model.CITIZENSHIP
+      this.model.MD_GENDER = this.model.GENDER
+      this.model.MD_EXISTING_PATIENT = this.model.EXISTING_PATIENT
+      this.model.MD_ALLERGY = this.model.ALLERGY
+
+      this.showLargeModal = true
     },
     launchToast (text) {
       this.showToast(
