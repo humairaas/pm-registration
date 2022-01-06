@@ -208,9 +208,9 @@
                   Next <div class="fa fa-step-forward" />
                 </button>
 
-                <!-- <button v-if="tabIndex==5" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
+                <button v-if="tabIndex==5" @click="showLargeModal = true" type="button" class="ml-2 btn btn-warning btn-fill btn-md">
                   <div class="fa fa-play-circle" /> &nbsp;Preview
-                </button> -->
+                </button>
 
                 <button v-if="tabIndex==5 && view==false" @click="saveAsDraft" type="button" class="ml-2 btn btn-fill btn-md btn-yellow">
                   <div class="material-icons align-middle">system_update_alt</div> &nbsp; Save as Draft
@@ -742,7 +742,7 @@ export default {
             fields: [
               {
                 type: 'label',
-                label: '7. Family history of substance abuse',
+                label: '7. Family histroy of substance abuse',
                 styleClasses: 'col-md-6',
               },
               {
@@ -1096,7 +1096,7 @@ export default {
           },
           {
             type: 'vueMultiSelect',
-            label: 'Place of Occurrence',
+            label: 'Place of Occurance',
             model: 'OCCUR',
             values: () => {
               return this.selectOccurance

@@ -7,6 +7,22 @@
 
           <va-card class="clinical-card">
             <h4 class="mt-4 mb-5 text-dark">CLINICAL INFORMATION</h4>
+            <vue-form-generator :model="model" :schema="temperatureSchema" :options="formOptions" ref="temperature">
+            </vue-form-generator>
+            <p>Blood Pressure (mm/Hg)<span style="color: red;"> *</span></p>
+            <div class = 'row'>
+              <div class = 'col-md'>
+                <vue-form-generator :model="model" :schema="mmSchema" :options="formOptions" ref="mm">
+                </vue-form-generator>
+              </div>
+              <div class = 'col-md-auto'>
+                /
+              </div>
+              <div class = 'col-md'>
+                <vue-form-generator :model="model" :schema="hgSchema" :options="formOptions" ref="hg">
+                </vue-form-generator>
+              </div>
+            </div>
             <vue-form-generator :model="model" :schema="schema" :options="formOptions" ref="vital">
             </vue-form-generator>
 
@@ -42,6 +58,8 @@ export default {
 
       model: {
         TEMPERATURE: '',
+        BP_MM: '',
+        BP_HG: '',
         BLOOD_PRESSURE: '',
         PULSE_RATE: '',
         WEIGHT: '',
@@ -49,7 +67,7 @@ export default {
         BMI: '',
         WAIST: '',
       },
-      schema: {
+      temperatureSchema: {
         fields: [
           {
             type: 'input',
@@ -60,15 +78,34 @@ export default {
             validator: 'number',
             required: true,
           },
+        ],
+      },
+      mmSchema: {
+        fields: [
           {
             type: 'input',
-            inputType: 'text',
-            placeholder: 'Enter Blood Pressure',
-            label: 'Blood Pressure (in mm/Hg unit)',
-            model: 'BLOOD_PRESSURE',
-            validator: 'string',
+            inputType: 'number',
+            placeholder: 'mm',
+            model: 'BP_MM',
+            validator: 'number',
             required: true,
           },
+        ],
+      },
+      hgSchema: {
+        fields: [
+          {
+            type: 'input',
+            inputType: 'number',
+            placeholder: 'Hg',
+            model: 'BP_HG',
+            validator: 'number',
+            required: true,
+          },
+        ],
+      },
+      schema: {
+        fields: [
           {
             type: 'input',
             inputType: 'number',
@@ -130,9 +167,14 @@ export default {
   },
   methods: {
     validateVital () {
-      var errors = this.$refs.vital.validate()
+      var err1 = this.$refs.temperature.validate()
+      var err2 = this.$refs.mm.validate()
+      var err3 = this.$refs.hg.validate()
+      var err4 = this.$refs.vital.validate()
 
-      if (errors) {
+      if (err1 && err2 && err3 && err4) {
+        this.model.BLOOD_PRESSURE = this.model.BP_MM + '/' + this.model.BP_HG
+
         var patientId = JSON.parse(localStorage.getItem('ID'))
         this.submitPath = true
 
