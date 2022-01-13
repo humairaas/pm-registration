@@ -1243,7 +1243,6 @@ export default {
   methods: {
     calculateWhodas () {
       var patientId = JSON.parse(localStorage.getItem('ID'))
-      this.submitPath = true
 
       var error = this.$refs.whodas7.validate()
 
@@ -1280,6 +1279,7 @@ export default {
 
         var score = total + ' [' + sumD1 + ', ' + sumD2 + ', ' + sumD3 + ', ' + sumD4 + ', ' + sumD5 + ', ' + sumD6 + ', ' + sumD7 + ']'
 
+        this.submitPath = true
         const data = new FormData()
         data.append('score', JSON.stringify(score))
         this.$axios

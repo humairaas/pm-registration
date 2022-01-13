@@ -391,33 +391,17 @@ export default {
     background: hsl(0, 0%, 91%);
   }
 
-  .p {
-    font-size: 0.9rem;
-  }
-
-  .spacing {
-    margin-right: 500px;
-    width: 300px;
+  .patient-name {
+    margin-top: 1rem !important;
   }
 
   .sizebtn {
     font-size: 2rem;
   }
 
-  .line {
-    border-top: 1px solid rgb(189, 184, 184);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
   .log-button:hover {
     text-decoration: underline;
     color: blue;
-  }
-
-  .no-padding {
-    padding: none;
-    margin: none;
   }
 
   .ga-one {

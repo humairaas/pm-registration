@@ -28,14 +28,6 @@
 
             <!-- Button footer-->
             <div class="mt-3">
-              <div class="float-left">
-                <button @click="$router.push({ path: 'patient-profile' })" type="button" class="ml-2 btn btn-fill btn-md btn-secondary">
-                  <div class="fa fa-undo" /> &nbsp; RETURN
-                </button>
-              </div>
-            </div>
-
-            <div class="mt-3">
               <div class="float-right">
                 <button @click="validateVital" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-paper-plane" /> &nbsp; SAVE

@@ -27,7 +27,7 @@ This page is not fully completed [last updated by Humaira': 27/12/2021]
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Outcome </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="tabA = false">
+              <button type="button" class="btn close-button" @click="tabB = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -38,7 +38,7 @@ This page is not fully completed [last updated by Humaira': 27/12/2021]
                 {{ $t('Incomplete') }}
               </va-badge>
               <span>Please fill all <b> Book Appointment </b> required fields.</span>
-              <button type="button" class="btn close-button" @click="tabA = false">
+              <button type="button" class="btn close-button" @click="tabC = false">
                 <span class="fa fa-close"/>
               </button>
             </va-notification>
@@ -155,16 +155,16 @@ This page is not fully completed [last updated by Humaira': 27/12/2021]
             <div class="my-3">
               <div class="float-left">
                 <button v-if="!tabIndex==0" @click="tabIndex--" type="button" class="btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-step-backward" /> &nbsp; Previous
+                  <div class="fa fa-angle-double-left" /> &nbsp; PREVIOUS
                 </button>
               </div>
               <div class="float-right">
                 <button v-if="tabIndex < 2" @click="tabIndex++" type="button" class="btn btn-info btn-fill btn-md">
-                  Next <div class="fa fa-step-forward" />
+                  NEXT <div class="fa fa-angle-double-right" />
                 </button>
 
                 <button v-if="tabIndex==2" @click="validateTriage" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  <div class="fa fa-paper-plane" /> &nbsp;SUBMIT
                 </button>
               </div>
             </div>

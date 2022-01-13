@@ -162,6 +162,10 @@ export default {
 </script>
 
 <style>
+.app-layout__main {
+  background: hsl(0, 0%, 91%);
+}
+
 thead {
   background-color: #bbf2eb;
 }

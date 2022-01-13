@@ -53,7 +53,7 @@ This page is not fully completed [last updated by Humaira': 27/12/2021]
             <div class="mt-5 mb-3">
               <div class="float-right">
                 <button @click="calculatePhq" type="submit" class="ml-2 btn btn-primary btn-fill btn-md">
-                  <div class="fa fa-paper-plane" /> &nbsp;Submit
+                  <div class="fa fa-paper-plane" /> &nbsp;SUBMIT
                 </button>
               </div>
             </div>
@@ -306,7 +306,6 @@ export default {
   methods: {
     calculatePhq () {
       var error = this.validatePhq()
-      this.submitPath = true
 
       if (error) {
         let NAA = 0
@@ -328,6 +327,7 @@ export default {
         var score = NAA * 0 + SD * 1 + MTHD * 2 + NE * 3
 
         var patientId = JSON.parse(localStorage.getItem('ID'))
+        this.submitPath = true
 
         const data = new FormData()
         data.append('score', JSON.stringify(score))

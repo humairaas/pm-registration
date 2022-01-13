@@ -118,4 +118,8 @@ export default {
 </script>
 
 <style lang="scss">
+.app-layout__main {
+  background: hsl(0, 0%, 91%);
+}
+
 </style>

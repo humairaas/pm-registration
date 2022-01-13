@@ -135,9 +135,9 @@
                   </template>
 
                   <template slot="actions" slot-scope="props">
-                    <va-button v-if="props.rowData.shharp_form_status=='COMPLETED'" flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
+                    <va-button v-if="props.rowData.shharp_form_status=='Completed'" flat small icon="fa fa-eye" @click="view(props.rowData.shharp_id)" style="color: #51ad5e;">
                     </va-button>
-                    <va-button v-if="props.rowData.shharp_form_status=='DRAFT'" flat small color="#75757" icon="fa fa-pencil" @click="editDraft(props.rowData.shharp_id)" class="edit-button">
+                    <va-button v-if="props.rowData.shharp_form_status=='Draft'" flat small color="#75757" icon="fa fa-pencil" @click="editDraft(props.rowData.shharp_id)" class="edit-button">
                     </va-button>
                   </template>
                 </va-data-table>
@@ -247,7 +247,7 @@ export default {
         if (response.data.data.citizenship_fk === 3) {
           this.nationality = 'Non-Malaysian ' + '(' + response.data.data.issuing_country + ')'
         } else {
-          this.nationality = 'Malaysia'
+          this.nationality = 'Malaysian'
         }
       })
 
@@ -269,8 +269,8 @@ export default {
     background: hsl(0, 0%, 91%);
   }
 
-  .p {
-    font-size: 0.9rem;
+  .patient-name {
+    margin-top: 1rem !important;
   }
 
   .sizebtn {

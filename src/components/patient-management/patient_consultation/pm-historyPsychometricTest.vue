@@ -99,7 +99,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row mb-4">
         <div class="col-xl-12">
           <div class="row mt-3">
             <!--Psychometric Test History--->
@@ -245,51 +245,11 @@ export default {
     background: hsl(0, 0%, 91%);
   }
 
-  .p {
-    font-size: 0.9rem;
-  }
-
-  .spacing {
-    margin-right: 500px;
-    width: 300px;
+  .patient-name {
+    margin-top: 1rem !important;
   }
 
   .sizebtn {
     font-size: 2rem;
-  }
-
-  .line {
-    border-top: 1px solid rgb(189, 184, 184);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .log-button:hover {
-    text-decoration: underline;
-    color: blue;
-  }
-
-  .no-padding {
-    padding: none;
-    margin: none;
-  }
-
-  .ga-one {
-    border-radius: 0.375rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    box-shadow: 0 2px 3px 0 rgba(168, 168, 168, 0.795);
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: #f5f8f9;
-  }
-
-  .ga-two {
-    color: #212529;
-  }
-
-  .ga-two:hover {
-    text-decoration: underline;
   }
 </style>

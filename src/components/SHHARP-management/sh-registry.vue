@@ -3280,7 +3280,7 @@ export default {
   },
   methods: {
     saveAsDraft () {
-      var status = 'DRAFT'
+      var status = 'Draft'
       var patientId = JSON.parse(localStorage.getItem('ID'))
       var shharpId = JSON.parse(localStorage.getItem('SH'))
       const data = new FormData()
@@ -3306,7 +3306,7 @@ export default {
     },
 
     validateForm () {
-      var status = 'COMPLETED'
+      var status = 'Completed'
       var patientId = JSON.parse(localStorage.getItem('ID'))
       var shharpId = JSON.parse(localStorage.getItem('SH'))
       const data = new FormData()
