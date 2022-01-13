@@ -38,16 +38,38 @@
             <!-- Button footer-->
             <div class="mt-3">
               <div class="float-left">
-                <button @click="cancelAppointment" type="button" class="ml-2 btn btn-fill btn-md btn-red">
+                <!-- <button @click="$router.push({ name: 'patient-appointmentList' })" type="button" class="ml-2 btn-secondary btn-fill btn-md btn">
                   CANCEL
+                </button> -->
+
+                <button  v-if='edit==true' @click="showSmallModal = true" type="button" class="ml-2 btn btn-fill btn-md btn-red">
+                  <div class="fa fa-trash" /> &nbsp;DELETE
                 </button>
               </div>
+
               <div class="float-right">
                 <button @click="validateForm" type="submit" class="ml-2 btn btn-fill btn-md btn-blue">
                   <div class="fa fa-paper-plane" /> &nbsp; CONFIRM
                 </button>
               </div>
             </div>
+
+            <va-modal
+              v-model="showSmallModal"
+              size="small"
+              :title=" $t('Delete Vital Reading')"
+              :message=" $t('Are you sure you wish to delete this appointment?') "
+              :hide-default-actions= "true"
+            >
+              <div style="float: right;">
+                <button @click="showSmallModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
+                  CANCEL
+                </button>
+                <button @click="deleteAppointment" type="button" class="ml-2 btn btn-danger btn-fill btn-md">
+                  <div class="fa fa-trash" /> &nbsp;DELETE
+                </button>
+              </div>
+            </va-modal>
 
           </va-card>
 
@@ -62,6 +84,8 @@ export default {
   data () {
     return {
       tabA: false,
+      edit: false,
+      showSmallModal: false,
       submitPath: false,
       patientNotExist: false,
       requestAppointmentId: '',
@@ -252,6 +276,9 @@ export default {
     }
   },
   mounted () {
+    if (this.$route.query.st === 'edit') {
+      this.edit = true
+    }
     this.$axios
       .get('http://127.0.0.1:8000/api/getAppointmentMountedData')
       .then((response) => {
@@ -287,16 +314,14 @@ export default {
     }
   },
   methods: {
-    async cancelAppointment () {
-      if (this.$route.query.st === 'edit') {
-        var appointmentId = localStorage.getItem('appointmentId')
-        const data = new FormData()
-        data.append('appointmentId', appointmentId)
-        const url = 'http://127.0.0.1:8000/api/deleteAppointment'
-        await this.$axios.post(url, data)
-        this.submitPath = true
-        this.launchToast(' Appointment has been deleted!')
-      }
+    async deleteAppointment () {
+      var appointmentId = localStorage.getItem('appointmentId')
+      const data = new FormData()
+      data.append('appointmentId', appointmentId)
+      const url = 'http://127.0.0.1:8000/api/deleteAppointment'
+      await this.$axios.post(url, data)
+      this.submitPath = true
+      this.launchToast(' Appointment Deleted')
       this.$router.push({ name: 'patient-appointmentList' })
     },
     async validateForm () {
@@ -320,7 +345,7 @@ export default {
               return response.data
             })
 
-          this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !')
+          this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successfully')
           this.submitPath = true
           this.$router.push({ name: 'patient-appointmentList' })
         }
@@ -335,7 +360,7 @@ export default {
               .then((response) => {
                 return response.data
               })
-            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Updated Successful !')
+            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Updated Successfully')
           } else {
             const data = new FormData()
             data.append('apptData', JSON.stringify(this.model))
@@ -345,7 +370,7 @@ export default {
                 return response.data
               })
 
-            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successful !')
+            this.launchToast(' Appointment for ' + this.model.NRIC_PASSPORT_NO + ' Booked Successfully')
           }
           this.submitPath = true
           this.$router.push({ name: 'patient-appointmentList' })

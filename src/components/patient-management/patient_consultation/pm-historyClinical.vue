@@ -116,6 +116,7 @@
                   :fields="clinicalInfoFields"
                   :data="vitals"
                   :per-page="5"
+                  :hoverable="true"
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
@@ -130,8 +131,25 @@
                   </template>
 
                   <template slot="actions" slot-scope="props">
-                    <va-button flat small color="black" icon="fa fa-trash" @click="deleteRow(props.rowData.vital_id)" class="ma-0">
+                    <va-button flat small color="black" icon="fa fa-trash" @click="showSmallModal = true" class="trash-button ma-0">
                     </va-button>
+
+                    <va-modal
+                      v-model="showSmallModal"
+                      size="small"
+                      :title=" $t('Delete Vital Reading')"
+                      :message=" $t('Are you sure you wish to delete this vital reading?') "
+                      :hide-default-actions= "true"
+                    >
+                      <div style="float: right;">
+                        <button @click="showSmallModal = false" type="button" class="ml-2 btn btn-secondary btn-fill btn-md">
+                          CANCEL
+                        </button>
+                        <button @click="deleteRow(props.rowData.vital_id)" type="button" class="ml-2 btn btn-danger btn-fill btn-md">
+                          <div class="fa fa-trash" /> &nbsp;DELETE
+                        </button>
+                      </div>
+                    </va-modal>
                   </template>
                 </va-data-table>
               </va-card>
@@ -170,6 +188,8 @@ export default {
       age: '',
       nationality: '',
       empty: true,
+
+      showSmallModal: false,
 
       vitals: [],
     }
@@ -247,10 +267,12 @@ export default {
       return newTime
     },
     async deleteRow (vitalId) {
+      this.showSmallModal = true
       const data = new FormData()
       data.append('vitalId', vitalId)
       const url = 'http://127.0.0.1:8000/api/deleteVital'
       await this.$axios.post(url, data)
+      this.showSmallModal = false
       this.refreshList()
     },
     refreshList () {
@@ -303,51 +325,15 @@ export default {
     background: hsl(0, 0%, 91%);
   }
 
-  .p {
-    font-size: 0.9rem;
-  }
-
-  .spacing {
-    margin-right: 500px;
-    width: 300px;
+  .patient-name {
+    margin-top: 1rem !important;
   }
 
   .sizebtn {
     font-size: 2rem;
   }
 
-  .line {
-    border-top: 1px solid rgb(189, 184, 184);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .log-button:hover {
-    text-decoration: underline;
-    color: blue;
-  }
-
-  .no-padding {
-    padding: none;
-    margin: none;
-  }
-
-  .ga-one {
-    border-radius: 0.375rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1rem;
-    box-shadow: 0 2px 3px 0 rgba(168, 168, 168, 0.795);
-    margin-bottom: 5px;
-    cursor: pointer;
-    background-color: #f5f8f9;
-  }
-
-  .ga-two {
-    color: #212529;
-  }
-
-  .ga-two:hover {
-    text-decoration: underline;
+  .trash-button:hover {
+    background-color: rgb(209, 209, 209);
   }
 </style>
