@@ -477,19 +477,13 @@ export default new Router({
         name: 'patient-screeningList',
         path: 'patient-screening-list',
         component: () =>
-          import('../components/patient-management/clinical_documentations/pm-screeningList.vue'),
+          import('../components/patient-management/patient_screening/pm-screeningList.vue'),
       },
       {
         name: 'patient-appointmentBooking',
         path: 'book-appointment',
         component: () =>
           import('../components/patient-management/patient_appointment/pm-appointmentBooking.vue'),
-      },
-      {
-        name: 'patient_screening',
-        path: 'patient_screening',
-        component: () =>
-          import('../components/patient-management/patient_screening/patient_screening.vue'),
       },
       {
         name: 'patient-profile',
@@ -531,55 +525,55 @@ export default new Router({
         name: 'triage_form',
         path: 'triage_form',
         component: () =>
-          import('../components/patient-management/clinical_documentations/pm-triageForm.vue'),
+          import('../components/patient-management/patient_screening/pm-triageForm.vue'),
       },
       {
         name: 'psychiatry_clerking_note',
         path: 'psychiatry_clerking_note',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-psychiatryClerkingNote.vue'),
+          import('../components/patient-management/clinical_documentations/pm-psychiatryClerkingNote.vue'),
       },
       {
         name: 'counselling_clerking_note',
         path: 'counselling_clerking_note',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-counsellingClerkingNote.vue'),
+          import('../components/patient-management/clinical_documentations/pm-counsellingClerkingNote.vue'),
       },
       {
         name: 'progress_note',
         path: 'progress_note',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-progressNote.vue'),
+          import('../components/patient-management/clinical_documentations/pm-progressNote.vue'),
       },
       {
         name: 'counselling_progress_note',
         path: 'counselling_progress_note',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-counsellingProgressNote.vue'),
+          import('../components/patient-management/clinical_documentations/pm-counsellingProgressNote.vue'),
       },
       {
         name: 'patient_care_plan',
         path: 'patient_care_plan',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-patientCarePlan.vue'),
+          import('../components/patient-management/clinical_documentations/pm-patientCarePlan.vue'),
       },
       {
         name: 'internal_referral_letter',
         path: 'internal_referral_letter',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-internalReferralLetter.vue'),
+          import('../components/patient-management/clinical_documentations/pm-internalReferralLetter.vue'),
       },
       {
         name: 'occupational_therapy_referral_form',
         path: 'occupational_therapy_referral_form',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-occupationalTherapyReferralForm.vue'),
+          import('../components/patient-management/clinical_documentations/pm-occupationalTherapyReferralForm.vue'),
       },
       {
         name: 'consultation_discharge_note',
         path: 'consultation_discharge_note',
         component: () =>
-          import('../components/patient-management/patient_consultation/pm-consultationDischargeNote.vue'),
+          import('../components/patient-management/clinical_documentations/pm-consultationDischargeNote.vue'),
       },
 
       // psychometric tests
@@ -608,8 +602,44 @@ export default new Router({
           import('../components/patient-management/psychometric_tests/pm-whodas.vue'),
       },
       {
-        name: 'calendar_management',
-        path: 'calendar_management',
+        name: 'bai',
+        path: 'bai',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-bai.vue'),
+      },
+      {
+        name: 'atq',
+        path: 'atq',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-atq.vue'),
+      },
+      {
+        name: 'bdi',
+        path: 'bdi',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-bdi.vue'),
+      },
+      {
+        name: 'psp',
+        path: 'psp',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-psp.vue'),
+      },
+      {
+        name: 'suicide-act-suicidal-intent',
+        path: 'suicide-act-suicidal-intent',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-suicideActSuicidalIntent.vue'),
+      },
+      {
+        name: 'suicide-risk-assessment',
+        path: 'suicide-risk-assessment',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-suicideRiskAssessment.vue'),
+      },
+      {
+        name: 'calendar-management',
+        path: 'calendar-management',
         component: () =>
           import('../components/patient-management/calendar_management.vue'),
       },

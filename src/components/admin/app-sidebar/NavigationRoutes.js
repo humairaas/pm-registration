@@ -10,6 +10,92 @@ export const navigationRoutes = {
       iconClass: 'vuestic-iconset vuestic-iconset-dashboard',
     },
   },
+  // Patient Management
+  {
+    name: 'patient-management',
+    displayName: 'Patient Management',
+    meta: {
+      iconClass: 'fa fa-user-plus',
+    },
+    disabled: true,
+    children: [{
+      name: 'patient-list',
+      displayName: 'Patient List',
+    },
+    {
+      name: 'patient-requestAppointmentList',
+      displayName: 'Request Appointment List',
+    },
+    {
+      name: 'patient-appointmentList',
+      displayName: 'Appointment List',
+    },
+    {
+      name: 'patient-screeningList',
+      displayName: 'Screening List',
+    },
+    {
+      name: 'patient-appointmentBooking',
+      displayName: 'Book New Appointment',
+    },
+    {
+      name: 'calendar_management',
+      displayName: 'Appointment Calendar',
+    },
+    ],
+  },
+
+  // Intervention Management
+  {
+    name: 'intervention-management',
+    displayName: 'Intervention Management',
+    meta: {
+      iconClass: 'fa fa-heartbeat',
+    },
+    disabled: true,
+    children: [{
+    },
+    ],
+  },
+
+  // VON Management
+  {
+    name: 'VON-management',
+    displayName: 'VON Management',
+    meta: {
+      iconClass: 'fa fa-users',
+    },
+    disabled: true,
+    children: [{
+    },
+    ],
+  },
+  // SHARRP Management
+  {
+    name: 'SHHARP-management',
+    displayName: 'SHHARP Management',
+    meta: {
+      iconClass: 'fa fa-frown-o',
+    },
+    disabled: true,
+    children: [{
+      name: 'shharp-list',
+      displayName: 'SHHARP List',
+    },
+    ],
+  },
+  // Report Management
+  {
+    name: 'report-management',
+    displayName: 'Report Management',
+    meta: {
+      iconClass: 'vuestic-iconset vuestic-iconset-files',
+    },
+    disabled: true,
+    children: [{
+    },
+    ],
+  },
   // System Setting
   {
     name: 'system-setting',
@@ -64,86 +150,27 @@ export const navigationRoutes = {
     },
     ],
   },
-  // Staff Management
+  // Occasion of Services
   {
-    name: 'staff-management',
-    displayName: 'Staff Management',
+    name: 'occassion-of-services',
+    displayName: 'Occasion of Services',
     meta: {
-      iconClass: 'fa fa-user-circle-o',
+      iconClass: 'fa fa-cogs',
     },
     disabled: true,
     children: [{
-      name: 'main',
-      displayName: 'User List',
-    },
-    {
-      name: 'newStaff',
-      displayName: 'New Staff Registration',
     },
     ],
   },
-  // Patient Management
+  // Library and References
   {
-    name: 'patient-management',
-    displayName: 'Patient Management',
+    name: 'library-and-references',
+    displayName: 'Library and References',
     meta: {
-      iconClass: 'fa fa-users',
+      iconClass: 'fa fa-book',
     },
     disabled: true,
     children: [{
-      name: 'patient-list',
-      displayName: 'Patient List',
-    },
-    {
-      name: 'patient-requestAppointmentList',
-      displayName: 'Request Appointment List',
-    },
-    {
-      name: 'patient-appointmentList',
-      displayName: 'Appointment List',
-    },
-    {
-      name: 'patient-screeningList',
-      displayName: 'Screening List',
-    },
-    {
-      name: 'patient-appointmentBooking',
-      displayName: 'Book New Appointment',
-    },
-    {
-      name: 'calendar_management',
-      displayName: 'Appointment Calendar',
-    },
-    ],
-  },
-  // SHARRP Management
-  {
-    name: 'SHHARP-management',
-    displayName: 'SHHARP Management',
-    meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-extras',
-    },
-    disabled: true,
-    children: [{
-      name: 'shharp-list',
-      displayName: 'SHHARP List',
-    },
-    ],
-  },
-  {
-    name: 'company-management',
-    displayName: 'Company Management',
-    meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-dashboard',
-    },
-    disabled: true,
-    children: [{
-      name: 'CEO Company List',
-      displayName: 'CEO Company List',
-    },
-    {
-      name: 'Candidate Appeal',
-      displayName: 'Candidate Appeal',
     },
     ],
   },
@@ -151,7 +178,7 @@ export const navigationRoutes = {
     name: 'statistics',
     displayName: 'menu.statistics',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-statistics',
+      iconClass: 'fa fa-times',
     },
     disabled: true,
     children: [{
@@ -168,7 +195,7 @@ export const navigationRoutes = {
     name: 'forms',
     displayName: 'menu.forms',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-forms',
+      iconClass: 'fa fa-times',
     },
     disabled: true,
     children: [{
@@ -185,7 +212,7 @@ export const navigationRoutes = {
     name: 'tables',
     displayName: 'menu.tables',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-tables',
+      iconClass: 'fa fa-times',
     },
     children: [{
       name: 'markup',
@@ -201,7 +228,7 @@ export const navigationRoutes = {
     name: 'ui',
     displayName: 'menu.uiElements',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-ui-elements',
+      iconClass: 'fa fa-times',
     },
     disabled: true,
     children: [{
@@ -306,7 +333,7 @@ export const navigationRoutes = {
     name: 'maps',
     displayName: 'menu.maps',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-maps',
+      iconClass: 'fa fa-times',
     },
     disabled: true,
     children: [{
@@ -335,7 +362,7 @@ export const navigationRoutes = {
     name: 'pages',
     displayName: 'menu.pages',
     meta: {
-      iconClass: 'vuestic-iconset vuestic-iconset-files',
+      iconClass: 'fa fa-times',
     },
     disabled: true,
     children: [{
