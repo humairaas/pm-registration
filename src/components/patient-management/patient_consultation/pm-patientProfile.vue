@@ -217,9 +217,9 @@
                 <router-link :to="{ name: 'psychometric-test-history'}"><va-tree-node class="ga-two">View History</va-tree-node></router-link>
                 <va-tree-category label="Take New Test" >
                   <router-link :to="{ name: 'dass'}"><va-tree-node class="ga-two">DASS</va-tree-node></router-link>
-                  <va-tree-node class="ga-two">PHQ-9</va-tree-node>
+                  <router-link :to="{ name: 'phq'}"><va-tree-node class="ga-two">PHQ-9</va-tree-node></router-link>
                   <router-link :to="{ name: 'cbi'}"><va-tree-node class="ga-two">CBI</va-tree-node></router-link>
-                  <va-tree-node class="ga-two">WHO DAS</va-tree-node>
+                  <router-link :to="{ name: 'whodas'}"><va-tree-node class="ga-two">WHODAS</va-tree-node></router-link>
                   <va-tree-node class="ga-two">BDI</va-tree-node>
                   <va-tree-node class="ga-two">BAI</va-tree-node>
                   <va-tree-node class="ga-two">ATQ</va-tree-node>
@@ -459,10 +459,10 @@ export default {
         if (this.allergies.length > 0) {
           this.empty = false
         }
-        if (response.data.data.date == null) {
+        if (response.data.nextAppointment == null) {
           this.appointmentDate = '--/--/-- --:--'
         } else {
-          this.appointmentDate = response.data.data.date + ' ' + response.data.data.time
+          this.appointmentDate = this.getDate(response.data.nextAppointment.date) + ' ' + response.data.nextAppointment.time
         }
 
         if (response.data.data.timestamp_create == null) {

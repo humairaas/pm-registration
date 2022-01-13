@@ -534,12 +534,6 @@ export default new Router({
           import('../components/patient-management/clinical_documentations/pm-triageForm.vue'),
       },
       {
-        name: 'visit_note',
-        path: 'visit_note',
-        component: () =>
-          import('../components/patient-management/patient_consultation/visit_note.vue'),
-      },
-      {
         name: 'psychiatry_clerking_note',
         path: 'psychiatry_clerking_note',
         component: () =>
@@ -586,6 +580,32 @@ export default new Router({
         path: 'consultation_discharge_note',
         component: () =>
           import('../components/patient-management/patient_consultation/pm-consultationDischargeNote.vue'),
+      },
+
+      // psychometric tests
+      {
+        name: 'dass',
+        path: 'dass',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-dass.vue'),
+      },
+      {
+        name: 'phq',
+        path: 'phq',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-phq.vue'),
+      },
+      {
+        name: 'cbi',
+        path: 'cbi',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-cbi.vue'),
+      },
+      {
+        name: 'whodas',
+        path: 'whodas',
+        component: () =>
+          import('../components/patient-management/psychometric_tests/pm-whodas.vue'),
       },
       {
         name: 'calendar_management',
