@@ -102,7 +102,7 @@
       <div class="row">
         <div class="col-xl-12">
           <div class="row mt-3">
-            <!--Visit History--->
+            <!--Psychometric Test History--->
             <div class="col-xl-12">
               <va-card :title="$t('Psychometric Test History')">
                 <va-data-table
@@ -112,6 +112,14 @@
                 >
                   <template slot="no" slot-scope="row">
                     {{ row.rowIndex + 1 }}
+                  </template>
+
+                  <template slot="date" slot-scope="props">
+                    {{ getDate(props.rowData.timestamp_create) }}
+                  </template>
+
+                  <template slot="time" slot-scope="props">
+                    {{ getTime(props.rowData.timestamp_create) }}
                   </template>
                 </va-data-table>
               </va-card>
@@ -165,16 +173,21 @@ export default {
           dataClass: 'text-center',
         },
         {
-          name: '',
-          title: 'Test Name',
+          name: '__slot:date',
+          title: 'DATE',
         },
         {
-          name: 'timestamp_create',
-          title: 'Date Taken',
+          name: '__slot:time',
+          title: 'TIME',
+        },
+
+        {
+          name: 'psychometric_name',
+          title: 'TEST NAME',
         },
         {
-          name: '',
-          title: 'Result',
+          name: 'psychometric_score',
+          title: 'RESULT',
         },
       ]
     },
@@ -212,6 +225,12 @@ export default {
         if (this.allergies.length > 0) {
           this.empty = false
         }
+      })
+
+    this.$axios
+      .get('http://127.0.0.1:8000/api/getScreeningHistory?patientId=' + patientId)
+      .then((response) => {
+        this.tests = response.data.data
       })
   },
 
