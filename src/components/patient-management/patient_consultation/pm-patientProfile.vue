@@ -453,7 +453,7 @@ export default {
         if (response.data.data.citizenship_fk === 3) {
           this.nationality = 'Non-Malaysian ' + '(' + response.data.data.issuing_country + ')'
         } else {
-          this.nationality = 'Malaysia'
+          this.nationality = 'Malaysian'
         }
         this.allergies = response.data.allergy
         if (this.allergies.length > 0) {
