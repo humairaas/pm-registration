@@ -153,7 +153,7 @@ export const navigationRoutes = {
   // Occasion of Services
   {
     name: 'occassion-of-services',
-    displayName: 'Occasion of Services',
+    displayName: 'Occassion of Services',
     meta: {
       iconClass: 'fa fa-cogs',
     },
