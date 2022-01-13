@@ -34,5 +34,6 @@ export default {
     display: inline-block;
     width: 24px;
     height: 24px;
+    margin-left: 10px;
   }
 </style>
