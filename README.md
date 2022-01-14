@@ -1,6 +1,6 @@
-MITS2.0 VUe Naming Convention
+<h2>MITS2.0 VUe Naming Convention</h2>
 
-Please follow these naming conventions when developing MITS2.0 front-end.
+Please follow these naming conventions when developing MITS2.0 front-end. <br>
 Any changes made should be discussed and updated here.
 
 <table>
@@ -125,7 +125,7 @@ References:
 <ol>
   <li><b>kebab-case</b></li>
       <ul>
-        <li>*All lower-case letters except for acronyms like DASS</li>
+        <li><span class='red'>*</span>All lower-case letters except for acronyms like DASS</li>
         <li>Hyphen between words</li>
       </ul>
   <li><b>camelCase</b></li>
@@ -144,4 +144,10 @@ References:
       </ul>
 </ol>
 
-*All acronyms are in UPPERCASE except for component name.
+<span class='red'>*All acronyms are in UPPERCASE except for component name.</span>
+
+<style>
+  .red {
+    color: red
+  }
+</style>
